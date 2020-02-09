@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    image: mysql:5.7
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/mysql
+
+  app:
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    image: wordpress:5-php7.2
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    volumes:
+      - app:/var/www/html
+
+volumes:
+  db:
+  app:
