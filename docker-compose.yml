@@ -13,6 +13,7 @@ services:
       - db:/var/lib/mysql
 
   app:
+    build: .
     depends_on:
       - db
     environment:
@@ -20,7 +21,6 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
-    image: wordpress:5-php7.2
     ports:
       - 8080:80
     restart: unless-stopped
