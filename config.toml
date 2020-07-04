@@ -1,0 +1,4 @@
+baseURL = "https://blog.yong-ju.me/"
+languageCode = "ja-jp"
+title = "よんログ"
+theme = "ananke"
