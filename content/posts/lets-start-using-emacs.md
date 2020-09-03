@@ -55,7 +55,7 @@ Emacs では Vim Script が動かないのでこれは正しい。しかし大�
 
 emacsclient を使えば「シェルのコマンドラインから指定したファイルを現在起動している Emacs で開く」といったことも可能だ。emacsclient の使い方は Man ページと Oh My Zsh の Emacs プラグインが参考になる。
 
-[ohmyzsh/ohmyzsh](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/emacs/emacs.plugin.zsh)
+[ohmyzsh/emacs.plugin.zsh at master · ohmyzsh/ohmyzsh](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/emacs/emacs.plugin.zsh)
 
 尚、Emacs はヘッドレスモードでも起動でき、OS へのログインと同時にバックグラウンドで Emacs のデーモンを起動しておくことも可能だ。
 
