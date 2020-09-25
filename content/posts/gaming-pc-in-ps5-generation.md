@@ -137,6 +137,11 @@ PCIe Gen4 対応の PC 向け SSD が市販され始め read 性能も PCIe Gen4
 
 しかし PS5 のようなハードウェアベースの圧縮処理専用チップを搭載するチップセットが市販される可能性は低いと考えている。
 
+2020/09/26 追記: DirectX 12 に DirectStorage というストレージ API が組み込まれることになった。
+これは PS5 のような専用チップで SSD ストレージの実効 I/O 速度を高速化するものではなく、ストレージ上に存在するゲームデータの解凍に GPU のリソースを使えるようになるというもの。
+
+[DirectStorage is coming to PC | DirectX Developer Blog](https://devblogs.microsoft.com/directx/directstorage-is-coming-to-pc/)
+
 PS5 の圧縮時の read 性能 8 〜 9GB/s を達成するには 2 台の PCIe Gen4 対応 SSD でストライピング構成を取る方法がある。
 理論上 read 性能は 1 台構成と比べ 2 倍になる。あくまで理論値であるため、これで PS5 のハードウェアベースの圧縮に対抗できるかどうかは不明。
 
