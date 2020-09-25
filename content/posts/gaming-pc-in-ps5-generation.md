@@ -117,6 +117,7 @@ PS5 のようなコンシューマハードウェアも CPU やメモリをプ�
 
 - [DDR4 SDRAM - Wikipedia](https://ja.wikipedia.org/wiki/DDR4_SDRAM)
 - [DDR5 SDRAM - Wikipedia](https://ja.wikipedia.org/wiki/DDR5_SDRAM)
+- [メモリインターリーブ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%AA%E3%83%BC%E3%83%96)
 
 # ストレージ
 
