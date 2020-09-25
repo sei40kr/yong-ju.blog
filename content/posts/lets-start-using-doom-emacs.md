@@ -1,5 +1,5 @@
 ---
-title: "Doom Emacs を使おう"
+title: "高品質 Emacs ディストリビューション Doom Emacs を使おう"
 date: 2020-09-03T22:16:20+09:00
 ---
 
