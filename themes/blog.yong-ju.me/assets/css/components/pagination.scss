@@ -1,0 +1,47 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 0 0;
+
+  .page-item {
+    background: #fff;
+    border: 1px solid $border-color;
+    display: block;
+    font-size: 0.875rem;
+    height: 38px;
+    line-height: 38px;
+    margin: 0 $single-space;
+    text-align: center;
+    width: 38px;
+
+    &.disabled {
+      display: none;
+    }
+
+    .page-link {
+      color: inherit;
+      display: block;
+      text-decoration: none;
+
+      &:hover,
+      &:active {
+        background: #eee;
+      }
+    }
+
+    &:first-child,
+    &:nth-child(2),
+    &:nth-last-child(2),
+    &:last-child {
+      font-size: 1.125rem;
+
+      .page-link {
+        color: #999;
+      }
+    }
+
+    &.active .page-link {
+      background: #eee;
+    }
+  }
+}

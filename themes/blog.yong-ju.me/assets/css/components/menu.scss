@@ -1,0 +1,48 @@
+.menu {
+  align-items: center;
+  background: #000;
+  color: #fff;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  list-style: none;
+
+  &__item {
+    font-family: Lato, sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin: 0 1em;
+    text-transform: uppercase;
+
+    a {
+      color: inherit;
+      display: block;
+      line-height: 1.9em;
+      text-decoration: none;
+
+      &::after {
+        background: #fff;
+        content: "";
+        display: block;
+        height: 3px;
+      }
+    }
+
+    &:not(&--active) {
+      a::after {
+        transform: scaleX(0);
+        transform-origin: 0.5 0;
+        transition: transform 0.3s ease;
+      }
+
+      a:hover {
+        color: $accent-color;
+
+        &::after {
+          background: $accent-color;
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+}

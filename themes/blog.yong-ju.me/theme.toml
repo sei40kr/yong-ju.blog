@@ -1,0 +1,12 @@
+description = "Custom Hugo theme authored by Seong Yong-ju"
+features    = []
+homepage    = "https://blog.yong-ju.me"
+license     = "UNLICENSED"
+licenselink = ""
+min_version = "0.65.0"
+name        = "blog.yong-ju.me"
+tags        = []
+
+[author]
+homepage = "https://yong-ju.me"
+name     = "Seong Yong-ju"

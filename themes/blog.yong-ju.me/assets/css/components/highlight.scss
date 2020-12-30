@@ -1,0 +1,16 @@
+.highlight {
+  border-bottom: 1px solid $border-color;
+  border-top: 1px solid $border-color;
+  margin: 1.5rem 0;
+
+  pre {
+    padding: 2rem;
+  }
+
+  code {
+    @extend %font-code;
+
+    background: transparent;
+    color: inherit;
+  }
+}

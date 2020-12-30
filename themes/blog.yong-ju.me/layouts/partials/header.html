@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="header__title">
+    <a href="{{ relLangURL "" }}">{{ site.Title }}</a>
+  </div>
+
+  {{ with site.Params.subtitle }}
+    <p class="header__subtitle">{{ . }}</p>
+  {{ end }}
+</header>
+{{ if site.Menus }}
+  <nav class="menu">
+    {{ $currentPage := . }}
+    {{ range site.Menus.main }}
+      {{ if .HasChildren }}
+        <li
+          class="menu__item {{ if $currentPage.HasMenuCurrent "main" . }}menu__item--active{{ end }}"
+        >
+          <a href="#">
+            {{ .Pre }}
+            <span>{{ .Name }}</span>
+          </a>
+        </li>
+        <ul>
+          {{ range .Children }}
+            <li
+              class="menu__item {{ if $currentPage.IsMenuCurrent "main" . }}menu__item--active{{ end }}"
+            >
+              <a href="{{ .URL }}">{{ .Name }}</a>
+            </li>
+          {{ end }}
+        </ul>
+        {{ else }}
+        <li
+          class="menu__item {{ if $currentPage.IsMenuCurrent "main" . }}menu__item--active{{ end }}"
+        >
+          <a href="{{ .URL }}">
+            {{ .Pre }}
+            <span>{{ .Name }}</span>
+          </a>
+        </li>
+      {{ end }}
+    {{ end }}
+  </nav>
+{{ end }}

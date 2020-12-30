@@ -1,3 +1,16 @@
-languageCode = "ja-jp"
 title = "よんログ"
-theme = "ananke"
+author = "Seong Yong-ju"
+DefaultContentLanguage = "ja"
+enableInlineShortcodes = true
+hasCJKLanguage = true
+# prevent build failures when using Hugo's Instagram shortcode due to deprecated Instagram API.
+# See https://github.com/gohugoio/hugo/issues/7228#issuecomment-714490456
+ignoreErrors = ["error-remote-getjson"]
+languageCode = "ja"
+paginate = 5
+pygmentsUseClasses = true
+theme = "blog.yong-ju.me"
+
+[Params]
+subtitle = "ソフトウェアエンジニアリングやフリーランスという働き方, アジャイルなど自由気ままに書く"
+summary = true

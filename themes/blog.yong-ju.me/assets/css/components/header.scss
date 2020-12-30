@@ -1,0 +1,28 @@
+.header {
+  background: #148 url("/img/header-bg.png");
+  padding: 2rem;
+  text-align: center;
+
+  // For Retina display
+  @media screen and (min-resolution: 2dppx) {
+    background-image: url("/img/header-bg@2x.png");
+    background-size: 512px 512px;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+
+  &__subtitle {
+    color: #ddd;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 1rem 0 0;
+  }
+}

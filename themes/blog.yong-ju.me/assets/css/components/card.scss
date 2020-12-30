@@ -1,0 +1,31 @@
+.card {
+  & + & {
+    border-top: 1px solid $border-color-alt;
+    margin: 1rem 0 0;
+    padding: 1rem 0 0;
+  }
+
+  > a {
+    color: inherit;
+    display: block;
+    text-decoration: none;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+  }
+
+  &__summary {
+    color: #555;
+    font-size: 0.875rem;
+    line-height: 1.5em;
+    margin: 0.5em 0 0;
+  }
+
+  &__date {
+    color: #999;
+    font-size: 0.75rem;
+    line-height: 1.5em;
+    margin: 0.5em 0 0;
+  }
+}
