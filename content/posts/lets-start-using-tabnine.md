@@ -3,7 +3,7 @@ title: "機械学習でコード補完をする TabNine を使おう"
 date: 2020-09-07T21:04:49+09:00
 ---
 
-# TabNine とは
+## TabNine とは
 
 {{< youtube TKLkXh_c-Gw >}}
 
@@ -20,7 +20,7 @@ TabNine は機械学習を用いてコードを予測し補完するためのツ
 これは `git grep` を用いて作業中のプロジェクトから似たような箇所を見つけ補完するというパッケージだ。
 こちらも非常に有用に見えたのだが、私が普段使っている company と相性が悪そうなので導入を断念した。
 
-# 料金プラン
+## 料金プラン
 
 [Pricing | TabNine](https://www.tabnine.com/pricing/)
 
@@ -31,11 +31,11 @@ TabNine は機械学習を用いてコードを予測し補完するためのツ
 Professional プランは月額 \$15.00 (約 ¥1,600) となっており、かなり考えさせられる価格設定となっている。
 **年額にすると IntelliJ IDEA のパーソナルライセンスの新規 1 年目のライセンス料を超える。**
 
-# 設定
+## 設定
 
 TabNine の補完を有効にしたエディタで `TabNine::config` と入力すると設定画面が Web ブラウザで開き、各種設定やライセンスのアップグレードを行うことができる。
 
-# Semantic Completion
+## Semantic Completion
 
 Semantic Completion は補完候補の検証に LSP 準拠の言語サーバを使う機能である。
 TabNine が子プロセスとして起動した言語サーバの補完候補と比較することで、機械学習による補完候補を文法的やコンテキスト的に正しいものに絞り込む。
@@ -44,18 +44,18 @@ Semantic Completion を有効にするには `TabNine.toml` で言語サーバ�
 
 [Semantic Completion | TabNine](https://www.tabnine.com/semantic)
 
-## Prefetch
+### Prefetch
 
 2 トークン以上の補完候補に対して Semantic Completion を有効にするには、言語サーバを複数起動して補完候補を先読みしておく必要がある。
 `TabNine.toml` で各言語ごとに `num_server_instances` で起動する言語サーバのプロセス数を設定できる。なんとも贅沢なマシンリソースの使い方だ。
 
-# TabNine の問題点
+## TabNine の問題点
 
 - TabNine で Semantic Completion を使うと言語サーバ実行コマンドの設定をエディタと TabNine の 2 箇所でもつことになる
 - 単一トークンの補完候補のメタデータ (型情報, ドキュメントなど) が TabNine 経由だと消える
 - コード補完をしたときの挙動 (import 文の追加など) が TabNine 経由だとない。これは Java や TypeScript を書く場合は致命的である
 
-# TabNine を言語サーバのプロキシにするという提案
+## TabNine を言語サーバのプロキシにするという提案
 
 私は「TabNine が言語サーバのプロキシとして動けばこれらの問題は全て解決できるのではないか」と考える。つまりこういうことである。
 
@@ -79,7 +79,7 @@ tabnine -- java -jar groovy-language-server-all.jar
 
 author にもこの案の利点がよく理解されているように見える。今後のアップデートが楽しみだ!
 
-# Doom Emacs で使う
+## Doom Emacs で使う
 
 Emacs で TabNine を使うためのパッケージとして [company-tabnine](https://github.com/TommyX12/company-tabnine) がある。
 これは company の backend として動作する。

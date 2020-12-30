@@ -3,13 +3,13 @@ title: "PS5 世代ゲーミング PC のパーツ構成"
 date: 2020-08-05T00:15:53+09:00
 ---
 
-# CPU
+## CPU
 
-## PS5
+### PS5
 
 - AMD Ryzen カスタムモデル (Zen2) 8C/16T 3.5GHz
 
-## PC
+### PC
 
 - AMD Ryzen 7 3700X (Zen2) 8C/16T 3.6GHz ― **¥39,280**
 
@@ -23,13 +23,13 @@ Ryzen 7 3700X は PS5 と比べ若干クロックが速いが、OS のオーバ�
 - [Ryzen - Wikipedia](https://ja.wikipedia.org/wiki/Ryzen)
 - [ASCII.jp：AMD、Zen 3 の CPU を 10 月 8 日に RDNA 2 の GPU を 10 月 28 日に発表予定](https://ascii.jp/elem/000/004/026/4026524/)
 
-# GPU
+## GPU
 
-## PS5
+### PS5
 
 - AMD カスタムモデル (RDNA2) 10.28TFlOps
 
-## PC
+### PC
 
 - AMD Radeon RX 5700XT (RDNA) GDDR6 8GB IO: 448GB/s 9.75TFlOps ― **¥43,978**
 - NVIDIA GeForce RTX 2080 GDDR6 8GB IO: 448GB/s 10TFlOps
@@ -39,7 +39,7 @@ Ryzen 7 3700X は PS5 と比べ若干クロックが速いが、OS のオーバ�
 - [AMD Radeon - Wikipedia](https://ja.wikipedia.org/wiki/AMD_Radeon)
 - [NVIDIA GeForce - Wikipedia](https://ja.wikipedia.org/wiki/NVIDIA_GeForce)
 
-## グラフィックメモリのトラウマ
+### グラフィックメモリのトラウマ
 
 PS4 が発売された当時、PC 向けグラフィックカードに搭載されているメモリはミドルクラスで 2GB, アッパーミドルクラスで 4GB 程度だった。
 PS4 に搭載されていた GPU はミドルクラス相当だが、メモリはシステムと共有で 8GB と、システムで使うメモリ空間とグラフィック演算で使うメモリ空間が共有されていた。
@@ -57,7 +57,7 @@ PS4 世代後半に差し掛かると 4GB 以上のグラフィックスメモ�
 
 結果として **PS4 の 2 倍以上の演算性能を誇る GTX 970 でも PS4 よりローグラフィック, Low FPS で頻繁なスラッシングを発生させるゲームが登場し始めた。**
 
-## レイトレーシング
+### レイトレーシング
 
 次世代の GPU はレイトレーシングと呼ばれる処理をハードウェアレベルでサポートする。
 これは光源の伝播をシミュレートする技術である。
@@ -83,13 +83,13 @@ PS4 時代にも水面やガラス、鏡など一部のマテリアルには光�
 - [レイトレーシング - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%AC%E3%82%A4%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%B3%E3%82%B0)
 - [環境マッピング - Wikipedia](https://ja.wikipedia.org/wiki/%E7%92%B0%E5%A2%83%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0)
 
-# メモリ
+## メモリ
 
-## PS5
+### PS5
 
 - GDDR6 16GB IO: 448GB/s
 
-## PC
+### PC
 
 - DDR4 3200MHz IO: 25.6GB/s
 
@@ -119,13 +119,13 @@ PS5 のようなコンシューマハードウェアも CPU やメモリをプ�
 - [DDR5 SDRAM - Wikipedia](https://ja.wikipedia.org/wiki/DDR5_SDRAM)
 - [メモリインターリーブ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%AA%E3%83%BC%E3%83%96)
 
-# ストレージ
+## ストレージ
 
-## PS5
+### PS5
 
 - 825GB PCIe Gen4 SSD read: 8 〜 9GB/s (圧縮時)
 
-## PC
+### PC
 
 - PCIe Gen4 SSD read: 5GB/s ― 1TB ¥24,000
 
@@ -150,6 +150,6 @@ PS5 のリードアーキテクト、マーク・サーニー氏はこのスト�
 
 {{< youtube ph8LyNIT9sg >}}
 
-# その他
+## その他
 
 [Playstation 5 - Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_5)

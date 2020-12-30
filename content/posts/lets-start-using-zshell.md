@@ -3,11 +3,11 @@ title: "究極の使い勝手を実現する UNIX シェル Z shell を使おう
 date: 2020-09-21T12:32:52+09:00
 ---
 
-# 普段使っているシェルにこだわる理由
+## 普段使っているシェルにこだわる理由
 
 エンジニアにシェルのカスタマイズを勧めると「自分はあまりシェルコマンドが得意ではないから」と敬遠されがちである。だが、そのようなエンジニアこそシェルにこだわってほしい。インタラクティブシェルはシェル作業における基礎となるツールであり、我々のシェル作業をサポートしてくれるものである。**シェルコマンドが苦手だからこそシェルをカスタマイズするべきなのだ。**
 
-# Z shell とは
+## Z shell とは
 
 [Z Shell - Wikipedia](https://ja.wikipedia.org/wiki/Z_Shell)
 
@@ -28,7 +28,7 @@ zsh の優れている点をいくつか紹介する。
 - bash と比べてコマンド補完やプロンプトのカスタマイズ性が充実している
 - fish と異なり POSIX に準拠しているため普段のシェル作業に影響を与えない
 
-# zsh をインストールする
+## zsh をインストールする
 
 macOS など、最初から zsh がインストールされている OS もある。
 
@@ -44,7 +44,7 @@ macOS ではプリインストールの zsh のバージョンが最新ではな
 brew install zsh
 ```
 
-# zsh をログインシェルに設定する
+## zsh をログインシェルに設定する
 
 ログインシェルは、Linux ユーザとしてログインした後にユーザセッションとして開始されるシェルプログラムである。
 
@@ -65,12 +65,12 @@ chsh -s "$(which zsh)"
 
 ログインシェルの設定を完全に反映するために、このコマンドを実行した後に一度ログアウトすることが好ましい。
 
-# zsh の設定ファイル
+## zsh の設定ファイル
 
 zsh の設定ファイルは複数存在する。
 設定ファイルによって読み込まれる条件やタイミングも異なるので、目的に合致する設定ファイルを考える。
 
-## ~/.zshenv
+### ~/.zshenv
 
 zsh が一番最初に読み込む設定ファイル。
 
@@ -81,20 +81,20 @@ zsh が一番最初に読み込む設定ファイル。
 | `LANG`    | デフォルトのロケールカテゴリ |
 | `ZDOTDIR` | 後節で説明                   |
 
-## ~/.zprofile
+### ~/.zprofile
 
 ログインシェルとして起動された ( `-l` オプションが引数に与えられた) 場合に読み込む設定ファイル。
 
 Linux 環境ではログイン時に, macOS 環境ではターミナルアプリでセッションを開始する度に読み込まれる。
 基本的に export する環境変数を記述する。 ( `PATH` など)
 
-## ~/.zshrc
+### ~/.zshrc
 
 インタラクティブシェルとして起動された ( `-i` オプションが引数に与えられた) 場合に読み込む設定ファイル。
 
 ほとんどのカスタマイズ設定は `~/.zshrc` に記述することになる。
 
-# `ZDOTDIR` を設定してホームディレクトリをスッキリさせる
+## `ZDOTDIR` を設定してホームディレクトリをスッキリさせる
 
 zsh は設定ファイルが 3 つも存在するのでホームディレクトリ直下がゴチャっとしてしまう。
 
@@ -132,7 +132,7 @@ export ZDOTDIR=~/.zsh
 └ .zshenv
 ```
 
-# bash から設定の移行
+## bash から設定の移行
 
 インストール時に自動的に bash の設定を追加する開発ツールは多い。主に
 
@@ -159,9 +159,9 @@ autoload -Uz bashcompinit && bashcompinit
 基本的に bash のコマンド補完と比べ zsh ネイティブなコマンド補完の方が機能的に優れていることが多い。
 今まで使っていた bash のコマンド補完をそのまま移行する前に、後述する zsh-completions に zsh ネイティブなコマンド補完が存在していないか確認しよう。
 
-# zsh プラグインマネージャ
+## zsh プラグインマネージャ
 
-## zinit
+### zinit
 
 zsh のプラグインを管理するプラグインマネージャとして zinit をオススメする。
 
@@ -174,9 +174,9 @@ zinit の優れている点をいくつか紹介する。
 - プラグインを zcompile でコンパイルし高速化 (参考: zshbuiltins(1))
 - プラグインによる設定の変更を追跡できる
 
-# zsh プラグイン
+## zsh プラグイン
 
-## Oh My Zsh
+### Oh My Zsh
 
 [ohmyzsh/ohmyzsh: A delightful community-driven (with 1700+ contributors) framework for managing your zsh configuration. Includes 200+ optional plugins (rails, git, OSX, hub, capistrano, brew, ant, php, python, etc), over 140 themes to spice up your morning, and an auto-update tool so that makes it easy to keep up with the latest updates from the community.](https://github.com/ohmyzsh/ohmyzsh/)
 
@@ -192,7 +192,7 @@ zinit snippet OMZL::clipboard.zsh
 zinit snippet OMZP::zsh_reload/zsh_reload.plugin.zsh
 ```
 
-## Prezto
+### Prezto
 
 [sorin-ionescu/prezto: The configuration framework for Zsh](https://github.com/sorin-ionescu/prezto)
 
@@ -207,9 +207,9 @@ zinit ice svn
 zinit snippet PZT::modules/gnu-utility
 ```
 
-# zsh のプラグイン&カスタマイズ
+## zsh のプラグイン&カスタマイズ
 
-## コマンド履歴の保存
+### コマンド履歴の保存
 
 コマンド履歴をファイルに書き出すことで、異なるセッションでコマンド履歴を共有することができる。
 
@@ -228,7 +228,7 @@ SAVEHIST=10000
 
 参考: zshparam(1)
 
-## コマンド履歴の検索
+### コマンド履歴の検索
 
 [zdharma/history-search-multi-word: Multi-word, syntax highlighted history searching for Zsh](https://github.com/zdharma/history-search-multi-word)
 
@@ -240,7 +240,7 @@ zinit ice wait'1' lucid
 zinit light -b zdharma/history-search-multi-word
 ```
 
-## シェルコマンドのシンタックスハイライト
+### シェルコマンドのシンタックスハイライト
 
 [zdharma/fast-syntax-highlighting: (Short name F-Sy-H). Syntax-highlighting for Zshell – fine granularity, number of features, 40 work hours themes](https://github.com/zdharma/fast-syntax-highlighting)
 
@@ -252,7 +252,7 @@ zinit ice wait atinit'zpcompinit; zpcdreplay' lucid
 zinit light zdharma/fast-syntax-highlighting
 ```
 
-## コマンド補完の改良
+### コマンド補完の改良
 
 zsh ではコマンド補完の挙動を強力にカスタマイズできる。
 利用可能な設定は zshcompsys(1) で参照できるが、私でも全てを把握しきれていないほど数が多いので Oh My Zsh の「コマンド補完の挙動をいい感じにしてくれるライブラリ」を読み込む。
@@ -263,7 +263,7 @@ zsh ではコマンド補完の挙動を強力にカスタマイズできる。
 zinit snippet OMZL::completion.zsh
 ```
 
-### zsh-completions
+#### zsh-completions
 
 コマンド補完定義の詰め合わせパック zsh-completions の導入もオススメする。
 zsh-completions はコマンド補完の定義が遅延ロードされるように設計されているため、普段使わないコマンド補完の定義が含まれていても気にすることはない。

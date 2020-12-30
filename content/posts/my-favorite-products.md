@@ -3,12 +3,10 @@ title: "買ってよかった製品"
 date: 2020-12-20T15:26:58+09:00
 ---
 
-# 買ってよかった製品
-
 今まで買った製品を辛口で評価しつつも総合的に買ってよかったと判断したものをを列挙していく。
 随時更新する予定。
 
-# デスク
+## デスク
 
 [折りたたみテーブル・幅１６０ｃｍ・オーク材 | 無印良品](https://www.muji.com/jp/ja/store/cmdty/detail/4550002603977)
 
@@ -43,7 +41,7 @@ SIGNUM は脚の回転部からデスクの端までのスペースのちょう�
 表面もウレタン樹脂塗装ではなくラッカー塗装になっているため、上記のダイニングテーブルよりは熱や水分に気を遣う必要がある。
 しかし、被膜が薄い分オーク材の質感をより楽しむことができるだろう。
 
-# デスクチェア
+## デスクチェア
 
 [【正規品】 Herman Miller (ハーマンミラー) セイルチェア オフィスチェア ブラック BB キャスター 12 年保証 AS1YA23HAN2BKBBBKBK9119](https://www.amazon.co.jp/dp/B0846HM9WF/ref=cm_sw_em_r_mt_dp_HDU3FbN626QG8?_encoding=UTF8&psc=1)
 
@@ -68,7 +66,7 @@ SIGNUM は脚の回転部からデスクの端までのスペースのちょう�
 
 [ポモドーロ・テクニック - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%9D%E3%83%A2%E3%83%89%E3%83%BC%E3%83%AD%E3%83%BB%E3%83%86%E3%82%AF%E3%83%8B%E3%83%83%E3%82%AF)
 
-# 自作 PC
+## 自作 PC
 
 [CRYORIG モニタースタンド PC ケース Mini-ITX 対応 Taku Silver 日本正規代理店品](https://www.amazon.co.jp/CRYORIG-%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%89PC%E3%82%B1%E3%83%BC%E3%82%B9-Mini-ITX%E5%AF%BE%E5%BF%9C-Taku-Silver/dp/B077697MT9/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dchild=1&keywords=taku+cryorig&qid=1608409716&sr=8-1)
 
@@ -96,7 +94,7 @@ CPU クーラーは背丈が低いトップフロー型のみ装着が可能で�
 
 普通に Amazon で買えばいいものをアクティブなオタクアピールするためにわざわざツ○モに行くからこういう目に合う。
 
-# キーボード
+## キーボード
 
 [PFU HHKB Professional2 Type-S 白/無刻印(英語配列) PD-KB400WNS](https://www.amazon.co.jp/PFU-Hacking-Keyboard-Professional2-PD-KB400WNS/dp/B008GXT6SK/ref=sr_1_7?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dchild=1&keywords=hhkb+professional2&qid=1608410692&sr=8-7)
 
@@ -113,7 +111,7 @@ HHKB Professional 2 を購入する前に所持していた Professional を静�
 静音性においては Type-S には敵わない。
 それはそれで気に入ってたのだが、新型コロナ感染拡大に伴うリモートワークの開始につき、オフィスに置き去りにしたまま入館できなくなり生き別れになってしまった。
 
-# スピーカー
+## スピーカー
 
 [Bose Companion 20 multimedia speaker system PC スピーカー](https://www.amazon.co.jp/dp/B005EFVVUO/ref=cm_sw_em_r_mt_dp_0iV3FbHGQBG27)
 
@@ -125,7 +123,7 @@ Computer MusicMonitor は今では生産終了してしまった。
 Companion 20 は BOSE 特有のドンシャリ感はなくなったものの、あの重量感のある低音は健在である。
 実際に BOSE のスピーカーを持ち上げてみると、どれも見た目以上に重い。
 
-# マイク
+## マイク
 
 [Blue Microphones Yeti Nano USB コンデンサー マイク Shadow Gray イエティ ナノ シャドー グレー BM300SG PC MAC PS4 USB ストリーミング 配信 ストリーマー テレワーク web 会議 国内正規品 2 年間メーカー保証](https://www.amazon.co.jp/dp/B0822NRR6M/ref=cm_sw_em_r_mt_dp_nIU3FbNE2G67H)
 
@@ -138,7 +136,7 @@ Yeti Nano を使い始めてから「声が聞こえづらい」と言われる�
 ほとんどのビデオ通話アプリはデフォルトでオーディオ入出力に同じデバイスを設定するので、OS デフォルトのオーディオ入力を Yeti Nano, オーディオ出力をスピーカーにしておくと、ビデオ通話の音声だけ Yeti Nano に接続したヘッドフォンから流すことができる。
 便利。
 
-# AV ラック
+## AV ラック
 
 [木製ＡＶラック・幅１５０ｃｍ・オーク材 | 無印良品](https://www.muji.com/jp/ja/store/cmdty/detail/4550182219227)
 
@@ -155,7 +153,7 @@ Yeti Nano を使い始めてから「声が聞こえづらい」と言われる�
 また、ガラス戸を閉めてしまうと収納スペースが密閉状態になるので、ここに PS4 を閉じ込めると熱暴走を起こす。
 ガラス戸を開けっ放しで PS4 をプレイしなければならないというのは少し気になる。
 
-# テレビ
+## テレビ
 
 [山善 50V 型 HDR 4K 対応 オンキヨースピーカー搭載 液晶テレビ (裏番組録画 外付け HDD 録画 対応) QRT-50W4K](https://www.amazon.co.jp/dp/B08HPD4J4T/ref=cm_sw_em_r_mt_dp_YLU3Fb9HD424J)
 
@@ -169,7 +167,7 @@ Yeti Nano を使い始めてから「声が聞こえづらい」と言われる�
 オンキヨーのスピーカーを搭載しており、追加スピーカーなしでも十分満足できる肉厚な音質だ。
 設定でビルトインスピーカーと光デジタルケーブルの両方からオーディオを出力することが可能なので、低音域が物足りないと感じる人はサブウーファーだけ追加することもできる。
 
-# PS4 Pro
+## PS4 Pro
 
 数年前に PS4 を友人に譲渡した。
 PS5 の安定したモデルの入手が今後 1 年は見込めないだろうと思い、それまでの繋ぎとして PS4 Pro をメルカリで中古を 2.6 万円で購入。
@@ -189,7 +187,7 @@ PS4 と PS4 Pro では内蔵ストレージのバス帯域が異なるので、�
 
 [SanDisk 内蔵 2.5 インチ SSD / SSD Plus 1TB / SATA3.0 / 3 年保証 / SDSSDA-1T00-G26](https://www.amazon.co.jp/dp/B07D998212/ref=cm_sw_em_r_mt_dp_avU3FbC4YR8YZ?_encoding=UTF8&psc=1)
 
-# スマートホーム
+## スマートホーム
 
 [Google Nest Mini](https://store.google.com/jp/product/google_nest_mini)
 
@@ -215,7 +213,7 @@ Nature Remo を使うと、登録したスマートフォンの位置情報を�
 例えば「家から 300m 以上離れたらエアコンを切る」という設定もできるので非常に便利だ。
 これは本当にどうでもいいが、行きつけの大戸屋が家から直線距離でちょうど 300m のところに位置するため、食事中にひたすらエアコンの ON/OFF を繰り返してしまう。
 
-# マグカップ
+## マグカップ
 
 [サーモス 真空断熱マグカップ ホワイト 350ml JDG-350C WH](https://www.amazon.co.jp/dp/B07VCCCPYR/ref=cm_sw_em_r_mt_dp_zQT3Fb8V39V5S)
 
@@ -224,7 +222,7 @@ Nature Remo を使うと、登録したスマートフォンの位置情報を�
 同社の保温マグカップの方が後発だが、カップの縁が鋭利すぎて洗うときに手首に当たると痛い。
 また、ステンレスとプラスティックの接合部に汚れが溜まるのが気になるので、先発であるこちらのマグカップを主に愛用している。
 
-# ゴミ箱
+## ゴミ箱
 
 [山崎実業 ゴミ箱 分別ゴミ袋ホルダー ゴミ袋とりだしやすい ルーチェ ホワイト 7552](https://www.amazon.co.jp/dp/B00B148XQM/ref=cm_sw_em_r_mt_dp_95U3FbQJA43Q7)
 
@@ -234,7 +232,7 @@ Nature Remo を使うと、登録したスマートフォンの位置情報を�
 とはいえ、交換を怠りすぎると肥大したゴミ袋がフレームに引っかかってなかなか外れないので早めに交換することをおすすめする。
 ちなみになぜか半年くらいでネジが緩む。
 
-# 掃除機
+## 掃除機
 
 [マキタ コードレス掃除機(充電式クリーナー) CL110DWI アイボリー](https://www.amazon.co.jp/dp/B06X19V7B2/ref=cm_sw_em_r_mt_dp_A3U3FbWX9AAAW)
 
@@ -251,7 +249,7 @@ Nature Remo を使うと、登録したスマートフォンの位置情報を�
 
 [山崎実業 クリーナースタンド スティッククリーナースタンド 掃除機たて プレート ホワイト 3275](https://www.amazon.co.jp/dp/B01MS9FO2R/ref=cm_sw_em_r_mt_dp_g5U3FbN62D5T1)
 
-# 財布
+## 財布
 
 [\[フリュー\] FRUH コードバン・スマートロングウォレット 薄さをコンセプトに拘った作り込みを日本で一環して生産している FRUH](https://www.amazon.co.jp/dp/B01MCS6ND4/ref=cm_sw_em_r_mt_dp_y5U3FbFDA9E2Y)
 
@@ -267,9 +265,9 @@ FRUH は私にとってピッタリの財布だった。
 素材はコードバンで非常に高級感がある。
 2 年ほど使っているが財布の角はまだまだしっかりしている。
 
-# 買って失敗だったもの
+## 買って失敗だったもの
 
-## 体にフィットするソファ
+### 体にフィットするソファ
 
 [体にフィットするソファ 通販 | 無印良品](https://www.muji.com/jp/ja/store/cmdty/section/S10305)
 
