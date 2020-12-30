@@ -3,7 +3,7 @@ features    = []
 homepage    = "https://blog.yong-ju.me"
 license     = "UNLICENSED"
 licenselink = ""
-min_version = "0.65.0"
+min_version = "0.74.3"
 name        = "blog.yong-ju.me"
 tags        = []
 
