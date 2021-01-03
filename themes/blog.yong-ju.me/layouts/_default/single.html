@@ -6,10 +6,9 @@
       </span>
       <h1 class="heading__title">{{ .Title }}</h1>
 
-      {{ $tags := .GetTerms "tags" }}
-      {{ if ne (len $tags) 0 }}
+      {{ with .GetTerms "tags" }}
         <ul class="heading__tags">
-          {{ range (.GetTerms "tags") }}
+          {{ range . }}
             <li class="heading__tag">
               <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
             </li>
