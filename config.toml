@@ -14,3 +14,10 @@ theme = "blog.yong-ju.me"
 [Params]
 subtitle = "ソフトウェアエンジニアリングやフリーランスという働き方, アジャイルなど自由気ままに書く"
 summary = true
+
+[menu]
+
+  [[menu.main]]
+    name = "Portfolio"
+    url = "https://yong-ju.me"
+    weight = 10
