@@ -1,12 +1,12 @@
 .footer {
   background: #000;
   color: #ddd;
-  margin: 2.5rem 0 0;
+  margin: $margin-xxl 0 0;
 
   &__inner {
     margin: 0 auto;
     max-width: 1024px;
-    padding: 2rem;
+    padding: $padding-xl;
   }
 
   p {

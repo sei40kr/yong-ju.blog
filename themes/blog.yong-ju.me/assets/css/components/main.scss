@@ -1,12 +1,12 @@
 .main {
   background: #fff;
-  margin: 2.5rem auto 0 auto;
+  margin: $margin-xxl auto 0 auto;
   max-width: 1024px;
-  padding: 2rem;
+  padding: $padding-xl;
 
   %full {
-    margin-left: -2rem;
-    margin-right: -2rem;
+    margin-left: -$padding-xl;
+    margin-right: -$padding-xl;
   }
 
   .highlight {

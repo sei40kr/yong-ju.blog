@@ -1,6 +1,6 @@
 .header {
   background: #148 url("/img/header-bg.png");
-  padding: 2rem;
+  padding: $padding-xl;
   text-align: center;
 
   // For Retina display
@@ -23,6 +23,6 @@
     color: #ddd;
     font-size: 0.875rem;
     line-height: 1.5;
-    margin: 1rem 0 0;
+    margin: $margin-m 0 0;
   }
 }
