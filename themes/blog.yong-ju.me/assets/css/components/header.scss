@@ -10,7 +10,7 @@
   }
 
   &__title {
-    font-size: 1.8rem;
+    font-size: $font-size-xl;
     font-weight: bold;
 
     a {
@@ -21,7 +21,7 @@
 
   &__subtitle {
     color: #ddd;
-    font-size: 0.875rem;
+    font-size: $font-size-xs;
     line-height: 1.5;
     margin: $margin-m 0 0;
   }
