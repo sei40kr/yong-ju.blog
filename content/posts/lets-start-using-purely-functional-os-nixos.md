@@ -1,6 +1,7 @@
 ---
 title: "純関数型 OS である NixOS を使おう"
 date: 2020-12-24T02:31:33+09:00
+tags: ["Linux", "NixOS"]
 ---
 
 ## NixOS とは
