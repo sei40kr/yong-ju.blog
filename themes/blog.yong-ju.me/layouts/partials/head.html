@@ -55,4 +55,20 @@
     {{ block "title" . }}{{ with .Params.Title }}{{ . }} |
     {{ end }}{{ .Site.Title }}{{ end }}
   </title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["$", "$"]],
+      },
+      chtml: {
+        displayAlign: "left",
+      },
+    };
+  </script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  ></script>
 </head>
