@@ -23,6 +23,10 @@
   {{ $options := (dict "outputStyle" "compressed") }}
   {{ $stylesheet := resources.Get "css/index.scss" | toCSS $options }}
   <link href="{{ $stylesheet.Permalink }}" rel="stylesheet" />
+  <link
+    href="{{ relLangURL "" }}katex-v0.12.0/katex.min.css"
+    rel="stylesheet"
+  />
   <link href="https://fonts.gstatic.com" rel="preconnect" />
   <link
     href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono&display=swap"
@@ -56,19 +60,24 @@
     {{ end }}{{ .Site.Title }}{{ end }}
   </title>
 
+  <script defer src="{{ relLangURL "" }}katex-v0.12.0/katex.min.js"></script>
+  <script defer src="{{ relLangURL "" }}katex-v0.12.0/contrib/auto-render.min.js"></script>
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [["$", "$"]],
-      },
-      chtml: {
-        displayAlign: "left",
-      },
-    };
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {
+            left: "$$",
+            right: "$$",
+            display: {{ if .IsPage }}true{{ else }}false{{ end }},
+          },
+          {
+            left: "$",
+            right: "$",
+            display: false,
+          },
+        ],
+      });
+    });
   </script>
-  <script
-    id="MathJax-script"
-    async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-  ></script>
 </head>
