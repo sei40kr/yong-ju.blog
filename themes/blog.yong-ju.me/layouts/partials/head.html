@@ -23,6 +23,11 @@
   {{ $options := (dict "outputStyle" "compressed") }}
   {{ $stylesheet := resources.Get "css/index.scss" | toCSS $options }}
   <link href="{{ $stylesheet.Permalink }}" rel="stylesheet" />
+
+  <link
+    href="{{ relLangURL "" }}materialdesignicons-v5.4.55/css/materialdesignicons.min.css"
+    rel="stylesheet"
+  />
   <link
     href="{{ relLangURL "" }}katex-v0.12.0/katex.min.css"
     rel="stylesheet"
