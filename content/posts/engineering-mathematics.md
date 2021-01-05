@@ -57,3 +57,28 @@ $$y'+f(x)y=0$$
 
    $$h(x)=e^{\int{f(x)dx}}$$
    $$y=\frac{1}{h(x)}\\{\int{g(x)h(x)}dx+C\\}$$
+
+## フーリエ変換
+
+### フーリエ級数
+
+横軸を $t$ として、同じような波形が繰り返して現れる関数 $f(t)$ は、三角関数の無限級数に分解することができる → **フーリエ級数**
+
+$$f(t)=a_0+\sum_{n=1}^\infty{a_n\cos{n\omega t}}+\sum_{n=1}^\infty{b_n\sin{n\omega t}}$$
+
+フーリエ級数の式の $a_0$, $a_n$, $b_n$ は、それぞれフーリエ係数と呼ばれ、次式のように計算される。
+
+$$
+a_0=\frac{1}{T}\int_{-\frac{T}2}^{+\frac{T}2}f(t)dt\newline
+a_n=\frac{2}T\int_{-\frac{T}2}^{+\frac{T}2}f(t)\cos{n\omega t}dt\newline
+b_n=\frac{2}T\int_{-\frac{T}2}^{+\frac{T}2}f(t)\sin{n\omega t}dt
+$$
+
+また、角速度 $\omega$ は、波形の周期を $T$ とすると
+
+$$\omega=\frac{2\pi}{T}$$
+
+となる。
+
+* $f(-x)=f(x)$ が成り立つとき、 $f(x)$ を **偶関数** といい、$b_n=0$ となる。
+* $f(-x)=-f(x)$ が成り立つとき、 $f(x)$ を **奇関数** といい、$a_0=a_n=0$ となる。
