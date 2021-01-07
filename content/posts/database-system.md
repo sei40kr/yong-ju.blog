@@ -92,7 +92,7 @@ ACID 原則のうちの I に関わる概念である。
 | REPEATABLE READ | 読み取り対象のデータを常に読み取る | Yes | No | No | MySQL |
 | SERIALIZABLE | 直列化可能 (いかなる場合でも、それらのトランザクションを時間的重なりなく逐次実行した場合と同じ結果になる) | No | No | No | |
 
-<!-- TODO MySQL InnoDB のネクストキーロック, ギャップロックについて書く -->
+- MySQL + InnoDB のデフォルトでは REPEATABLE READ で動作するが、ネクストキーロック, ギャップロックという仕組みでファントムリードを回避する。
 
 <!-- TODO ビュー, 実体ビュー について書く -->
 
@@ -104,6 +104,7 @@ ACID 原則のうちの I に関わる概念である。
 
 ## 参考文献
 
+- Oracle Corporation, [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/), 2020
 - PostgreSQL グローバル開発グループ, [PostgreSQL 12.4 文書](https://www.postgresql.jp/document/12/html/), 2020
 - Wikipedia, [ACID](<https://ja.wikipedia.org/wiki/ACID_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E7%A7%91%E5%AD%A6)>)
 - Wikipedia, [MultiVersion Currency Control](https://ja.wikipedia.org/wiki/MultiVersion_Concurrency_Control)
