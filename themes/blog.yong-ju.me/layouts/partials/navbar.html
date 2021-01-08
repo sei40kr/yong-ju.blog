@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item{{ if .IsHome }} active{{ end }}">
+          <a class="nav-link" href="{{ relLangURL ""  }}">最近の投稿</a>
+        </li>
+
+        {{ with .Site.Taxonomies.tags }}
+          <li class="nav-item dropdown">
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+            >
+              タグからさがす
+            </a>
+            <div class="dropdown-menu">
+              {{ range $name, $items := . }}
+                <a class="dropdown-item" href="{{ .Page.Permalink }}"
+                  >{{ .Page.Title }}</a
+                >
+              {{ end }}
+            </div>
+          </li>
+        {{ end }}
+
+        {{ $currentPage := . }}
+        {{ range site.Menus.main }}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{{ .URL }}"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span class="bi-box-arrow-up-right"></span>
+              {{ .Name }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,11 @@
+.blog-main {
+  background: $white;
+  padding: $spacer * 2;
+
+  &-title {
+    @include font-size($h5-font-size);
+
+    font-family: $font-family-serif;
+    font-weight: bold;
+  }
+}

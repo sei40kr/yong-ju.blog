@@ -1,52 +1,36 @@
 {{ define "main" }}
-  <div class="main">
-    <!--_index.md-->
+  <main role="main" class="blog-main">
     {{ if not .IsHome }}
       {{ with .Title }}
-        <div>
-          <heading>{{ . }}</heading>
-        </div>
-      {{ end }}
-      {{ with .Content }}
-        <div>
-          <article>{{ . }}</article>
-        </div>
+        <h1 class="blog-main-title">{{ . }}</h1>
       {{ end }}
     {{ end }}
 
-    <!-- $paginator -->
-    {{ $p := .Pages }}
-    {{ if .IsHome }}
-      {{ $p = where site.RegularPages "Type" "in" site.Params.mainSections }}
-      {{ else if eq .Kind "taxonomy" }}
-      {{ $p = $p.ByTitle }}
+    {{ $pag := $.Paginator }}
+    {{ with $pag.Pages }}
+      <ul class="blog-list">
+        {{ range $pag.Pages }}
+          <li class="blog-list-item">
+            <a href="{{ .RelPermalink }}" title="{{ .Title }}">
+              <h3 class="blog-list-item-title">{{ .Title }}</h3>
+
+              {{ if site.Params.summary }}
+                <div class="blog-list-item-summary">
+                  {{ .Summary | plainify }}
+                </div>
+              {{ end }}
+
+              {{ with .Lastmod }}
+                <div class="blog-list-item-date">
+                  {{ .Format "2006/1/2" }}
+                </div>
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
     {{ end }}
-    {{ $paginator := .Paginate $p }}
+  </main>
 
-    <!-- list -->
-    {{ range $paginator.Pages }}
-      <div class="card">
-        <a href="{{ .RelPermalink }}" title="{{ .Title }}">
-          <h3 class="card__title">
-            {{ .Title }}
-          </h3>
-
-          {{ if site.Params.summary }}
-            <div class="card__summary">
-              {{ .Summary | plainify }}
-            </div>
-          {{ end }}
-
-          {{ with .Lastmod }}
-            <div class="card__date">
-              {{ .Format "2006/1/2" }}
-            </div>
-          {{ end }}
-        </a>
-      </div>
-    {{ end }}
-
-    <!-- pagination -->
-    {{ template "_internal/pagination.html" . }}
-  </div>
+  {{ partial "blog-pagination.html" . }}
 {{ end }}

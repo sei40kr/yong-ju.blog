@@ -1,0 +1,41 @@
+.blog-list {
+  list-style: none;
+  padding: 0;
+
+  &-item {
+    display: block;
+
+    & + & {
+      border-top: $border-width solid $border-color;
+      margin: map-get($spacers, 3) 0 0;
+      padding: map-get($spacers, 3) 0 0;
+    }
+
+    > a {
+      text-decoration: none;
+    }
+
+    &-title {
+      @include font-size($font-size-lg);
+
+      font-family: $font-family-serif;
+      font-weight: bold;
+    }
+
+    &-summary {
+      line-height: 1.5;
+      margin: map-get($spacers, 2) 0 0;
+    }
+
+    &-date {
+      @include font-size($font-size-sm);
+
+      color: $gray-600;
+      margin: map-get($spacers, 2) 0 0;
+    }
+  }
+
+  .blog-main-title + & {
+    margin-top: map-get($spacers, 4);
+  }
+}

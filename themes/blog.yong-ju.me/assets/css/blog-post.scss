@@ -1,0 +1,120 @@
+.blog-post {
+  &-date {
+    @include font-size($font-size-sm);
+
+    color: $gray-600;
+    margin: 0 0 map-get($spacers, 4);
+  }
+
+  &-title {
+    font-family: $font-family-serif;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0 0 map-get($spacers, 3);
+  }
+
+  &-tags {
+    display: inline-flex;
+
+    .badge {
+      @include font-size($font-size-sm);
+
+      margin: 0 0.5em 0 0;
+      padding: map-get($spacers, 1) map-get($spacers, 2);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.blog-post-content {
+  margin: map-get($spacers, 5) 0 0;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $font-family-serif;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 1.5em 0 1.75rem;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.9;
+
+    & + p {
+      margin-top: map-get($spacers, 4);
+    }
+  }
+
+  blockquote {
+    @extend .blockquote;
+    @include font-size($font-size-base);
+
+    border-left: 3px solid #000;
+    margin: map-get($spacers, 4) 0;
+    padding: map-get($spacers, 3) 0 map-get($spacers, 3)
+      calc(#{$spacer} * 2 - 3px);
+  }
+
+  > blockquote {
+    margin-left: $spacer * -2;
+    margin-right: $spacer * -2;
+    padding-right: $spacer * 2;
+  }
+
+  dl {
+    line-height: 1.9;
+    margin: map-get($spacers, 4) 0;
+  }
+
+  dd {
+    padding: 0 0 0 ($spacer * 2);
+  }
+
+  > ol,
+  > ul {
+    line-height: 1.9;
+    margin: map-get($spacers, 4) 0;
+    padding: 0 0 0 1.35rem;
+
+    // stylelint-disable no-descending-specificity
+    ol,
+    ul {
+      padding: 0 0 0 map-get($spacers, 4);
+    }
+    // stylelint-enable no-descending-specificity
+  }
+
+  table {
+    @extend .table;
+  }
+
+  hr {
+    background: $border-color;
+    border: 0;
+    height: $border-width;
+    margin: map-get($spacers, 5) 0;
+  }
+
+  .highlight {
+    background: $gray-100;
+    margin: map-get($spacers, 4) (-$spacer * 2);
+
+    pre {
+      background: inherit;
+      padding: $spacer * 2;
+    }
+  }
+
+  .katex-display {
+    margin: map-get($spacers, 4) 0;
+  }
+}

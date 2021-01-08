@@ -1,28 +1,30 @@
-.header {
+.blog-header {
   background: #148 url("/img/header-bg.png");
-  padding: $padding-xl;
+  color: $gray-400;
+  padding: map-get($spacers, 5) 0;
   text-align: center;
 
-  // For Retina display
   @media screen and (min-resolution: 2dppx) {
     background-image: url("/img/header-bg@2x.png");
     background-size: 512px 512px;
   }
 
-  &__title {
-    font-size: $font-size-xl;
+  &-title {
+    @include font-size($h2-font-size);
+
     font-weight: bold;
 
     a {
-      color: #fff;
+      color: $gray-100;
       text-decoration: none;
+    }
+
+    a:hover {
+      color: $gray-100;
     }
   }
 
-  &__subtitle {
-    color: #ddd;
-    font-size: $font-size-xs;
-    line-height: 1.5;
-    margin: $margin-m 0 0;
+  &-subtitle {
+    margin: map-get($spacers, 3) 0 0;
   }
 }

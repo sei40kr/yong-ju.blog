@@ -1,33 +1,32 @@
+/// Include parts of Bootstrap
+
+@import "../bootstrap-4.5.0/scss/functions";
 @import "variables";
-@import "fonts";
+@import "../bootstrap-4.5.0/scss/variables";
+@import "../bootstrap-4.5.0/scss/mixins";
 
-@import "reset";
+@import "../bootstrap-4.5.0/scss/reboot";
 
-@import "components/card";
-@import "components/content";
-@import "components/footer";
-@import "components/footnotes";
-@import "components/header";
-@import "components/heading";
-@import "components/highlight";
-@import "components/main";
-@import "components/menu";
-@import "components/pagination";
+@import "../bootstrap-4.5.0/scss/badge";
+@import "../bootstrap-4.5.0/scss/buttons";
+@import "../bootstrap-4.5.0/scss/dropdown";
+@import "../bootstrap-4.5.0/scss/grid";
+@import "../bootstrap-4.5.0/scss/jumbotron";
+@import "../bootstrap-4.5.0/scss/nav";
+@import "../bootstrap-4.5.0/scss/navbar";
+@import "../bootstrap-4.5.0/scss/pagination";
+@import "../bootstrap-4.5.0/scss/tables";
+@import "../bootstrap-4.5.0/scss/type";
+@import "../bootstrap-4.5.0/scss/utilities/background";
+@import "../bootstrap-4.5.0/scss/utilities/position";
 
+@import "blog-footer";
+@import "blog-header";
+@import "blog-list";
+@import "blog-main";
+@import "blog-pagination";
+@import "blog-post";
+@import "blog-sidebar";
+@import "main";
+@import "navbar";
 @import "syntax";
-
-body {
-  background: $background-color;
-  color: $text-color;
-  font-size: 16px;
-  font-family: Roboto, sans-serif;
-}
-
-a {
-  color: #445;
-
-  &:hover {
-    color: #aab;
-    text-decoration: none;
-  }
-}

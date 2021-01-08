@@ -1,22 +1,5 @@
 {{ define "main" }}
-  <div class="main">
-    <div class="heading">
-      <span class="heading__date">
-        {{ dateFormat "2006年01月02日" .Lastmod }}に更新
-      </span>
-      <h1 class="heading__title">{{ .Title }}</h1>
-
-      {{ with .GetTerms "tags" }}
-        <ul class="heading__tags">
-          {{ range . }}
-            <li class="heading__tag">
-              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-            </li>
-          {{ end }}
-        </ul>
-      {{ end }}
-    </div>
-
-    {{ with .Content }}<div class="content">{{ . }}</div>{{ end }}
-  </div>
+  <main role="main" class="blog-main">
+    {{ partial "blog-post.html" . }}
+  </main>
 {{ end }}

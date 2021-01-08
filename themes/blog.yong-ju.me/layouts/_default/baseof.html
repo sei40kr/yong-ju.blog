@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html>
-  {{- partial "head.html" . -}}
+<html lang="ja">
+  {{ partial "head.html" . }}
 
   <body>
-    {{- partial "header.html" . -}}
+    {{ partial "blog-header.html" . }}
 
-    <div id="content">
-      {{- block "main" . }}{{- end }}
+    <div class="sticky-top">
+      {{ partial "navbar.html" . }}
     </div>
 
-    {{- partial "footer.html" . -}}
+    <div class="main">
+      <div class="container">
+        {{ if .IsPage }}
+          <div class="row">
+            <div class="col-md-9">
+              {{ block "main" . }}{{ end }}
+            </div>
+
+            <div class="col-md-3">
+              {{ partial "blog-sidebar.html" . }}
+            </div>
+          </div>
+          {{ else }}
+          {{ block "main" . }}{{ end }}
+        {{ end }}
+      </div>
+    </div>
+
+    {{ partial "blog-footer.html" . }}
+
+    {{ partial "foot.html" . }}
   </body>
 </html>
