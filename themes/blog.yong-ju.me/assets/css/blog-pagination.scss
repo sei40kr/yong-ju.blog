@@ -3,17 +3,4 @@
   display: flex;
   justify-content: space-between;
   margin: map-get($spacers, 4) 0 0;
-
-  .btn {
-    display: block;
-
-    .bi-arrow-left,
-    .bi-arrow-right {
-      display: inline-block;
-      font-size: 1.25em;
-      line-height: 1;
-      position: relative;
-      top: -0.1em;
-    }
-  }
 }
