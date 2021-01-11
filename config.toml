@@ -18,6 +18,6 @@ summary = true
 [menu]
 
   [[menu.main]]
-    name = "Portfolio"
+    name = "ポートフォリオ"
     url = "https://yong-ju.me"
     weight = 10
