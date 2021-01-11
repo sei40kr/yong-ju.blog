@@ -70,9 +70,12 @@
     padding-right: $spacer * 2;
   }
 
+  > dl {
+    margin: map-get($spacers, 4) 0;
+  }
+
   dl {
     line-height: 1.9;
-    margin: map-get($spacers, 4) 0;
   }
 
   dd {
