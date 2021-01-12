@@ -1,14 +1,6 @@
 .blog-sidebar {
   padding: ($spacer * 2) ($spacer * 0.5);
 
-  @supports (position: sticky) {
-    $navbar-height: $navbar-padding-y + $nav-link-padding-y + $font-size-base *
-      $line-height-base;
-    position: sticky;
-    top: $navbar-height;
-    z-index: $zindex-sticky;
-  }
-
   &-toc {
     @include font-size($font-size-sm);
 

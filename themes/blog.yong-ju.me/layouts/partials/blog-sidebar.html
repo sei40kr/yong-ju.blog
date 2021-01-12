@@ -1,7 +1,9 @@
-<aside class="blog-sidebar">
-  <nav class="blog-sidebar-toc">
-    {{ if .IsPage }}
-      {{ .TableOfContents }}
-    {{ end }}
-  </nav>
-</aside>
+<div class="sticky-top">
+  <aside class="blog-sidebar">
+    <nav class="blog-sidebar-toc">
+      {{ if .IsPage }}
+        {{ .TableOfContents }}
+      {{ end }}
+    </nav>
+  </aside>
+</div>
