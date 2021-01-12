@@ -156,3 +156,14 @@ RAC (Real Application Clusters, シェアード・ディスク)
 <!-- TODO Two Phase Commit について書く -->
 <!-- TODO 分散メッセージングについて書く -->
 <!-- TODO 基本的な用語の解説を書く -->
+
+## 参考文献
+
+- [グロッシュの法則](https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%AD%E3%83%83%E3%82%B7%E3%83%A5%E3%81%AE%E6%B3%95%E5%89%87)
+- [分散コンピューティングの落とし穴](https://ja.wikipedia.org/wiki/%E5%88%86%E6%95%A3%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4)
+- [透過性 (情報工学)](https://ja.wikipedia.org/wiki/%E9%80%8F%E9%81%8E%E6%80%A7_(%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6))
+- [分割 (データベース)](https://ja.wikipedia.org/wiki/%E5%88%86%E5%89%B2_(%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9))
+- [レプリケーション](https://ja.wikipedia.org/wiki/%E3%83%AC%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3)
+- [Quorum](https://ja.wikipedia.org/wiki/Quorum)
+- [シェアード・ナッシング・アーキテクチャ](https://ja.wikipedia.org/wiki/%E3%82%B7%E3%82%A7%E3%82%A2%E3%83%BC%E3%83%89%E3%83%BB%E3%83%8A%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0%E3%83%BB%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3)
+- [コンシステントハッシュ法](https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%82%B7%E3%82%B9%E3%83%86%E3%83%B3%E3%83%88%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E6%B3%95)
