@@ -15,11 +15,12 @@
 
   &-tags {
     display: inline-flex;
+    flex-wrap: wrap;
 
     .badge {
       @include font-size($font-size-sm);
 
-      margin: 0 0.5em 0 0;
+      margin: map-get($spacers, 1) 0.5em 0 0;
       padding: map-get($spacers, 1) map-get($spacers, 2);
       text-decoration: none;
 
