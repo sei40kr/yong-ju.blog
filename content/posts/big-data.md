@@ -94,3 +94,13 @@ BI で使われる一般的な機能を以下に示す。
 
 探索的データ探索 (exploratory data analysis)
 : データを見ながらその意味を読み取ろうとする
+
+## 参考文献
+
+- Wikipedia, [Fact table](https://en.wikipedia.org/wiki/Fact_table)
+- Wikipedia, [Dimension (data warehouse)](https://en.wikipedia.org/wiki/Dimension_(data_warehouse))
+- Wikipedia, [データレイク](https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AC%E3%82%A4%E3%82%AF)
+- Wikipedia, [データウェアハウス](https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%8F%E3%82%A6%E3%82%B9)
+- Wikipedia, [データマート](https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E3%83%9E%E3%83%BC%E3%83%88)
+- Wikipedia, [Extract/Transform/Load](https://ja.wikipedia.org/wiki/Extract/Transform/Load)
+- 西田 圭介, ビッグデータを支える技術, 2017
