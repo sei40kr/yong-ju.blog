@@ -6,6 +6,7 @@ tags: ["勉強ノート", "分散システム", "データベース"]
 
 ## 前提知識
 
+- [フォールトトレラントシステム]({{< ref "fault-torelant-system" >}})
 - [データベースシステム]({{< ref "database-system" >}})
 - [分散システム]({{< ref "distributed-system" >}})
 
