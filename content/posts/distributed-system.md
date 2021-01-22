@@ -244,20 +244,20 @@ RAC (Real Application Clusters, シェアード・ディスク)
 : リバースプロキシ (reverse proxy) として機能する。
 
 ネットワークロードバランサ
-: L4 レイヤーで NAT (= Network Address Translator) として機能する。
+: L4 (トランスポート層) レイヤーで NAT (= Network Address Translator) として機能する。
 宛先 IP アドレスを選択されたワーカーの IP アドレスに書き換える。
 
 ---
 
 ワーカーのヘルスチェックには以下のようなものがある。
 
-L3 チェック
+L3 (ネットワーク層) チェック
 : ICMP (= Internet Control Message Protocol) echo リクエストを送信し、echo リプライが返ってくるかを確認する。
 
-L4 チェック
+L4 (トランスポート層) チェック
 : TCP ハンドシェイクを行う。
 
-L5 チェック
+L5 (セッション層) チェック
 : アプリケーションにリクエストを送信し、レスポンスを確認する。
 
 ---
