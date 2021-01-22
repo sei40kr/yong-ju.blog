@@ -59,6 +59,9 @@ $$=\frac{1}{(1-並列化可能な部分の割合)+\frac{並列化可能な部分
 分断耐性 (Partition-tolerance)
 : システムは任意の通信障害などによるメッセージ損失に対し、継続して動作する性質。
 
+CP 型は基幹系システムや勘定系システムなど、**ミッションクリティカル (mission critical)** な SoR (System of Records) 領域に適している。
+AP 型は UX (= User eXperience, ユーザ体験) や可用性を重視する SoE (System of Engagement) 領域に適している。
+
 ## BASE 特性
 
 BASE 特性とは前述の CAP 定理の制約の下、高可用性を達成するシステムの特性である。
