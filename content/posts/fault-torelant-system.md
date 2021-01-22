@@ -23,7 +23,7 @@ RAS はコンピュータシステムに関する代表的な指標の頭文字�
 
 $$A=\frac{\text{MTBF}}{\text{MTBF}+\text{MTTR}}$$
 
-RAS に完全性 (Integrity) と 気密性 (Security) を加えた RASIS というものも存在するが、ここでは解説しない。
+RAS に完全性 (Integrity) と 機密性 (Security) を加えた RASIS というものも存在するが、ここでは解説しない。
 
 <!-- TODO RAS の要素の説明を見直す -->
 
