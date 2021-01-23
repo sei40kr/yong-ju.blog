@@ -69,21 +69,24 @@ $$\text{F 値}=\frac{2}{\frac{1}{再現率}+\frac{1}{適合率}}$$
 - 日本語の場合は、単語をスペースで区切る (わかち書き) の習慣がないため、**解析用の辞書が必須**となる。
 - **適合率に優れるが、再現率に劣る。**
 
-日本語の代表的な形態素解析エンジンとして、以下の 3 つがある。
-
-- [MeCab](https://taku910.github.io/mecab)
-- [Kuromoji](https://www.atilika.com/ja/kuromoji)
-- [Sudachi](https://github.com/WorksApplications/Sudachi)
+日本語の代表的な形態素解析エンジンとして、[MeCab](https://taku910.github.io/mecab),
+[Kuromoji](https://www.atilika.com/ja/kuromoji),
+[Sudachi](https://github.com/WorksApplications/Sudachi) などがある。
 
 ## 単語の表記ゆれの吸収
 
 ### ステミング (stemming, lemmatisation)
 
-形態素解析で抽出した単語の語形を辞書系にする (ex. 会った → 会う, met -> meet)
+形態素解析で抽出した単語の語形を辞書系にする (ex. 会った → 会う, met → meet)
 
-### シノニム (synonym)
+### 検索シノニム (synonym)
 
-同義の単語を予め辞書登録しておく (ex. 地下ドル → 地下アイドル)
+予め辞書登録した同義語に基づいて単語を変換する (ex. 地下ドル → 地下アイドル)
+
+---
+
+日本語の形態素解析や検索シノニム, ステミングで用いられる代表的な辞書に [NEologd](https://github.com/neologd/mecab-ipadic-neologd) がある。
+週 2 回で更新され、新語や固有名詞に強いという特徴がある。
 
 ## ランキング指標
 
