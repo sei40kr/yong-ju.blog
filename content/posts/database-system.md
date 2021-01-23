@@ -248,6 +248,18 @@ B-tree, B+-tree と比べ、空間計算量, 時間計算量に優れるが、�
 : MySQL + InnoDB では強制的に主キーから構成されるクラスタインデックスが作成される。
 : PostgreSQL では `CLUSTER` コマンドにより実際のデータを並び替えることができる。
 
+## アプリケーション側の実装
+
+### コネクションプール (connection pool)
+
+コネクションプールはデータベースコネクションのキャッシュである。
+確立したコネクションをコネクションプールに保存して再利用する。
+これにより、コネクションの確立に必要なリソースや時間を節約することができる。
+
+特にコネクション単位でプロセスを作成する Oracle では有用である。
+
+コネクションプールのライブラリには Spring Boot にデフォルトで含まれている [HikariCP](https://github.com/brettwooldridge/HikariCP) (Java) などがある。
+
 <!-- TODO ビュー, 実体ビュー について書く -->
 
 <!-- TODO テーブル結合について書く -->
@@ -271,4 +283,5 @@ B-tree, B+-tree と比べ、空間計算量, 時間計算量に優れるが、�
 - Wikipedia, [索引 (データベース)](<https://ja.wikipedia.org/wiki/%E7%B4%A2%E5%BC%95_(%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9)>)
 - Wikipedia, [B 木](https://ja.wikipedia.org/wiki/B%E6%9C%A8)
 - Wikipedia, [ハッシュテーブル](https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%83%E3%82%B7%E3%83%A5%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB)
+- Wikipedia, [Connection pool](https://en.wikipedia.org/wiki/Connection_pool)
 - saiya_moebius, [RDBMS in Action](https://speakerdeck.com/saiya_moebius/rdbms-in-action), 2019
