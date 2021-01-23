@@ -102,16 +102,16 @@ $$\text{tf-idf}=\frac{文書中の単語の出現回数}{文書中の全ての�
 <!-- TODO Okapi BM25 について書く -->
 <!-- TODO nDCG について書く -->
 
-## 有名な全文検索エンジン
+## 有名な全文検索システム
 
 [Apache Lucene](https://lucene.apache.org)
 : Java 製の OSS 検索**ライブラリ**。
 
+[Elasticsearch](https://www.elastic.co/jp/elasticsearch)
+: Lucene ベースの OSS 全文検索システム。Elastic 社が中心となり開発している。
+
 [Apache Solr](https://lucene.apache.org/solr)
 : Lucene ベースの OSS 全文検索システム。
-
-[Elasticsearch](https://www.elastic.co/jp/elasticsearch)
-: Lucene ベースの OSS 全文検索システム。Elastic 社が中心となり開発されている。
 
 [Algolia](https://www.algolia.com)
 : BaaS の全文検索システム。API 経由で利用できる。
