@@ -1,6 +1,14 @@
 <header class="blog-header">
-  <div class="blog-header-title">
-    <a href="{{ relURL "/" }}">{{ site.Title }}</a>
+  <div class="blog-header-logo">
+    <a href="{{ relURL "/" }}" title="{{ site.Title }}">
+      <img
+        src="{{ relURL "/img/logo.png" }}"
+        srcset="
+          {{ relURL "/img/logo.png" }} 1x,
+          {{ relURL "/img/logo@2x.png" }} 2x
+        "
+      />
+    </a>
   </div>
 
   {{ with site.Params.subtitle }}
