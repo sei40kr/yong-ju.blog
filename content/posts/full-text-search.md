@@ -24,13 +24,21 @@ tags: ["データベース", "全文検索"]
 ## 転置インデックス
 
 インデックス型検索のインデックスには**転置インデックス**が使われる。
-転置インデックスの構造には以下の 2 通りがある。
+転置インデックスは、単語に対してそれを含む文書集合を保持するデータ構造である。
 
-DAAT (Document At A Time)
-: 各索引文字列に対してその索引文字列を含む文書のリストをもつ
+## 並行処理
 
-TAAT (Term At A Time)
-: 各文書に対してその文書に含まれる索引文字列のリストをもつ
+検索処理を高速に行うには、転置インデックスを複数のノードに分散配置し、並列で検索を行う。
+
+転置インデックスの分割 (パーティショニング) 方法には以下の 2 通りがある。
+
+文書分割方式 (document partitioning)
+: 文書単位で分割する
+: 文書単位で検索する → **DAAT (Document At A Time)**
+
+単語分割方式 (term partitioning)
+: 単語単位で分割する
+: 単語単位で検索する → **TAAT (Term At A Time)**
 
 ## 検索評価指標
 
@@ -128,6 +136,7 @@ $$\text{tf-idf}=\frac{文書中の単語の出現回数}{文書中の全ての�
 - Wikipedia, [文字列検索](https://ja.wikipedia.org/wiki/%E6%96%87%E5%AD%97%E5%88%97%E6%8E%A2%E7%B4%A2)
 - Wikipedia, [tf-idf](https://ja.wikipedia.org/wiki/Tf-idf)
 - Wikipedia, [Okapi BM25](https://ja.wikipedia.org/wiki/Okapi_BM25)
+- 山田 浩之, 検索エンジン自作入門～手を動かしながら見渡す検索の舞台裏, 2014
 - rilmayer, 図書館情報学オタクと学ぶ 検索エンジニア入門, 2020
 - 守谷 純之介, [検索結果の品質向上 Elasticsearch 入門](https://speakerdeck.com/rtechkouhou/jian-suo-jie-guo-falsepin-zhi-xiang-shang-elasticsearchru-men), 2019
 - 高岡 一馬, [Java でつくる本格形態素解析器](https://www.slideshare.net/WorksApplications/java-82794239), 2017
