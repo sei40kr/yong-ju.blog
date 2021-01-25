@@ -86,15 +86,20 @@ $$\text{F 値}=\frac{2}{\frac{1}{再現率}+\frac{1}{適合率}}$$
 - [Kuromoji](https://www.atilika.com/ja/kuromoji)
 - [Sudachi](https://github.com/WorksApplications/Sudachi)
 
-## 単語の表記ゆれの吸収
+## 正規化
+
+### シノニム (synonym)
+
+予め辞書登録した同義語に基づいて単語を変換する (ex. 地下ドル → 地下アイドル)
+
+### ストップワード (stop word)
+
+ストップワードとは検索の対象外となる単語のことであり、大半の文書に含まれている単語から構成される。
+(ex. です, ます)
 
 ### ステミング (stemming, lemmatisation)
 
 形態素解析で抽出した単語の語形を辞書系にする (ex. 会った → 会う, met → meet)
-
-### 検索シノニム (synonym)
-
-予め辞書登録した同義語に基づいて単語を変換する (ex. 地下ドル → 地下アイドル)
 
 ---
 
