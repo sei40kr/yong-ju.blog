@@ -99,10 +99,10 @@ RAID 2 以降は 3 台以上のハードディスクで構成される。
 
 ## 参考文献
 
-- [RASIS](https://ja.wikipedia.org/wiki/RASIS)
-- [冗長化](https://ja.wikipedia.org/wiki/%E5%86%97%E9%95%B7%E5%8C%96)
-- [単一障害点](https://ja.wikipedia.org/wiki/%E5%8D%98%E4%B8%80%E9%9A%9C%E5%AE%B3%E7%82%B9)
-- [RAID](https://ja.wikipedia.org/wiki/RAID)
-- [無停電電源装置](https://ja.wikipedia.org/wiki/%E7%84%A1%E5%81%9C%E9%9B%BB%E9%9B%BB%E6%BA%90%E8%A3%85%E7%BD%AE)
-- [バックアップ](https://ja.wikipedia.org/wiki/%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97)
-- [フェイルオーバー](https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%82%A4%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC)
+- Wikipedia, [RASIS](https://ja.wikipedia.org/wiki/RASIS)
+- Wikipedia, [冗長化](https://ja.wikipedia.org/wiki/%E5%86%97%E9%95%B7%E5%8C%96)
+- Wikipedia, [単一障害点](https://ja.wikipedia.org/wiki/%E5%8D%98%E4%B8%80%E9%9A%9C%E5%AE%B3%E7%82%B9)
+- Wikipedia, [RAID](https://ja.wikipedia.org/wiki/RAID)
+- Wikipedia, [無停電電源装置](https://ja.wikipedia.org/wiki/%E7%84%A1%E5%81%9C%E9%9B%BB%E9%9B%BB%E6%BA%90%E8%A3%85%E7%BD%AE)
+- Wikipedia, [バックアップ](https://ja.wikipedia.org/wiki/%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97)
+- Wikipedia, [フェイルオーバー](https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%82%A4%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC)
