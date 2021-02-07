@@ -157,3 +157,4 @@ GDP はインフレによる価格変動によっても変動してしまう。
 - Wikipedia, [潜在産出量](https://ja.wikipedia.org/wiki/%E6%BD%9C%E5%9C%A8%E7%94%A3%E5%87%BA%E9%87%8F)
 - Wikipedia, [セイの法則](https://ja.wikipedia.org/wiki/%E3%82%BB%E3%82%A4%E3%81%AE%E6%B3%95%E5%89%87)
 - Wikipedia, [新古典派経済学](https://ja.wikipedia.org/wiki/%E6%96%B0%E5%8F%A4%E5%85%B8%E6%B4%BE%E7%B5%8C%E6%B8%88%E5%AD%A6)
+- Wikipedia, [ケインズ経済学](https://ja.wikipedia.org/wiki/%E3%82%B1%E3%82%A4%E3%83%B3%E3%82%BA%E7%B5%8C%E6%B8%88%E5%AD%A6)
