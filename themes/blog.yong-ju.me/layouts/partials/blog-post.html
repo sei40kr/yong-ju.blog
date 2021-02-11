@@ -21,4 +21,8 @@
   {{ if .Content }}
     <div class="blog-post-content">{{ .Content }}</div>
   {{ end }}
+
+  <div class="blog-post-comment">
+    {{ template "_internal/disqus.html" . }}
+  </div>
 </div>
