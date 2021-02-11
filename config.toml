@@ -1,6 +1,7 @@
 title = "よんログ"
 author = "Seong Yong-ju"
 DefaultContentLanguage = "ja"
+disqusShortname = "blog-yong-ju-me"
 enableInlineShortcodes = true
 hasCJKLanguage = true
 # prevent build failures when using Hugo's Instagram shortcode due to deprecated Instagram API.
