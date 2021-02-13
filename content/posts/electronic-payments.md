@@ -4,6 +4,12 @@ date: 2021-02-13T13:12:21+09:00
 tags: ["勉強ノート"]
 ---
 
+## 強制通用力
+
+強制通用力とは、法律が貨幣に対して付与する、決済の最終手段として認められる効力のことである。
+
+強制通用力をもった貨幣のことを**法定通貨**という。
+
 ## 電子マネーの分類
 
 カード型電子マネー
@@ -49,7 +55,22 @@ QR コード・バーコード決済は更に下記の 2 つに分類できる�
 <!-- TODO 手数料の比較について書く -->
 <!-- TODO スーパーアプリについて書く -->
 
+## 暗号通貨
+
+暗号通貨とは、暗号理論を用いて取引の安全性を確保し、その通貨の発行を統制する電子マネーである。
+
+無担保の暗号通貨は価値の裏付けがないため、通貨自体の価格は安定しない。
+貴金属などのコモディティや法定通貨などを担保としてその価値を裏付ける暗号通貨を**ステーブルコイン (stable coin)** という。
+
+## CBDC (Central Bank Digital Currency, 中央銀行発行デジタル通貨)
+
+CBDC とは、中央銀行が管理する、政府や金融当局または法律によって法定通貨として認められた電子マネーのことである。
+
 ## 参考文献
 
+- Wikipedia, [強制通用力](https://ja.wikipedia.org/wiki/%E5%BC%B7%E5%88%B6%E9%80%9A%E7%94%A8%E5%8A%9B)
 - Wikipedia, [電子決済](https://ja.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%B1%BA%E6%B8%88)
 - Wikipedia, [電子マネー](https://ja.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E3%83%9E%E3%83%8D%E3%83%BC)
+- Wikipedia, [暗号通貨](https://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E9%80%9A%E8%B2%A8)
+- Wikipedia, [Stablecoin](https://en.wikipedia.org/wiki/Stablecoin)
+- Wikipedia, [中央銀行発行デジタル通貨](https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%A4%AE%E9%8A%80%E8%A1%8C%E7%99%BA%E8%A1%8C%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB%E9%80%9A%E8%B2%A8)
