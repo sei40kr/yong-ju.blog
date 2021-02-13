@@ -76,22 +76,22 @@ IAB (Internet Architecture Board) によって **OpenRTB** というプロトコ
 
 ## 広告の効果を測る指標
 
-インプレッション回数
+インプレッション (impression, imp) 回数
 : 広告が表示された回数
 
-リーチ
+リーチ (reach)
 : 広告を伝達した閲覧者の数
 
 クリック回数
 : 広告がクリックされた回数
 
-コンバージョン回数
+コンバージョン (conversion) 回数
 : 成果 (ex. 会員登録, 資料請求, 商品の購入) に繋がった回数
 
-CTR
+CTR (Click Through Rate)
 : インプレッションに対するクリック回数の割合
 
-CVR
+CVR (ConVersion Rate)
 : クリック回数に対するコンバージョン回数の割合
 
 CPM (Cost Per Mile)
