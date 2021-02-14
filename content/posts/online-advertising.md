@@ -55,9 +55,9 @@ Safari は ITP (= Intelligent Tracking Prevention) は 3rd Party Cookie を利�
 クリック報酬型
 : 広告がクリックされた回数に対して課金。
 
-## RTB (= Real-Time Bidding, リアルタイムビディング)
+## RTB
 
-広告スペースにどの広告を出すかを、広告の表示毎にオークションを行って決定する仕組み、またはそのためのプロトコル。
+**RTB(= Real-Time Bidding, リアルタイムビディング)** は広告スペースにどの広告を出すかを、広告の表示毎にオークションを行って決定する仕組み、またはそのためのプロトコルのことである。
 IAB (Internet Architecture Board) によって **OpenRTB** というプロトコルの標準仕様が定められている。
 
 広告スペースのオークションは、広告配信媒体の利得を最大化する **SSP (= Supply-Side Platform)** と、広告主の利得を最大化する **DSP (= Demand-Side Platform)** が RTB を使って取引することで行われる。

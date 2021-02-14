@@ -45,9 +45,9 @@ UPS (Uninterruptible Power Supply, 無停電電源装置)
 
 ## データの冗長化
 
-### RAID (Redundant Arrays of Inexpensive Disks)
+### RAID
 
-RAID は複数台のハードディスクをあかたも 1 台のハードディスクとして運用し、冗長性を向上させる技術のことである。
+**RAID (Redundant Arrays of Inexpensive Disks)** は複数台のハードディスクをあかたも 1 台のハードディスクとして運用し、冗長性を向上させる技術のことである。
 
 RAID におけるハードディスクの管理方法には以下の 2 つが存在する。
 
