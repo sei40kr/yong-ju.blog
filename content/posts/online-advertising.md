@@ -131,5 +131,5 @@ viewable impression 問題
 - Wikipedia, [検索連動型広告](https://ja.wikipedia.org/wiki/%E6%A4%9C%E7%B4%A2%E9%80%A3%E5%8B%95%E5%9E%8B%E5%BA%83%E5%91%8A)
 - Wikipedia, [アドネットワーク](https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%89%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
 - Wikipedia, [リアルタイムビディング](https://ja.wikipedia.org/wiki/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%93%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)
-- Wikipedia, [Supply-side_platform](https://en.wikipedia.org/wiki/Supply-side_platform)
-- Wikipedia, [Demand-side_platform](https://en.wikipedia.org/wiki/Demand-side_platform)
+- Wikipedia, [Supply-side platform](https://en.wikipedia.org/wiki/Supply-side_platform)
+- Wikipedia, [Demand-side platform](https://en.wikipedia.org/wiki/Demand-side_platform)
