@@ -1,28 +1,11 @@
-<div class="blog-post">
-  <header class="blog-post__header">
-    {{ with .Lastmod }}
-      <span class="blog-post__date">{{ .Format "2006年01月02日" }}に更新</span>
-    {{ end }}
-    <h1 class="blog-post__title">{{ .Title }}</h1>
-
-    <div class="blog-post__meta">
-      {{ with .GetTerms "tags" }}
-        <div class="blog-post__tags">
-          {{ range . }}
-            <a class="badge badge-light" href="{{ .RelPermalink }}">
-              {{ .LinkTitle }}
-            </a>
-          {{ end }}
-        </div>
-      {{ end }}
-    </div>
-  </header>
+<article class="blog-post">
+  {{ partial "blog-post-header.html" . }}
 
   {{ if .Content }}
-    <div class="blog-post__content">{{ .Content }}</div>
+    <section class="blog-post__content">{{ .Content }}</section>
   {{ end }}
 
-  <div class="blog-post__comment">
+  <section class="blog-post__comment">
     {{ template "_internal/disqus.html" . }}
-  </div>
-</div>
+  </section>
+</article>
