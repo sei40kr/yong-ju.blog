@@ -2,7 +2,7 @@
   {{ if gt .TotalPages 1 }}
     <nav class="blog-pagination">
       <a
-        class="btn btn-outline-dark{{ if not .HasPrev }} disabled{{ end }}"
+        class="btn btn-outline-secondary{{ if not .HasPrev }} disabled{{ end }}"
         {{ if .HasPrev }}
           href="{{ .Prev.URL }}"
           title="前のページ"
@@ -16,7 +16,7 @@
       <div>{{ .PageNumber }} / {{ .TotalPages }} ページ</div>
 
       <a
-        class="btn btn-outline-dark{{ if not .HasNext }} disabled{{ end }}"
+        class="btn btn-outline-secondary{{ if not .HasNext }} disabled{{ end }}"
         {{ if .HasNext }}
           href="{{ .Next.URL }}"
           title="次のページ"

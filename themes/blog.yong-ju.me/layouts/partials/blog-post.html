@@ -1,13 +1,13 @@
 <div class="blog-post">
-  <header class="blog-post-header">
+  <header class="blog-post__header">
     {{ with .Lastmod }}
-      <span class="blog-post-date">{{ .Format "2006年01月02日" }}に更新</span>
+      <span class="blog-post__date">{{ .Format "2006年01月02日" }}に更新</span>
     {{ end }}
-    <h1 class="blog-post-title">{{ .Title }}</h1>
+    <h1 class="blog-post__title">{{ .Title }}</h1>
 
-    <div class="blog-post-meta">
+    <div class="blog-post__meta">
       {{ with .GetTerms "tags" }}
-        <div class="blog-post-tags">
+        <div class="blog-post__tags">
           {{ range . }}
             <a class="badge badge-light" href="{{ .RelPermalink }}">
               {{ .LinkTitle }}
@@ -19,10 +19,10 @@
   </header>
 
   {{ if .Content }}
-    <div class="blog-post-content">{{ .Content }}</div>
+    <div class="blog-post__content">{{ .Content }}</div>
   {{ end }}
 
-  <div class="blog-post-comment">
+  <div class="blog-post__comment">
     {{ template "_internal/disqus.html" . }}
   </div>
 </div>

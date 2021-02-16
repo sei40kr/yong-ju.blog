@@ -2,34 +2,12 @@
   <main role="main" class="blog-main">
     {{ if not .IsHome }}
       {{ with .Title }}
-        <h1 class="blog-main-title">{{ . }}</h1>
+        <h1 class="blog-main__title">{{ . }}</h1>
       {{ end }}
     {{ end }}
 
     {{ $pag := $.Paginator }}
-    {{ with $pag.Pages }}
-      <ul class="blog-list">
-        {{ range $pag.Pages }}
-          <li class="blog-list-item">
-            <a href="{{ .RelPermalink }}" title="{{ .Title }}">
-              <h3 class="blog-list-item-title">{{ .Title }}</h3>
-
-              {{ if site.Params.summary }}
-                <div class="blog-list-item-summary">
-                  {{ .Summary | plainify }}
-                </div>
-              {{ end }}
-
-              {{ with .Lastmod }}
-                <div class="blog-list-item-date">
-                  {{ .Format "2006/1/2" }}
-                </div>
-              {{ end }}
-            </a>
-          </li>
-        {{ end }}
-      </ul>
-    {{ end }}
+    {{ partial "blog-post-list.html" $pag.Pages }}
   </main>
 
   {{ partial "blog-pagination.html" . }}

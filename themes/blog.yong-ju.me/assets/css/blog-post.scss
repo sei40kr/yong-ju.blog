@@ -1,19 +1,19 @@
 .blog-post {
-  &-date {
+  &__date {
     @include font-size($font-size-sm);
 
     color: $gray-600;
     margin: 0 0 map-get($spacers, 4);
   }
 
-  &-title {
+  &__title {
     font-family: $font-family-serif;
     font-weight: bold;
     line-height: 1.5;
     margin: 0 0 map-get($spacers, 3);
   }
 
-  &-tags {
+  &__tags {
     display: inline-flex;
     flex-wrap: wrap;
 
@@ -31,7 +31,7 @@
   }
 }
 
-.blog-post-content {
+.blog-post__content {
   margin: map-get($spacers, 5) 0 0;
 
   h1,

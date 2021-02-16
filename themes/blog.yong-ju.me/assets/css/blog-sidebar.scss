@@ -1,7 +1,13 @@
 .blog-sidebar {
+  display: none;
+  margin: 0 0 0 map-get($spacers, 3);
   padding: ($spacer * 2) ($spacer * 0.5);
 
-  &-toc {
+  @include media-breakpoint-up(sm) {
+    display: block;
+  }
+
+  &__toc {
     @include font-size($font-size-sm);
 
     line-height: 1.9;

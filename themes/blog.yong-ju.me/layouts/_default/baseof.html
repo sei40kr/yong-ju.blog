@@ -5,12 +5,12 @@
   <body>
     {{ partial "blog-header.html" . }}
 
-    {{ partial "navbar.html" . }}
+    {{ partial "blog-navbar.html" . }}
 
     <div class="main">
       <div class="container">
         {{ if .IsPage }}
-          <div class="row">
+          <div class="row no-gutters">
             <div class="col-md-9">
               {{ block "main" . }}{{ end }}
             </div>

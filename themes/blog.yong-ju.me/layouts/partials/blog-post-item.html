@@ -1,0 +1,17 @@
+<div class="blog-post-item">
+  <a href="{{ .RelPermalink }}" title="{{ .Title }}">
+    <h3 class="blog-post-item__title">{{ .Title }}</h3>
+
+    {{ if site.Params.summary }}
+      <div class="blog-post-item__summary">
+        {{ .Summary | plainify }}
+      </div>
+    {{ end }}
+
+    {{ with .Lastmod }}
+      <div class="blog-post-item__date">
+        {{ .Format "2006/1/2" }}
+      </div>
+    {{ end }}
+  </a>
+</div>
