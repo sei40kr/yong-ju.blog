@@ -84,7 +84,11 @@
 
   .highlight {
     background: $gray-100;
-    margin: map-get($spacers, 4) (-$spacer * 2);
+    margin: map-get($spacers, 4) (map-get($spacers, 3) * -1);
+
+    @include media-breakpoint-up(sm) {
+      padding: map-get($spacers, 4) ($spacer * -2);
+    }
 
     pre {
       background: inherit;

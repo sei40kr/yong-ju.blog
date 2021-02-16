@@ -1,6 +1,10 @@
 .blog-main {
   background: $white;
-  padding: $spacer * 2;
+  padding: ($spacer * 2) map-get($spacers, 3);
+
+  @include media-breakpoint-up(sm) {
+    padding: $spacer * 2;
+  }
 
   &__title {
     @include font-size($h5-font-size);
