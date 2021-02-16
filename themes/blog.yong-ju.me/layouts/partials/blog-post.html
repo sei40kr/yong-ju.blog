@@ -5,7 +5,10 @@
     <section class="blog-post__content">{{ .Content }}</section>
   {{ end }}
 
-  <section class="blog-post__comment">
-    {{ template "_internal/disqus.html" . }}
+  <section class="blog-post-aside">
+    <h2 class="blog-post-aside__title">コメント</h2>
+    <div class="blog-post-aside__content">
+      {{ template "_internal/disqus.html" . }}
+    </div>
   </section>
 </article>
