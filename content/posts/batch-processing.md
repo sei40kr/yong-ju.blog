@@ -58,11 +58,11 @@ Hadoop は下記に示すコンポーネントから構成される。
 
 ### 分散ファイルシステム
 
+Hadoop 標準の分散ファイルシステムは **HDFS** である。
+
 #### HDFS
 
-HDFS (Hadoop Distributed File System) は Hadoop 標準の分散ファイルシステムである。
-
-HDFS は下記のような特徴をもつ。
+**HDFS (Hadoop Distributed File System)** は下記のような特徴をもつ。
 
 - **プライマリ/バックアップ型**
   - ファイルとブロックの対応関係を管理する **NameNode** (プライマリ)
