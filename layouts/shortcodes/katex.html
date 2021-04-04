@@ -1,0 +1,5 @@
+<span>
+  {{ cond (in .Params "display") "$$" "$" -}}
+  {{- trim .Inner "\n" -}}
+  {{- cond (in .Params "display") "$$" "$" }}
+</span>
