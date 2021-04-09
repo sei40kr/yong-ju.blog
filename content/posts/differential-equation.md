@@ -47,7 +47,7 @@ y'=f(\frac{y}{x})
 {{< katex display >}}
 \begin{aligned}
 u'x+u&=f(u)\\
-\frac{du}{dx}&=\frac{1}{x}(f(u)-u)
+\frac{du}{dx}&=\frac{1}{x}\{f(u)-u\}
 \end{aligned}
 {{< /katex >}}
 
@@ -61,8 +61,8 @@ u'x+u&=f(u)\\
 y'+p(x)y=q(x)
 {{< /katex >}}
 
-{{< katex >}}q(x)=0{{< /katex >}} の場合**同次方程式**となり変数分離形と同じように解ける。
-{{< katex >}}q(x)\ne0{{< /katex >}} の場合を**非同次方程式**となる。
+{{< katex >}}q(x)=0{{< /katex >}} の場合、上式を**同次方程式**といい、変数分離形と同じように解ける。
+{{< katex >}}q(x)\ne0{{< /katex >}} の場合、上式を**非同次方程式**という。
 
 ### 解法
 
@@ -98,26 +98,32 @@ Y'+p(x)Y=0
 {{< katex display >}}
 \begin{aligned}
 y'+p(x)y&=0\\
-y&=Ce^{-\int{p(x)dx}}
+y&=C_1e^{-\int{p(x)dx}}
 \end{aligned}
 {{< /katex >}}
 
-ここで、 定数 {{< katex >}}C{{< /katex >}} を関数 {{< katex >}}y=C(x){{< /katex >}} に変化させ代入する。
+ここで、 定数 {{< katex >}}C_1{{< /katex >}} を関数 {{< katex >}}y=C_1(x){{< /katex >}} に変化させ代入する。
 
 {{< katex display >}}
 \begin{aligned}
-(C(x)e^{-\int{p(x)dx}})'+p(x)C(x)e^{-\int{p(x)dx}}&=q(x)\\
-C'(x)e^{-\int{p(x)dx}}-p(x)C(x)e^{-\int{p(x)dx}}+p(x)C(x)e^{-\int{p(x)dx}}&=q(x)\\
-C'(x)e^{-\int{p(x)dx}}&=q(x)\\
-C'(x)&=q(x)e^{\int{p(x)dx}}\\
-C(x)&=\int{q(x)e^{\int{p(x)dx}}}
+(C_1(x)e^{-\int{p(x)dx}})'+p(x)C_1(x)e^{-\int{p(x)dx}}&=q(x)\\
+C_1'(x)e^{-\int{p(x)dx}}-p(x)C_1(x)e^{-\int{p(x)dx}}+p(x)C_1(x)e^{-\int{p(x)dx}}&=q(x)\\
+C_1'(x)e^{-\int{p(x)dx}}&=q(x)\\
+C_1'(x)&=q(x)e^{\int{p(x)dx}}+C_2\\
+C_1(x)&=\int{q(x)e^{\int{p(x)dx}}+C_2}
 \end{aligned}
 {{< /katex >}}
 
 よって
 
 {{< katex display >}}
-y=\{\int{q(x)e^{\int{p(x)dx}}}\}e^{-\int{p(x)dx}}
+y=\{\int{q(x)e^{\int{p(x)dx}}}+C_2\}e^{-\int{p(x)dx}}
+{{< /katex >}}
+
+ここで {{< katex >}}h(x)=e^{\int{p(x)dx}}{{< /katex >}} とおくと
+
+{{< katex display >}}
+y=\frac{1}{h(x)}\{\int{q(x)h(x)dx}+C_2\}
 {{< /katex >}}
 
 #### 積分因子
@@ -132,9 +138,15 @@ y'+p(x)y=q(x)
 \begin{aligned}
 e^{\int{p(x)dx}}y'+e^{\int{p(x)dx}}p(x)y&=e^{\int{p(x)dx}}q(x)\\
 \{e^{\int{p(x)dx}}y\}'&=e^{\int{p(x)dx}}q(x)\\
-e^{\int{p(x)dx}}y&=\int{q(x)e^{\int{p(x)dx}}}\\
-y&=\{\int{q(x)e^{\int{p(x)dx}}}\}e^{-\int{p(x)dx}}
+e^{\int{p(x)dx}}y&=\int{q(x)e^{\int{p(x)dx}}+C}\\
+y&=\{\int{q(x)e^{\int{p(x)dx}}}+C\}e^{-\int{p(x)dx}}
 \end{aligned}
+{{< /katex >}}
+
+ここで {{< katex >}}h(x)=e^{\int{p(x)dx}}{{< /katex >}} とおくと
+
+{{< katex display >}}
+y=\frac{1}{h(x)}\{\int{q(x)h(x)dx}+C\}
 {{< /katex >}}
 
 ## ベルヌーイの微分方程式
@@ -188,7 +200,7 @@ y=xp+f(p) \tag{*}
 {{< katex display >}}
 \begin{aligned}
 y'=p+xp'+f'(p)p'\\
-(x+f'(p))p'=0
+\{x+f'(p)\}p'=0
 \end{aligned}
 {{< /katex >}}
 
