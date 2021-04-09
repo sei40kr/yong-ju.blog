@@ -160,3 +160,7 @@ A^n&=P(P^{-1}AP)^nP^{-1}
 {{< /katex >}}
 
 と求められる。
+
+## 参考文献
+
+- ヨビノリたくみ, [線形代数 - YouTube](https://youtube.com/playlist?list=PLDJfzGjtVLHnc1vTpBaCNKMUl6HauQv1a), 2019

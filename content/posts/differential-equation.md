@@ -230,3 +230,10 @@ y'=p+xp'+f'(p)p'\\
     {{< katex display >}}
     (x,y)=(-f'(p),-pf'(p)+f(p))
     {{< /katex >}}
+
+## 参考文献
+
+- 井上 満, 工業数学がわかる, 技術評論社, 2010
+- ヨビノリたくみ, [【大学数学】偏微分とは何か【解析学】](https://youtu.be/UWFTIEIruyc), 2018
+- ヨビノリたくみ, [【大学数学】全微分とは何か【解析学】](https://youtu.be/ChoArVJnSjQ), 2018
+- ヨビノリたくみ, [微分方程式 - YouTube](https://youtube.com/playlist?list=PLDJfzGjtVLHnmhT1AhMx7bSt0ZOGbIP3c), 2020
