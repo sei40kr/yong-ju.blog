@@ -10,15 +10,53 @@ ignoreErrors = ["error-remote-getjson"]
 languageCode = "ja"
 paginate = 5
 pygmentsUseClasses = true
-theme = "blog.yong-ju.me"
+theme = "hugo-book"
 
-[Params]
-subtitle = "ソフトウェアエンジニアリングやフリーランスという働き方, アジャイルなど自由気ままに書く"
-summary = true
+# Book configuration
+disablePathToLower = true
+enableGitInfo = true
+
+# Needed for mermaid/katex shortcodes
+[markup]
+[markup.goldmark.renderer]
+  unsafe = true
+[markup.tableOfContents]
+  startLevel = 1
+
+# Multi-lingual mode config
+# There are different options to translate files
+# See https://gohugo.io/content-management/multilingual/#translation-by-filename
+# And https://gohugo.io/content-management/multilingual/#translation-by-content-directory
+[languages]
+[languages.ja]
+  languageName = 'Japanese'
+  contentDir = 'content'
+  weight = 1
+
+[params]
+  # Set source repository location.
+  # Used for 'Last Modified' and 'Edit this page' links.
+  BookRepo = 'https://github.com/sei40kr/blog.yong-ju.me'
+
+  # Configure the date format used on the pages
+  # - In git information
+  # - In blog posts
+  BookDateFormat = '2006年01月02日'
+  # (Optional, default true) Enables search function with flexsearch,
+  # Index is built on fly, therefore it might slowdown your website.
+  # Configuration for indexing can be adjusted in i18n folder per language.
+  BookSearch = false
+
+  # /!\ This is an experimental feature, might be removed or changed at any time
+  # (Optional, experimental, default false) Enables service worker that caches visited pages and resources for offline use.
+  BookServiceWorker = true
 
 [menu]
-
-  [[menu.main]]
+  [[menu.before]]
     name = "ポートフォリオ"
     url = "https://yong-ju.me"
     weight = 10
+  [[menu.before]]
+    name = "GitHub"
+    url = "https://github.com/sei40kr"
+    weight = 20
