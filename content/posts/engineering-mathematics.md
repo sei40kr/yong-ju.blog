@@ -12,19 +12,25 @@ tags: ["勉強ノート", "数学"]
 
 ## オイラーの公式
 
-$$e^{iy}=\cos{y}+i\sin{y}$$
+{{< katex display >}}
+e^{iy}=\cos{y}+i\sin{y}
+{{< /katex >}}
 
 この関係式を **オイラーの公式** という。この公式を用いれば、複素数の極座標表示は
 
-$$z=r(\cos{\theta}+i\sin{\theta})=re^{i\theta}$$
+{{< katex display >}}
+z=r(\cos{\theta}+i\sin{\theta})=re^{i\theta}
+{{< /katex >}}
 
 と表される。
 
 ## テイラー展開
 
-$$f(x)=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3+\cdots$$
+{{< katex display >}}
+f(x)=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3+\cdots
+{{< /katex >}}
 
-$a=0$ のときのテイラー展開を **マクローリン展開** という。
+{{< katex >}}a=0{{< /katex >}} のときのテイラー展開を **マクローリン展開** という。
 
 テイラー展開をすることによって、複雑な関数を多項式で表せる。
 
@@ -32,26 +38,30 @@ $a=0$ のときのテイラー展開を **マクローリン展開** という�
 
 ### フーリエ級数
 
-横軸を $t$ として、同じような波形が繰り返して現れる関数 $f(t)$ は、三角関数の無限級数に分解することができる → **フーリエ級数**
+横軸を {{< katex >}}t{{< /katex >}} として、同じような波形が繰り返して現れる関数 {{< katex >}}f(t){{< /katex >}} は、三角関数の無限級数に分解することができる → **フーリエ級数**
 
-$$f(t)=a_0+\sum_{n=1}^\infty{a_n\cos{n\omega t}}+\sum_{n=1}^\infty{b_n\sin{n\omega t}}$$
+{{< katex display >}}
+f(t)=a_0+\sum_{n=1}^\infty{a_n\cos{n\omega t}}+\sum_{n=1}^\infty{b_n\sin{n\omega t}}
+{{< /katex >}}
 
-フーリエ級数の式の $a_0$, $a_n$, $b_n$ は、それぞれフーリエ係数と呼ばれ、次式のように計算される。
+フーリエ級数の式の {{< katex >}}a_0,a_n,b_n{{< /katex >}} は、それぞれフーリエ係数と呼ばれ、次式のように計算される。
 
-$$
+{{< katex display >}}
 a_0=\frac{1}{T}\int_{-\frac{T}2}^{+\frac{T}2}f(t)dt\newline
 a_n=\frac{2}T\int_{-\frac{T}2}^{+\frac{T}2}f(t)\cos{n\omega t}dt\newline
 b_n=\frac{2}T\int_{-\frac{T}2}^{+\frac{T}2}f(t)\sin{n\omega t}dt
-$$
+{{< /katex >}}
 
-また、角速度 $\omega$ は、波形の周期を $T$ とすると
+また、角速度 {{< katex >}}\omega{{< /katex >}} は、波形の周期を {{< katex >}}T{{< /katex >}} とすると
 
-$$\omega=\frac{2\pi}{T}$$
+{{< katex display >}}
+\omega=\frac{2\pi}{T}
+{{< /katex >}}
 
 となる。
 
-* $f(-x)=f(x)$ が成り立つとき、 $f(x)$ を **偶関数** といい、$b_n=0$ となる。
-* $f(-x)=-f(x)$ が成り立つとき、 $f(x)$ を **奇関数** といい、$a_0=a_n=0$ となる。
+* {{< katex >}}f(-x)=f(x){{< /katex >}} が成り立つとき、 {{< katex >}}f(x){{< /katex >}} を **偶関数** といい、{{< katex >}}b_n=0{{< /katex >}} となる。
+* {{< katex >}}f(-x)=-f(x){{< /katex >}} が成り立つとき、 {{< katex >}}f(x){{< /katex >}} を **奇関数** といい、{{< katex >}}a_0=a_n=0{{< /katex >}} となる。
 
 ## 参考文献
 

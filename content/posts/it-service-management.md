@@ -23,7 +23,9 @@ RASIS はコンピュータシステムに関する代表的な指標の頭文�
 可用性 (Availability)
 : システムが継続して稼働できる能力。
 代表的な評価指標に**稼働率**があり、以下に示す式で求められる。
-$$A=\frac{\text{MTBF}}{\text{MTBF}+\text{MTTR}}$$
+{{< katex display >}}
+A=\frac{\text{MTBF}}{\text{MTBF}+\text{MTTR}}
+{{< /katex >}}
 
 完全性 (Integrity)
 : データに欠損や不整合がないことを保証する能力。

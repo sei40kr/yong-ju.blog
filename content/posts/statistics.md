@@ -36,7 +36,9 @@ tags: ["勉強ノート", "数学", "統計学"]
 
 平均 (mean) は、すべてのデータを合計してデータ数で割った値。
 
-$$\overline{x}=\frac{1}{n}\sum_{i=1}^n$$
+{{< katex display >}}
+\overline{x}=\frac{1}{n}\sum_{i=1}^n
+{{< /katex >}}
 
 ### 中央値
 
@@ -54,36 +56,44 @@ $$\overline{x}=\frac{1}{n}\sum_{i=1}^n$$
 
 分散 (variance) は、偏差の 2 乗を合計したもので、データのばらつきを表す指標。
 
-$$S^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2$$
+{{< katex display >}}
+S^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2
+{{< /katex >}}
 
 ### 標準偏差
 
 標準偏差 (standard deviation) は、分散のルートをとった、データと同じ単位をもつデータのばらつきを表す指標。
 
-$$S=\sqrt{S^2}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2}$$
+{{< katex display >}}
+S=\sqrt{S^2}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2}
+{{< /katex >}}
 
 ### 四分位範囲
 
-データの下位 25%, 50%, 75% に位置する値を第 1 四分位数, 第 2 四分位数, 第 3 四分位数といい、それぞれ $Q_1,Q_2,Q_3$ で表す。
-(第 2 四分位数 $Q_2$ は中央値に一致する)
+データの下位 25%, 50%, 75% に位置する値を第 1 四分位数, 第 2 四分位数, 第 3 四分位数といい、それぞれ {{< katex >}}Q_1,Q_2,Q_3{{< /katex >}} で表す。
+(第 2 四分位数 {{< katex >}}Q_2{{< /katex >}} は中央値に一致する)
 
-このとき $\text{IQR}=Q_3-Q_1$ を四分位範囲 (interquartile range) という。
+このとき {{< katex >}}\text{IQR}=Q_3-Q_1{{< /katex >}} を四分位範囲 (interquartile range) という。
 
 ### 共分散
 
 共分散 (covariance) は 2 組の対応するデータの偏差積の平均値。
 
-$$S_{xy}=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})(y_i-\overline{y})$$
+{{< katex display >}}
+S_{xy}=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})(y_i-\overline{y})
+{{< /katex >}}
 
 ### 相関係数
 
 相関係数 (correlation coefficient) は 2 つの確率変数の間にある関係の強弱を測る指標で、-1 から 1 の値をとる。
 
-$$r_{xy}=\frac{S_{xy}}{S_xS_y}$$
+{{< katex display >}}
+r_{xy}=\frac{S_{xy}}{S_xS_y}
+{{< /katex >}}
 
-1. $r_{xy}>0$ のとき、データは**正の相関**をもつ
-1. $r_{xy}=0$ のとき、データは**無相関**
-1. $r_{xy}<0$ のとき、データは**負の相関**をもつ
+1. {{< katex >}}r_{xy}>0{{< /katex >}} のとき、データは**正の相関**をもつ
+1. {{< katex >}}r_{xy}=0{{< /katex >}} のとき、データは**無相関**
+1. {{< katex >}}r_{xy}<0{{< /katex >}} のとき、データは**負の相関**をもつ
 
 ## データの整理
 
@@ -91,7 +101,9 @@ $$r_{xy}=\frac{S_{xy}}{S_xS_y}$$
 
 データから平均を引き、標準偏差で割る操作を標準化 (standardization) という。標準化されたデータを Z スコア (z-score) といい、平均が 0, 標準偏差が 1 となる。
 
-$$z_i=\frac{x_i-\overline{x}}{S}$$
+{{< katex display >}}
+z_i=\frac{x_i-\overline{x}}{S}
+{{< /katex >}}
 
 <!-- TODO データの整理, 表やグラフについて書く -->
 
@@ -140,110 +152,118 @@ $$z_i=\frac{x_i-\overline{x}}{S}$$
 
 ### 期待値
 
-確率変数 $X$ を無限回試行して得られた実現値の平均を**期待値** (expected value) といい、離散型確率変数 $X$ の期待値は $\mu, E(X)$ で表す。
+確率変数 {{< katex >}}X{{< /katex >}} を無限回試行して得られた実現値の平均を**期待値** (expected value) といい、離散型確率変数 {{< katex >}}X{{< /katex >}} の期待値は {{< katex >}}\mu, E(X){{< /katex >}} で表す。
 
 期待値について、常に以下の式が成り立つ。
 
-$$E(aX+b)=aE(X)+b$$
+{{< katex display >}}
+E(aX+b)=aE(X)+b
+{{< /katex >}}
 
 このような性質を**線形性**という。
 
 ### 分散
 
-確率変数の分散も、データの分散と同様にばらつきを表す指標であり、離散型確率変数 $X$ の分散は $\sigma^2,V(X)$ で表す。
+確率変数の分散も、データの分散と同様にばらつきを表す指標であり、離散型確率変数 {{< katex >}}X{{< /katex >}} の分散は {{< katex >}}\sigma^2,V(X){{< /katex >}} で表す。
 
 分散について、常に以下の式が成り立つ。
 
-$$V(aX+b)=a^2V(X)$$
+{{< katex display >}}
+V(aX+b)=a^2V(X)
+{{< /katex >}}
 
 ## 離散型確率変数
 
-確率変数 $X$ が $x$ という値をとる確率を、**確率質量関数** (PMF = Probability Mass Function) $f(x)$ で表す。
+確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x{{< /katex >}} という値をとる確率を、**確率質量関数** (PMF = Probability Mass Function) {{< katex >}}f(x){{< /katex >}} で表す。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&=P(X=x)\\\\E(X)&=\sum_kx_kf(x_k)\\\\V(X)&=\sum_k(x_k-\mu)^2f(x_k)\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&=P(X=x)\\\\E(X)&=\sum_kx_kf(x_k)\\\\V(X)&=\sum_k(x_k-\mu)^2f(x_k)\end{aligned}
+{{< /katex >}}
 
 確率の性質より、離散型確率変数は以下の 2 つの式を満たす。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x_k)&\ge0\\\\\sum_kf(x_k)&=1\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x_k)&\ge0\\\\\sum_kf(x_k)&=1\end{aligned}
+{{< /katex >}}
 
 ## 離散型確率分布
 
 ### ベルヌーイ分布
 
-ベルヌーイ分布 (Bernoulli distribution) は最も基本的な確率分布で、とりうる値が $\{0,1\}$ しかない確率分布である。
+ベルヌーイ分布 (Bernoulli distribution) は最も基本的な確率分布で、とりうる値が {{< katex >}}\{0,1\}{{< /katex >}} しかない確率分布である。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=p\\\\V(X)&=p(1-p)\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=p\\\\V(X)&=p(1-p)\end{aligned}
+{{< /katex >}}
 
 ### 二項分布
 
-二項分布 (binomial distribution) は成功確率が $p$ のベルヌーイ試行を $n$ 回行った時の成功回数が従う確率分布であり、その分布を $B(n,p)$ で表す。
+二項分布 (binomial distribution) は成功確率が {{< katex >}}p{{< /katex >}} のベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う確率分布であり、その分布を {{< katex >}}B(n,p){{< /katex >}} で表す。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&=\begin{cases}_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=np\\\\V(X)&=np(1-p)\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&=\begin{cases}_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=np\\\\V(X)&=np(1-p)\end{aligned}
+{{< /katex >}}
 
-$B(n,p)$ に従う確率変数 $X$ と $B(m,p)$ に従う確率変数 $Y$ が互いに独立であるとき、確率変数の和 $X+Y$ は $B(n+m,p)$ に従う。 (**再生性**)
+{{< katex >}}B(n,p){{< /katex >}} に従う確率変数 {{< katex >}}X{{< /katex >}} と {{< katex >}}B(m,p){{< /katex >}} に従う確率変数 {{< katex >}}Y{{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}B(n+m,p){{< /katex >}} に従う。 (**再生性**)
 
 ### 幾何分布
 
 幾何分布 (geometric distribution) はベルヌーイ試行を繰り返して、初めて成功するまでの試行回数が従う確率分布である。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&=\begin{cases}p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\frac{1}{p}\\\\P(X)&=\frac{1-p}{p^2}\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&=\begin{cases}p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\frac{1}{p}\\\\P(X)&=\frac{1-p}{p^2}\end{aligned}
+{{< /katex >}}
 
 ### ポアソン分布
 
 ポアソン分布はランダムな事象が単位時間あたりに発生する件数が従う確率分布である。
 
-ポアソン分布は、二項分布 $B(n,p)$ において $n$ が大きく $p$ が小さい場合の近似となる。
+ポアソン分布は、二項分布 {{< katex >}}B(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&=\begin{cases}\frac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\lambda\\\\V(X)&=\lambda\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&=\begin{cases}\frac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\lambda\\\\V(X)&=\lambda\end{aligned}
+{{< /katex >}}
 
 ## 連続型確率変数
 
 ### 確率密度関数
 
-連続型確率変数は**確率密度関数** (PDF = Probability Density Function) $f(x)$ で表す。
+連続型確率変数は**確率密度関数** (PDF = Probability Density Function) {{< katex >}}f(x){{< /katex >}} で表す。
 
-確率変数 $X$ が $x_0\le X \le x_1$ の区間に入る確率 $P(x_0\le X \le x_1)$ を、確率密度関数 $f(x)$ を用いて次のように表す。
+確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x_0\le X \le x_1{{< /katex >}} の区間に入る確率 {{< katex >}}P(x_0\le X \le x_1){{< /katex >}} を、確率密度関数 {{< katex >}}f(x){{< /katex >}} を用いて次のように表す。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}P(x_0\le X\le x_1)&=\int_{x_0}^{x_1}f(x)dx\\\\\mu=E(X)&=\int_{-\infty}^\infty xf(x)dx\\\\\sigma^2=V(X)&=\int_{-\infty}^\infty(x-\mu)^2f(x)dx\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}P(x_0\le X\le x_1)&=\int_{x_0}^{x_1}f(x)dx\\\\\mu=E(X)&=\int_{-\infty}^\infty xf(x)dx\\\\\sigma^2=V(X)&=\int_{-\infty}^\infty(x-\mu)^2f(x)dx\end{aligned}
+{{< /katex >}}
 
 ### 確率の性質
 
 確率の性質より、連続型確率変数は以下の 2 つの式を満たす。
 
-<!-- prettier-ignore-start -->
-$$\begin{aligned}f(x)&\ge0\\\\\int_{-\infty}^\infty f(x)dx&=1\end{aligned}$$
-<!-- prettier-ignore-end -->
+{{< katex display >}}
+\begin{aligned}f(x)&\ge0\\\\\int_{-\infty}^\infty f(x)dx&=1\end{aligned}
+{{< /katex >}}
 
 ### 類型分布関数
 
-確率変数 $X$ が $k$ 以下になる時の確率は**類型分布関数** (CDF = Cumulative Distribution Function) $F(k)$ で表す。
+確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}k{{< /katex >}} 以下になる時の確率は**類型分布関数** (CDF = Cumulative Distribution Function) {{< katex >}}F(k){{< /katex >}} で表す。
 
-$$F(x)=P(X\le x)=\int_{-\infty}^{x}f(x)dx$$
+{{< katex display >}}
+F(x)=P(X\le x)=\int_{-\infty}^{x}f(x)dx
+{{< /katex >}}
 
 ## 連続型確率分布
 
 ### 正規分布
 
 正規分布 (normal distribution, ガウス分布, Gaussian distribution) は、自然界の多くの事象を表現できる確率分布である。
-期待値が $\mu$, 分散が $\sigma^2$ であるような正規分布を $N(\mu,\sigma^2)$ で表す。
+期待値が {{< katex >}}\mu{{< /katex >}}, 分散が {{< katex >}}\sigma^2{{< /katex >}} であるような正規分布を {{< katex >}}N(\mu,\sigma^2){{< /katex >}} で表す。
 
-$$f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}$$
+{{< katex display >}}
+\begin{aligned}f(x)&=\frac{1}{\sqrt{2\pi}\sigma}\exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}\\\\E(X)&=\mu\\\\V(X)&=\sigma^2\end{aligned}
+{{< /katex >}}
 
-正規分布に従う確率変数を標準化した確率変数が従う $N(0,1)$ を**標準正規分布**という。
+正規分布に従う確率変数を標準化した確率変数が従う {{< katex >}}N(0,1){{< /katex >}} を**標準正規分布**という。
 
 ## 参考文献
 

@@ -20,8 +20,9 @@ RAS はコンピュータシステムに関する代表的な指標の頭文字�
 
 可用性 (Availability)
 : システムが継続して稼働できる能力。代表的な評価指標に**稼働率**があり、以下に示す式で求められる。
-
-$$A=\frac{\text{MTBF}}{\text{MTBF}+\text{MTTR}}$$
+{{< katex display >}}
+A=\frac{\text{MTBF}}{\text{MTBF}+\text{MTTR}
+{{< /katex >}}
 
 RAS に完全性 (Integrity) と 機密性 (Security) を加えた RASIS というものも存在するが、ここでは解説しない。
 
