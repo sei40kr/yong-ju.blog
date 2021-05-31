@@ -30,6 +30,11 @@ y'=f(x)g(y)
 
 <!-- TODO 置換積分の注釈 -->
 
+### 例題
+
+1. {{< katex >}}y'=2xy,y(0)=1{{< /katex >}}
+1. {{< katex >}}y'=1-y^2{{< /katex >}}
+
 ## 同次形
 
 ### 定義
@@ -52,6 +57,11 @@ u'x+u&=f(u)\\
 {{< /katex >}}
 
 となり、変数分離形と同じように解ける。
+
+### 例題
+
+1. {{< katex >}}y'=\frac{y^2}{x^2+xy}{{< /katex >}}
+1. {{< katex >}}y'=\frac{y}x+\cos^2\frac{y}x,y(1)=\frac\pi4{{< /katex >}}
 
 ## 一階線形微分方程式
 
@@ -102,7 +112,7 @@ y&=C_1e^{-\int{p(x)dx}}
 \end{aligned}
 {{< /katex >}}
 
-ここで、 定数 {{< katex >}}C_1{{< /katex >}} を関数 {{< katex >}}y=C_1(x){{< /katex >}} に変化させ代入する。
+ここで、 定数 {{< katex >}}C_1{{< /katex >}} を関数 {{< katex >}}C_1(x){{< /katex >}} に変化させ {{< katex >}}y{{< /katex >}} を代入する。
 
 {{< katex display >}}
 \begin{aligned}
@@ -149,6 +159,11 @@ y&=\{\int{q(x)e^{\int{p(x)dx}}}+C\}e^{-\int{p(x)dx}}
 y=\frac{1}{h(x)}\{\int{q(x)h(x)dx}+C\}
 {{< /katex >}}
 
+### 例題
+
+1. {{< katex >}}y'+2xy=2x{{< /katex >}}
+1. {{< katex >}}y'-(2x+1)y=2xe^x{{< /katex >}}
+
 ## ベルヌーイの微分方程式
 
 ### 定義
@@ -178,6 +193,11 @@ u'+(1-\alpha)p(x)u&=(1-\alpha)q(x)
 となり、線形微分方程式と同じように解ける。
 
 <!-- TODO 完全微分方程式について書く -->
+
+### 例題
+
+1. {{< katex >}}y'+y=e^xy^2{{< /katex >}}
+1. {{< katex >}}w'=aw^\frac23-bw,w(0)=0{{< /katex >}} (von Bertalanffy の成長曲線)
 
 ## クレローの微分方程式
 
@@ -231,9 +251,19 @@ y'=p+xp'+f'(p)p'\\
     (x,y)=(-f'(p),-pf'(p)+f(p))
     {{< /katex >}}
 
+### 例題
+
+1. {{< katex >}}y=xy'+(y')^2{{< /katex >}}
+1. {{< katex >}}y=xp+\cos{p}{{< /katex >}}
+
 ## 参考文献
 
 - 井上 満, 工業数学がわかる, 技術評論社, 2010
 - ヨビノリたくみ, [【大学数学】偏微分とは何か【解析学】](https://youtu.be/UWFTIEIruyc), 2018
 - ヨビノリたくみ, [【大学数学】全微分とは何か【解析学】](https://youtu.be/ChoArVJnSjQ), 2018
-- ヨビノリたくみ, [微分方程式 - YouTube](https://youtube.com/playlist?list=PLDJfzGjtVLHnmhT1AhMx7bSt0ZOGbIP3c), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門①(微分方程式とは)](https://youtu.be/po97dnBfoco), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門②(変数分離形)](https://youtu.be/uPRY-KUl4fg), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門③(同次形)](https://youtu.be/QeYOiFU6UNs), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門④(一階線形微分方程式)](https://youtu.be/Hfby9zyZ0HY)
+- ヨビノリたくみ, [【大学数学】微分方程式入門⑤(ベルヌーイの微分方程式)](https://youtu.be/TaVimHlrN4U), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門⑦(クレローの微分方程式)](https://youtu.be/P1dh8bg2mus), 2020
