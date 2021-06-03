@@ -1,6 +1,7 @@
 ---
 title: "NixOS"
 date: 2021-02-11T22:01:36+09:00
+categories: ["Linux"]
 tags: ["勉強ノート", "NixOS"]
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Emacs を使おう"
 date: 2020-09-03T01:00:56+09:00
-tags: ["プログラミング", "エディタ", "Emacs"]
+categories: ["開発環境"]
+tags: ["エディタ", "Emacs"]
 ---
 
 ## Vimmer が Emacs を嫌う理由とそれに対する弁明

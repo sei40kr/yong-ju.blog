@@ -1,7 +1,8 @@
 ---
 title: "高品質 Emacs ディストリビューション Doom Emacs を使おう"
 date: 2020-09-03T22:16:20+09:00
-tags: ["プログラミング", "エディタ", "Emacs", "Doom Emacs"]
+categories: ["開発環境"]
+tags: ["エディタ", "Emacs"]
 ---
 
 この記事は [Emacs を使おう]({{< ref "lets-start-using-emacs" >}}) の続編である。
