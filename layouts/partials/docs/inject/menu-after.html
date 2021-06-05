@@ -4,12 +4,12 @@
       <strong>カテゴリ</strong>
       <ul>
         {{- $pages := ($.Site.GetPage (urlize "/categories")).Pages -}}
-        {{ range $pages }}>
+        {{ range $pages }}
           <li class="flex justify-between">
-            <a href="{{ .RelPermalink }}"{{ .Title }}</a>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
             <span>{{ len .Pages }}</span>
           </li>
-        {{ end }}>
+        {{ end }}
       </ul>
     </li>
   </ul>
