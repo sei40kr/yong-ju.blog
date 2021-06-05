@@ -50,13 +50,3 @@ enableGitInfo = true
   # /!\ This is an experimental feature, might be removed or changed at any time
   # (Optional, experimental, default false) Enables service worker that caches visited pages and resources for offline use.
   BookServiceWorker = true
-
-[menu]
-  [[menu.before]]
-    name = "ポートフォリオ"
-    url = "https://yong-ju.me"
-    weight = 10
-  [[menu.before]]
-    name = "GitHub"
-    url = "https://github.com/sei40kr"
-    weight = 20

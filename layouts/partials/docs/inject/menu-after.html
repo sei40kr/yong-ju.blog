@@ -1,0 +1,16 @@
+<nav>
+  <ul>
+    <li class="book-section-flat">
+      <strong>カテゴリ</strong>
+      <ul>
+        {{- $pages := ($.Site.GetPage (urlize "/categories")).Pages -}}
+        {{ range $pages }}>
+          <li class="flex justify-between">
+            <a href="{{ .RelPermalink }}"{{ .Title }}</a>
+            <span>{{ len .Pages }}</span>
+          </li>
+        {{ end }}>
+      </ul>
+    </li>
+  </ul>
+</nav>
