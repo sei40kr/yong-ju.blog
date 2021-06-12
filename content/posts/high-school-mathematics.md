@@ -68,7 +68,7 @@ a^2=b^2+c^2-2bc\cos\theta
 sin^2\alpha=\frac{1-\cos2\alpha}2
 {{< /katex >}}
 
-ここで {{< katex >}}\alpha{{< /katex >}} を {{< katex >}}\frac\alpha2{{< /katex >}} に置き換えると
+ここで {{< katex >}}\alpha{{< /katex >}} を {{< katex >}}\dfrac\alpha2{{< /katex >}} に置き換えると
 
 {{< katex display >}}
 \sin^2\frac\alpha2=\frac{1-\cos\alpha}2
@@ -107,7 +107,7 @@ sin^2\alpha=\frac{1-\cos2\alpha}2
 
 #### 和積の公式の導出
 
-積和の公式 {{< katex >}}\sin\alpha\cos\beta=\frac12\{\sin(\alpha+\beta)+\sin(\alpha-\beta)\}{{< /katex >}} に {{< katex >}}(\alpha,\beta)=(\frac{x+y}2,\frac{x-y}2){{< /katex >}} を代入すると
+積和の公式 {{< katex >}}\sin\alpha\cos\beta=\dfrac12\{\sin(\alpha+\beta)+\sin(\alpha-\beta)\}{{< /katex >}} に {{< katex >}}(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2){{< /katex >}} を代入すると
 
 {{< katex display >}}
 \begin{aligned}
@@ -119,7 +119,7 @@ sin^2\alpha=\frac{1-\cos2\alpha}2
 
 となる。
 
-また、同式に {{< katex >}}(\alpha,\beta)=(\frac{x-y}2,\frac{x+y}2){{< /katex >}} を代入して整理すると
+また、同式に {{< katex >}}(\alpha,\beta)=(\dfrac{x-y}2,\dfrac{x+y}2){{< /katex >}} を代入して整理すると
 
 {{< katex display >}}
 \sin x-\sin y=2\cos\frac{x+y}2\sin\frac{x-y}2
@@ -127,13 +127,13 @@ sin^2\alpha=\frac{1-\cos2\alpha}2
 
 となる。
 
-同様に、{{< katex >}}\cos\alpha\cos\beta=\frac12\{\cos(\alpha+\beta)+\cos(\alpha-\beta)\}{{< /katex >}} に、 {{< katex >}}(\alpha,\beta)=(\frac{x+y}2,\frac{x-y}2){{< /katex >}} を代入して整理すると
+同様に、{{< katex >}}\cos\alpha\cos\beta=\dfrac12\{\cos(\alpha+\beta)+\cos(\alpha-\beta)\}{{< /katex >}} に、 {{< katex >}}(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2){{< /katex >}} を代入して整理すると
 
 {{< katex display >}}
 \cos x+\cos y=2\cos\frac{x+y}2\cos\frac{x-y}2
 {{< /katex >}}
 
-{{< katex >}}\sin\alpha\sin\beta=\frac12\{\cos(\alpha+\beta)-\cos(\alpha-\beta)\}{{< /katex >}} に {{< katex >}}(\alpha,\beta)=(\frac{x+y}2,\frac{x-y}2){{< /katex >}} を代入して整理すると
+{{< katex >}}\sin\alpha\sin\beta=\dfrac12\{\cos(\alpha+\beta)-\cos(\alpha-\beta)\}{{< /katex >}} に {{< katex >}}(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2){{< /katex >}} を代入して整理すると
 
 {{< katex display >}}
 \cos x-\cos y=2\sin\frac{x+y}2\sin\frac{x-y}2

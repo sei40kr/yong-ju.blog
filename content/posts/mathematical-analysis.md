@@ -159,18 +159,18 @@ f(x)&=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3
 ### 定義
 
 {{< katex >}}\lim_{x\rightarrow a}{{< /katex >}} が
-{{< katex >}}\frac00{{< /katex >}} か
-{{< katex >}}\frac{\pm\infty}{\pm\infty}{{< /katex >}}
+{{< katex >}}\dfrac00{{< /katex >}} か
+{{< katex >}}\dfrac{\pm\infty}{\pm\infty}{{< /katex >}}
 の不定形であり、次の条件をすべて満たすとき
 
 1. {{< katex >}}\lim_{x\rightarrow a}f(x)=\lim_{x\rightarrow a}g(x){{< /katex >}}
    が {{< katex >}}0{{< /katex >}} または {{< katex >}}\pm\infty{{< /katex >}}
 1. {{< katex >}}a{{< /katex >}} を含むある開区間から {{< katex >}}a{{< /katex >}}
    を除くすべての点で {{< katex >}}g'(x)\ne0{{< /katex >}}
-1. 極限 {{< katex >}}\lim_{x\rightarrow a}\frac{f'(x)}{g'(x)}{{< /katex >}}
+1. 極限 {{< katex >}}\lim_{x\rightarrow a}\dfrac{f'(x)}{g'(x)}{{< /katex >}}
    が存在する
 
-このとき、極限 {{< katex >}}\lim_{x\rightarrow a}\frac{f(x)}{g(x)}{{< /katex >}}
+このとき、極限 {{< katex >}}\lim_{x\rightarrow a}\dfrac{f(x)}{g(x)}{{< /katex >}}
 も存在し
 
 {{< katex display >}}
@@ -181,10 +181,10 @@ f(x)&=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3
 
 ### 例題
 
-1. {{< katex >}}\lim_{x\rightarrow0}\frac{x+\sin{x}}x{{< /katex >}}
-1. {{< katex >}}\lim_{x\rightarrow\infty}\frac{x}{e^x}{{< /katex >}}
-1. {{< katex >}}\lim_{x\rightarrow0}\frac{\sin2x}{x+\sin{x}}{{< /katex >}}
-1. {{< katex >}}\lim_{x\rightarrow0}\frac{x-\sin{x}}{x^3}{{< /katex >}}
+1. {{< katex >}}\lim_{x\rightarrow0}\dfrac{x+\sin{x}}x{{< /katex >}}
+1. {{< katex >}}\lim_{x\rightarrow\infty}\dfrac{x}{e^x}{{< /katex >}}
+1. {{< katex >}}\lim_{x\rightarrow0}\dfrac{\sin2x}{x+\sin{x}}{{< /katex >}}
+1. {{< katex >}}\lim_{x\rightarrow0}\dfrac{x-\sin{x}}{x^3}{{< /katex >}}
 
 ## フーリエ解析
 
