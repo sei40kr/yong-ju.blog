@@ -257,6 +257,306 @@ y'=p+xp'+f'(p)p'\\
 1. {{< katex >}}y=xy'+(y')^2{{< /katex >}}
 1. {{< katex >}}y=xp+\cos{p}{{< /katex >}}
 
+## 二階線形同次微分方程式
+
+### 定義
+
+{{< katex display >}}
+y''+p(x)y'+q(x)y=0 \tag{1}
+{{< /katex >}}
+
+### 重ね合わせの原理
+
+{{< katex >}}y_1,y_2{{< /katex >}} が式 (1) の解ならば
+
+{{< katex display >}}
+y=C_1y_1+C_2y_2
+{{< /katex >}}
+
+も式 (1) の解である。
+
+#### 証明
+
+{{< katex >}}y=C_1y_1+C_2y_2{{< /katex >}} を式 (1) の左辺に代入すると
+
+{{< katex display >}}
+\begin{aligned}
+\text{(左辺)}&=C_1y_1''+C_2y_2''+p(x)(C_1y_1'+C_2y_2')+q(x)(C_1y_1+C_2y_2) \\
+&=C_1\{y_1''+p(x)y_1'+q(x)y_1\}+C_2\{y_2''+p(x)y_2'+q(x)y_2\}
+\end{aligned}
+{{< /katex >}}
+
+ここで  {{< katex >}}y_1''+p(x)y_1'+q(x)y_1=y_2''+p(x)y_2'+q(x)y_2=0{{< /katex >}} なので
+
+{{< katex display >}}
+(左辺)=0
+{{< /katex >}}
+
+となり、成り立つ。
+
+### 定理
+
+(1) の 2 つの解 {{< katex >}}y_1,y_2{{< /katex >}} が一次独立であるとき
+
+{{< katex display >}}
+y=C_1y_1+C_2y_2
+{{< /katex >}}
+
+が (1) の一般解となる。なお、特殊解はもたない。
+
+## 解法
+
+{{< katex display >}}
+y''+ay'+by=0 \tag{2}
+{{< /katex >}}
+
+式 (2) に {{< katex >}}y=e^{\lambda x}{{< /katex >}} (解の候補) を代入すると
+
+{{< katex display >}}
+\lambda^2e^{\lambda x}+a\lambda e^{\lambda x}+be^{\lambda x}=0 \\
+{{< /katex >}}
+
+{{< katex >}}0<e^{\lambda x}{{< /katex >}} なので、両辺を {{< katex >}}e^{\lambda x}{{< /katex >}} で割って
+
+{{< katex display >}}
+\lambda^2+a\lambda+b=0
+{{< /katex >}}
+
+特性方程式 {{< katex >}}\lambda^2+a\lambda+b=0{{< /katex >}} が
+
+1. 相異なる 2 つの実数解 {{< katex >}}\lambda_1,\lambda_2{{< /katex >}} をもつ場合
+
+   {{< katex display >}}
+   y=C_1e^{\lambda_1 x}+C_2e^{\lambda_2 x}
+   {{< /katex >}}
+
+2. 重解 {{< katex >}}\lambda=-\dfrac{a}{2}{{< /katex >}} をもつ場合
+
+   {{< katex >}}y=C_1(x)e^{\lambda x}{{< /katex >}} を式 (2) の左辺に代入する
+
+   {{< katex display >}}
+   \begin{aligned}
+   (左辺)&=C_1''(x)y_1+2C_1'(x)y_1'+C_1(x)y_1''+a\{C_1'(x)y_1+C_1(x)y_1'\}+bC_1(x)y_1\\
+   &=C_1(x)(y_1''+ay_1'+by_1)+C_1'(x)(2y_1'+ay_1)+C_1''(x)y_1=0
+   \end{aligned}
+   {{< /katex >}}
+
+   ここで {{< katex >}}y_1''+ay_1'+by_1=2y_1'+ay_1=0{{< /katex >}} なので
+
+   {{< katex display >}}
+     (左辺)=C_1''(x)y_1=0
+   {{< /katex >}}
+
+   よって {{< katex >}}C_1''(x)=0{{< /katex >}} となればよく、 {{< katex >}}C_1(x)=C_2,C_3x{{< /katex >}} はこれを満たす。よって
+
+   {{< katex display >}}
+   y=C_2e^{\lambda x}+C_3xe^{\lambda x}
+   {{< /katex >}}
+
+3. 2 つの複素数重解 {{< katex >}}\lambda_1=\alpha+i\beta,\lambda_2=\alpha-i\beta{{< /katex >}} をもつ場合
+
+   オイラーの公式 {{< katex >}}e^{i\theta}=\cos\theta+\sin\theta{{< /katex >}} より
+
+   {{< katex display >}}
+   \begin{aligned}
+   Z_1&=e^{(\alpha+i\beta)x}=e^{\alpha x}e^{i\beta x}&=e^{\alpha x}(\cos{\beta x}+i\sin{\beta x})\\
+   Z_2&=e^{(\alpha-i\beta)x}=e^{\alpha x}e^{-i\beta x}&=e^{\alpha x}(\cos{\beta x}-i\sin{\beta x})
+   \end{aligned}
+   {{< /katex >}}
+
+   重ね合わせの原理より
+
+   {{< katex display >}}
+   \begin{aligned}
+   \frac{1}{2}(Z_1+Z_2)&=e^{\alpha x}\cos{\beta x}\\
+   \frac{1}{2}(Z_1-Z_2)&=e^{\alpha x}\sin{\beta x}
+   \end{aligned}
+   {{< /katex >}}
+
+   も式 (2) の解となる。これらは一次独立なので
+
+   {{< katex display >}}
+   y=C_1e^{\alpha x}\cos{\beta x}+C_2e^{\alpha x}\sin{\beta x}
+   {{< /katex >}}
+
+## 二階線形非同次微分方程式
+
+### 定義
+
+{{< katex display >}}
+y''+ay'+by=f(x)
+{{< /katex >}}
+
+### 解法
+
+#### 特殊解 {{< katex >}}\alpha(x){{< /katex >}} が分かっている場合
+
+{{< katex display >}}
+\begin{cases}
+\begin{aligned}
+y''&+ay'&+&by&=f(x) \\
+\alpha''(x)&+a\alpha'(x)&+&b\alpha(x)&=f(x)
+\end{aligned}
+\end{cases}
+{{< /katex >}}
+
+より
+
+{{< katex display >}}
+\{y-\alpha(x)\}''+a\{y-\alpha(x)\}'+b\{y-\alpha(x)\}=0
+{{< /katex >}}
+
+となり、ここで {{< katex >}}Y=y-\alpha{{< /katex >}} とおくと
+
+{{< katex display >}}
+Y''+aY'+bY=0
+{{< /katex >}}
+
+となり、二階線形同次微分方程式に帰着できた。
+
+#### 定数変化法
+
+{{< katex display >}}
+y''+ay'+by=0 \tag{1}
+{{< /katex >}}
+
+{{< katex display >}}
+y=C_1y_1+C_2y_2 \tag{2}
+{{< /katex >}}
+
+式 (2) の {{< katex >}}C_1,C_2{{< /katex >}} を、それぞれ {{< katex >}}C_1(x),C_2(x){{< /katex >}} に変化させる。
+
+{{< katex >}}y=C_1(x)y_1+C_2(x)y_2{{< /katex >}} の形で、かつ {{< katex >}}C_1'(x)y_1+C_2'(x)y_2=0{{< /katex >}} を満たすもので、式 (1) の解となるような {{< katex >}}C_1(x),C_2(x){{< /katex >}} を探す。
+
+{{< katex display >}}
+\begin{cases}
+\begin{aligned}
+y'&=C_1'(x)y_1+C_1(x)y_1'+C_2'(x)y_2+C_2(x)y_2' \\
+&=C_1(x)y_1'+C_2(x)y_2' \\
+y''&=C_1'(x)y_1'+C_1(x)y_1''+C_2'(x)y_2'+C_2(x)y_2''
+\end{aligned}
+\end{cases}
+{{< /katex >}}
+
+を式 (1) の左辺に代入して
+
+{{< katex display >}}
+\begin{aligned}
+(左辺)=&C_1'(x)y_1'+C_1(x)y_1''+C_2'(x)y_2'+C_2(x)y_2'' \\
+&+a\{C_1(x)y_1'+C_2(x)y_2'\} \\
+&+b\{C_1'(x)y_1+C_1(x)y_1'+C_2'(x)y_2+C_2(x)y_2'\} \\
+=&C_1(x)(y_1''+ay_1'+by_1)+C_2(x)(y_2''+ay_2'+by_2)+C_1'(x)y_1'+C_2'(x)y_2'
+\end{aligned}
+{{< /katex >}}
+
+ここで {{< katex >}}y_1''+ay_1'+by_1=y_2''+ay_2'+by_2=0{{< /katex >}} なので
+
+{{< katex display >}}
+(左辺)=C_1'(x)y_1'+C_2'(x)y_2'=0
+{{< /katex >}}
+
+よって
+
+{{< katex display >}}
+\begin{cases}
+\begin{aligned}
+C_1'(x)y_1+C_2'(x)y_2&=0 \\
+C_1'(x)y_1'+C_2'(x)y_2'&=f(x)
+\end{aligned}
+\end{cases}
+{{< /katex >}}
+
+{{< katex display >}}
+\begin{aligned}
+\left(\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right)
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right) \\
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\left(\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right)^{-1}
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right)
+\end{aligned}
+{{< /katex >}}
+
+{{< katex >}}
+W(y_1,y_2)=\left|\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right|
+{{< /katex >}} とおくと、 {{< katex >}}x{{< /katex >}} の値によらず {{< katex >}}W(y_1,y_2) \ne 0{{< /katex >}} なので
+
+{{< katex display >}}
+\begin{aligned}
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\frac{1}{W(y_1,y_2)}
+\left(\begin{array}{cc}
+y_2'&-y_2 \\
+-y_1'&y_1
+\end{array}\right)
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right) \\
+&=
+\frac{1}{W(y_1,y_2)}
+\left(\begin{array}{c}
+-y_2f(x) \\
+y_1f(x)
+\end{array}\right) \\
+\end{aligned}
+{{< /katex >}}
+
+{{< katex display >}}
+\begin{cases}
+\begin{aligned}
+C_1'(x)&=-\frac{y_2f(x)}{W(y_1,y_2)} \\
+C_2'(x)&=\frac{y_1f(x)}{W(y_1,y_2)}
+\end{aligned}
+\end{cases}
+{{< /katex >}}
+
+よって
+
+{{< katex display >}}
+\begin{cases}
+\begin{aligned}
+C_1(x)&=-\int{\frac{y_2f(x)}{W(y_1,y_2)}dx} \\
+C_2(x)&=\int{\frac{y_1f(x)}{W(y_1,y_2)}dx}
+\end{aligned}
+\end{cases}
+{{< /katex >}}
+
+となり
+
+{{< katex display >}}
+\alpha(x)=-y_1\int{\frac{y_2f(x)}{W(y_1,y_2)}dx}+y_2\int{\frac{y_1f(x)}{W(y_1,y_2)}dx} \\
+{{< /katex >}}
+
+は特殊解である。
+
 ## 参考文献
 
 - 井上 満, 工業数学がわかる, 技術評論社, 2010
