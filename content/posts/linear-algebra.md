@@ -72,7 +72,7 @@ tags: ["勉強ノート", "大学数学"]
 
 行列 {{< katex >}}A{{< /katex >}} から {{< katex >}}i{{< /katex >}} 行 {{< katex >}}j{{< /katex >}} 列を取り除いた小行列式を {{< katex >}}M_{i,j}{{< /katex >}} と表すとき
 
-{{< katex >}}
+{{< katex display >}}
 (-1)^{i+j}M_{i,j}
 {{< /katex >}}
 
