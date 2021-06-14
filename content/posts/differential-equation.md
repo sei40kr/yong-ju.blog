@@ -46,7 +46,7 @@ y'=f(\frac{y}{x})
 
 ### 解法
 
-{{< katex >}}u=\frac{y}{x}{{< /katex >}} とおく。このとき
+{{< katex >}}u=\dfrac{y}{x}{{< /katex >}} とおく。このとき
 {{< katex >}}y=ux{{< /katex >}} であるので
 {{< katex >}}y'=u'x+u{{< /katex >}} を代入して
 
@@ -61,8 +61,8 @@ u'x+u&=f(u)\\
 
 ### 例題
 
-1. {{< katex >}}y'=\frac{y^2}{x^2+xy}{{< /katex >}}
-1. {{< katex >}}y'=\frac{y}x+\cos^2\frac{y}x,y(1)=\frac\pi4{{< /katex >}}
+1. {{< katex >}}y'=\dfrac{y^2}{x^2+xy}{{< /katex >}}
+1. {{< katex >}}y'=\dfrac{y}x+\cos^2\dfrac{y}x,y(1)=\dfrac\pi4{{< /katex >}}
 
 ## 一階線形微分方程式
 
@@ -198,7 +198,7 @@ u'+(1-\alpha)p(x)u&=(1-\alpha)q(x)
 ### 例題
 
 1. {{< katex >}}y'+y=e^xy^2{{< /katex >}}
-1. {{< katex >}}w'=aw^\frac23-bw,w(0)=0{{< /katex >}} (von Bertalanffy の成長曲線)
+1. {{< katex >}}w'=aw^\dfrac23-bw,w(0)=0{{< /katex >}} (von Bertalanffy の成長曲線)
 
 ## クレローの微分方程式
 
