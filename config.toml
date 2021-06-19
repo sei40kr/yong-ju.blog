@@ -21,7 +21,7 @@ enableGitInfo = true
 [markup.goldmark.renderer]
   unsafe = true
 [markup.tableOfContents]
-  startLevel = 1
+  startLevel = 2
 
 # Multi-lingual mode config
 # There are different options to translate files

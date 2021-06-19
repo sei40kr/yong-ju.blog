@@ -1,8 +1,136 @@
-/* You can add custom styles here. */
-
 @import "syntax";
 
+body {
+  font-family: $font-family-sans-serif;
+}
+
+.book-page {
+  padding: 4rem 5.5rem;
+}
+
+// Extra space for big screens
+@media screen and (min-width: $container-max-width) {
+  .book-page {
+    padding: 4rem 5.5rem;
+  }
+}
+
+.book-menu-content,
+.book-toc-content {
+  nav ul {
+    a,
+    a:visited {
+      color: $text-muted;
+    }
+
+    a:hover {
+      opacity: 1 !important;
+    }
+
+    li {
+      margin: 0 !important;
+      position: static !important;
+    }
+  }
+}
+
+.book-menu {
+  border-right: 1px solid $border-color;
+
+  nav ul {
+    a {
+      border-radius: $border-radius 0 0 $border-radius;
+      margin: 0 -1.5rem 0 -1rem;
+      padding: 0.5rem 1.5rem 0.5rem 1rem;
+    }
+
+    a:hover {
+      background: $gray-200;
+      color: inherit;
+    }
+  }
+
+  .book-menu-content {
+    padding: 2rem 1.5rem 2rem 2.5rem;
+    width: #{$menu-width - 1px};
+  }
+}
+
+// Extra space for big screens
+@media screen and (min-width: $container-max-width) {
+  .book-menu .book-menu-content {
+    padding: 2rem 1.5rem 2rem 2.5rem;
+  }
+}
+
+.book-toc-content {
+  padding: 2.5rem 0;
+
+  nav > ul {
+    border-left: 1px solid $border-color;
+
+    a {
+      padding: 0.5rem 1rem;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: $text-muted;
+    }
+
+    ul {
+      padding: 0 0 0 1rem;
+    }
+  }
+}
+
+// Extra space for big screens
+@media screen and (min-width: $container-max-width) {
+  .book-toc .book-toc-content {
+    padding: 2.5rem 0;
+  }
+}
+
+.book-post {
+  margin: 0;
+
+  & + & {
+    border-top: 1px solid $border-color;
+    margin: 2rem 0 0;
+    padding: 2rem 0 0;
+  }
+}
+
+.book-comments {
+  border-top: 2px solid $border-color;
+  margin: 1.5rem 0 0;
+  padding: 1.5rem 0 0;
+}
+
+.book-footer {
+  color: $text-muted;
+
+  a,
+  a:visited {
+    color: inherit;
+  }
+}
+
 .markdown {
+  blockquote {
+    color: $text-muted;
+    border-left: 4px solid $border-color;
+    border-radius: 0;
+    padding: 0 0 0 calc(1rem - 4px);
+  }
+
+  code {
+    background: transparent;
+    color: $pink;
+    margin: 0 1px;
+    padding: 3px 6px;
+  }
+
   h1,
   h2,
   h3,
@@ -13,6 +141,7 @@
     a:visited {
       color: inherit;
     }
+
     a:hover {
       text-decoration: none;
     }
@@ -22,12 +151,68 @@
   h2,
   h3,
   h4 {
-    font-family: $font-family-serif;
     font-weight: bold;
+  }
+
+  h1 {
+    border-bottom: 2px solid $border-color;
+    margin: 0 0 2rem;
+    padding: 0 0 2.5rem;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin: 2rem 0 1.5rem;
+  }
+
+  h2:not(:first-child) {
+    border-top: 1px solid $border-color;
+    padding: 2.5rem 0 0;
   }
 
   h5,
   h6 {
     font-weight: inherit;
   }
+
+  p {
+    margin-block-start: 1.5rem;
+    margin-block-end: 1.5rem;
+  }
+
+  .book-hint {
+    border-radius: $border-radius;
+    box-shadow: 0 0 0 1px $border-color;
+    margin: calc(1px + 2rem) 1px;
+    padding: 1.5rem;
+
+    @each $name, $color in $hint-colors {
+      &.#{$name} {
+        background: transparent;
+      }
+    }
+  }
+
+  .highlight {
+    margin: 2rem 0;
+
+    code {
+      color: inherit;
+      margin: 0;
+      padding: 0;
+    }
+
+    pre {
+      padding: 1.5rem;
+    }
+  }
+
+  .katex {
+    font-family: KaTeX_Main, $font-family-serif;
+  }
+}
+
+.pagination {
+  margin: 4rem 0 0;
 }
