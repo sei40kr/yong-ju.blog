@@ -1,0 +1,26 @@
+<article class="book-post">
+  <h1 class="book-post__title">
+    <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+  </h1>
+
+  <div class="book-post-item__meta">
+    <div class="me-3">
+      {{ $pubDate := printf "%sに更新" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
+      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
+    </div>
+    {{ with .Lastmod }}
+      <div class="me-3">
+        {{ $lastmod := printf "%sに更新" (partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
+        {{ partial "docs/post-meta" (dict "Icon" "arrow-repeat" "Text" $lastmod) }}
+      </div>
+    {{ end }}
+    <div>
+      {{ $mins := printf "%.f min reads" (math.Round (div .WordCount 220.0)) | safeHTML }}
+      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $mins) }}
+    </div>
+  </div>
+
+  <div class="book-post__content markdown">
+    {{- .Content -}}
+  </div>
+</article>

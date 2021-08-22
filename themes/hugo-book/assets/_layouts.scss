@@ -1,0 +1,67 @@
+.book-header {
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: $zindex-fixed;
+}
+
+.container {
+  @include make-container;
+  display: flex;
+  height: 100%;
+  margin: 0 auto 0;
+  max-width: 1600px;
+
+  .book-header + & {
+    margin-top: var(--book-header-height);
+  }
+}
+
+.book-menu {
+  @include make-col-ready;
+  @include media-breakpoint-up(lg) {
+    @include make-col(3);
+    display: block;
+  }
+  display: none;
+
+  &__body {
+    bottom: 0;
+    left: 0;
+    position: sticky;
+    right: 0;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+
+.book-toc {
+  @include make-col-ready;
+  @include media-breakpoint-up(lg) {
+    @include make-col(3);
+    display: block;
+  }
+  display: none;
+
+  &__body {
+    bottom: 0;
+    left: 0;
+    padding: 2rem 1.5rem;
+    position: sticky;
+    right: 0;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+
+.book-header + .container {
+  .book-menu__body,
+  .book-toc__body {
+    top: var(--book-header-height);
+  }
+}
+
+.book-page {
+  @include make-col;
+}

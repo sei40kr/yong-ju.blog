@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}">
+  <head>
+    {{ partial "docs/html-head" . }}
+    {{ partial "docs/inject/head" . }}
+  </head>
+  <body>
+    <nav class="book-header">
+      <h1 class="book-header__title"><a href="{{ relURL "" }}">よんログ</a></h1>
+    </nav>
+
+    <main class="container">
+      <aside class="book-menu">
+        <div class="book-menu__body">
+          <!-- Left menu Content -->
+          {{ template "menu" . }}
+        </div>
+      </aside>
+
+      <div class="book-page">
+        {{ partial "docs/inject/content-before" . }}
+        <!-- Page Content -->
+        {{ template "main" . }}
+        {{ partial "docs/inject/content-after" . }}
+      </div>
+
+      {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+        <aside class="book-toc">
+          <div class="book-toc__body">
+            <!-- Table of Contents -->
+            {{ template "toc" . }}
+          </div>
+        </aside>
+      {{ end }}
+    </main>
+
+    {{ partial "docs/inject/body" . }}
+  </body>
+</html>
+
+{{ define "menu" }}
+  {{ partial "docs/menu" . }}
+{{ end }}
+
+{{ define "main" }}
+  <article class="markdown">
+    {{- .Content -}}
+  </article>
+{{ end }}
+
+{{ define "toc" }}
+  {{ partial "docs/toc" . }}
+{{ end }}

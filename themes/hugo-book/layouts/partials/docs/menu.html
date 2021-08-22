@@ -1,0 +1,23 @@
+<nav>
+  {{ partial "docs/inject/menu-before" . }}
+
+  {{ with $.Site.GetPage (urlize "/categories") }}
+    <div>
+      <section class="book-menu-section">
+        <h3 class="book-menu-section__title">カテゴリ</h3>
+        <div class="book-menu-section__body">
+          <ul class="book-menu-list">
+            {{ range .Pages }}
+              {{- $current := eq . $ -}}
+              <li class="book-menu-list__item{{ if $current }} book-menu-list__item--active{{ end }}">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              </li>
+            {{ end }}
+          </ul>
+        </div>
+      </section>
+    </div>
+  {{ end }}
+
+  {{ partial "docs/inject/menu-after" . }}
+</nav>
