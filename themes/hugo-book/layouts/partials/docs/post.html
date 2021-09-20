@@ -5,7 +5,7 @@
 
   <div class="book-post-item__meta">
     <div class="me-3">
-      {{ $pubDate := printf "%sに更新" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
+      {{ $pubDate := printf "%sに公開" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
       {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
     </div>
     {{ with .Lastmod }}
