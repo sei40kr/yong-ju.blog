@@ -1,5 +1,5 @@
 ---
-title: "Oracleの条件式の評価順序の最適化"
+title: "Oracleの条件式の評価順序の最適化の透過性が破れるとき"
 categories: ["データベース"]
 tags: ["RDB", "Oracle"]
 date: 2021-09-21T00:36:34+09:00
