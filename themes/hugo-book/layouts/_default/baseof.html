@@ -6,12 +6,12 @@
   </head>
   <body>
     <nav class="book-header">
-      <h1 class="book-header__title"><a href="{{ relURL "" }}">よんログ</a></h1>
+      <h1 class="title"><a href="{{ relURL "" }}">よんログ</a></h1>
     </nav>
 
     <main class="container">
       <aside class="book-menu">
-        <div class="book-menu__body">
+        <div class="body">
           <!-- Left menu Content -->
           {{ template "menu" . }}
         </div>
@@ -26,7 +26,7 @@
 
       {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
         <aside class="book-toc">
-          <div class="book-toc__body">
+          <div class="body">
             <!-- Table of Contents -->
             {{ template "toc" . }}
           </div>

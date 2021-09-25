@@ -4,12 +4,12 @@
   {{ with $.Site.GetPage (urlize "/categories") }}
     <div>
       <section class="book-menu-section">
-        <h3 class="book-menu-section__title">カテゴリ</h3>
-        <div class="book-menu-section__body">
+        <h3 class="title">カテゴリ</h3>
+        <div class="body">
           <ul class="book-menu-list">
             {{ range .Pages }}
               {{- $current := eq . $ -}}
-              <li class="book-menu-list__item{{ if $current }} book-menu-list__item--active{{ end }}">
+              <li class="item{{ if $current }} active{{ end }}">
                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
               </li>
             {{ end }}

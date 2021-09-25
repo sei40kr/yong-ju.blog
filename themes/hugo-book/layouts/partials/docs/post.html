@@ -1,9 +1,9 @@
 <article class="book-post">
-  <h1 class="book-post__title">
+  <h1 class="title">
     <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
   </h1>
 
-  <div class="book-post-item__meta">
+  <div class="meta">
     <div class="me-3">
       {{ $pubDate := printf "%sに公開" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
       {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="book-post__content markdown">
+  <div class="content markdown">
     {{- .Content -}}
   </div>
 </article>

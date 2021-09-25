@@ -1,13 +1,13 @@
 .book-menu {
   border-right: $border-width solid $border-color;
 
-  &__body {
+  > .body {
     padding: 2rem 1.5rem;
   }
 }
 
 .book-menu-section {
-  &__title {
+  > .title {
     font-family: inherit;
     font-size: inherit;
     font-weight: 700;
@@ -17,14 +17,14 @@
 .book-menu-list {
   @include list-unstyled;
 
-  &__item {
+  > .item {
     a {
       color: $gray-600;
       display: block;
       padding: 0.25rem 0;
       text-decoration: none;
     }
-    &--active a {
+    &.active a {
       color: inherit;
       font-weight: bold;
     }
@@ -32,7 +32,7 @@
     a:hover {
       color: $link-hover-color;
     }
-    &--active a:hover {
+    &.active a:hover {
       color: inherit;
     }
   }

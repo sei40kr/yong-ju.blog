@@ -1,24 +1,24 @@
 .book-post-meta {
-  &__icon {
+  > .icon {
     margin: 0 0.25rem 0 0;
   }
 }
 
 .book-post {
-  &__title {
+  > .title {
     a {
       color: inherit;
       text-decoration: none;
     }
   }
 
-  &__meta {
+  > .meta {
     color: $gray-600;
     display: flex;
     margin: 0 0 1.5rem;
   }
 
-  &__content {
+  > .content {
     margin-bottom: 2rem;
   }
 }
@@ -29,20 +29,20 @@
 }
 
 .book-post-item {
-  &__title {
+  > .title {
     a {
       color: inherit;
       text-decoration: none;
     }
   }
 
-  &__meta {
+  > .meta {
     color: $gray-600;
     display: flex;
     margin: 0 0 1.5rem;
   }
 
-  &__summary {
+  > .summary {
     word-break: break-word;
   }
 }
@@ -53,11 +53,16 @@
   line-height: 1.5;
   margin: 2em 0 0.5rem calc(var(--book-page-padding-x) * -1);
 
-  &--h2 {
+  &.h2 {
     margin-bottom: 1rem;
+
+    > .text {
+      border-bottom: $border-width solid $border-color;
+      padding: 0 0 0.5rem;
+    }
   }
 
-  &__anchor {
+  > .anchor {
     @include media-breakpoint-up(sm) {
       display: block;
     }
@@ -66,8 +71,7 @@
     text-align: center;
     width: var(--book-page-padding-x);
 
-    &:hover,
-    .book-heading:hover #{&} {
+    &:hover {
       opacity: 1;
     }
 
@@ -80,7 +84,11 @@
     }
   }
 
-  &__text {
+  &:hover > .anchor {
+    opacity: 1;
+  }
+
+  > .text {
     flex: 1;
 
     h2,
@@ -90,10 +98,6 @@
     h6 {
       margin: 0;
     }
-  }
-  &--h2 .book-heading__text {
-    border-bottom: $border-width solid $border-color;
-    padding: 0 0 0.5rem;
   }
 }
 

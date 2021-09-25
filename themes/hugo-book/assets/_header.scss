@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
 
-  &__title {
+  > .title {
     @include make-col-auto;
     @include media-breakpoint-up(sm) {
       font-size: 1.5rem;
