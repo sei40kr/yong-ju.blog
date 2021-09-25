@@ -5,9 +5,7 @@
     {{- with .First }}
       {{- if ne $currentPageNumber .PageNumber }}
         <li class="page-item">
-          <a href="{{ .URL }}" aria-label="First" class="page-link" role="button">
-            <span aria-hidden="true"><i class="bi bi-chevron-double-left"></span>
-          </a>
+          <a href="{{ .URL }}" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
         </li>
       {{- else }}
         <li class="page-item disabled">
@@ -47,7 +45,7 @@
 
     {{- with .Next }}
       <li class="page-item">
-        <a href="{{ .URL }}" aria-label="Next" class="page-link" role="button"><span aria-hidden="true"><i class="bi bi-chevron-double-right"></i></span></a>
+        <a href="{{ .URL }}" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
     {{- else }}
       <li class="page-item disabled">
