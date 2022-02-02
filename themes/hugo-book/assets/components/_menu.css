@@ -1,0 +1,19 @@
+.book-menu {
+  border-right: 1px solid #ddd;
+}
+
+.book-menu > .body {
+  @apply px-6 py-8;
+}
+
+.book-menu-section .title {
+  @apply font-bold mb-2;
+}
+
+.book-menu-list .item a {
+  @apply block py-1 text-muted hover:text-link-hover;
+}
+
+.book-menu-list .item.active a {
+  @apply font-bold text-black;
+}

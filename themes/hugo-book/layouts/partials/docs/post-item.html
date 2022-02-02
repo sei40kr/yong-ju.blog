@@ -4,12 +4,12 @@
   </h2>
 
   <div class="meta">
-    <div class="me-3">
+    <div class="mr-4">
       {{ $pubDate := printf "%sに公開" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
       {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
     </div>
     {{ with .Lastmod }}
-      <div class="me-3">
+      <div class="mr-4">
         {{ $lastmod := printf "%sに更新" (partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
         {{ partial "docs/post-meta" (dict "Icon" "arrow-repeat" "Text" $lastmod) }}
       </div>

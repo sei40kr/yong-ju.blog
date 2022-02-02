@@ -1,0 +1,35 @@
+.book-heading {
+  @apply flex items-center mt-8 mb-2;
+  margin-left: calc(var(--book-page-padding-x) * -1);
+}
+
+.book-heading .anchor {
+  @apply opacity-0 text-2xl text-center;
+  width: var(--book-page-padding-x);
+}
+
+@screen sm {
+  .book-heading > .anchor {
+    @apply block;
+  }
+}
+
+.book-heading .anchor a {
+  @apply text-muted hover:text-link-hover hover:opacity-100;
+}
+
+.book-heading:hover > .anchor {
+  @apply opacity-100;
+}
+
+.book-heading > .text {
+  flex: 1;
+}
+
+.book-heading.h2 {
+  @apply mb-4;
+}
+
+.book-heading.h2 > .text {
+  @apply border-b border-b-gray-200 pb-2;
+}

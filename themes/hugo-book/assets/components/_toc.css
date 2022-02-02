@@ -1,0 +1,15 @@
+.book-toc {
+  @apply text-sm;
+}
+
+.book-toc #TableOfContents {
+  @apply border-gray-200 border-l-2;
+}
+
+.book-toc ul {
+  @apply list-none m-0 pl-4;
+}
+
+.book-toc li a {
+  @apply block no-underline py-1 text-muted hover:text-link-hover text-sm;
+}

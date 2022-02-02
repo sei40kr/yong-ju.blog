@@ -1,0 +1,15 @@
+.book-post-item .title {
+  @apply font-serif mb-2 text-3xl;
+}
+
+.book-post-item .meta {
+  @apply flex mb-6 text-muted;
+}
+
+.book-post-item .summary {
+  @apply break-words mb-4;
+}
+
+.book-post-item .link a {
+  @apply text-link hover:text-link-hover underline;
+}

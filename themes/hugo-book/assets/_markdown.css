@@ -1,0 +1,113 @@
+.markdown {
+  line-height: 1.75;
+}
+
+.markdown > :first-child {
+  @apply mt-0;
+}
+
+.markdown > :last-child {
+  @apply mb-0;
+}
+
+.markdown a {
+  @apply text-link hover:text-link-hover underline;
+}
+
+.markdown blockquote {
+  @apply my-6 text-xl;
+}
+
+.markdown code {
+  @apply text-rose-700;
+}
+
+.markdown dl {
+  @apply my-6;
+}
+
+.markdown dt {
+  @apply font-bold;
+}
+
+.markdown dd {
+  @apply mb-2 pl-8;
+}
+
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  @apply font-serif;
+}
+
+.markdown h2 {
+  @apply text-3xl;
+}
+
+.markdown h3 {
+  @apply text-2xl;
+}
+
+.markdown h4 {
+  @apply text-xl;
+}
+
+.markdown h5 {
+  @apply text-lg;
+}
+
+.markdown h6 {
+  @apply text-base;
+}
+
+.markdown hr {
+  @apply bg-current border-0 h-px my-4 opacity-25;
+}
+
+.markdown img {
+  @apply w-full;
+}
+
+.markdown p {
+  @apply mb-4;
+}
+
+.markdown ol,
+.markdown ul {
+  @apply pl-8;
+}
+
+.markdown ol {
+  @apply list-decimal;
+}
+
+.markdown ul {
+  @apply list-disc;
+}
+
+.markdown table {
+  @apply my-6 w-full;
+}
+
+.markdown thead {
+  @apply border-b border-b-black;
+}
+
+.markdown tbody tr {
+  @apply border-b border-b-gray-200;
+}
+
+.markdown td,
+.markdown th {
+  @apply p-2;
+}
+
+.markdown .highlight {
+  @apply py-6;
+}
+
+.markdown .highlight code {
+  @apply text-inherit;
+}

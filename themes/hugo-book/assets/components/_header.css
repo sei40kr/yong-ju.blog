@@ -1,0 +1,40 @@
+:root {
+  --book-header-height: 44px;
+}
+
+@screen sm {
+  :root {
+    --book-header-height: 50px;
+  }
+}
+
+@screen lg {
+  :root {
+    --book-header-height: 70px;
+  }
+}
+
+.book-header {
+  @apply bg-white border-b border-b-gray-200 flex items-center justify-center;
+  height: var(--book-header-height);
+}
+
+.book-header .title {
+  @apply font-bold font-serif m-0 text-xl tracking-tighter;
+}
+
+.book-header .title a {
+  @apply underline;
+}
+
+@screen sm {
+  .book-header .title {
+    @apply text-2xl;
+  }
+}
+
+@screen lg {
+  .book-header .title {
+    @apply text-3xl;
+  }
+}

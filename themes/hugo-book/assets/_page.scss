@@ -1,7 +1,0 @@
-.book-page {
-  @include media-breakpoint-up(sm) {
-    --book-page-padding-x: 3rem;
-  }
-  --book-page-padding-x: 1rem;
-  padding: 2rem var(--book-page-padding-x);
-}

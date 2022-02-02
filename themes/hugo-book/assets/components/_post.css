@@ -1,0 +1,11 @@
+.book-post > .title {
+  @apply font-serif mb-2 text-4xl;
+}
+
+.book-post > .meta {
+  @apply flex mb-6 text-muted;
+}
+
+.book-post > .content {
+  @apply mb-8;
+}
