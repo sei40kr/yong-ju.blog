@@ -1,113 +1,90 @@
 .markdown {
-  line-height: 1.75;
-}
-
-.markdown > :first-child {
-  @apply mt-0;
-}
-
-.markdown > :last-child {
-  @apply mb-0;
-}
-
-.markdown a {
-  @apply text-link hover:text-link-hover underline;
-}
-
-.markdown blockquote {
-  @apply my-6 text-xl;
-}
-
-.markdown code {
-  @apply text-rose-700;
-}
-
-.markdown dl {
-  @apply my-6;
-}
-
-.markdown dt {
-  @apply font-bold;
-}
-
-.markdown dd {
-  @apply mb-2 pl-8;
-}
-
-.markdown h2,
-.markdown h3,
-.markdown h4,
-.markdown h5,
-.markdown h6 {
-  @apply font-serif;
-}
-
-.markdown h2 {
-  @apply text-3xl;
-}
-
-.markdown h3 {
-  @apply text-2xl;
-}
-
-.markdown h4 {
-  @apply text-xl;
-}
-
-.markdown h5 {
-  @apply text-lg;
-}
-
-.markdown h6 {
   @apply text-base;
-}
 
-.markdown hr {
-  @apply bg-current border-0 h-px my-4 opacity-25;
-}
+  > :first-child {
+    @apply mt-0;
+  }
 
-.markdown img {
-  @apply w-full;
-}
+  > :last-child {
+    @apply mb-0;
+  }
 
-.markdown p {
-  @apply mb-4;
-}
+  blockquote {
+    @apply my-6 text-xl;
+  }
 
-.markdown ol,
-.markdown ul {
-  @apply pl-8;
-}
+  code {
+    @apply text-rose-700;
+  }
 
-.markdown ol {
-  @apply list-decimal;
-}
+  dl {
+    @apply my-6;
+  }
 
-.markdown ul {
-  @apply list-disc;
-}
+  dt {
+    @apply font-bold;
+  }
 
-.markdown table {
-  @apply my-6 w-full;
-}
+  dd {
+    @apply mb-2 pl-8;
+  }
 
-.markdown thead {
-  @apply border-b border-b-black;
-}
+  hr {
+    @apply bg-current border-0 h-px my-4 opacity-25;
+  }
 
-.markdown tbody tr {
-  @apply border-b border-b-gray-200;
-}
+  img {
+    @apply w-full;
+  }
 
-.markdown td,
-.markdown th {
-  @apply p-2;
-}
+  p {
+    @apply mb-4;
+  }
 
-.markdown .highlight {
-  @apply py-6;
-}
+  ol,
+  ul {
+    @apply pl-8;
+  }
 
-.markdown .highlight code {
-  @apply text-inherit;
+  ol {
+    @apply list-decimal;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  table {
+    @apply my-6 w-full;
+  }
+
+  thead {
+    @apply border-b border-b-black;
+  }
+
+  tbody tr {
+    @apply border-b border-b-gray-200;
+  }
+
+  td,
+  th {
+    @apply p-2;
+  }
+
+  .highlight {
+    @apply py-6;
+
+    code {
+      @apply text-inherit;
+    }
+  }
+
+  .katex-display,
+  .mermaid {
+    @apply my-4;
+  }
+
+  .katex .cjk_fallback {
+    font-size: 1rem;
+  }
 }

@@ -1,0 +1,19 @@
+.book-hint {
+  @apply border border-gray-200 border-l-4 my-4 px-6 py-4 rounded;
+
+  &--info {
+    @apply border-l-cyan-500;
+  }
+
+  &--warning {
+    @apply border-l-orange-500;
+  }
+
+  &--danger {
+    @apply border-l-red-500;
+  }
+
+  > :last-child {
+    @apply mb-0;
+  }
+}

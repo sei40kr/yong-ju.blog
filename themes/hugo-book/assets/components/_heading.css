@@ -1,35 +1,35 @@
 .book-heading {
-  @apply flex items-center mt-8 mb-2;
-  margin-left: calc(var(--book-page-padding-x) * -1);
-}
+  @apply flex font-serif items-center mb-2 mt-8;
 
-.book-heading .anchor {
-  @apply opacity-0 text-2xl text-center;
-  width: var(--book-page-padding-x);
-}
-
-@screen sm {
-  .book-heading > .anchor {
-    @apply block;
+  &--level-2 {
+    @apply border-b border-b-gray-200 mb-4 pb-2 text-3xl;
   }
-}
 
-.book-heading .anchor a {
-  @apply text-muted hover:text-link-hover hover:opacity-100;
-}
+  &--level-3 {
+    @apply text-2xl;
+  }
 
-.book-heading:hover > .anchor {
-  @apply opacity-100;
-}
+  &--level-4 {
+    @apply text-xl;
+  }
 
-.book-heading > .text {
-  flex: 1;
-}
+  &--level-5 {
+    @apply text-lg;
+  }
 
-.book-heading.h2 {
-  @apply mb-4;
-}
+  &--level-6 {
+    @apply text-base;
+  }
 
-.book-heading.h2 > .text {
-  @apply border-b border-b-gray-200 pb-2;
+  &__anchor-outer {
+    @apply hidden sm:block -ml-8 text-2xl text-center text-muted hover:text-link-hover opacity-0 w-8;
+  }
+
+  &:hover &__anchor-outer {
+    @apply opacity-100;
+  }
+
+  &__anchor {
+    @apply text-muted hover:text-link-hover;
+  }
 }

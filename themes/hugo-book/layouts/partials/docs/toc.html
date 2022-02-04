@@ -1,3 +1,7 @@
-{{ partial "docs/inject/toc-before" . }}
-  {{ .TableOfContents }}
-{{ partial "docs/inject/toc-after" . }}
+<div class="book-toc">
+  <div class="book-toc__inner">
+      {{ partial "docs/inject/toc-before" . }}
+      {{ .TableOfContents }}
+      {{ partial "docs/inject/toc-after" . }}
+  </div>
+</div>

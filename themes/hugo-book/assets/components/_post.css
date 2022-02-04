@@ -1,11 +1,33 @@
-.book-post > .title {
-  @apply font-serif mb-2 text-4xl;
-}
+.book-post {
+  &__header {
+    @apply mb-6;
+  }
 
-.book-post > .meta {
-  @apply flex mb-6 text-muted;
-}
+  &__title {
+    @apply font-serif mb-2;
 
-.book-post > .content {
-  @apply mb-8;
+    &--level-1 {
+      @apply text-4xl;
+    }
+
+    &--level-2 {
+      @apply text-3xl;
+    }
+  }
+
+  &__meta {
+    @apply flex flex-wrap items-center;
+  }
+
+  &__summary {
+    @apply break-words;
+  }
+
+  &__footer {
+    @apply mt-4;
+  }
+
+  &__readmore {
+    @apply text-link hover:text-link-hover underline;
+  }
 }

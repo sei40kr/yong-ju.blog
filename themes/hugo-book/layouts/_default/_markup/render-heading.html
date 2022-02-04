@@ -1,8 +1,6 @@
-<div class="book-heading h{{ .Level }}">
-  <div class="anchor">
-    <a href="#{{ .Anchor | safeURL }}"><i class="bi bi-link"></i></a>
+<div class="book-heading book-heading--level-{{ .Level }}">
+  <div class="book-heading__anchor-outer">
+    <a href="#{{ .Anchor | safeURL }}" class="book-heading__anchor"><i class="bi bi-link"></i></a>
   </div>
-  <div class="text">
-    <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}>
-  </div>
+  <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}>
 </div>

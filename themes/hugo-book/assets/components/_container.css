@@ -1,0 +1,7 @@
+:root {
+  --book-container-w-max: theme('screens.2xl');
+}
+
+.book-container {
+  @apply mt-[var(--book-header-h)] mx-auto w-full max-w-[var(--book-container-w-max)];
+}

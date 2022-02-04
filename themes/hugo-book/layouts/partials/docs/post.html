@@ -1,26 +1,26 @@
 <article class="book-post">
-  <h1 class="title">
-    <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
-  </h1>
-
-  <div class="meta">
-    <div class="mr-4">
-      {{ $pubDate := printf "%sに公開" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
-      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
+  <header class="book-post__header">
+    <h1 class="book-post__title book-post__title--level-1">
+      <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+    </h1>
+    <div class="book-post__meta">
+        {{ $pubDate := partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat) }}
+        {{ $label := printf "%sに公開" $pubDate | safeHTML }}
+        {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+        {{ with .Lastmod }}
+            {{ $lastmod := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}
+            {{ $label = printf "%sに更新" $lastmod | safeHTML }}
+            {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+        {{ end }}
+        {{ $mins := math.Round (div .WordCount 220.0) }}
+        {{ $label = printf "%.f min reads" $mins | safeHTML }}
+        {{ partial "docs/tag" (dict "Icon" "calendar" "Label" $label) }}
     </div>
-    {{ with .Lastmod }}
-      <div class="mr-4">
-        {{ $lastmod := printf "%sに更新" (partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
-        {{ partial "docs/post-meta" (dict "Icon" "arrow-repeat" "Text" $lastmod) }}
-      </div>
-    {{ end }}
-    <div>
-      {{ $mins := printf "%.f min reads" (math.Round (div .WordCount 220.0)) | safeHTML }}
-      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $mins) }}
-    </div>
-  </div>
+  </header>
 
-  <div class="content markdown">
-    {{- .Content -}}
-  </div>
+  <section class="book-post__content">
+    <div class="markdown">
+        {{- .Content -}}
+    </div>
+  </section>
 </article>

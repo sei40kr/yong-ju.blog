@@ -1,0 +1,15 @@
+:root {
+  --book-page-px: theme('spacing.4');
+
+  @screen sm {
+    --book-page-px: theme('spacing.12');
+  }
+}
+
+.book-page {
+  @apply flex;
+
+  &__inner {
+    @apply flex-1 pl-[calc(var(--book-page-px)+var(--book-nav-w))] pr-[var(--book-page-px)] py-8;
+  }
+}

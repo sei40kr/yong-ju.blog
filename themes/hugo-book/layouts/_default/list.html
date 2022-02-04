@@ -1,16 +1,16 @@
 {{ define "main" }}
   <ul class="book-posts">
-    {{ range sort .Paginator.Pages }}
-      <li>
-        <div class="mb-12">
-          {{ partial "docs/post-item.html" . }}
-        </div>
-      </li>
-    {{ end }}
+      {{ range sort .Paginator.Pages }}
+        <li>
+          <div class="mb-12">
+              {{ partial "docs/post-item.html" . }}
+          </div>
+        </li>
+      {{ end }}
   </ul>
 
   <div class="flex justify-center my-4">
-    {{ partial "docs/pagination.html" . }}
+      {{ partial "docs/pagination.html" . }}
   </div>
 {{ end }}
 

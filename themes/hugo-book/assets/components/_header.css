@@ -1,40 +1,19 @@
 :root {
-  --book-header-height: 44px;
-}
+  --book-header-h: 44px;
 
-@screen sm {
-  :root {
-    --book-header-height: 50px;
+  @screen sm {
+    --book-header-h: 50px;
   }
-}
 
-@screen lg {
-  :root {
-    --book-header-height: 70px;
+  @screen lg {
+    --book-header-h: 70px;
   }
 }
 
 .book-header {
-  @apply bg-white border-b border-b-gray-200 flex items-center justify-center;
-  height: var(--book-header-height);
-}
+  @apply bg-white border-b border-b-gray-200 fixed flex h-[var(--book-header-h)] inset-x-0 items-center justify-center top-0 z-30;
 
-.book-header .title {
-  @apply font-bold font-serif m-0 text-xl tracking-tighter;
-}
-
-.book-header .title a {
-  @apply underline;
-}
-
-@screen sm {
-  .book-header .title {
-    @apply text-2xl;
-  }
-}
-
-@screen lg {
-  .book-header .title {
-    @apply text-3xl;
+  &__brand {
+    @apply font-bold font-serif m-0 text-xl sm:text-2xl lg:text-3xl tracking-tighter underline;
   }
 }

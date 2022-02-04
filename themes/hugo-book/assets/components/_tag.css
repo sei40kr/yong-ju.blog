@@ -1,0 +1,11 @@
+.book-tag {
+  @apply flex items-center text-muted;
+
+  &__icon {
+    @apply mr-1;
+  }
+
+  &__label {
+    @apply mr-4;
+  }
+}

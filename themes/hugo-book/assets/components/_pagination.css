@@ -1,31 +1,33 @@
 .pagination {
   @apply flex items-stretch;
-}
 
-.pagination .page-link {
-  @apply block border border-gray-200 px-3 py-1.5;
-}
+  .page-link {
+    @apply block border border-gray-200 px-3 py-1.5;
+  }
 
-.pagination .page-item:first-child .page-link {
-  @apply rounded-l;
-}
+  .page-item {
+    &:first-child .page-link {
+      @apply rounded-l;
+    }
 
-.pagination .page-item:not(:first-child) .page-link {
-  @apply -ml-px;
-}
+    &:not(:first-child) .page-link {
+      @apply -ml-px;
+    }
 
-.pagination .page-item:last-child .page-link {
-  @apply rounded-r;
-}
+    &:last-child .page-link {
+      @apply rounded-r;
+    }
 
-.pagination .page-item:not(.active, .disabled) .page-link {
-  @apply bg-white hover:bg-gray-100 text-link hover:text-link-hover;
-}
+    &:not(.active, .disabled) .page-link {
+      @apply bg-white hover:bg-gray-100 text-link hover:text-link-hover;
+    }
 
-.pagination .page-item.active .page-link {
-  @apply bg-link text-white;
-}
+    &.active .page-link {
+      @apply bg-link text-white;
+    }
 
-.pagination .page-item.disabled .page-link {
-  @apply bg-white pointer-events-none text-muted;
+    &.disabled .page-link {
+      @apply bg-white pointer-events-none text-muted;
+    }
+  }
 }

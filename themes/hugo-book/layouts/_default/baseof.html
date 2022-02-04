@@ -1,53 +1,43 @@
 <!doctype html>
 <html lang="{{ .Site.Language.Lang }}">
-  <head>
+<head>
     {{ partial "docs/html-head" . }}
     {{ partial "docs/inject/head" . }}
-  </head>
-  <body>
-    <nav class="book-header">
-      <h1 class="title"><a href="{{ relURL "" }}">よんログ</a></h1>
-    </nav>
+</head>
+<body>
+<header class="book-header">
+  <h1><a href="{{ relURL "" }}" class="book-header__brand">よんログ</a></h1>
+</header>
 
-    <main class="book-container">
-      <aside class="book-menu">
-        <div class="body">
-          <!-- Left menu Content -->
-          {{ template "menu" . }}
-        </div>
-      </aside>
+<main class="book-container">
+  <nav class="book-nav">
+      {{ template "menu" . }}
+  </nav>
 
-      <div class="book-page">
+  <div class="book-page">
+    <div class="book-page__inner">
         {{ partial "docs/inject/content-before" . }}
-        <!-- Page Content -->
         {{ template "main" . }}
         {{ partial "docs/inject/content-after" . }}
-      </div>
-
+    </div>
       {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-        <aside class="book-toc">
-          <div class="body">
-            <!-- Table of Contents -->
-            {{ template "toc" . }}
-          </div>
-        </aside>
+          {{ template "toc" . }}
       {{ end }}
-    </main>
+  </div>
+</main>
 
-    {{ partial "docs/inject/body" . }}
-  </body>
+{{ partial "docs/inject/body" . }}
+</body>
 </html>
 
 {{ define "menu" }}
-  {{ partial "docs/menu" . }}
+    {{ partial "docs/menu" . }}
 {{ end }}
 
 {{ define "main" }}
   <article class="markdown">
-    {{- .Content -}}
+      {{- .Content -}}
   </article>
 {{ end }}
 
-{{ define "toc" }}
-  {{ partial "docs/toc" . }}
-{{ end }}
+{{ define "toc" }}{{ end }}

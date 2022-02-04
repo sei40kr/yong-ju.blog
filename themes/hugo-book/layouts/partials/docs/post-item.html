@@ -1,35 +1,37 @@
-<article class="book-post-item">
-  <h2 class="title">
-    <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
-  </h2>
-
-  <div class="meta">
-    <div class="mr-4">
-      {{ $pubDate := printf "%sに公開" (partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
-      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $pubDate) }}
+<article class="book-post">
+  <header class="book-post__header">
+    <h2 class="book-post__title book-post__title--level-2">
+      <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+    </h2>
+    <div class="book-post__meta">
+        {{ $pubDate := partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat) }}
+        {{ $label := printf "%sに公開" $pubDate | safeHTML }}
+        {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+        {{ with .Lastmod }}
+            {{ $lastmod := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}
+            {{ $label = printf "%sに更新" $lastmod | safeHTML }}
+            {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+        {{ end }}
+        {{ $mins := math.Round (div .WordCount 220.0) }}
+        {{ $label = printf "%.f min reads" $mins | safeHTML }}
+        {{ partial "docs/tag" (dict "Icon" "calendar" "Label" $label) }}
     </div>
-    {{ with .Lastmod }}
-      <div class="mr-4">
-        {{ $lastmod := printf "%sに更新" (partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat)) | safeHTML }}
-        {{ partial "docs/post-meta" (dict "Icon" "arrow-repeat" "Text" $lastmod) }}
-      </div>
+  </header>
+
+  <section>
+    <p class="book-post__summary">
+        {{ .Summary -}}
+        {{- if .Truncated -}}
+          ...
+        {{- end }}
+    </p>
+  </section>
+
+    {{ if .Truncated }}
+      <footer class="book-post__footer">
+        <p class="book-post__readmore">
+          <a href="{{ .RelPermalink }}">続きを読む</a>
+        </p>
+      </footer>
     {{ end }}
-    <div>
-      {{ $mins := printf "%.f min reads" (math.Round (div .WordCount 220.0)) | safeHTML }}
-      {{ partial "docs/post-meta" (dict "Icon" "calendar" "Text" $mins) }}
-    </div>
-  </div>
-
-  <p class="summary">
-    {{ .Summary -}}
-    {{- if .Truncated -}}
-      ...
-    {{- end }}
-  </p>
-
-  <p class="link">
-    {{- if .Truncated }}
-      <a href="{{ .RelPermalink }}">続きを読む</a>
-    {{ end -}}
-  </p>
 </article>

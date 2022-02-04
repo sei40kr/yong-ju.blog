@@ -3,6 +3,7 @@ module.exports = {
     "postcss-import": {
       path: ["themes/hugo-book/assets"],
     },
+    "tailwindcss/nesting": {},
     tailwindcss: {},
     autoprefixer: {},
   },
