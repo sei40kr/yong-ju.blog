@@ -15,7 +15,7 @@
 
   #TableOfContents {
     > ul {
-      @apply border-l-2 border-l-gray-200;
+      @apply border-l-2;
     }
 
     ul {

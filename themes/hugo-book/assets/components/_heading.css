@@ -2,7 +2,7 @@
   @apply flex font-serif items-center mb-2 mt-8;
 
   &--level-2 {
-    @apply border-b border-b-gray-200 mb-4 pb-2 text-3xl;
+    @apply border-b mb-4 pb-2 text-3xl;
   }
 
   &--level-3 {

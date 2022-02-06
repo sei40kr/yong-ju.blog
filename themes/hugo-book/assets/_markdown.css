@@ -63,7 +63,7 @@
   }
 
   tbody tr {
-    @apply border-b border-b-gray-200;
+    @apply border-b;
   }
 
   td,

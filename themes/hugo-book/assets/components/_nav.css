@@ -7,7 +7,7 @@
 }
 
 .book-nav {
-  @apply border-r border-r-gray-200 bottom-0 fixed hidden left-[max(0px,50%-var(--book-container-w-max)/2)] lg:block px-6 py-8 top-[var(--book-header-h)] w-[var(--book-nav-w)] z-30;
+  @apply border-r bottom-0 fixed hidden left-[max(0px,50%-var(--book-container-w-max)/2)] lg:block px-6 py-8 top-[var(--book-header-h)] w-[var(--book-nav-w)] z-30;
 
   &__title {
     @apply font-bold mb-2;

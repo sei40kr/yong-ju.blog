@@ -1,5 +1,5 @@
 .book-hint {
-  @apply border border-gray-200 border-l-4 my-4 px-6 py-4 rounded;
+  @apply border border-l-4 my-4 px-6 py-4 rounded;
 
   &--info {
     @apply border-l-cyan-500;
