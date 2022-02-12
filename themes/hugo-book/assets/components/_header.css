@@ -4,16 +4,12 @@
   @screen sm {
     --book-header-h: 50px;
   }
-
-  @screen lg {
-    --book-header-h: 70px;
-  }
 }
 
 .book-header {
   @apply bg-white border-b fixed flex h-[var(--book-header-h)] inset-x-0 items-center justify-center top-0 z-30;
 
   &__brand {
-    @apply font-bold font-serif m-0 text-xl sm:text-2xl lg:text-3xl tracking-tighter underline;
+    @apply font-bold font-serif m-0 text-xl sm:text-2xl tracking-tighter;
   }
 }
