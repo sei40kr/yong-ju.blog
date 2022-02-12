@@ -7,11 +7,11 @@
     @apply font-serif;
 
     &--level-1 {
-      @apply text-4xl;
+      @apply font-bold text-4xl;
     }
 
     &--level-2 {
-      @apply text-3xl;
+      @apply font-semibold text-3xl;
     }
   }
 

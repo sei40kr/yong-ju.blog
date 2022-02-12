@@ -1,24 +1,24 @@
 .book-heading {
-  @apply flex font-serif items-center mb-2 mt-8;
+  @apply flex items-center mb-2 mt-8;
 
   &--level-2 {
-    @apply border-b mb-4 pb-2 text-3xl;
+    @apply border-b font-serif font-semibold mb-4 pb-2 text-3xl;
   }
 
   &--level-3 {
-    @apply text-2xl;
+    @apply font-bold font-serif font-semibold text-2xl;
   }
 
   &--level-4 {
-    @apply text-xl;
+    @apply font-bold font-sans text-xl;
   }
 
   &--level-5 {
-    @apply text-lg;
+    @apply font-bold font-sans text-lg;
   }
 
   &--level-6 {
-    @apply text-base;
+    @apply font-bold font-sans text-base;
   }
 
   &__anchor-outer {
