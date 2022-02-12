@@ -10,7 +10,7 @@
         {{ with .Lastmod }}
             {{ $lastmod := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}
             {{ $label = printf "%sに更新" $lastmod | safeHTML }}
-            {{ partial "docs/tag" (dict "Icon" "refresh" "Label" $label) }}
+            {{ partial "docs/tag" (dict "Icon" "pencil-alt" "Label" $label) }}
         {{ end }}
         {{ $mins := math.Round (div .WordCount 220.0) }}
         {{ $label = printf "%.f min reads" $mins | safeHTML }}
