@@ -2,10 +2,10 @@
   @apply flex items-center text-muted;
 
   &__icon {
-    @apply mr-1;
+    @apply mr-1.5;
   }
 
   &__label {
-    @apply mr-4;
+    @apply mr-4 mt-0.5;
   }
 }
