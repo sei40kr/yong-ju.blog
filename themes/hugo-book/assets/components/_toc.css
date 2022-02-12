@@ -10,7 +10,7 @@
   @apply hidden lg:block text-sm w-[var(--book-toc-w)] z-20;
 
   &__inner {
-    @apply bottom-0 px-6 py-8 top-[var(--book-header-h)] sticky;
+    @apply bottom-0 px-6 py-8 top-[var(--book-header-h)] fixed;
   }
 
   #TableOfContents {
