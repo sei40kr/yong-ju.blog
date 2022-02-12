@@ -1,4 +1,6 @@
 <div class="book-tag">
-  <span class="book-tag__icon"><i class="bi bi-{{ .Icon }}"></i></span>
+  <span class="book-tag__icon">
+      {{ partial "docs/icon.html" (dict "Icon" .Icon "Class" "h-5 w-5") }}
+  </span>
   <span class="book-tag__label">{{ .Label }}</span>
 </div>

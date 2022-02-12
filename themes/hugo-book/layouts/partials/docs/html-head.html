@@ -17,7 +17,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
 {{- $styles := resources.Get "book.css" | resources.PostCSS | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ template "integrity" $styles }}>
-<link rel="stylesheet" href="{{ relURL "vendor/bootstrap-icons-1.5.0/bootstrap-icons.css" }}">
 
 {{- template "_internal/google_analytics_async.html" . -}}
 

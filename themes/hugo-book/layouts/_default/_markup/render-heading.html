@@ -1,6 +1,8 @@
 <div class="book-heading book-heading--level-{{ .Level }}">
   <div class="book-heading__anchor-outer">
-    <a href="#{{ .Anchor | safeURL }}" class="book-heading__anchor"><i class="bi bi-link"></i></a>
+    <a href="#{{ .Anchor | safeURL }}" class="book-heading__anchor">
+        {{ partial "docs/icon.html" (dict "Icon" "link" "Class" "h-5 w-5") }}
+    </a>
   </div>
   <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}>
 </div>

@@ -6,15 +6,15 @@
     <div class="book-post__meta">
         {{ $pubDate := partial "docs/date" (dict "Date" .Date "Format" $.Site.Params.BookDateFormat) }}
         {{ $label := printf "%sに公開" $pubDate | safeHTML }}
-        {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+        {{ partial "docs/tag" (dict "Icon" "calendar" "Label" $label) }}
         {{ with .Lastmod }}
             {{ $lastmod := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}
             {{ $label = printf "%sに更新" $lastmod | safeHTML }}
-            {{ partial "docs/tag" (dict "Icon" "arrow-repeat" "Label" $label) }}
+            {{ partial "docs/tag" (dict "Icon" "refresh" "Label" $label) }}
         {{ end }}
         {{ $mins := math.Round (div .WordCount 220.0) }}
         {{ $label = printf "%.f min reads" $mins | safeHTML }}
-        {{ partial "docs/tag" (dict "Icon" "calendar" "Label" $label) }}
+        {{ partial "docs/tag" (dict "Icon" "clock" "Label" $label) }}
     </div>
   </header>
 
