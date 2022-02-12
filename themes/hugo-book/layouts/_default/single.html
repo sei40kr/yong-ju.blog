@@ -1,5 +1,15 @@
 {{ define "main" }}
-    {{ partial "docs/post" . }}
+  <article class="book-post">
+    <header class="book-post__header">
+        {{ partial "docs/post-meta.html" (dict "Level" 1 "Post" .) }}
+    </header>
+
+    <section class="book-post__content">
+      <div class="markdown">
+          {{- .Content -}}
+      </div>
+    </section>
+  </article>
 {{ end }}
 
 {{ define "toc" }}

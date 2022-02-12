@@ -30,9 +30,3 @@ startLevel = 2
 languageName = 'Japanese'
 contentDir = 'content'
 weight = 1
-
-[params]
-# Configure the date format used on the pages
-# - In git information
-# - In blog posts
-BookDateFormat = "2006.01.02"

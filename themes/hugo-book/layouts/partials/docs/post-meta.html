@@ -1,0 +1,18 @@
+{{ with .Post }}
+  <h2 class="book-post__title book-post__title--level-{{ $.Level }}">
+    <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+  </h2>
+  <div class="book-post__terms">
+      {{ $pubDate := partial "docs/date" .Date }}
+      {{ $label := printf "%sに公開" $pubDate | safeHTML }}
+      {{ partial "docs/post-term" (dict "Icon" "calendar" "Label" $label) }}
+      {{ with .Lastmod }}
+          {{ $lastmod := partial "docs/date" . }}
+          {{ $label = printf "%sに更新" $lastmod | safeHTML }}
+          {{ partial "docs/post-term" (dict "Icon" "pencil-alt" "Label" $label) }}
+      {{ end }}
+      {{ $mins := math.Round (div .WordCount 220.0) }}
+      {{ $label = printf "%.f min reads" $mins | safeHTML }}
+      {{ partial "docs/post-term" (dict "Icon" "clock" "Label" $label) }}
+  </div>
+{{ end }}

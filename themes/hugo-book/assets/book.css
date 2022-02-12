@@ -7,7 +7,7 @@
 @import "components/_page.css";
 @import "components/_pagination.css";
 @import "components/_post.css";
-@import "components/_tag.css";
+@import "components/_post-term.css";
 @import "components/_toc.css";
 
 @import "_markdown.css";

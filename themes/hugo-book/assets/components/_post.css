@@ -15,7 +15,7 @@
     }
   }
 
-  &__meta {
+  &__terms {
     @apply flex flex-wrap items-center;
   }
 
