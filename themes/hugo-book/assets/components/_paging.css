@@ -1,0 +1,23 @@
+.paging {
+  @apply border-t flex items-stretch justify-center;
+
+  &__item {
+    @apply border-t border-t-transparent -mt-px mx-0.5 rounded-b text-muted;
+
+    &:not(&--disabled, &--active) {
+      @apply hover:bg-slate-100 hover:border-t-link-hover hover:text-link-hover;
+    }
+
+    &--disabled {
+      @apply text-disabled;
+    }
+
+    &--active {
+      @apply font-bold border-t-black text-black;
+    }
+  }
+
+  &__link {
+    @apply flex h-10 items-center justify-center text-sm sm:text-base w-10;
+  }
+}

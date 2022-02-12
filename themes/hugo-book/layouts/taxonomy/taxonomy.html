@@ -9,9 +9,7 @@
     {{ end }}
   </ul>
 
-  <div class="flex justify-center my-4">
-    {{ partial "docs/pagination.html" . }}
-  </div>
+  {{ partial "docs/paging.html" . }}
 {{ end }}
 
 {{ define "toc" }}

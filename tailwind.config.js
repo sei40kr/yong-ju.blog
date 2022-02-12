@@ -6,6 +6,7 @@ module.exports = {
     "./{assets,static}/**/*.js",
     "./themes/hugo-book/layouts/**/*.html",
     "./themes/hugo-book/{assets,static}/**/*.js",
+    { raw: '<svg class="h-3.5 -mt-0.5 w-3.5">', extension: "html" },
     { raw: '<svg class="h-5 w-5">', extension: "html" },
     { raw: '<div class="markdown"><blockquote>', extension: "html" },
     { raw: '<div class="markdown"><code>', extension: "html" },
