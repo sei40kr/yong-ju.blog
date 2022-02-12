@@ -44,6 +44,7 @@ module.exports = {
         link: colors.blue["500"],
         "link-hover": colors.blue["700"],
         muted: colors.gray["500"],
+        disabled: colors.slate["300"],
       },
     },
   },
