@@ -16,11 +16,11 @@
   }
 
   &__terms {
-    @apply flex flex-wrap items-center mt-2;
+    @apply flex flex-wrap items-center mt-3 text-sm;
   }
   
   &__tags {
-    @apply flex flex-wrap mt-2;
+    @apply flex flex-wrap mt-3;
   }
 
   &__summary {
