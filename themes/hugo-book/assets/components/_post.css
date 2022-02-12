@@ -4,7 +4,7 @@
   }
 
   &__title {
-    @apply font-serif mb-2;
+    @apply font-serif;
 
     &--level-1 {
       @apply text-4xl;
@@ -16,7 +16,11 @@
   }
 
   &__terms {
-    @apply flex flex-wrap items-center;
+    @apply flex flex-wrap items-center mt-2;
+  }
+  
+  &__tags {
+    @apply flex flex-wrap mt-2;
   }
 
   &__summary {
