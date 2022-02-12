@@ -1,6 +1,6 @@
 .book-post {
   &__header {
-    @apply mb-6;
+    @apply mb-8;
   }
 
   &__title {
