@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-base;
+  @apply leading-8 text-base;
 
   > :first-child {
     @apply mt-0;
@@ -46,6 +46,11 @@
     @apply pl-8;
   }
 
+  > ol,
+  > ul {
+    @apply my-6;
+  }
+
   ol {
     @apply list-decimal;
   }
@@ -84,7 +89,11 @@
     @apply my-4;
   }
 
-  .katex .cjk_fallback {
-    font-size: 1rem;
+  .katex {
+    @apply whitespace-nowrap;
+
+    .cjk_fallback {
+      font-size: 1rem;
+    }
   }
 }
