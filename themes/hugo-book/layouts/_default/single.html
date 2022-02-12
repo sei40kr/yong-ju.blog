@@ -13,5 +13,9 @@
 {{ end }}
 
 {{ define "toc" }}
-    {{ partial "docs/toc" . }}
+  <div class="book-toc">
+    <div class="book-toc__body">
+        {{ partial "docs/toc" . }}
+    </div>
+  </div>
 {{ end }}

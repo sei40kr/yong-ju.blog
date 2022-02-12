@@ -15,14 +15,16 @@
   </nav>
 
   <div class="book-page">
-    <div class="book-page__inner">
+    <div class="book-page__body">
         {{ partial "docs/inject/content-before" . }}
         {{ template "main" . }}
         {{ partial "docs/inject/content-after" . }}
     </div>
-      {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-          {{ template "toc" . }}
-      {{ end }}
+    <div class="book-page__toc">
+        {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+            {{ template "toc" . }}
+        {{ end }}
+    </div>
   </div>
 </main>
 

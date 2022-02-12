@@ -1,15 +1,27 @@
-:root {
-  --book-page-px: theme('spacing.4');
-
-  @screen sm {
-    --book-page-px: theme('spacing.12');
-  }
-}
-
 .book-page {
   @apply flex;
 
-  &__inner {
-    @apply flex-1 pl-[calc(var(--book-page-px)+var(--book-nav-w))] pr-[var(--book-page-px)] py-8;
+  &__body {
+    @apply flex-auto ml-[var(--book-nav-w)] overflow-auto px-[calc(var(--book-page-px))] py-8;
+
+    @at-root :root {
+      --book-page-px: theme('spacing.4');
+
+      @screen sm {
+        --book-page-px: theme('spacing.12');
+      }
+    }
+  }
+
+  &__toc {
+    @apply basis-[var(--book-toc-w)] hidden xl:block shrink-0;
+
+    @at-root :root {
+      --book-toc-w: 0px;
+
+      @screen xl {
+        --book-toc-w: 19.5rem;
+      }
+    }
   }
 }

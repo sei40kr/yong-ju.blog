@@ -1,29 +1,21 @@
-:root {
-  --book-toc-w: 0px;
-
-  @screen lg {
-    --book-toc-w: 19.5rem;
-  }
-}
-
 .book-toc {
-  @apply hidden lg:block text-sm w-[var(--book-toc-w)] z-20;
+  @apply text-sm;
 
-  &__inner {
-    @apply bottom-0 px-6 py-8 top-[var(--book-header-h)] fixed;
+  &__body {
+    @apply bottom-0 fixed px-6 py-8 top-[var(--book-header-h)] z-20;
   }
 
   #TableOfContents {
     > ul {
-      @apply border-l-2;
+      @apply border-l border-l-gray-100;
     }
 
     ul {
-      @apply list-none m-0 pl-4;
+      @apply list-none pl-4;
     }
 
     li a {
-      @apply block no-underline py-1 text-muted hover:text-link-hover text-sm;
+      @apply block py-1 text-muted hover:text-link-hover text-sm;
     }
   }
 }
