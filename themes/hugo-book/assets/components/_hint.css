@@ -1,19 +1,27 @@
 .book-hint {
-  @apply border border-l-4 my-4 px-6 py-4 rounded;
+  @apply border border-l-4 flex items-center my-4 pl-4 pr-6 py-3 rounded-lg shadow-sm;
 
   &--info {
-    @apply border-l-cyan-500;
+    @apply border-l-sky-500;
+    --book-hint-icon-color: theme('colors.sky.600');
   }
 
-  &--warning {
-    @apply border-l-orange-500;
+  &--warn {
+    @apply border-l-amber-500;
+    --book-hint-icon-color: theme('colors.amber.600');
   }
 
   &--danger {
-    @apply border-l-red-500;
+    @apply border-l-rose-500;
+    --book-hint-icon-color: theme('colors.rose.600');
   }
 
-  > :last-child {
-    @apply mb-0;
+  &__icon {
+    @apply mr-4;
+    color: var(--book-hint-icon-color);
+  }
+
+  &__content {
+    @apply flex-1;
   }
 }

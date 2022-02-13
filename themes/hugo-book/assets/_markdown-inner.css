@@ -1,0 +1,34 @@
+.markdown-inner {
+  > :first-child {
+    @apply mt-0 !important;
+  }
+
+  > :last-child {
+    @apply leading-7 mb-0 !important;
+  }
+
+  dl {
+    @apply my-3 !important;
+  }
+
+  > ol,
+  > ul {
+    @apply my-3 !important;
+  }
+
+  p {
+    @apply mb-2 !important;
+  }
+
+  .highlight {
+    @apply my-3 !important;
+  }
+
+  .katex-display {
+    @apply my-2 !important;
+  }
+
+  .mermaid {
+    @apply my-2 !important;
+  }
+}

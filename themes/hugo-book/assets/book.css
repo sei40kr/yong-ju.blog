@@ -1,4 +1,5 @@
 @import "components/_container.css";
+@import "components/_details.css";
 @import "components/_header.css";
 @import "components/_heading.css";
 @import "components/_hint.css";
@@ -12,6 +13,7 @@
 @import "components/_toc.css";
 
 @import "_markdown.css";
+@import "_markdown-inner.css";
 
 @tailwind base;
 @tailwind components;

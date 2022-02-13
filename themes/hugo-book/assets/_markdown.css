@@ -60,27 +60,32 @@
   }
 
   table {
-    @apply my-6 w-full;
+    @apply leading-normal my-6 text-sm w-full;
   }
 
-  thead {
-    @apply border-b border-b-black;
-  }
-
-  tbody tr {
+  thead,
+  tbody {
     @apply border-b;
+  }
+
+  tbody tr:not(:first-child, :last-child) {
+    @apply border-y border-y-slate-100;
   }
 
   td,
   th {
-    @apply p-2;
+    @apply py-2 pr-2;
   }
 
   .highlight {
-    @apply py-6;
+    @apply bg-white border my-6 px-6 py-3 rounded-lg shadow-sm;
 
     code {
-      @apply text-inherit;
+      @apply font-mono text-inherit;
+    }
+
+    .chroma {
+      @apply bg-transparent;
     }
   }
 
