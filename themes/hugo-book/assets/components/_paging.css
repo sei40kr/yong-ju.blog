@@ -2,7 +2,7 @@
   @apply border-t flex items-stretch justify-center;
 
   &__item {
-    @apply border-t border-t-transparent -mt-px mx-0.5 rounded-b text-muted;
+    @apply border-t border-t-transparent -mt-px mx-0.5 text-muted;
 
     &:not(&--disabled, &--active) {
       @apply hover:bg-slate-100 hover:border-t-link-hover hover:text-link-hover;
@@ -18,6 +18,6 @@
   }
 
   &__link {
-    @apply flex h-10 items-center justify-center text-sm sm:text-base w-10;
+    @apply flex h-11 items-center justify-center text-sm sm:text-base w-10;
   }
 }
