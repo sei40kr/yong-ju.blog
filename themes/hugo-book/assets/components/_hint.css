@@ -17,7 +17,7 @@
   }
 
   &__icon {
-    @apply mr-4;
+    @apply mr-6;
     color: var(--book-hint-icon-color);
   }
 
