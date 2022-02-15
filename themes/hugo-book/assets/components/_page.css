@@ -2,15 +2,7 @@
   @apply flex;
 
   &__body {
-    @apply flex-auto ml-[var(--book-nav-w)] overflow-auto px-[calc(var(--book-page-px))] py-8;
-
-    @at-root :root {
-      --book-page-px: theme('spacing.4');
-
-      @screen sm {
-        --book-page-px: theme('spacing.12');
-      }
-    }
+    @apply flex-auto ml-[var(--book-nav-w)] overflow-auto px-8 sm:px-12 py-8;
   }
 
   &__toc {
