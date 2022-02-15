@@ -60,7 +60,7 @@
   }
 
   table {
-    @apply leading-normal my-6 text-sm w-full;
+    @apply leading-normal my-6 text-sm sm:text-base w-full;
   }
 
   thead,

@@ -1,5 +1,5 @@
 .book-post-term {
-  @apply flex items-center text-muted;
+  @apply flex items-center text-muted text-sm sm:text-base;
 
   &__icon {
     @apply mr-1.5;
