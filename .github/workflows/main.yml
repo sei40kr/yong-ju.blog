@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-hugomod-
 
-      - run: npm run ci
+      - run: npm ci
       - run: hugo --minify
 
       - name: Deploy
