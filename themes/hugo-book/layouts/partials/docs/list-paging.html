@@ -1,17 +1,18 @@
-<ul class="paging">
+<ul class="list-paging">
     {{- with .Paginator }}
         {{- $currentPageNumber := .PageNumber }}
 
         {{- with .First }}
             {{- if ne $currentPageNumber .PageNumber }}
-              <li class="paging__item">
-                <a role="button" href="{{ .URL }}" class="paging__link" aria-label="First">
+              <li class="list-paging__item">
+                <a role="button" href="{{ .URL }}" class="list-paging__link" aria-label="First">
                     {{ partial "docs/icon.html" (dict "Icon" "chevron-double-left" "Class" "h-3.5 -mt-0.5 w-3.5") }}
                 </a>
               </li>
             {{- else }}
-              <li class="paging__item paging__item--disabled">
-                <a role="button" href="#" tabindex="-1" class="paging__link" aria-disabled="true" aria-label="First">
+              <li class="list-paging__item list-paging__item--disabled">
+                <a role="button" href="#" tabindex="-1" class="list-paging__link" aria-disabled="true"
+                   aria-label="First">
                     {{ partial "docs/icon.html" (dict "Icon" "chevron-double-left" "Class" "h-3.5 -mt-0.5 w-3.5") }}
                 </a>
               </li>
@@ -19,14 +20,15 @@
         {{- end }}
 
         {{- with .Prev }}
-          <li class="paging__item">
-            <a role="button" href="{{ .URL }}" class="paging__link" aria-label="Previous">
+          <li class="list-paging__item">
+            <a role="button" href="{{ .URL }}" class="list-paging__link" aria-label="Previous">
                 {{ partial "docs/icon.html" (dict "Icon" "chevron-left" "Class" "h-3.5 -mt-0.5 w-3.5") }}
             </a>
           </li>
         {{- else }}
-          <li class="paging__item paging__item--disabled">
-            <a role="button" href="#" tabindex="-1" class="paging__link" aria-disabled="true" aria-label="Previous">
+          <li class="list-paging__item list-paging__item--disabled">
+            <a role="button" href="#" tabindex="-1" class="list-paging__link" aria-disabled="true"
+               aria-label="Previous">
                 {{ partial "docs/icon.html" (dict "Icon" "chevron-left" "Class" "h-3.5 -mt-0.5 w-3.5") }}
             </a>
           </li>
@@ -41,27 +43,27 @@
 
         {{- range $k := seq $start $end }}
             {{- if eq $.Paginator.PageNumber $k }}
-              <li class="paging__item paging__item--active">
-                <a role="button" href="#" class="paging__link" aria-current="page"
+              <li class="list-paging__item list-paging__item--active">
+                <a role="button" href="#" class="list-paging__link" aria-current="page"
                    aria-label="Page {{ $k }}">{{ $k }}</a>
               </li>
             {{- else }}
-              <li class="paging__item">
-                <a role="button" href="{{ (index $.Paginator.Pagers (sub $k 1)).URL }}" class="paging__link"
+              <li class="list-paging__item">
+                <a role="button" href="{{ (index $.Paginator.Pagers (sub $k 1)).URL }}" class="list-paging__link"
                    aria-label="Page {{ $k }}">{{ $k }}</a>
               </li>
             {{- end }}
         {{- end }}
 
         {{- with .Next }}
-          <li class="paging__item">
-            <a role="button" href="{{ .URL }}" class="paging__link" aria-label="Next">
+          <li class="list-paging__item">
+            <a role="button" href="{{ .URL }}" class="list-paging__link" aria-label="Next">
                 {{ partial "docs/icon.html" (dict "Icon" "chevron-right" "Class" "h-3.5 -mt-0.5 w-3.5") }}
             </a>
           </li>
         {{- else }}
-          <li class="paging__item paging__item--disabled">
-            <a role="button" href="#" tabindex="-1" class="paging__link" aria-disabled="true" aria-label="Next">
+          <li class="list-paging__item list-paging__item--disabled">
+            <a role="button" href="#" tabindex="-1" class="list-paging__link" aria-disabled="true" aria-label="Next">
                 {{ partial "docs/icon.html" (dict "Icon" "chevron-right" "Class" "h-3.5 -mt-0.5 w-3.5") }}
             </a>
           </li>
@@ -69,15 +71,16 @@
 
         {{- with .Last }}
             {{- if ne $currentPageNumber .PageNumber }}
-              <li class="paging__item">
-                <a role="button" href="{{ .URL }}" class="paging__link" aria-label="Last">
+              <li class="list-paging__item">
+                <a role="button" href="{{ .URL }}" class="list-paging__link" aria-label="Last">
                     {{ partial "docs/icon.html" (dict "Icon" "chevron-double-right" "Class" "h-3.5 -mt-0.5 w-3.5") }}
                 </a>
               </li>
             {{- else }}
-              <li class="paging__item paging__item--disabled">
-                <a role="button" href="#" tabindex="-1" class="paging__link" aria-disabled="true" aria-label="Last">
-                  {{ partial "docs/icon.html" (dict "Icon" "chevron-double-right" "Class" "h-3.5 -mt-0.5 w-3.5") }}
+              <li class="list-paging__item list-paging__item--disabled">
+                <a role="button" href="#" tabindex="-1" class="list-paging__link" aria-disabled="true"
+                   aria-label="Last">
+                    {{ partial "docs/icon.html" (dict "Icon" "chevron-double-right" "Class" "h-3.5 -mt-0.5 w-3.5") }}
                 </a>
               </li>
             {{- end }}

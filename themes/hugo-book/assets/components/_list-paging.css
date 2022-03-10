@@ -1,4 +1,4 @@
-.paging {
+.list-paging {
   @apply border-t flex items-stretch justify-center;
 
   &__item {
