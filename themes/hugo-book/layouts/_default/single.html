@@ -16,6 +16,13 @@
   </div>
 
   {{ partial "docs/single-paging.html" . }}
+
+  {{ $related := .Site.RegularPages.Related . | first 5 }}
+  {{ with $related }}
+    <div class="mt-8">
+        {{ partial "docs/related-posts.html" $related }}
+    </div>
+  {{ end }}
 {{ end }}
 
 {{ define "toc" }}
