@@ -1,0 +1,28 @@
+<nav class="single-paging">
+  <div>
+      {{- with .Prev }}
+        <a href="{{ .RelPermalink }}" role="button" class="single-paging__link single-paging__link--prev">
+          <div class="single-paging__icon">
+              {{ partial "docs/icon.html" (dict "Icon" "arrow-left" "Class" "h-5 w-5") }}
+          </div>
+          <div class="single-paging__content">
+            <div class="single-paging__dir">前</div>
+            <div class="single-paging__title">{{ .Title }}</div>
+          </div>
+        </a>
+      {{ end -}}
+  </div>
+  <div>
+      {{- with .Next }}
+        <a href="{{ .RelPermalink }}" role="button" class="single-paging__link single-paging__link--next">
+          <div class="single-paging__content">
+            <div class="single-paging__dir">次</div>
+            <div class="single-paging__title">{{ .Title }}</div>
+          </div>
+          <div class="single-paging__icon">
+              {{ partial "docs/icon.html" (dict "Icon" "arrow-right" "Class" "h-5 w-5") }}
+          </div>
+        </a>
+      {{ end -}}
+  </div>
+</nav>
