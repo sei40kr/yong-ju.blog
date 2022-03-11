@@ -2,7 +2,7 @@
   @apply flex;
 
   &__body {
-    @apply flex-auto ml-[var(--book-nav-w)] overflow-auto px-8 sm:px-12 py-8;
+    @apply flex-auto ml-[var(--nav-width)] overflow-auto px-8 sm:px-12 py-8;
   }
 
   &__toc {

@@ -1,0 +1,12 @@
+<nav class="nav">
+  {{ partial "docs/inject/menu-before" . }}
+
+  <section class="nav__section">
+    <h3 class="nav__title">カテゴリ</h3>
+    <div class="nav__content">
+      {{ partial "docs/menu" . }}
+    </div>
+  </section>
+
+  {{ partial "docs/inject/menu-after" . }}
+</nav>
