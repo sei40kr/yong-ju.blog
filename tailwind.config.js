@@ -34,8 +34,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        link: colors.blue["500"],
-        "link-hover": colors.blue["700"],
+        link: colors.blue["700"],
+        "link-hover": colors.blue["500"],
         muted: colors.gray["500"],
         disabled: colors.slate["300"],
       },
