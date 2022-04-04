@@ -14,7 +14,7 @@
 <!-- Theme stylesheet, you can customize scss by creating `assets/custom.scss` in your website -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
 {{- $mainCss := resources.Get "book.css" | resources.PostCSS | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $mainCss.RelPermalink }}" {{ template "integrity" $mainCss }}>
 {{- $syntaxCss := resources.Get "syntax.css" | resources.Minify | resources.Fingerprint }}
