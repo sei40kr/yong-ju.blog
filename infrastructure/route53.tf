@@ -1,7 +1,7 @@
 resource "aws_route53_record" "blog_ipv4" {
-  name    = "blog.yong-ju.me"
+  name    = "yong-ju.blog"
   type    = "A"
-  zone_id = data.aws_route53_zone.yong_ju_me.zone_id
+  zone_id = data.aws_route53_zone.yong_ju_blog.zone_id
 
   alias {
     name                   = aws_cloudfront_distribution.blog.domain_name
@@ -11,9 +11,9 @@ resource "aws_route53_record" "blog_ipv4" {
 }
 
 resource "aws_route53_record" "blog_ipv6" {
-  name    = "blog.yong-ju.me"
+  name    = "yong-ju.blog"
   type    = "AAAA"
-  zone_id = data.aws_route53_zone.yong_ju_me.zone_id
+  zone_id = data.aws_route53_zone.yong_ju_blog.zone_id
 
   alias {
     name                   = aws_cloudfront_distribution.blog.domain_name

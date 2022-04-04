@@ -1,5 +1,5 @@
-# blog.yong-ju.me
+# yong-ju.blog
 
-[![build & deployment status](https://github.com/sei40kr/blog.yong-ju.me/actions/workflows/main.yml/badge.svg)](https://github.com/sei40kr/blog.yong-ju.me/actions/workflows/main.yml)
+[![build & deployment status](https://github.com/sei40kr/yong-ju.blog/actions/workflows/main.yml/badge.svg)](https://github.com/sei40kr/yong-ju.blog/actions/workflows/main.yml)
 
-https://blog.yong-ju.me
+https://yong-ju.blog

@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "blog" {
 }
 
 resource "aws_s3_bucket" "blog" {
-  bucket = "blog.yong-ju.me"
+  bucket = "yong-ju.blog"
   tags   = {
     Owner = "blog"
   }

@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "blog" {
-  domain_name       = "blog.yong-ju.me"
+  domain_name       = "yong-ju.blog"
   provider          = aws.us_east_1
   validation_method = "DNS"
   tags              = {
@@ -31,5 +31,5 @@ resource "aws_route53_record" "blog_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.yong_ju_me.zone_id
+  zone_id         = data.aws_route53_zone.yong_ju_blog.zone_id
 }

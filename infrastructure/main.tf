@@ -16,6 +16,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "aws_route53_zone" "yong_ju_me" {
-  name = "yong-ju.me"
+data "aws_route53_zone" "yong_ju_blog" {
+  name = "yong-ju.blog"
 }

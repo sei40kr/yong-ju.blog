@@ -45,5 +45,5 @@ jobs:
       - name: Deploy
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          aws s3 sync public s3://blog.yong-ju.me
+          aws s3 sync public s3://yong-ju.blog
           aws cloudfront create-invalidation --distribution-id E2UWZGD7QU0B6Q --paths '/*'
