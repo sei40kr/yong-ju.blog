@@ -1,6 +1,6 @@
 .related-posts {
   &__title {
-    @apply font-serif mb-6 text-2xl;
+    @apply font-bold mb-6 text-2xl;
   }
 
   &__item {

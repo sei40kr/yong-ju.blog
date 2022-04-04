@@ -4,14 +4,12 @@
   }
 
   &__title {
-    @apply font-serif;
-
     &--level-1 {
       @apply font-bold text-4xl;
     }
 
     &--level-2 {
-      @apply font-semibold text-3xl;
+      @apply font-bold text-3xl;
     }
   }
 
