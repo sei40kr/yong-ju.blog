@@ -44,7 +44,11 @@ tags: ["勉強ノート"]
 アムダールの法則を分散システムに適用すると、処理の分散によるシステム全体の性能向上率は次の式で表される。
 
 {{< katex display >}}
-=\frac{1}{(1-並列化可能な部分の割合)+\frac{並列化可能な部分の割合}{ノード数}}
+\begin{aligned}
+&=\frac{1}{(1-P)+\frac{P}N}\\
+P&:並列化可能な部分の割合\\
+N&:ノード数
+\end{aligned}
 {{< /katex >}}
 
 一方で並列化可能な部分は、処理の大きさに関わらず一定であるとし、「十分に大きな規模の処理は、効率的に分散化して解くことができる」ことを示した法則もある → **グスタフソンの法則**
@@ -175,7 +179,10 @@ read quorum
 あるデータのレプリケーション数を V, write quorum を {{< katex >}}V_w{{< /katex >}}, read quorum を {{< katex >}}V_r{{< /katex >}} とすると、以下の条件を満たすとき、強い一貫性が保証される。
 
 {{< katex display >}}
-\begin{aligned}V_w+V_r&>V \\\\ V_w&>\frac{V}{2}\end{aligned}
+\begin{aligned}
+V_w+V_r&>V\\
+V_w&>\frac{V}{2}
+\end{aligned}
 {{< /katex >}}
 
 ## パーティション
@@ -198,7 +205,12 @@ read quorum
 偽陽性の発生率 {{< katex >}}p{{< /katex >}} は以下の式で表される。
 
 {{< katex display >}}
-\begin{aligned}p&=(1-(1-\frac1m)^{kn})^k\approx(1-e^{-kn/m})^k\\\\m&:配列のビット数\\\\n&:要素数\\\\k&:ハッシュのビット数\end{aligned}
+\begin{aligned}
+p&=(1-(1-\frac1m)^{kn})^k\approx(1-e^{-kn/m})^k\\
+m&:配列のビット数\\
+n&:要素数\\
+k&:ハッシュのビット数
+\end{aligned}
 {{< /katex >}}
 
 ブルームフィルタは同様の集合的データ構造の中で、圧倒的に空間効率 (メモリ使用量) において優れる。

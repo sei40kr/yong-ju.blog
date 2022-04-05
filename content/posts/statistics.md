@@ -38,7 +38,7 @@ tags: ["勉強ノート", "大学数学"]
 平均 (mean) は、すべてのデータを合計してデータ数で割った値。
 
 {{< katex display >}}
-\overline{x}=\frac{1}{n}\sum_{i=1}^n
+\overline{x}=\frac{1}{n}\sum_{i=1}^n{x_i}
 {{< /katex >}}
 
 ### 中央値
@@ -178,13 +178,18 @@ V(aX+b)=a^2V(X)
 確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x{{< /katex >}} という値をとる確率を、**確率質量関数** (PMF = Probability Mass Function) {{< katex >}}f(x){{< /katex >}} で表す。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=P(X=x)\\\\E(X)&=\sum_kx_kf(x_k)\\\\V(X)&=\sum_k(x_k-\mu)^2f(x_k)\end{aligned}
+\begin{aligned}
+f(x)&=P(X=x)\\
+E(X)&=\sum_kx_kf(x_k)\\
+V(X)&=\sum_k(x_k-\mu)^2f(x_k)
+\end{aligned}
 {{< /katex >}}
 
 確率の性質より、離散型確率変数は以下の 2 つの式を満たす。
 
 {{< katex display >}}
-\begin{aligned}f(x_k)&\ge0\\\\\sum_kf(x_k)&=1\end{aligned}
+0\le f(x_i)\le1\\
+\sum_{i=1}^kf(x_i)=1
 {{< /katex >}}
 
 ## 離散型確率分布
@@ -194,7 +199,13 @@ V(aX+b)=a^2V(X)
 ベルヌーイ分布 (Bernoulli distribution) は最も基本的な確率分布で、とりうる値が {{< katex >}}\{0,1\}{{< /katex >}} しかない確率分布である。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=p\\\\V(X)&=p(1-p)\end{aligned}
+\begin{aligned}
+f(x)&=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\
+0&(\text{otherwise})
+\end{cases}\\
+E(X)&=p\\
+V(X)&=p(1-p)
+\end{aligned}
 {{< /katex >}}
 
 ### 二項分布
@@ -202,7 +213,12 @@ V(aX+b)=a^2V(X)
 二項分布 (binomial distribution) は成功確率が {{< katex >}}p{{< /katex >}} のベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う確率分布であり、その分布を {{< katex >}}B(n,p){{< /katex >}} で表す。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=\begin{cases}_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=np\\\\V(X)&=np(1-p)\end{aligned}
+\begin{aligned}
+f(x)&=\begin{cases}_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\
+0&(\text{otherwise})\end{cases}\\
+E(X)&=np\\
+V(X)&=np(1-p)
+\end{aligned}
 {{< /katex >}}
 
 {{< katex >}}B(n,p){{< /katex >}} に従う確率変数 {{< katex >}}X{{< /katex >}} と {{< katex >}}B(m,p){{< /katex >}} に従う確率変数 {{< katex >}}Y{{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}B(n+m,p){{< /katex >}} に従う。 (**再生性**)
@@ -212,7 +228,14 @@ V(aX+b)=a^2V(X)
 幾何分布 (geometric distribution) はベルヌーイ試行を繰り返して、初めて成功するまでの試行回数が従う確率分布である。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=\begin{cases}p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\frac{1}{p}\\\\P(X)&=\frac{1-p}{p^2}\end{aligned}
+\begin{aligned}
+f(x)&=\begin{cases}
+p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\
+0&(\text{otherwise})
+\end{cases}\\
+E(X)&=\frac{1}{p}\\
+P(X)&=\frac{1-p}{p^2}
+\end{aligned}
 {{< /katex >}}
 
 ### ポアソン分布
@@ -222,7 +245,14 @@ V(aX+b)=a^2V(X)
 ポアソン分布は、二項分布 {{< katex >}}B(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=\begin{cases}\frac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\\\0&(\text{otherwise})\end{cases}\\\\E(X)&=\lambda\\\\V(X)&=\lambda\end{aligned}
+\begin{aligned}
+f(x)&=\begin{cases}
+\frac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\
+0&(\text{otherwise})
+\end{cases}\\
+E(X)&=\lambda\\
+V(X)&=\lambda
+\end{aligned}
 {{< /katex >}}
 
 ## 連続型確率変数
@@ -234,7 +264,11 @@ V(aX+b)=a^2V(X)
 確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x_0\le X \le x_1{{< /katex >}} の区間に入る確率 {{< katex >}}P(x_0\le X \le x_1){{< /katex >}} を、確率密度関数 {{< katex >}}f(x){{< /katex >}} を用いて次のように表す。
 
 {{< katex display >}}
-\begin{aligned}P(x_0\le X\le x_1)&=\int_{x_0}^{x_1}f(x)dx\\\\\mu=E(X)&=\int_{-\infty}^\infty xf(x)dx\\\\\sigma^2=V(X)&=\int_{-\infty}^\infty(x-\mu)^2f(x)dx\end{aligned}
+\begin{aligned}
+P(x_0\le X\le x_1)&=\int_{x_0}^{x_1}f(x)dx\\
+\mu=E(X)&=\int_{-\infty}^\infty xf(x)dx\\
+\sigma^2=V(X)&=\int_{-\infty}^\infty(x-\mu)^2f(x)dx
+\end{aligned}
 {{< /katex >}}
 
 ### 確率の性質
@@ -242,7 +276,10 @@ V(aX+b)=a^2V(X)
 確率の性質より、連続型確率変数は以下の 2 つの式を満たす。
 
 {{< katex display >}}
-\begin{aligned}f(x)&\ge0\\\\\int_{-\infty}^\infty f(x)dx&=1\end{aligned}
+\begin{aligned}
+f(x)&\ge0\\
+\int_{-\infty}^\infty f(x)dx&=1
+\end{aligned}
 {{< /katex >}}
 
 ### 類型分布関数
@@ -261,7 +298,11 @@ F(x)=P(X\le x)=\int_{-\infty}^{x}f(x)dx
 期待値が {{< katex >}}\mu{{< /katex >}}, 分散が {{< katex >}}\sigma^2{{< /katex >}} であるような正規分布を {{< katex >}}N(\mu,\sigma^2){{< /katex >}} で表す。
 
 {{< katex display >}}
-\begin{aligned}f(x)&=\frac{1}{\sqrt{2\pi}\sigma}\exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}\\\\E(X)&=\mu\\\\V(X)&=\sigma^2\end{aligned}
+\begin{aligned}
+f(x)&=\frac{1}{\sqrt{2\pi}\sigma}\exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}\\
+E(X)&=\mu\\
+V(X)&=\sigma^2
+\end{aligned}
 {{< /katex >}}
 
 正規分布に従う確率変数を標準化した確率変数が従う {{< katex >}}N(0,1){{< /katex >}} を**標準正規分布**という。
