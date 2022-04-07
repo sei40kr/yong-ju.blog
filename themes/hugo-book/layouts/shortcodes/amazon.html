@@ -1,0 +1,17 @@
+{{- $asin := .Get "asin" -}}
+{{- $title := .Get "title" -}}
+<a href="https://www.amazon.co.jp/dp/{{ $asin }}" class="amazon">
+  <div class="amazon__img-outer">
+    <img
+      src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN={{ $asin }}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL350_"
+      class="amazon__img" alt="{{ $title }}"/>
+  </div>
+  <div class="amazon__meta">
+    <div class="amazon__title">
+      {{ $title }}
+    </div>
+    <div class="amazon__site">
+      amazon.co.jp
+    </div>
+  </div>
+</a>
