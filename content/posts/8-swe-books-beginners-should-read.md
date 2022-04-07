@@ -7,7 +7,7 @@ tags: ["キャリア", "読書", "技術書"]
 
 ## ITエンジニアのための業務知識がわかる本
 
-**会社法**から**企業会計原則**などのあらゆる業務の基幹となる法律知識から始まり、**マーケティング**, **生産管理**, **在庫管理 (SCM)**, **販売管理**などの業務知識を、実際のシステム設計や画面を交えて解説している。
+**会社法**から**企業会計原則**などのあらゆる業務の根幹をなす法律知識から始まり、**マーケティング**, **生産管理**, **在庫管理 (SCM)**, **販売管理**などの業務知識を、実際のシステム設計や画面を交えて解説している。
 専門用語も多数解説しているため、ドメインエキスパートと同じ言語で会話する上でも役に立つ。
 
 - [ITエンジニアのための【業務知識】がわかる本 第5版](https://www.amazon.co.jp/dp/4798157384)
@@ -20,30 +20,32 @@ BtoBソフトウェアベンダーが探りを入れるために競合他社のB
 
 ## キタミ式イラストIT塾 応用情報技術者
 
-なにかと馬鹿にされがちな応用情報技術者 (AP) 資格だが、ソフトウェアエンジニアとしてやっていく上での必要な知識を薄く広く学ぶには非常によい試験である。
+なにかと馬鹿にされがちな応用情報技術者 (AP) 資格だが、ソフトウェアエンジニアとしてやっていく上での必要な知識を浅く広く学ぶには最適な試験内容である。
 その試験内容は**コンピュータアーキテクチャの基礎**から**データベース**, **ネットワーク**, **プロジェクト管理**や**経営学**など、非常に幅広い。
 
-- [キタミ式イラストIT塾 応用情報技術者 令和04年](https://www.amazon.co.jp/dp/429712453X)
+{{< amazon asin="B09MYHHJ9P" title="キタミ式イラストIT塾 応用情報技術者 令和04年" >}}
 
 キタミ式イラストIT塾は分かりやすい一方、試験内容のカバレッジが若干狭いため、他の参考書と併読することがオススメ。
 
 「徹底攻略」シリーズは、物理本を買うと電子版 (PDF) も貰える。
 「電子書籍で持ち運び、物理本で見直す」という勉強方法ができるため、資格試験の受験を考えている人に特にオススメ。
 
-- [徹底攻略 応用情報技術者教科書 令和4年度](https://www.amazon.co.jp/dp/4295012912)
+{{< amazon asin="4295012912" title="徹底攻略 応用情報技術者教科書 令和4年度" >}}
 
-キタミ式イラストIT塾では深く触れられていない、**演算器**, **レジスタ**, **キャッシュの仕組み**, **スーパースカラ**や**パイプライン**などの低レイヤー最適化技術を学ぶのに以下の本もオススメ。
+キタミ式イラストIT塾では深く触れられていない、**演算器**, **レジスタ**, **メモリキャッシュの仕組み**に加え、**Out-of-Order実行**, **分岐予測**, **スーパースカラ**や**パイプライン**など低レイヤーの最適化技術を学ぶのに以下の本もオススメ。
 
-- [プロセッサを支える技術 －－果てしなくスピードを追求する世界 (WEB+DB PRESS plus)](https://www.amazon.co.jp/dp/4774145211)
+{{< amazon asin="B07JJJ22ML" title="プロセッサを支える技術 ― 果てしなくスピードを追求する世界 WEB+DB PRESS plus" >}}
+
+{{< amazon asin="B07JKM6YYM" title="コンピュータアーキテクチャ技術入門 ――高速化の追求×消費電力の壁 WEB+DB PRESS plus" >}}
 
 ## 実践ドメイン駆動設計
 
-ドメイン駆動設計を実装を交えながら丁寧に解説している。
-開発者とドメインエキスパートが対話をするための共通言語 (**ユビキタス言語**) の定義から始まり、基本的なアーキテクチャや**ES**, **CQRS**などの実装パターンに触れつつ、**マイクロサービス**, **永続層のスケーリング**, **データ一貫性**など幅広いソフトウェアエンジニアリングの問題に触れている。
+ドメイン駆動設計の話を中心にバックエンドエンジニアリングを網羅的に解説している。
+異なるステークホルダーが対話をするための共通言語 (**ユビキタス言語**) の定義から始まり、基本的なアーキテクチャから**集約**, **エンティティ**, **値オブジェクト**などの実装パターン, **ES**, **CQRS**などのアーキテクチャにも触れつつ、**マイクロサービス**, **データ一貫性**など幅広いバックエンドエンジニアリングの諸問題に触れている。
 
-- [実践ドメイン駆動設計 (Object Oriented SELECTION)](https://www.amazon.co.jp/dp/479813161X)
+{{< amazon asin="B00UX9VJGW" title="実践ドメイン駆動設計" >}}
 
-本著で登場する「**境界づけられたコンテキスト**」の実装例として、以下のGitHubレポジトリのソースコードを参照することもオススメ。
+本著で登場する「**境界づけられたコンテキスト**」の実装例として、以下のGitHubレポジトリをコードリーディングすることもオススメ。
 ただし、実装例のJavaのバージョンがかなり古い。
 
 - [VaughnVernon/IDDD_Samples](https://github.com/VaughnVernon/IDDD_Samples)
@@ -60,7 +62,7 @@ Zalando社におけるRESTful APIの設計ガイドライン。
 **リソース指向アーキテクチャ (resource-oriented architecture, ROA)** でRESTful APIを設計するためのガイドラインがまとまっている。
 無料で読める。
 
-- [Zalando RESTful API と イベントスキーマのガイドライン](https://restful-api-guidelines-ja.netlify.app)
+- [Zalando RESTful API とイベントスキーマのガイドライン](https://restful-api-guidelines-ja.netlify.app)
 
 ## Cassandra The Definitive Guide
 
@@ -71,9 +73,9 @@ Cassandraはレプリケーション・ファクターやQuorumなどの設定�
 つまり、**Cassandraのアーキテクチャを学ぶことは、分散データベースそのものを学ぶことに近い。**
 日本語版はないが、分散システムを学びたい方へオススメである。
 
-- [Cassandra - the Definitive Guide: Distributed Data at Web Scale](https://www.amazon.co.jp/dp/1492097144)
+{{< amazon asin="B09R2BVFB1" title="Cassandra - the Definitive Guide: Distributed Data at Web Scale" >}}
 
-加えて、分散システムを学ぶ上で役に立つ記事やブログを紹介しておく。
+加えて、分散システムを学ぶ上で一読すべき記事やフォローすべきブログを紹介しておく。
 
 - [分散型システム徹底入門 – Part 1.](https://postd.cc/a-thorough-introduction-to-distributed-systems-3/)
 - [分散型システム徹底入門 – Part 2.](https://postd.cc/a-thorough-introduction-to-distributed-systems-2/)
@@ -83,6 +85,11 @@ Cassandraはレプリケーション・ファクターやQuorumなどの設定�
 - [大規模な決済システムを構築する際に学んだ分散型アーキテクチャの考え方 – 前編](https://postd.cc/distributed-architecture-concepts-i-have-learned-while-building-payments-systems/)
 - [大規模な決済システムを構築する際に学んだ分散型アーキテクチャの考え方 – 後編](https://postd.cc/distributed-architecture-concepts-i-have-learned-while-building-payments-systems-2/)
 - [Software Transactional Memo](https://kumagi.hatenablog.com/)
+
+自分はまだ読書途中だが、以下の本の第2部でも分散システムに触れているようだ。
+ただ、この本の内容は初学者には重すぎるかもしれない。
+
+{{< amazon asin="4873119545" title="詳説 データベース ―ストレージエンジンと分散データシステムの仕組み" >}}
 
 ## The Twelve-Factor App
 
@@ -96,18 +103,18 @@ Cassandraはレプリケーション・ファクターやQuorumなどの設定�
 AWS中級資格の試験対策本で、AWSサービスの基本的な使い方がまとまっている。
 IAMなどの**ゼロトラスト**的な考え方、VPCなどの**仮想ネットワーク**, セキュリティグループやACLなどの**多層防御**など、AWSサービスの概要から学ぶべきクラウド設計のノウハウは多くある。
 
-- [AWS認定アソシエイト3資格対策~ソリューションアーキテクト、デベロッパー、SysOpsアドミニストレーター~](https://www.amazon.co.jp/dp/4865941991)
+{{< amazon asin="4865941991" title="AWS認定アソシエイト3資格対策~ソリューションアーキテクト、デベロッパー、SysOpsアドミニストレーター~" >}}
 
-特にAWS Well-Architected フレームワークの5本の柱には、クラウド設計の重要な考え方がまとめられているので是非一読してほしい。
+特にAWS Well-Architectedフレームワークの5本の柱には、クラウドネイティブ設計の重要な考え方がまとめられているので是非一読してほしい。
 
-- [フレームワークの 5 本の柱 - AWS Well-Architected フレームワーク](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.pillars.wa-pillars.ja.html)
+- [フレームワークの5本の柱 - AWS Well-Architectedフレームワーク](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.pillars.wa-pillars.ja.html)
 
 ## Pythonで理解する統計解析の基礎
 
-統計解析の基礎をPythonで動かしながら学ぶことができる。
+統計解析の基礎をPythonで動かしながら学べる。
 あらゆる箇所で数学的な証明を欠いているのは難点だが、Google先生と併用しながら読み進めることができた。
 
-- [Pythonで理解する統計解析の基礎 (PYTHON×MATH SERIES)](https://www.amazon.co.jp/dp/4297100495)
+{{< amazon asin="B07HHV6LL8" title="Pythonで理解する統計解析の基礎" >}}
 
 教育系YouTuberの[ヨビノリ先生](https://yobinori.jp/index.html)の解説動画も是非見てほしい。
 前述の著書に欠けている数学的証明や各統計量の気持ちなどを丁寧に解説している。
