@@ -89,4 +89,4 @@ Nix 言語で宣言的に自分の環境を記述し dotfiles などで管理す
 - [NixOS - Nix 2.3.10 manual](https://nixos.org/manual/nix/stable/#ch-expression-language) ― Nix Expression Language の言語仕様
 - [NixOS Wiki](https://nixos.wiki) ― NixOS ユーザによってメンテナンスされている Wiki
 - [NixOS/nixpkgs](https://github.com/NixOS/nixpkgs) ― Nixpkgs のレポジトリ
-- [hlissner/dotfiles](https://github.com/hlissner/dotfiles) ― [高品質 Emacs ディストリビューション Doom Emacs を使おう]({{< ref "lets-start-using-doom-emacs" >}}) で紹介した Doom Emacs の author, Henrik Lissner さんの dotfiles. 環境をモジュール (module) という単位を分割し、ホストマシン毎に必要なモジュールを有効化して環境を宣言している。
+- [hlissner/dotfiles](https://github.com/hlissner/dotfiles) ― [高品質EmacsディストリビューションDoom Emacsを使おう]({{< ref "lets-start-using-doom-emacs" >}}) で紹介した Doom Emacs の author, Henrik Lissner さんの dotfiles. 環境をモジュール (module) という単位を分割し、ホストマシン毎に必要なモジュールを有効化して環境を宣言している。
