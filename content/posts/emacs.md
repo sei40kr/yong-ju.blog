@@ -2,7 +2,7 @@
 title: "Emacsを使おう"
 date: 2020-09-03T01:00:56+09:00
 categories: ["開発環境"]
-tags: ["エディタ", "Emacs"]
+tags: ["開発環境", "エディタ", "Emacs"]
 ---
 
 Vim vs Emacs論争においては永い時を経て、大半のユーザーがVim側に傾きつつある。

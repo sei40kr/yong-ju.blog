@@ -5,7 +5,7 @@ categories: ["開発環境"]
 tags: ["開発環境", "エディタ", "Emacs", "Doom Emacs"]
 ---
 
-この記事は [Emacsを使おう]({{< ref "lets-start-using-emacs" >}}) の続編である。
+この記事は [Emacsを使おう]({{< ref "emacs" >}}) の続編である。
 前回の記事ではVimmerにもEmacsをオススメする理由を説明しているので是非一読して頂きたい。
 
 ## Emacsのディストリビューション
