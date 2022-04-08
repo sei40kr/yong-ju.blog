@@ -1,85 +1,129 @@
 ---
-title: "Emacs を使おう"
+title: "Emacsを使おう"
 date: 2020-09-03T01:00:56+09:00
 categories: ["開発環境"]
 tags: ["エディタ", "Emacs"]
 ---
 
-## Vimmer が Emacs を嫌う理由とそれに対する弁明
+Vim vs Emacs論争においては永い時を経て、大半のユーザーがVim側に傾きつつある。
+Vimの独自キーバインドの根幹となる「カウント + テキストオブジェクト + オペレータ」のアイデアの素晴らしさや、Vimスクリプトの既存資産の充実度を私は評価している。
+それでもなお私がEmacsを人に奨める理由を、よくあるEmacsへの誤解を解きつつこの記事で解説していく。
 
-### Emacs キーバインドで小指が損傷
+## Emacsに対する誤解
 
-evil-mode を使うことで Emacs で Vim のキーバインドが使える。
+### 誤解: Vimのキーバインドが使えない
 
-それでも evil-mode のことをよく思わない Vimmer も多い。
+Emacsにおいても、[Evil](https://melpa.org/#/evil)を使うことで**EmacsでVimのキーバインドが使える。**
 
-[我が evil-mode を嫌いな理由 〜evil-mode の闇〜](https://www.slideshare.net/Shougo/evilmode-evilmode)
+EvilがVimキーバインドをサポートする範囲はテキスト編集のみに留まらない。
+[evil-collection](https://melpa.org/#/evil-collection) はファイラやMagitなど、あらゆるツールバッファにおけるVimキーバインドをサポートする。
 
-テキスト編集は Vim キーバインドだが、あらゆるところで Emacs キーバインドが残っている。基本的に evil-mode は Emacs のキーバインドを上書きするので Vim で定義されていないキーは Emacs のキーバインドがそのまま残っている。
+{{< hint info >}}
+Evilは完全にVimのキーバインドを再現している訳ではなく、一部のキーバインドが微妙に異なる。
+使う頻度が高いキーにおける差分を列挙する。
 
-[emacs-evil/evil-collection](https://github.com/emacs-evil/evil-collection)
+| モード   | キー    | Vimの動作                                                               | Evilの動作                   |
+|-------|-------|-----------------------------------------------------------------------|---------------------------|
+| 挿入 | `C-h` | Backspace                                                             | ヘルプの表示                    |
+| 選択 | `S`    | 選択範囲を囲む ( [surround.vim](https://github.com/tpope/vim-surround) 使用時 ) | セレクトモード (「選択範囲を囲む」は `s` ) |
 
-恐らく標準設定で困るのは以下の 2 つだろう。
+これらの差分もカスタマイズでVimの動作に揃えることができる。
+{{< /hint >}}
 
-1. 挿入モードでは `C-h` は Backspace ではなくヘルプ
-2. surround のマッピングが `S` ではなく `s`
+### 誤解: Vim のコマンドが使えない
 
-いずれもカスタマイズで解決可能だ。
+いくつかのVimコマンドはEvilにも実装されている。
+Vimと同じように、通常モードで `:` を押すと、VimのExコマンドを入力するコマンドラインが表示される。
 
-### Vim のコマンドが使えない
+置換 ( `:s` ) はもちろん、`:sort` や `:read` も完備されており、少なくとも手入力でインタラクティブに実行する分には不足ないと思われる。
+また、置換のオプション ( `g` など) のデフォルトをEvilの設定でカスタマイズすることも可能だ。
 
-ほとんどの Vim コマンドは evil-mode に実装されており Vim と全く同じ方法で呼び出すことができる。
+### 誤解: Vimの既存資産に相当するものがない
 
-`:sort` や `:read` も完備されており一定以上のレベルの Vimmer でも事足りるのではないだろうか。また設定することで「 `:s` の `g` オプションをデフォルトで有効にする」など細かい挙動の変更も可能だ。
+EmacsではVim Scriptが動作しないので、「Vimの既存資産をそのまま動かせない」は正しい。
+しかし、メジャーなVimプラグインには既に完成度の高い代替プラグインがEmacsに存在している。
 
-### Vim の資産が使えない
+| Vim                            | Emacs                   |
+|:-------------------------------|:------------------------|
+| incsearch.vim                  | evil-mode               |
+| vim-expand-region              | expand-region           |
+| vim-surround                   | evil-surround           |
+| vim-commentary, NERD Commenter | evil-nerd-commenter     |
+| vim-multiple-cursors           | evil-mc, evil-multiedit |
+| clever-f                       | evil-snipe              |
+| easymotion                     | avy                     |
+| vim-quickrun                   | quickrun.el             |
+| Unite, Denite                  | helm, ivy               |
+| vimfiler, Defx                 | Neotree, Treemacs       |
 
-Emacs では Vim Script が動かないのでこれは正しい。しかし大抵の場合、既に完成度の高い代替パッケージが存在している。以下で紹介するパッケージは全て公式に evil-mode に対応しているか evil-collection に evil-mode で使うための設定が存在する。
+また、以上のプラグインは全て公式にVimキーバインドをサポートしているか、evil-collection (前述) に専用設定が存在しているかのどちらかである。
 
-- incsearch.vim → evil-mode に標準搭載
-- vim-expand-region → expand-region
-- vim-surround → evil-surround
-- vim-commentary, NERD Commenter → evil-nerd-commenter
-- vim-multiple-cursors → evil-mc, evil-multiedit
-- clever-f → evil-snipe
-- easymotion → avy
-- vim-quickrun → quickrun.el
-- Unite, Denite → helm, ivy
-- vimfiler, Defx → Neotree, Treemacs
+既にEvilコミュニティは熟していることがお分かり頂けるだろう。
 
-既に Emacs + evil-mode 使いのコミュニティは熟していることがお分かり頂けるだろう。
+### 誤解: Emacsは遅い
 
-### Emacs は Vim と比べ起動が遅い
+#### Emacsにもプラグインの遅延ロード機構はある
 
-これも 2020 年現在 stable である Emacs 26 においては正しい。
+Emacsも大半のVimプラグインマネージャと同じような遅延ロード機構を備えているため、プラグインのロードはそれなりに速い。
 
-しかし Emacs は Projectile というパッケージでプロジェクトを管理でき persp-mode.el でワークスペースを管理できるため、そもそも Emacs を終了する機会が滅多にない。
+#### そもそもEmacsを終了する機会があまりない
 
-emacsclient を使えば「シェルのコマンドラインから指定したファイルを現在起動している Emacs で開く」といったことも可能だ。emacsclient の使い方は Man ページと Oh My Zsh の Emacs プラグインが参考になる。
+そもそもEmacsは [Projectile](https://melpa.org/#/projectile) と [persp-mode.el](https://melpa.org/#/persp-mode) でプロジェクトごとにワークスペースを管理できるため、**終了 (と再起動) する機会があまりない。**
+そのため、起動時間の遅さはネックにならない。
 
-[ohmyzsh/emacs.plugin.zsh at master · ohmyzsh/ohmyzsh](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/emacs/emacs.plugin.zsh)
+また、`emacsclient` を使うと「指定したファイルを現在起動しているEmacsプロセスで開く」こともできる。
+よって、シェル作業のエディタとしてEmacsを使う場合も、都度Emacsプロセスを立ち上げる必要がない。
 
-尚、Emacs はヘッドレスモードでも起動でき、OS へのログインと同時にバックグラウンドで Emacs のデーモンを起動しておくことも可能だ。
+また、[Oh My Zshの emacs プラグイン](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/emacs)では、「起動中のEmacsプロセスが存在すればそれを使用し、存在しなければ新規にプロセスを立ち上げる」ということを行うラッパーを提供している。
+これにより、特に意識することなく `emacsclient` の恩恵を受けることができる。
 
-更に Emacs 27 以降には Portable Dumper といった起動時間を短縮する機能が追加されている。パッケージの Emacs Lisp ファイルはほとんどが遅延ロードされ、遅延ロード不可能な部分は Portable Dumper によって解釈済みのものをメモリ上に展開するので起動が早くなる。
+ちなみに、Emacsはヘッドレスモードでも起動できるため、Emacsデーモンをsystemdのユーザーサービスとしてログイン時に起動しておくこともできる。
 
-[portable dumper: アーキテクチャに依存しない Emacs の起動時間短縮手法](http://lc.linux.or.jp/lc2002/papers/nagano0920h.pdf)
+{{< details title="emacs.service の例" >}}
+```ini
+[Unit]
+Description=Emacs text editor
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/emacs --fg-daemon
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+```
+{{< /details >}}
+
+#### Emacs 27で Portable Dumper が登場
+
+Emacs 27以降には **Portable Dumper** という機能が追加されている。
+Emacs Lispファイルのロード時に評価される箇所を予め評価しておき、起動時にPortable Dumperによってその評価結果をメモリ上に展開することで、**起動時に読み込むEmacs Lispファイルのロード時間を大幅に短縮する。**
+
+参考: [portable dumper: アーキテクチャに依存しない Emacs の起動時間短縮手法](https://gist.github.com/t-sin/911d192dac926bf06c2a750083855fc8)
+
+#### Emacs 28で Native Compilation が登場
+
+Emacs 28移行には **Native Compilation** という機能が追加されている。
+Emacs Lispをネイティブバイナリにコンパイルすることで、**Emacs Lispの実行パフォーマンスを大幅に向上させる。**
 
 ## Emacs を使うべき理由
 
-もちろん Emacs に乗り換えるメリットもたくさんある。
+ここまでEmacsのネガティヴな噂に対して、その誤解を解いてきた。
+ここからは、Emacsならでは機能というポジティブな面に注目していく。
 
 ### グラフィカルな UI
 
-Neovim をグラフィカルな UI で扱うための gonvim というプログラムが存在する。
+Emacsには公式のGUIインターフェイスが付属する。
 
-一方 Emacs は GUI モードでの起動を公式にサポートしている。これはターミナルモードの Emacs をウィンドウで囲ったようななんちゃって GUI モードではない。画像ファイルを開いて表示することもできるし、スペルミスを含む英単語を波線で強調することもできる。Jupyter Notebook と seaborn を使ったデータの可視化も Emacs だけで完結することができる。
+EmacsのGUIはターミナルで起動したEmacsをウィンドウで囲ったなんちゃってGUIではない。
+ファイラから画像ファイルを開いて表示できるし、Markdown中のLaTeXフラグメントのプレビューもできる。
 
 ### Org
 
-Emacs には Org と呼ばれる Markdown のようなマークアップ言語が存在する。
+EmacsにはOrgと呼ばれるMarkdownのようなマークアップ言語が存在する。
 
-[Org mode for Emacs: あなたの生活をプレーンテキストで](https://www.orgmode.org/ja)
+OrgはMarkdownより遥かに多くの機能をサポートする:
 
 - TODO & スケジュール管理機能
 - 時間管理機能
@@ -88,27 +132,31 @@ Emacs には Org と呼ばれる Markdown のようなマークアップ言語�
 - コード実行結果の埋め込み
 - HTML や LaTeX, PDF へのエクスポート
 
-などの機能があり、マークアップ言語として大変高機能だが、デメリットもあり
-
-- Markdown と比べて普及していない
-- Org の編集機能を有するエディタが Emacs しか存在しない
-
-と考えると個人利用に留めるのが現実的だろう。(全員 Emacser というチームでなければ)
+参考: [Org mode for Emacs: あなたの生活をプレーンテキストで](https://www.orgmode.org/ja)
 
 ### TRAMP
 
-Emacs には TRAMP と呼ばれるリモートのファイル操作を SSH 経由で行う機能がファイルシステムレベルに組み込まれている。これによりリモートのファイルをローカルにあるファイルのように編集することが可能だ。
+Emacsには **TRAMP** という、**リモートのファイルシステムをまるでローカルであるかのように扱う**機能がファイルシステムレベルで実装されている。
+TRAMPはシェルコマンドを介してリモートのファイルシステムにアクセスするため、シェルにアクセスできる環境であれば、**Dockerコンテナ内だろうとVagrantインスタンスの中だろうと、まるでローカルのようにアクセスできる。**
+(注: Dockerコンテナ内へのアクセスは [docker-tramp](https://melpa.org/#/docker-tramp), Vagrantインスタンス内へのアクセスは [vagrant-tramp](https://melpa.org/#/vagrant-tramp) が必要)
 
-また、編集に root 権限が必要なファイルも TRAMP 経由でアクセスできるので「root でシステムファイルを編集しようとするとユーザコンフィグで設定した機能が全て使えない」という問題も発生しない。
+また、アクセスにroot権限が必要なファイルもTRAMPでアクセスできるため、「`sudo` でエディタを開くとバニラ状態のエディタを使わされる」という問題も起きない。
 
 ### Magit
 
-Emacs のパッケージの 1 つに Magit と呼ばれる超高機能な Git クライアントがある。もちろん全機能が Vim のキーバインドで利用可能だ。Magit を介した Git の操作だけでも Emacs を使う価値は十分にある。
+Emacsのプラグインの一つに **Magit** と呼ばれる超強力なGitクライアントがある。
+Magitは、**Gitのあらゆる操作を分かりやすいインターフェイスと強力な補完でサポートしてくれる。**
+もちろん、全てVimキーバインドで操作が可能だ。
 
-[A Git Porcelain inside Emacs](https://magit.vc)
+MagitだけでもEmacsを使う価値は十分にあると言える。
+
+参考: [A Git Porcelain inside Emacs](https://magit.vc)
 
 ## まとめ
 
-Emacs の魅力が少し分かって頂けただろうか。せっかく興味をもって頂いても「また 1 からエディタをカスタマイズするのは面倒だ」と思われるかもしれない。そこで別の記事で「既にカスタマイズされた超高機能 Emacs ディストリビューション Doom Emacs」について書こうと思う。
+Emacsの魅力が少し分かって頂けただろうか。
+
+せっかく興味をもって頂いても「また一から新しいエディタをカスタマイズするのは億劫だ」と思うかもしれない。
+別記事で、**既にカスタマイズされたEmacsディストリビューションの利用**について書いたので是非読んでほしい。
 
 続編: [高品質EmacsディストリビューションDoom Emacsを使おう]({{< ref "doom-emacs" >}})
