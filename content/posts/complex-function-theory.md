@@ -62,6 +62,24 @@ tags: ["数学", "複素解析", "複素数", "勉強ノート"]
 が導ける。
 {{< /details >}}
 
+## 複素関数の積分
+
+区分的に滑らかな積分路 {{< katex >}}C{{< /katex >}} における複素関数 {{< katex >}}f(z){{< /katex >}} の積分は、{{< katex >}}z(t)=x(t)+y(t)\;(a\le t\le b){{< /katex >}} とおくと
+
+{{< katex display >}}
+\int_Cf(z)dz=\int_a^bf(z(t))
+\dfrac{dz(t)}{dt}dt
+{{< /katex >}}
+
+と表せる。
+
+### 性質
+
+1. {{< katex display >}}\int_C\{f(z)+g(z)\}dz=\int_Cf(z)dz+\int_Cg(z)dz{{< /katex >}}
+1. {{< katex display >}}\int kf(z)dz=k\int f(z)dz{{< /katex >}}
+1. {{< katex display >}}\int_{-C}f(z)dz=-\int_Cf(z)dz{{< /katex >}}
+1. {{< katex display >}}\int_Cf(z)dz=\int_{C_1}f(z)dz+\int_{C_2}f(z)dz{{< /katex >}}
+
 ## コーシーの積分定理
 
 {{< katex >}}f(z)=u+iv{{< /katex >}} は {{< katex >}}D{{< /katex >}} で正則であり、かつ {{< katex >}}u,v{{< /katex >}} は {{< katex >}}C^1{{< /katex >}} 級であるとする。 
@@ -243,4 +261,18 @@ f(z)=\sum_{n=0}^\infty\dfrac1{n!}f^{(n)}(\alpha)(z-\alpha)^n
 {{< /katex >}}
 {{< /details >}}
 
-<!-- TODO ローラン展開 -->
+## ローラン展開
+
+{{< katex >}}D=\{z\in\Bbb{C}\mid R_1<|z-\alpha|<R_2\}\;(0\le R_1<R_2\le\infty){{< /katex >}} とする。
+{{< katex >}}f(z){{< /katex >}} が {{< katex >}}\bar{D}{{< /katex >}} で正則な関数であるとき、任意の {{< katex >}}z\in D{{< /katex >}} に対し、次の等式が成り立つ。
+
+{{< katex display >}}
+\begin{aligned}
+c_n&=\dfrac1{2\pi i}\oint_C\dfrac{f(\zeta)}{(\zeta-\alpha)^{n+1}}d\zeta\;(n=0,\pm1,\pm2,\dots)\\
+f(z)&=\cdots+\dfrac{c_{-2}}{(z-\alpha)^2}
++\dfrac{c_{-1}}{(z-\alpha)}+c_0+c_1(z-\alpha)+c_2(z-\alpha)^2+\cdots\\
+&=\sum_{n=-\infty}^\infty c_n(z-\alpha)^n
+\end{aligned}
+{{< /katex >}}
+
+ただし {{< katex >}}C{{< /katex >}} は {{< katex >}}\alpha{{< /katex >}} を内部に含む任意の円。
