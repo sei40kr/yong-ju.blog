@@ -2,8 +2,38 @@
 title: "複素関数論"
 date: 2022-02-18T03:55:11+09:00
 categories: ["数学"]
-tags: ["数学", "複素解析", "複素数", "勉強ノート"]
+tags: ["複素関数論", "複素解析", "複素数", "大学数学", "数学", "勉強ノート", "WIP"]
 ---
+
+## ド・モアブルの定理
+
+{{< katex >}}z=r(\cos\theta+i\sin\theta){{< /katex >}} のとき
+
+{{< katex display >}}
+z^n=r^n(\cos{n\theta}+i\sin{n\theta})
+{{< /katex >}}
+
+ただし、{{< katex >}}n{{< /katex >}} は任意の整数
+
+{{< details title="証明" >}}
+オイラーの公式より
+
+{{< katex display >}}
+\begin{aligned}
+z&=r(\cos\theta+i\sin\theta)\\
+&=re^{i\theta}
+\end{aligned}
+{{< /katex >}}
+
+両辺を {{< katex >}}n{{< /katex >}} 乗して
+
+{{< katex display >}}
+\begin{aligned}
+z^n&=r^ne^{in\theta}\\
+&=r^n(\cos{n\theta}+i\sin{n\theta})
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
 
 <!-- TODO 複素数の対数関数 -->
 <!-- TODO 複素数の累乗関数 -->
@@ -235,7 +265,7 @@ f(z)&=f(\alpha)+f'(\alpha)(z-\alpha)+\dfrac1{2!}f''(\alpha)(z-\alpha)^2+\cdots\\
 実関数のテイラー展開の公式が複素関数にもそのまま使える。
 {{< /hint >}}
 
-{{< details title="証明" >}}
+{{< details title="証明 (注: 厳密でない)" >}}
 コーシーの積分公式より
 
 {{< katex display >}}
