@@ -2,7 +2,7 @@
 title: "解析学"
 date: 2021-01-05T04:53:19+09:00
 categories: ["数学"]
-tags: ["勉強ノート", "大学数学"]
+tags: ["解析学", "数学", "大学数学", "勉強ノート"]
 ---
 
 ## 前提知識
@@ -11,31 +11,79 @@ tags: ["勉強ノート", "大学数学"]
 * 積分
 * 複素数
 
+## テイラー展開
+
+**テイラー展開** (Taylor expansion) は、関数のある一点での導関数たちの値から計算される項の無限和として関数を表したものである。
+
+{{< katex display >}}
+\begin{aligned}
+f(x)&=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3+\dots\\
+&=\sum_{n=0}^\infty{\frac1{n!}f^{(n)}(a)(x-a)^n}
+\end{aligned}
+{{< /katex >}}
+
+特に {{< katex >}}a=0{{< /katex >}} のときのテイラー展開を**マクローリン展開** (Maclaurin expansion) という。
+
+{{< katex display >}}
+f(x)=\sum_{n=0}^\infty{\frac1{n!}f^{(n)}(0)x^n}
+{{< /katex >}}
+
+{{< hint info >}}
+テイラー展開 (マクローリン展開) をすることによって、複雑な関数を多項式で表せる。
+{{< /hint >}}
+
 ## オイラーの公式
 
-### 定義
+以下の関係式を**オイラーの公式** (Euler's formula) という。
 
 {{< katex display >}}
 e^{iy}=\cos{y}+i\sin{y}
 {{< /katex >}}
 
-この関係式を**オイラーの公式** (Euler's formula) という。
-
-この公式を用いれば、複素数の極座標表示は
-
-{{< katex display >}}
-z=r(\cos{\theta}+i\sin{\theta})=re^{i\theta}
-{{< /katex >}}
-
-と表される。
-
-また、特に {{< katex >}}\theta=\pi{{< /katex >}} のとき
+特に {{< katex >}}\theta=\pi{{< /katex >}} のとき
 
 {{< katex display >}}
 e^{i\pi}+1=0
 {{< /katex >}}
 
 が導かれ、この関係式を**オイラーの等式** (Euler's identity) という。
+
+{{< hint info >}}
+オイラー公式を用いれば、複素数の極座標表示は
+
+{{< katex display >}}
+z=r(\cos{\theta}+i\sin{\theta})=re^{i\theta}
+{{< /katex >}}
+
+と表される。
+{{< /hint >}}
+
+{{< details title="証明 (注: 厳密でない)" >}}
+{{< katex >}}\cos\theta,\sin\theta{{< /katex >}} をそれぞれマクローリン展開すると
+
+{{< katex display >}}
+\begin{aligned}
+\cos\theta&=1-\dfrac1{2!}\theta^2+\dfrac1{4!}\theta^4-\dfrac1{6!}\theta^6+\cdots\\
+\sin\theta&=\theta-\dfrac1{3!}\theta^3+\dfrac1{5!}\theta^5-\dfrac1{7!}\theta^7+\cdots\tag{1}
+\end{aligned}
+{{< /katex >}}
+
+{{< katex >}}e^x{{< /katex >}} をマクローリン展開すると
+
+{{< katex display >}}
+e^x=1+x+\dfrac1{2!}x^2+\dfrac1{3!}x^3+\dfrac1{4!}x^4+\dfrac1{5!}x^5+\dfrac1{6!}x^6+\dfrac1{7!}x^7+\cdots\tag{2}
+{{< /katex >}}
+
+(2) に {{< katex >}}x=i\theta{{< /katex >}} を形式的に代入すると
+
+{{< katex display >}}
+\begin{aligned}
+e^{i\theta}&=1+i\theta-\dfrac1{2!}\theta^2-\dfrac1{3!}i\theta^3+\dfrac1{4!}\theta^4+\dfrac1{5!}i\theta^5-\dfrac1{6!}\theta^6-\dfrac1{7!}i\theta^7+\cdots\\
+&=\left(1-\dfrac1{2!}\theta^2+\dfrac1{4!}\theta^4-\dfrac1{6!}\theta^6+\cdots\right)+i\left(\theta-\dfrac1{3!}i\theta^3+\dfrac1{5!}i\theta^5-\dfrac1{7!}i\theta^7+\cdots\right)\\
+&=\cos\theta+i\sin\theta
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
 
 ## ε-δ論法
 
@@ -136,23 +184,6 @@ I=\sqrt\pi
 
 となり、双曲線関数と式の形が似ているため。
 {{< /details >}}
-
-## テイラー展開
-
-テイラー展開 (Taylor expansion) は、関数のある一点での導関数たちの値から計算される項の無限和として関数を表したものである。
-
-### 定義
-
-{{< katex display >}}
-\begin{aligned}
-f(x)&=f(a)+f{'}(a)(x-a)+\frac{1}{2!}f{''}(x)(x-a)^2+\frac{1}{3!}f{'''}(a)(x-a)^3+\dots\\
-&=\sum_{n=0}^\infty{\frac1{n!}f^{(n)}(a)(x-a)^n}
-\end{aligned}
-{{< /katex >}}
-
-{{< katex >}}a=0{{< /katex >}} のときのテイラー展開を**マクローリン展開** (Maclaurin expansion) という。
-
-テイラー展開をすることによって、複雑な関数を多項式で表せる。
 
 ## ロピタルの定理
 
