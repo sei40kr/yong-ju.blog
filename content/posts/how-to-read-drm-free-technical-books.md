@@ -99,16 +99,24 @@ impress社の資格試験対策本「徹底攻略シリーズ」は物理本を�
 
 ## スマートフォンやタブレットに配信する
 
-DRMフリーの電子書籍ファイルを自分のスマートフォンやタブレットに配信する方法を考える。
+入手したDRMフリーの電子書籍ファイルを自分のスマートフォンやタブレットに配信し、読める状態にする方法を考える。
 
-### Send-to-Kindle でKindleライブラリに送る
+### Send to KindleでKindleライブラリに送る
 
-Kindleには、メールで添付した PDF or MOBI 形式の電子書籍ファイルを自分のKindleライブラリに送る **Send-to-Kindle** というサービスがある。
+Kindleには、メールで添付した PDF or MOBI 形式の電子書籍ファイルを自分のKindleライブラリに送る **Send to Kindle** というサービスがある。
 
-しかし、Gmailから送信する添付ファイルには **25MB** の容量制限があり、Send-to-Kindle 自体も **50MB** の容量制限を設けている。
+しかし、Gmailから送信する添付ファイルには **25MB** の容量制限があり、Send to Kindle自体も **50MB** の容量制限を設けている。
 よって、固定レイアウトの電子書籍のような画像データを主体とする書籍の配信は厳しい。
 
 参考: [Send to Kindle Eメールアドレスの使用方法](https://www.amazon.co.jp/gp/help/customer/display.html?nodeId=G7NECT4B4ZWHQ8WV)
+
+{{< hint info >}}
+**2022/05/04追記**
+
+Send to Kindleは2022年後半にEPUB形式を新たにサポートすることを発表した。
+
+参考: [KindleがEPUBファイルをサポート、「Send to Kindle」を使って送信 | マイナビニュース](https://news.mynavi.jp/article/20220503-2336836/)
+{{< /hint >}}
 
 ### OPDS で配信する
 
