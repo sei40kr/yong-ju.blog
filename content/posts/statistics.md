@@ -1,7 +1,7 @@
 ---
 title: "確率統計"
 date: 2021-02-07T22:06:02+09:00
-categories: ["数学"]
+categories: ["数学", "機械学習"]
 tags: ["勉強ノート", "大学数学"]
 ---
 
@@ -9,57 +9,71 @@ tags: ["勉強ノート", "大学数学"]
 
 ### 質的変数
 
-種類 (ex. 性別, 血液型) を区別するような変数。中でも性別のように 2 種類の値しかとらない質的変数を**2 値変数**と呼ぶ。
+質的変数は種類 (性別, 血液型など) を区別するような変数である。
+中でも性別のように2種類の値しかとらない質的変数を**2値変数**と呼ぶ。
 
-質的変数は尺度水準によって以下のように細かく分類できる。
+質的変数は尺度水準によって以下のように分類できる。
 
 名義尺度
-: 単に分類するための変数。 (ex. 生徒番号, 電話番号, 性別)
+: 単に分類するための変数。 (生徒番号, 電話番号, 性別など)
 
 順序尺度
-: 順序関係や大小関係に意味のある変数。 (ex. 成績の順位, アンケートの満足度)
+: 順序関係や大小関係に意味のある変数。 (成績の順位, アンケートの満足度など)
 
 ### 量的変数
 
-量 (ex. 身長, テストの点数) を表現する変数。
+量的変数は量 (身長, テストの点数など) を表現する変数である。
 
-量的変数は尺度水準によって以下のように細かく分類できる。
+量的変数は尺度水準によって以下のように分類できる。
 
 間隔尺度
-: 大小関係に加え、差に意味がある変数。 (ex. 西暦, 温度)
+: 大小関係, 差に意味がある変数。 (西暦など)
 
 比例尺度
-: 大小関係, 差, 比すべてに意味がある変数。
+: 間隔尺度の性質 (大小関係, 差) に加え、比にも意味がある変数。
+
+{{< hint info >}}
+摂氏 (℃), 華氏 (°F) 表記の温度は間隔尺度であるが、比例尺度ではない。
+一方でケルビン (K) 表記の温度は比例尺度である。
+{{< /hint >}}
 
 ## データの指標
 
-### 平均
+### 平均値
 
-平均 (mean) は、すべてのデータを合計してデータ数で割った値。
+**平均値 (mean)** は、すべてのデータを合計してデータ数で割った値である。
 
 {{< katex display >}}
 \overline{x}=\frac{1}{n}\sum_{i=1}^n{x_i}
 {{< /katex >}}
 
-### 中央値
+{{< hint info >}}
+「平均値」を意味する英単語には mean の他に average がある。
 
-中央値 (median) は、データを降順に並べたときに中央に位置する値。データ数が偶数のときは中央に位置する 2 つの値の平均値となる。
-
-### 最頻値
-
-最頻値 (mode) は、データの中で最も多く出現する値。
-
-### 偏差
-
-偏差 (deviation) は、各データと平均値の差。
+統計学では、mean は「平均値」を表すのに対し、average は「代表値」を表す。
+代表値とは、平均値を含む中央値 (後述), 最頻値 (後述) など、分布の中心的位置を表す数値の総称である。
+{{< /hint >}}
 
 ### 分散
 
-分散 (variance) は、偏差の 2 乗を合計したもので、データのばらつきを表す指標。
+分散 (variance) は、偏差の2乗を合計したもので、データのばらつきを表す指標。
 
 {{< katex display >}}
 S^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2
 {{< /katex >}}
+
+### 中央値
+
+中央値 (メジアン, median) は、データを降順に並べたときに中央に位置する値である。
+データ数が偶数のときは中央に位置する2つの値の平均値となる。
+
+### 最頻値
+
+最頻値 (モード, mode) は、データの中で最も多く出現する値である。
+
+### 偏差
+
+偏差 (deviation) は、各データと平均値の差である。
 
 ### 標準偏差
 
@@ -92,7 +106,7 @@ S_{xy}=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})(y_i-\overline{y})
 r_{xy}=\frac{S_{xy}}{S_xS_y}
 {{< /katex >}}
 
-1. {{< katex >}}r_{xy}>0{{< /katex >}} のとき、データは**正の相関**をもつ
+1. {{< katex >}}r_{xy}>0\iff\text{データは正の相関をもつ}{{< /katex >}}
 1. {{< katex >}}r_{xy}=0{{< /katex >}} のとき、データは**無相関**
 1. {{< katex >}}r_{xy}<0{{< /katex >}} のとき、データは**負の相関**をもつ
 
@@ -153,159 +167,337 @@ z_i=\frac{x_i-\overline{x}}{S}
 
 ### 期待値
 
-確率変数 {{< katex >}}X{{< /katex >}} を無限回試行して得られた実現値の平均を**期待値** (expected value) といい、離散型確率変数 {{< katex >}}X{{< /katex >}} の期待値は {{< katex >}}\mu, E(X){{< /katex >}} で表す。
+確率変数 {{< katex >}}X{{< /katex >}} を無限回試行して得られた実現値の平均を**期待値 (expected value)** といい、以下 {{< katex >}}E(X){{< /katex >}} で表す。
 
-期待値について、常に以下の式が成り立つ。
+また、期待値について以下の式が成り立つ。
 
 {{< katex display >}}
-E(aX+b)=aE(X)+b
+E[aX+b]=aE[X]+b
 {{< /katex >}}
 
-このような性質を**線形性**という。
+{{< hint info >}}
+このような性質を**線形性 (linearity)**という。
+{{< /hint >}}
 
 ### 分散
 
-確率変数の分散も、データの分散と同様にばらつきを表す指標であり、離散型確率変数 {{< katex >}}X{{< /katex >}} の分散は {{< katex >}}\sigma^2,V(X){{< /katex >}} で表す。
+確率変数 {{< katex >}}X{{< /katex >}} における分散もデータの分散と同様にばらつきを表す指標であり、以下 {{< katex >}}V[X]{{< /katex >}} で表す。
 
 分散について、常に以下の式が成り立つ。
 
 {{< katex display >}}
-V(aX+b)=a^2V(X)
+\begin{aligned}
+V[X]&=E[(E[X]-X)^2]\\
+&=E[X^2]-E[X]^2\\
+V[aX+b]&=a^2V[X]\\
+\end{aligned}
 {{< /katex >}}
+
+{{< details title="V[X]=E[X^2]-E[X]^2 の証明" >}}
+{{< katex display >}}
+\begin{aligned}
+V[X]&=E[(X-E[X])^2]\\
+&=E[X^2-2E[X]X-E[X]^2]\\
+&=E[X^2]-2E[X]^2+E[X]^2\\
+&=E[X^2]-E[X]^2
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
 
 ## 離散型確率変数
 
-確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x{{< /katex >}} という値をとる確率を、**確率質量関数** (PMF = Probability Mass Function) {{< katex >}}f(x){{< /katex >}} で表す。
+飛び飛びの値をとる (離散的である) 確率変数を **離散型確率変数 (discrete random variable)** という。
+
+離散型確率分布において、{{< katex >}}X=x{{< /katex >}} となる確率 {{< katex >}}P[X=x]{{< /katex >}} を返す関数を、**確率質量関数 (Probability Mass Function, PMF)** といい、以下 {{< katex >}}f(x){{< /katex >}} で表す。
+
+{{< katex >}}X{{< /katex >}} が離散型確率変数であるとき、以下が成り立つ。
 
 {{< katex display >}}
 \begin{aligned}
-f(x)&=P(X=x)\\
-E(X)&=\sum_kx_kf(x_k)\\
-V(X)&=\sum_k(x_k-\mu)^2f(x_k)
+E[X]&=\sum_kx_kf(x_k)\\
+V[X]&=\sum_k(x_k-\mu)^2f(x_k)
 \end{aligned}
 {{< /katex >}}
 
-確率の性質より、離散型確率変数は以下の 2 つの式を満たす。
+また、確率の性質より以下が自明に成り立つ。
 
 {{< katex display >}}
 0\le f(x_i)\le1\\
-\sum_{i=1}^kf(x_i)=1
-{{< /katex >}}
-
-## 離散型確率分布
-
-### ベルヌーイ分布
-
-ベルヌーイ分布 (Bernoulli distribution) は最も基本的な確率分布で、とりうる値が {{< katex >}}\{0,1\}{{< /katex >}} しかない確率分布である。
-
-{{< katex display >}}
-\begin{aligned}
-f(x)&=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\
-0&(\text{otherwise})
-\end{cases}\\
-E(X)&=p\\
-V(X)&=p(1-p)
-\end{aligned}
-{{< /katex >}}
-
-### 二項分布
-
-二項分布 (binomial distribution) は成功確率が {{< katex >}}p{{< /katex >}} のベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う確率分布であり、その分布を {{< katex >}}B(n,p){{< /katex >}} で表す。
-
-{{< katex display >}}
-\begin{aligned}
-f(x)&=\begin{cases}_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\
-0&(\text{otherwise})\end{cases}\\
-E(X)&=np\\
-V(X)&=np(1-p)
-\end{aligned}
-{{< /katex >}}
-
-{{< katex >}}B(n,p){{< /katex >}} に従う確率変数 {{< katex >}}X{{< /katex >}} と {{< katex >}}B(m,p){{< /katex >}} に従う確率変数 {{< katex >}}Y{{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}B(n+m,p){{< /katex >}} に従う。 (**再生性**)
-
-### 幾何分布
-
-幾何分布 (geometric distribution) はベルヌーイ試行を繰り返して、初めて成功するまでの試行回数が従う確率分布である。
-
-{{< katex display >}}
-\begin{aligned}
-f(x)&=\begin{cases}
-p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\
-0&(\text{otherwise})
-\end{cases}\\
-E(X)&=\frac{1}{p}\\
-P(X)&=\frac{1-p}{p^2}
-\end{aligned}
-{{< /katex >}}
-
-### ポアソン分布
-
-ポアソン分布はランダムな事象が単位時間あたりに発生する件数が従う確率分布である。
-
-ポアソン分布は、二項分布 {{< katex >}}B(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
-
-{{< katex display >}}
-\begin{aligned}
-f(x)&=\begin{cases}
-\frac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\
-0&(\text{otherwise})
-\end{cases}\\
-E(X)&=\lambda\\
-V(X)&=\lambda
-\end{aligned}
+\sum_kf(x_k)=1
 {{< /katex >}}
 
 ## 連続型確率変数
 
-### 確率密度関数
+連続した値をとる確率変数を **連続的確率変数 (continuous random variable)** という。
 
-連続型確率変数は**確率密度関数** (PDF = Probability Density Function) {{< katex >}}f(x){{< /katex >}} で表す。
+連続型確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x_0\le X\le x_1{{< /katex >}} を満たす確率 {{< katex >}}P[x_0\le x\le x_1]{{< /katex >}} が
 
-確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}x_0\le X \le x_1{{< /katex >}} の区間に入る確率 {{< katex >}}P(x_0\le X \le x_1){{< /katex >}} を、確率密度関数 {{< katex >}}f(x){{< /katex >}} を用いて次のように表す。
+{{< katex display >}}
+P[x_0\le x\le x_1]=\int_{x_0}^{x_1}f(x)dx
+{{< /katex >}}
+
+を満たすよう定義した {{< katex >}}f(x){{< /katex >}} を**確率密度関数 (Probability Density Function, PDF)** という。
+
+{{< katex >}}X{{< /katex >}} が連続型確率変数であるとき、以下が成り立つ。
 
 {{< katex display >}}
 \begin{aligned}
-P(x_0\le X\le x_1)&=\int_{x_0}^{x_1}f(x)dx\\
-\mu=E(X)&=\int_{-\infty}^\infty xf(x)dx\\
-\sigma^2=V(X)&=\int_{-\infty}^\infty(x-\mu)^2f(x)dx
+E[X]&=\int_{-\infty}^\infty xf(x)dx\\
+V[X]&=\int_{-\infty}^\infty(x-E[X])^2f(x)dx
 \end{aligned}
 {{< /katex >}}
 
-### 確率の性質
+また、確率の性質より以下が自明に成り立つ。
 
-確率の性質より、連続型確率変数は以下の 2 つの式を満たす。
+{{< katex display >}}
+0\le f(x)\le1\\
+\int_{-\infty}^\infty f(x)dx=1
+{{< /katex >}}
+
+## ベルヌーイ分布
+
+確率 {{< katex >}}p{{< /katex >}} で {{< katex >}}1{{< /katex >}}、それ以外の場合 (確率 {{< katex >}}1-p{{< /katex >}}) に {{< katex >}}0{{< /katex >}} をとる、最も基本的な離散型確率分布を **ベルヌーイ分布 (Bernoulli distribution)** といい、以下 {{< katex >}}\text{Bern}(p){{< /katex >}} で表す。
+
+{{< katex >}}\text{Bern}(p){{< /katex >}} の密度関数は次のようになる。
+
+{{< katex display >}}
+f(x)=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\
+0&(\text{otherwise})
+\end{cases}
+{{< /katex >}}
+
+{{< katex >}}X\sim\text{Bern}(p){{< /katex >}} のとき
 
 {{< katex display >}}
 \begin{aligned}
-f(x)&\ge0\\
-\int_{-\infty}^\infty f(x)dx&=1
+E[X]&=p\\
+V[X]&=p(1-p)
 \end{aligned}
 {{< /katex >}}
 
-### 類型分布関数
+{{< details title="V[X] の導出" >}}
+{{< katex display >}}
+\begin{aligned}
+V[X]&=E[(X-E[X])^2]\\
+&=E[X^2]-E[X]^2\\
+&=p-p^2\\
+&=p(1-p)
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
 
-確率変数 {{< katex >}}X{{< /katex >}} が {{< katex >}}k{{< /katex >}} 以下になる時の確率は**類型分布関数** (CDF = Cumulative Distribution Function) {{< katex >}}F(k){{< /katex >}} で表す。
+## 二項分布
+
+成功確率が {{< katex >}}p{{< /katex >}} であるベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う離散型確率分布を **二項分布 (binomial distribution)** といい、以下 {{< katex >}}\text{Bi}(n,p){{< /katex >}} で表す。
+
+{{< katex >}}\text{Bi}(n,p){{< /katex >}} の密度関数は次のようになる。
 
 {{< katex display >}}
-F(x)=P(X\le x)=\int_{-\infty}^{x}f(x)dx
+f(x)=\begin{cases}
+_nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\
+0&(\text{otherwise})
+\end{cases}
 {{< /katex >}}
 
-## 連続型確率分布
-
-### 正規分布
-
-正規分布 (normal distribution, ガウス分布, Gaussian distribution) は、自然界の多くの事象を表現できる確率分布である。
-期待値が {{< katex >}}\mu{{< /katex >}}, 分散が {{< katex >}}\sigma^2{{< /katex >}} であるような正規分布を {{< katex >}}N(\mu,\sigma^2){{< /katex >}} で表す。
+{{< katex >}}X\sim\text{Bi}(n,p){{< /katex >}} のとき
 
 {{< katex display >}}
 \begin{aligned}
-f(x)&=\frac{1}{\sqrt{2\pi}\sigma}\exp\{-\frac{(x-\mu)^2}{2\sigma^2}\}\\
-E(X)&=\mu\\
-V(X)&=\sigma^2
+E[X]&=np\\
+V[X]&=np(1-p)
 \end{aligned}
 {{< /katex >}}
 
-正規分布に従う確率変数を標準化した確率変数が従う {{< katex >}}N(0,1){{< /katex >}} を**標準正規分布**という。
+確率変数 {{< katex >}}X\sim\text{Bi}(n,p){{< /katex >}} と {{< katex >}}Y\sim\text{Bi}(m,p){{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}\text{Bi}(n+m,p){{< /katex >}} に従う。 (**再生性**)
+
+<!-- TODO V[X] の導出 -->
+
+## 幾何分布
+
+成功確率が {{< katex >}}p{{< /katex >}} であるベルヌーイ試行を繰り返し、初めて成功するまでの試行回数が従う離散型確率分布を
+**幾何分布 (geometric distribution)** といい、以下 {{< katex >}}\text{Ge}(p){{< /katex >}} で表す。
+
+{{< katex >}}\text{Ge}(p){{< /katex >}} の密度関数は次のようになる。
+
+{{< katex display >}}
+f(x)=\begin{cases}
+p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\
+0&(\text{otherwise})
+\end{cases}
+{{< /katex >}}
+
+{{< katex >}}X\sim\text{Ge}(p){{< /katex >}} のとき
+
+{{< katex display >}}
+\begin{aligned}
+E[X]&=\frac{1}{p}\\
+P[X]&=\frac{1-p}{p^2}
+\end{aligned}
+{{< /katex >}}
+
+が成り立つ。
+
+## ポアソン分布
+
+単位時間当たり平均 {{< katex >}}\lambda{{< /katex >}} 回発生する事象が単位時間に起こる件数が従う離散型確率分布を **ポアソン分布 (Poisson distribution)** といい、以下 {{< katex >}}\text{Poi}(\lambda){{< /katex >}} で表す。
+
+{{< katex >}}\text{Poi}(\lambda){{< /katex >}} の密度関数は次のようになる。
+
+{{< katex display >}}
+f(x)=\begin{cases}
+\dfrac{\lambda^x}{x!}\cdot e^{-\lambda}&(x\in\{0,1,2,\dots\})\\
+0&(\text{otherwise})
+\end{cases}
+{{< /katex >}}
+
+{{< katex >}}X\sim\text{Poi}(\lambda){{< /katex >}} のとき
+
+{{< katex display >}}
+\begin{aligned}
+E[X]&=\lambda\\
+V[X]&=\lambda
+\end{aligned}
+{{< /katex >}}
+
+が成り立つ。
+
+ポアソン分布は、二項分布 {{< katex >}}\text{Bi}(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
+
+{{< details title="二項分布からポアソン分布の導出 (ポアソンの極限定理)" >}}
+{{< katex display >}}
+\begin{aligned}
+\text{Poi}(\lambda)&=\lim_{\lambda=np,n\rightarrow=\infty}{}_nC_kp^k(1-p)^{n-k}\\
+&=\lim_{n\rightarrow\infty}\frac{n!}{(n-k)!k!}(\frac{\lambda}{n})^k(1-\frac{\lambda}{n})^{n-k}\\
+&=\lim_{n\rightarrow\infty}\frac{n(n-1)(n-2)\cdots(n-k+1)}{k!}(\frac{\lambda}{n})^k(1-\lambda)^{n-k}\\
+&=\lim_{n\rightarrow\infty}(\frac{n}{n})(\frac{n-1}{n})(\frac{n-2}{n})\cdots(\frac{n-k+1}{n})(\frac{\lambda^k}{k!})(1-\frac{\lambda}{n})^n(1-\frac{\lambda}{n})^{-k}\\
+&=1\cdot1\cdot1\cdots1(\frac{\lambda^k}{k!})e^{-\lambda}\cdot1\\
+&=\frac{\lambda^ke^{-\lambda}}{k!}
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
+
+<!-- TODO E[X], V[X] の導出 -->
+
+## 指数分布
+
+単位時間当たり平均 {{< katex >}}\lambda{{< /katex >}} 回発生する事象の発生間隔が従う連続型確率分布を**指数分布 (exponential distribution)** といい、以下 {{< katex >}}\text{Ex}(\lambda){{< /katex >}} で表す。
+
+{{< katex >}}\text{Ex}(\lambda){{< /katex >}} の密度関数は次のようになる。
+
+{{< katex display >}}
+f(x)=\begin{cases}
+\lambda e^{-\lambda x}&(x\ge0)\\
+0&(\text{otherwise})
+\end{cases}
+{{< /katex >}}
+
+<!-- TODO 指数分布の導出 -->
+
+{{< katex >}}X\sim Ex(\lambda){{< /katex >}} のとき
+
+{{< katex display >}}
+\begin{aligned}
+E[X]&=\dfrac1\lambda\\
+V[X]&=\dfrac1{\lambda^2}
+\end{aligned}
+{{< /katex >}}
+
+が成り立つ。
+
+---
+
+{{< hint info >}}
+単位時間当たり平均 {{< katex >}}\lambda{{< /katex >}} 回発生する事象の
+
+- **単位時間に起こる件数**は {{< katex >}}\text{Poi}(\lambda){{< /katex >}} (ポアソン分布) に従う。
+- **発生間隔**は {{< katex >}}\text{Ex}(\lambda){{< /katex >}} (指数分布) に従う。
+{{< /hint >}}
+
+## 正規分布
+
+自然界の多くの事象が従う、期待値が {{< katex >}}\mu{{< /katex >}}、分散が {{< katex >}}\sigma^2{{< /katex >}} となる **左右対称・釣り鐘型** の連続型確率分布を **正規分布 (normal distribution)** あるいは **ガウス分布 (Gaussian distribution)** といい、以下 {{< katex >}}\text{N}(\mu,\sigma^2){{< /katex >}} で表す。
+
+{{< katex display >}}
+f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}
+{{< /katex >}}
+
+{{< katex >}}X\sim\text{N}(\mu,\sigma^2){{< /katex >}} のとき
+
+{{< katex display >}}
+\begin{aligned}
+E[X]&=\mu\\
+V[X]&=\sigma^2
+\end{aligned}
+{{< /katex >}}
+
+また、{{< katex >}}X\sim \text{N}(\mu,\sigma^2){{< /katex >}} のとき
+
+{{< katex display >}}
+aX+b\sim\text{N}(a\mu+b,a^2\sigma^2)
+{{< /katex >}}
+
+が成り立つ。
+
+よって、確率変数 {{< katex >}}X{{< /katex >}} を標準化した確率変数 {{< katex >}}Z=\dfrac{X-\mu}\sigma{{< /katex >}} は {{< katex >}}\text{N}(0,1){{< /katex >}} に従う。
+このように {{< katex >}}\mu=0,\sigma^2=1{{< /katex >}} であるような正規分布 {{< katex >}}\text{N}(0,1){{< /katex >}} を特に {{< katex >}}\text{N}(0,1){{< /katex >}} を **標準正規分布** という。
+
+## マルコフの不等式
+
+{{< katex >}}X{{< /katex >}} を非負の値を取る確率変数とする。
+このとき、任意の {{< katex >}}c>0{{< /katex >}} に対して
+
+{{< katex display >}}
+P[X\ge c]\le\frac{E[X]}c
+{{< /katex >}}
+
+が成り立つ。
+
+{{< details title="証明" >}}
+{{< katex display >}}
+\begin{aligned}
+E[X]&=\int_0^\infty xf_X(x)dx\\
+&=\int_0^c xf_X(x)dx+\int_c^\infty xf_X(x)dx
+\end{aligned}
+{{< /katex >}}
+
+{{< katex >}}\int_0^cxf_X(x)dx\ge0{{< /katex >}} より
+
+{{< katex display >}}
+E[X]\le\int_c^\infty xf_X(x)dx
+{{< /katex >}}
+
+{{< katex >}}x\ge c{{< /katex >}} より
+
+{{< katex display >}}
+\begin{aligned}
+E[X]&\ge c\int_c^\infty f_X(x)dx\\
+&\ge cP[x\ge c]\\
+\therefore P[x\ge c]&\le\frac{E[X]}c
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
+
+## チェビシェフの不等式
+
+{{< katex >}}E[Y]=\mu,V[Y]=\sigma^2{{< /katex >}} とする。
+このとき、任意の {{< katex >}}a>0{{< /katex >}} に対して
+
+{{< katex display >}}
+P[|x-\mu|\ge a\sigma]\le\frac1{a^2}
+{{< /katex >}}
+
+が成り立つ。
+
+{{< details title="証明" >}}
+マルコフの不等式において {{< katex >}}X=(Y-\mu)^2,c=a^2\sigma^2{{< /katex >}} とすると
+
+{{< katex display >}}
+\begin{aligned}
+P[(Y-\mu)^2\ge a^2\sigma^2]&\le\frac{E[(Y-\mu)^2]}{a^2\sigma^2}\\
+P[|Y-\mu|\ge a\sigma]&\le\frac1{a^2}
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
 
 ## 参考文献
 
