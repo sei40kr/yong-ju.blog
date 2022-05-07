@@ -441,6 +441,16 @@ aX+b\sim\text{N}(a\mu+b,a^2\sigma^2)
 よって、確率変数 {{< katex >}}X{{< /katex >}} を標準化した確率変数 {{< katex >}}Z=\dfrac{X-\mu}\sigma{{< /katex >}} は {{< katex >}}\text{N}(0,1){{< /katex >}} に従う。
 このように {{< katex >}}\mu=0,\sigma^2=1{{< /katex >}} であるような正規分布 {{< katex >}}\text{N}(0,1){{< /katex >}} を特に {{< katex >}}\text{N}(0,1){{< /katex >}} を **標準正規分布** という。
 
+## カイ二乗分布
+
+確率変数 {{< katex >}}Z_1,Z_2,\dots,Z_n{{< /katex >}} が互いに独立で {{< katex >}}\text{N}(0,1){{< /katex >}} に従うとする。
+このとき、それらの二乗和 {{< katex >}}\sum_{i=0}^nZ_i^2{{< /katex >}} が従う連続型確率分布を**自由度 {{< katex >}}n{{< /katex >}} のカイ二乗分布 (chi-square distribution)** といい、以下 {{< katex >}}\chi^2(n){{< /katex >}} で表す。
+
+## t分布
+
+確率変数 {{< katex >}}Z,Y{{< /katex >}} が互いに独立で、{{< katex >}}Z\sim\text{N}(0,1),Y\sim\chi^2(n){{< /katex >}} とする。
+このとき、{{< katex >}}t=\dfrac{Z}{\sqrt{Y/n}}{{< /katex >}} が従う連続型確率分布を**自由度 {{< katex >}}n{{< /katex >}} のt分布 (t distribution)** といい、以下 {{< katex >}}t(n){{< /katex >}} で表す。
+
 ## マルコフの不等式
 
 {{< katex >}}X{{< /katex >}} を非負の値を取る確率変数とする。
