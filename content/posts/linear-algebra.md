@@ -2,55 +2,63 @@
 title: "線形代数"
 date: 2021-04-08T03:07:05+09:00
 categories: ["数学"]
-tags: ["勉強ノート", "大学数学"]
+tags: ["線形代数", "行列", "大学数学", "数学", "勉強ノート"]
 ---
 
 ## 階数
 
 任意の行列 {{< katex >}}A{{< /katex >}} は行基本変形を繰り返すことによって階段行列にすることができる。
-このとき、この階段行列の中の少なくとも1つは {{< katex >}}0{{< /katex >}} ではない成分をもつ行の個数を行列 {{< katex >}}A{{< /katex >}} の**階数**といい
+
+<!-- TODO 行基本変形について -->
+
+行列 {{< katex >}}A{{< /katex >}} の階段行列の中の少なくとも1つは {{< katex >}}0{{< /katex >}} でない成分をもつ行の個数を行列 {{< katex >}}A{{< /katex >}} の**階数 (rank)** といい、以下 {{< katex >}}\text{rank}(A){{< /katex >}} で表す。
+
+{{< katex >}}n{{< /katex >}} 元連立方程式の係数行列を {{< katex >}}A{{< /katex >}}、定数項ベクトルを {{< katex >}}\bold{b}{{< /katex >}}、係数行列と定数項ベクトルを連結した拡大係数行列を {{< katex >}}Ab{{< /katex >}} とおくと、以下の関係が成り立つ。
 
 {{< katex display >}}
-\text{rank}(A)
+\begin{aligned}
+\text{rank}(A)&=\text{rank}(A\bold{b})\land\begin{cases}
+\text{rank}(A)=n&\iff\text{解は1つ}\\
+\text{rank}(A)\lt n&\iff\text{解は不定であり、}n-\text{rank}(A)\,\text{個の任意定数で表せる}
+\end{cases}\\
+\text{rank}(A)&\ne\text{rank}(A\bold{b})\iff\text{解なし (不能)}
+\end{aligned}
 {{< /katex >}}
 
-で表す。
-
-{{< katex >}}n{{< /katex >}} 元連立方程式の係数行列を {{< katex >}}A{{< /katex >}}, 定数項ベクトルを {{< katex >}}b{{< /katex >}} とする。
-ここで、拡大係数行列を {{< katex >}}Ab{{< /katex >}} で表すとする。
-
-- {{< katex >}}\text{rank}(A)=\text{rank}(Ab){{< /katex >}}
-    - {{< katex >}}\text{rank}(A)=n{{< /katex >}} →
-      連立一次方程式の**解は1つ**
-    - {{< katex >}}\text{rank}(A)\lt n{{< /katex >}} →
-      連立一次方程式の**解は不定**であり、{{< katex >}}n-\text{rank}(A){{< /katex >}} 個の任意定数で表せる
-- {{< katex >}}\text{rank}(A)\ne\text{rank}(Ab){{< /katex >}} → 連立方程式の**解はなし** (**不能**)
-
-また、{{< katex >}}b=0{{< /katex >}} なら、連立一次方程式は必ず解をもつ。
+{{< hint info >}}
+特に {{< katex >}}\bold{b}=\bold{0}{{< /katex >}} のとき、必ず {{< katex >}}\text{rank}(A)=\text{rank}(A\bold{b}){{< /katex >}} であるため、連立方程式は必ず解をもつ。
+{{< /hint >}}
 
 ## 行列式
 
-行列式とは、正方行列に対して定義される量であり、行列 {{< katex >}}A{{< /katex >}} の行列式を
-
-{{< katex display >}}
-|A|,\det{A}
-{{< /katex >}}
-
-で表す。
+**行列式 (determinant)** とは正方行列に対して定義される量であり、以下行列 {{< katex >}}A{{< /katex >}} の行列式を {{< katex >}}|A|{{< /katex >}} で表す。
 
 ### 性質
 
-- **転置不変性** ({{< katex >}}|A|=|A^t|{{< /katex >}})
-- **交代性** (行 or 列を入れ替えると、行列式の値は {{< katex >}}-1{{< /katex >}} 倍になる)
-- **多重線形性** (ある行 or 列の定数倍を他の行 or 列に加えても行列式の値は変化しない)
+- **転置不変性**
 
-### 求め方
+  {{< katex display >}}
+  |A|=|A^t|
+  {{< /katex >}}
 
-#### サラスの方法
+- **交代性**
 
-サラスの方法は、2次あるいは3次正方行列において、左下から右下へ向かう方向に +, 右上から左下に向う方向に - の符号を付けて積をとり、それらの和をとることで行列式を求める。
+  行 or 列を入れ替えると、行列式の値は {{< katex >}}-1{{< /katex >}} 倍になる。
 
-2次正方行列 {{< katex >}}A=\left(\begin{matrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{matrix}\right){{< /katex >}} の行列式は
+- **多重線形性**
+
+  ある行 or 列の定数倍を他の行 or 列に加えても行列式の値は変化しない。
+
+### 求め方: サラスの方法
+
+サラスの方法は、2次あるいは3次正方行列において、左下から右下へ向かう方向に {{< katex >}}+{{< /katex >}}, 右上から左下に向う方向に {{< katex >}}-{{< /katex >}} の符号を付けて積をとり、それらの和をとることで行列式を求める。
+
+**例**
+
+2次正方行列 {{< katex >}}A=\left(\begin{matrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{matrix}\right){{< /katex >}} の行列式は
 
 {{< katex display >}}
 |A|=a_{11}a_{22}-a_{12}a_{21}
@@ -58,7 +66,11 @@ tags: ["勉強ノート", "大学数学"]
 
 で計算できる。
 
-3次正方行列 {{< katex >}}A=\left(\begin{matrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{matrix}\right){{< /katex >}} の行列式は
+3次正方行列 {{< katex >}}A=\left(\begin{matrix}
+a_{11}&a_{12}&a_{13}\\
+a_{21}&a_{22}&a_{23}\\
+a_{31}&a_{32}&a_{33}
+\end{matrix}\right){{< /katex >}} の行列式は
 
 {{< katex display >}}
 |A|=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{31}a_{22}a_{13}-a_{32}a_{23}a_{11}-a_{33}a_{21}a_{12}
@@ -66,22 +78,23 @@ tags: ["勉強ノート", "大学数学"]
 
 で計算できる。
 
-**4次以上の正方行列に対してサラスの方法は使えない。**
+ただし、**4次以上の正方行列に対してサラスの方法は使えない。**
 
-#### 余因子展開
+### 求め方: 余因子展開
 
 行列 {{< katex >}}A{{< /katex >}} から {{< katex >}}i{{< /katex >}} 行 {{< katex >}}j{{< /katex >}} 列を取り除いた小行列式を {{< katex >}}M_{i,j}{{< /katex >}} と表すとき
 
 {{< katex display >}}
-(-1)^{i+j}M_{i,j}
+\tilde{a}_{i,j}=(-1)^{i+j}|M_{i,j}|
 {{< /katex >}}
 
-を {{< katex >}}A{{< /katex >}} の {{< katex >}}(i,j){{< /katex >}} 余因子といい、{{< katex >}}\tilde{a}_{i,j}{{< /katex >}} で表す。
+を {{< katex >}}A{{< /katex >}} の**{{< katex >}}(i,j){{< /katex >}} 余因子 (cofactor)** といい、{{< katex >}}\tilde{a}_{i,j}{{< /katex >}} で表す。
 
-行列 {{< katex >}}A{{< /katex >}} を {{< katex >}}n{{< /katex >}} 次正方行列とすると、{{< katex >}}A{{< /katex >}} の行列式は次のように与えられる。
+行列 {{< katex >}}A{{< /katex >}} を {{< katex >}}n{{< /katex >}}次正方行列とすると、{{< katex >}}A{{< /katex >}} の行列式は次のように与えられる。
 
-第 {{< katex >}}i{{< /katex >}} 列に沿った余因子展開
-: {{< katex display >}}
+**第 {{< katex >}}i{{< /katex >}} 列に沿った余因子展開**
+
+{{< katex display >}}
 \begin{aligned}
 |A|&=a_{i,1}(-1)^{i+1}|M_{i,1}|+a_{i,2}(-1)^{i+2}|M_{i,2}|+\cdots+a_{i,n}(-1)^{i+n}|M_{i,n}|\\
 &=\sum_{j'=1}^n{a_{i,j'}(-1)^{i+j'}|M_{i,j'}|}\\
@@ -89,8 +102,9 @@ tags: ["勉強ノート", "大学数学"]
 \end{aligned}
 {{< /katex >}}
 
-第 {{< katex >}}j{{< /katex >}} 行に沿った余因子展開
-: {{< katex display >}}
+**第 {{< katex >}}j{{< /katex >}} 行に沿った余因子展開**
+
+{{< katex display >}}
 \begin{aligned}
 |A|&=a_{1,j}(-1)^{1+j}|M_{1,j}|+a_{2,j}(-1)^{2,j}|M_{2,j}|+\cdots+a_{n,j}(-1)^{n+j}|M_{n,j}|\\
 &=\sum_{i'=1}^n{a_{i',j}(-1)^{i'+j}|M_{i'+j}|}\\
@@ -106,17 +120,10 @@ tags: ["勉強ノート", "大学数学"]
 
 ## 逆行列
 
-### 定義
+正方行列 {{< katex >}}A{{< /katex >}} に対して {{< katex >}}AX=XA=E{{< /katex >}} となる正方行列 {{< katex >}}X{{< /katex >}} が存在するとき、行列 {{< katex >}}A{{< /katex >}} は「**正則である (regular)**」という。
+このとき、{{< katex >}}X{{< /katex >}} を {{< katex >}}A{{< /katex >}} の**逆行列 (inverse matrix)** といい、以下 {{< katex >}}A^{-1}{{< /katex >}} で表す。
 
-正方行列 {{< katex >}}A{{< /katex >}} に対して
-
-{{< katex display >}}
-AX=XA=E
-{{< /katex >}}
-
-となる正方行列 {{< katex >}}X{{< /katex >}} が存在するとき、**{{< katex >}}A{{< /katex >}} は正則である**といい、{{< katex >}}X{{< /katex >}} を {{< katex >}}A{{< /katex >}} の**逆行列**といい、一般には {{< katex >}}A^{-1}{{< /katex >}} で表す。
-
-また、{{< katex >}}n{{< /katex >}} 次正方行列 {{< katex >}}A{{< /katex >}} が正則であるとき、その逆行列  {{< katex >}}A^{-1}{{< /katex >}} は
+{{< katex >}}n{{< /katex >}}次正方行列 {{< katex >}}A{{< /katex >}} が正則であるとき、その逆行列 {{< katex >}}A^{-1}{{< /katex >}} は
 
 {{< katex display >}}
 A^{-1}=\frac1{|A|}\tilde{A}
@@ -124,13 +131,29 @@ A^{-1}=\frac1{|A|}\tilde{A}
 
 と表せる。
 
-<!-- TODO 余因子行列について書く -->
+ここで、{{< katex >}}\tilde{A}{{< /katex >}} を {{< katex >}}A{{< /katex >}} の**余因子行列 (cofactor matrix)**といい、以下のように定義される。
+
+{{< katex display >}}
+\tilde{A}=\left(\begin{array}{ccccc}
+\tilde{a}_{11}&\tilde{a}_{12}&\cdots&\tilde{a}_{1n}\\
+\tilde{a}_{21}&\tilde{a}_{22}&\cdots&\tilde{a}_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+\tilde{a}_{n1}&\tilde{a}_{n2}&\cdots&\tilde{a}_{nn}\\
+\end{array}\right)^t=\left(\begin{array}{ccccc}
+\tilde{a}_{11}&\tilde{a}_{21}&\cdots&\tilde{a}_{n1}\\
+\tilde{a}_{12}&\tilde{a}_{22}&\cdots&\tilde{a}_{n2}\\
+\vdots&\vdots&\ddots&\vdots\\
+\tilde{a}_{1n}&\tilde{a}_{2n}&\cdots&\tilde{a}_{nn}\\
+\end{array}\right)
+{{< /katex >}}
 
 <!-- TODO 掃き出し法について書く -->
 
 ### 性質
 
-{{< katex >}}n{{< /katex >}} 次正方行列が正則{{< katex >}}\iff\text{rank}(A)=n\iff|A|\ne0{{< /katex >}}
+{{< katex display >}}
+n\text{次正方行列が正則}\iff\text{rank}(A)=n\iff|A|\ne0
+{{< /katex >}}
 
 ### 例題
 
@@ -138,27 +161,86 @@ A^{-1}=\frac1{|A|}\tilde{A}
 
 ## 固有ベクトルと固有値
 
-ある {{< katex >}}n{{< /katex >}} 次正方行列 {{< katex >}}A{{< /katex >}} に対し
+ある {{< katex >}}n{{< /katex >}}次正方行列 {{< katex >}}A{{< /katex >}} に対し {{< katex >}}A\bold{x}=\lambda\bold{x}{{< /katex >}} を満たす {{< katex >}}n{{< /katex >}} 次元列ベクトル {{< katex >}}\bold{x}\;(\bold{x}\ne\bold{0}){{< /katex >}} が存在するとする。
+このとき、{{< katex >}}\lambda{{< /katex >}} を {{< katex >}}A{{< /katex >}} の**固有値 (eigenvalue)** といい、{{< katex >}}\bold{x}{{< /katex >}} を {{< katex >}}\lambda{{< /katex >}} に対する**固有ベクトル (eigenvector)** という。
+
+また、{{< katex >}}A{{< /katex >}} の相異なる固有ベクトル {{< katex >}}\lambda_1,\lambda_2,\dots,\lambda_k{{< /katex >}} は**一次独立**である。
+
+{{< hint info >}}
+**固有値と固有ベクトルの意味の考察**
 
 {{< katex display >}}
-A\vec{x}=\lambda\vec{x}
+A\bold{x}=\lambda\bold{x}
 {{< /katex >}}
 
-を満たす  {{< katex >}}n{{< /katex >}} 次元列ベクトル {{< katex >}}\vec{x}~(\vec{x}\ne\vec{0}){{< /katex >}} が存在するとする。
-このとき、{{< katex >}}\lambda{{< /katex >}} を {{< katex >}}A{{< /katex >}} の**固有値**といい、{{< katex >}}\vec{x}{{< /katex >}} を {{< katex >}}\lambda{{< /katex >}} に対する**固有ベクトル**という。
+ベクトル {{< katex >}}\bold{x}{{< /katex >}} を行列 {{< katex >}}A{{< /katex >}} によって変換したときに、変換後のベクトル {{< katex >}}A\bold{x}{{< /katex >}} が変換前のベクトルのスカラー倍になる (変換前後でベクトルの向きが変わらない) とき、変換前のベクトルが固有ベクトル {{< katex >}}\bold{x}{{< /katex >}} でそのときの倍率が固有値 {{< katex >}}\lambda{{< /katex >}} となる。
+{{< /hint >}}
 
-また、{{< katex >}}A{{< /katex >}} の相異なる固有値 {{< katex >}}\vec{x_1},\vec{x_2},\dots,\vec{x_k}{{< /katex >}} に対する固有ベクトル {{< katex >}}\lambda_1,\lambda_2,\dots,\lambda_k{{< /katex >}} は**一次独立**である。
+{{< details title="A の相異なる固有値 λ_1, λ_2, ..., λ_k に対する固有ベクトル x_1, x_2, ..., x_k が一次独立であることの証明" >}}
+{{< katex >}}k=1{{< /katex >}} のとき、成立は明らか。
+
+{{< katex >}}k=m{{< /katex >}} のとき、成立を仮定する。
+
+{{< katex >}}k=m+1{{< /katex >}} とき
+
+{{< katex display >}}
+c_1\bold{x_1}+c_2\bold{x_2}+\cdots+c_m\bold{x_m}+c_{m+1}\bold{x_{m+1}}=\bold{0}\tag{1}
+{{< /katex >}}
+
+について考える。
+
+(1) の両辺に左から {{< katex >}}A{{< /katex >}} をかけると、{{< katex >}}A\bold{x}_i=\lambda_i\bold{x}_i{{< /katex >}} より
+
+{{< katex display >}}
+c_1\lambda_1\bold{x_1}+c_2\lambda_2\bold{x_2}+\cdots+c_m\lambda_m \bold{x_m}+c_{m+1}\lambda_{m+1}\bold{x_{m+1}}=\bold{0}\tag{2}
+{{< /katex >}}
+
+(1) の両辺に左から {{< katex >}}\lambda_{m+1}{{< /katex >}} をかけると
+
+{{< katex display >}}
+c_1\lambda_{m+1}\bold{x_1}+c_2\lambda_{m+1}\bold{x_2}+\cdots+c_m\lambda_{m+1} \bold{x_m}+c_{m+1}\lambda_{m+1}\bold{x_{m+1}}=\bold{0}\tag{3}
+{{< /katex >}}
+
+ここで {{< katex >}}\text{(2)}-\text{(3)}{{< /katex >}} を考えると
+
+{{< katex display >}}
+c_1(\lambda_1-\lambda_{m+1})\bold{x_1}+c_2(\lambda_2-\lambda_{m+1})\bold{x_2}+\cdots+c_m(\lambda_m-\lambda_{m+1})\bold{x_m}=\bold{0}
+{{< /katex >}}
+
+仮定より {{< katex >}}\bold{x_1},\bold{x_2},\dots,\bold{x_m}{{< /katex >}} は一次独立であるから
+
+{{< katex display >}}
+c_i(\lambda_i-\lambda_{m+1})=0\;(i=1,2,\dots,m)
+{{< /katex >}}
+
+ここで {{< katex >}}\lambda_i-\lambda_{m+1}\ne0\enspace(i=1,2,\dots,m){{< /katex >}} であるので
+
+{{< katex display >}}
+c_1=c_2=\cdots=c_m=0
+{{< /katex >}}
+
+これを (1) に代入すると
+
+{{< katex display >}}
+\begin{aligned}
+c_{m+1}\bold{x_{m+1}}&=\bold{0}\\
+\therefore c_{m+1}&=0
+\end{aligned}
+{{< /katex >}}
+
+以上より {{< katex >}}\bold{x_1},\bold{x_2},\dots,\bold{x_{m+1}}{{< /katex >}} は一次独立。
+{{< /details >}}
 
 ### 求め方
 
 {{< katex display >}}
 \begin{aligned}
-Ax&=\lambda x\\
-(A-\lambda E)x&=\vec{0}
+A\bold{x}&=\lambda\bold{x}\\
+(A-\lambda E)\bold{x}&=\bold{0}
 \end{aligned}
 {{< /katex >}}
 
-ここで、上記の式が {{< katex >}}x=\vec{0}{{< /katex >}} 以外の解をもつことから
+ここで、上記の式が {{< katex >}}\bold{x}=\bold{0}{{< /katex >}} 以外の解をもつことから
 
 {{< katex display >}}
 \begin{aligned}
@@ -166,65 +248,9 @@ Ax&=\lambda x\\
 \end{aligned}
 {{< /katex >}}
 
-が成り立つ。
-これを**固有方程式**という。
-固有方程式は {{< katex >}}\lambda{{< /katex >}} の {{< katex >}}n{{< /katex >}} 次方程式である。
+が導け、これを**固有方程式**という。
+固有方程式は {{< katex >}}\lambda{{< /katex >}} についての {{< katex >}}n{{< /katex >}} 元連立方程式である。
 
-### 証明
-
-#### {{< katex >}}A{{< /katex >}} の相異なる固有値 {{< katex >}}\vec{x_1},\vec{x_2},\dots,\vec{x_k}{{< /katex >}} に対する固有ベクトル {{< katex >}}\lambda_1,\lambda_2,\dots,\lambda_k{{< /katex >}} が一次独立であることの証明
-
-- {{< katex >}}k=1{{< /katex >}} のとき、成立は明らか
-- {{< katex >}}k=m{{< /katex >}} のとき、成立を仮定する
-
-このとき
-
-{{< katex display >}}
-c_1\vec{x_1}+c_2\vec{x_2}+\cdots+c_m\vec{x_m}+c_{m+1}\vec{x_{m+1}}=\vec{0}\tag{*}
-{{< /katex >}}
-
-について考える。
-
-{{< katex >}}(\text{*}){{< /katex >}} の両辺に左から {{< katex >}}A{{< /katex >}} をかけると、{{< katex >}}Ax_i=\lambda_ix_i{{< /katex >}} より
-
-{{< katex display >}}
-c_1\lambda_1\vec{x_1}+c_2\lambda_2\vec{x_2}+\cdots+c_m\lambda_m \vec{x_m}+c_{m+1}\lambda_{m+1}\vec{x_{m+1}}=\vec{0}\tag{a}
-{{< /katex >}}
-
-{{< katex >}}(\text{*}){{< /katex >}} の両辺に左から {{< katex >}}\lambda_{m+1}{{< /katex >}} をかけると
-
-{{< katex display >}}
-c_1\lambda_{m+1}\vec{x_1}+c_2\lambda_{m+1}\vec{x_2}+\cdots+c_m\lambda_{m+1} \vec{x_m}+c_{m+1}\lambda_{m+1}\vec{x_{m+1}}=\vec{0}\tag{b}
-{{< /katex >}}
-
-ここで {{< katex >}}(\text{a})-(\text{b}){{< /katex >}} を考えると
-
-{{< katex display >}}
-c_1(\lambda_1-\lambda_{m+1})\vec{x_1}+c_2(\lambda_2-\lambda_{m+1})\vec{x_2}+\cdots+c_m(\lambda_m-\lambda_{m+1})\vec{x_m}=\vec{0}
-{{< /katex >}}
-
-ここで {{< katex >}}\vec{x_1},\vec{x_2},\dots,\vec{x_m}{{< /katex >}} は一次独立であるから
-
-{{< katex display >}}
-c_i(\lambda_i-\lambda_{m+1})=\vec{0}~(i=1,2,\dots,m)
-{{< /katex >}}
-
-{{< katex >}}\lambda_i-\lambda_{m+1}\ne0~(i=1,2,\dots,m){{< /katex >}} であるので
-
-{{< katex display>}}
-c_1=c_2=\cdots=c_m=0
-{{< /katex >}}
-
-これを {{< katex >}}(*){{< /katex >}} に代入すると
-
-{{< katex display >}}
-\begin{aligned}
-c_{m+1}\vec{x_{m+1}}&=\vec{0}\\
-\therefore c_{m+1}&=0
-\end{aligned}
-{{< /katex >}}
-
-以上より {{< katex >}}x_1,x_2,\dots,x_{m+1}{{< /katex >}} は一次独立。
 
 ### 例題
 
@@ -233,7 +259,7 @@ c_{m+1}\vec{x_{m+1}}&=\vec{0}\\
 
 ## 対角化
 
-{{< katex >}}n{{< /katex >}} 次正方行列 {{< katex >}}A{{< /katex >}} に対し、適切な正則行列 {{< katex >}}P{{< /katex >}} が存在して
+{{< katex >}}n{{< /katex >}}次正方行列 {{< katex >}}A{{< /katex >}} に対し、適切な正則行列 {{< katex >}}P{{< /katex >}} が存在して
 
 {{< katex display >}}
 P^{-1}AP=\left(\begin{array}{cccc}
@@ -248,27 +274,10 @@ P^{-1}AP=\left(\begin{array}{cccc}
 
 ここで {{< katex >}}\lambda_0,\lambda_1\,\cdots,\lambda_n{{< /katex >}} は行列 {{< katex >}}A{{< /katex >}} の固有値である。
 
-### 定理
-
-{{< katex >}}n{{< /katex >}} 次正方行列 {{< katex >}}A{{< /katex >}} の {{< katex >}}n{{< /katex >}} 個の一次独立な固有ベクトルを {{< katex >}}\vec{x_1},\vec{x_2},\cdots,\vec{x_n}{{< /katex >}} とする。
-それらを並べた行列 {{< katex >}}(\vec{x_1},\vec{x_2},\cdots,\vec{x_n}){{< /katex >}} を {{< katex >}}P{{< /katex >}} とすると、行列 {{< katex >}}A{{< /katex >}} は次のように対角化できる。
-
-{{< katex display >}}
-P^{-1}AP=\left(\begin{array}{cccc}
-\lambda_1&0&\cdots&0\\
-0&\lambda_2&\cdots&0\\
-\vdots&\vdots&\ddots&\vdots\\
-0&0&\cdots&\lambda_n
-\end{array}\right)
-{{< /katex >}}
-
-### 証明
-
-#### 行列 {{< katex >}}P{{< /katex >}} が逆行列をもつことの証明
-
+{{< details title="行列 P が逆行列をもつことの証明" >}}
 {{< katex display >}}
 \begin{aligned}
-(x_1,x_2,\cdots,x_n)\left(\begin{array}{c}
+(\bold{x_1},\bold{x_2},\cdots,\bold{x_n})\left(\begin{array}{c}
 c_1\\
 c_2\\
 \vdots\\
@@ -278,18 +287,19 @@ c_n
 {{< /katex >}}
 
 とする。
-ここで {{< katex >}}\text{rank}(P)<0{{< /katex >}} とすると、 {{< katex >}}C_1=C_2=\cdots=C_n=0{{< /katex >}} という自明な解以外の解をもってしまうので、これは {{< katex >}}\vec{x_1},\vec{x_2},\cdots,\vec{x_n}{{< /katex >}} が一次独立であることに矛盾する。
 
-よって {{< katex >}}\text{rank}(P)=n{{< /katex >}} であり、{{< katex >}}P{{< /katex >}} は正則である。 (逆行列をもつ)
+ここで {{< katex >}}\text{rank}(P)<n{{< /katex >}} とすると、 {{< katex >}}c_1=c_2=\cdots=c_n=0{{< /katex >}} という自明な解以外の解をもってしまうので、これは {{< katex >}}\bold{x_1},\bold{x_2},\cdots,\bold{x_n}{{< /katex >}} が一次独立であることに矛盾する。
 
-#### {{< katex >}}P^{-1}AP{{< /katex >}} が対角行列であることの証明
+よって {{< katex >}}\text{rank}(P)=n{{< /katex >}} であり、{{< katex >}}P{{< /katex >}} は正則である。(逆行列をもつ)
+{{< /details >}}
 
+{{< details title="P^(-1)AP が対角行列であることの証明" >}}
 {{< katex display >}}
 \begin{aligned}
-P^{-1}AP&=P^{-1}A(\vec{x_1},\vec{x_2},\cdots,\vec{x_n})\\
-&=P^{-1}(A\vec{x_1},A\vec{x_2},\cdots,A\vec{x_n})\\
-&=P^{-1}(\lambda_1\vec{x_1},\lambda_2\vec{x_2},\cdots,\lambda_n\vec{x_n})\\
-&=P^{-1}(\vec{x_1},\vec{x_2},\cdots,\vec{x_n})\left(\begin{array}{cccc}
+P^{-1}AP&=P^{-1}A(\bold{x_1},\bold{x_2},\cdots,\bold{x_n})\\
+&=P^{-1}(A\bold{x_1},A\bold{x_2},\cdots,A\bold{x_n})\\
+&=P^{-1}(\lambda_1\bold{x_1},\lambda_2\bold{x_2},\cdots,\lambda_n\bold{x_n})\\
+&=P^{-1}(\bold{x_1},\bold{x_2},\cdots,\bold{x_n})\left(\begin{array}{cccc}
 \lambda_1&0&\cdots&0\\
 0&\lambda_2&\cdots&0\\
 \vdots&\vdots&\ddots&\vdots\\
@@ -303,23 +313,42 @@ P^{-1}AP&=P^{-1}A(\vec{x_1},\vec{x_2},\cdots,\vec{x_n})\\
 \end{array}\right)
 \end{aligned}
 {{< /katex >}}
+{{< /details >}}
+
+### 定理
+
+{{< katex >}}n{{< /katex >}}次正方行列 {{< katex >}}A{{< /katex >}} の {{< katex >}}n{{< /katex >}} 個の一次独立な固有ベクトルを {{< katex >}}\bold{x_1},\bold{x_2},\cdots,\bold{x_n}{{< /katex >}} とする。
+それらを並べた行列 {{< katex >}}(\bold{x_1},\bold{x_2},\cdots,\bold{x_n}){{< /katex >}} を {{< katex >}}P{{< /katex >}} とすると、行列 {{< katex >}}A{{< /katex >}} は次のように対角化できる。
+
+{{< katex display >}}
+P^{-1}AP=\left(\begin{array}{cccc}
+\lambda_1&0&\cdots&0\\
+0&\lambda_2&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&\lambda_n
+\end{array}\right)
+{{< /katex >}}
 
 ### 対角化できない例
 
 {{< katex display >}}
-\begin{aligned}
-A&=\left(\begin{matrix}
+A=\left(\begin{matrix}
 -3&-1\\
 1&-1
-\end{matrix}\right)\\[9mu]
+\end{matrix}\right)\\
+{{< /katex >}}
+
+行列 {{< katex >}}A{{< /katex >}} の固有方程式を解くと
+
+{{< katex display >}}
+\begin{aligned}
 \begin{vmatrix}
 -3-\lambda&-1\\
 1&-1-\lambda
 \end{vmatrix}&=(-3-\lambda)(-1-\lambda)+1\\
 &=\lambda^2+4\lambda+4\\
-&=(\lambda+2)^2\\
-&=0\\
-\therefore\lambda&=-2\\[9mu]
+&=(\lambda+2)^2=0\\
+\therefore\lambda&=-2\\
 \left(\begin{matrix}
 -1&-1\\
 1&1
@@ -333,10 +362,13 @@ y
 \end{aligned}
 {{< /katex >}}
 
-ここで {{< katex >}}x=s_1{{< /katex >}} とおくと {{< katex >}}y=-s_1{{< /katex >}}
+ここで {{< katex >}}x=s{{< /katex >}} とおくと {{< katex >}}y=-s{{< /katex >}}
 
 {{< katex display >}}
-\therefore{x_1=s_1\left(\begin{matrix}
+\therefore{\left(\begin{matrix}
+x\\
+y
+\end{matrix}\right)=s\left(\begin{matrix}
 1\\
 -1
 \end{matrix}\right)}
@@ -344,26 +376,19 @@ y
 
 これ以外に独立な固有ベクトルがとれないので**対角化不可能**。
 
-### 応用例
-
-#### 対角化を使った {{< katex >}}A^n{{< /katex >}} の計算
-
-{{< katex display >}}
-(P^{-1}AP)^k=(P^{-1}AP)(P^{-1}AP)\cdots(P^{-1}AP)
-{{< /katex >}}
-
-ここで {{< katex >}}PP^{-1}=E{{< /katex >}} なので
+### 応用例: 対角化を使った A^n の計算
 
 {{< katex display >}}
 \begin{aligned}
-(P^{-1}AP)^k&=P^{-1}A^kP\\
+(P^{-1}AP)^k&=(P^{-1}AP)(P^{-1}AP)\cdots(P^{-1}AP)\\
+&=P^{-1}A^kP\\
 A^k&=P(P^{-1}AP)^kP^{-1}\\
-&=P^{-1}\left(\begin{matrix}
+&=P\left(\begin{matrix}
 \lambda_1^k&0&\cdots&0\\
 0&\lambda_2^k&\cdots&0\\
 \vdots&\vdots&\ddots&\vdots\\
 0&0&\cdots&\lambda_n^k
-\end{matrix}\right)P
+\end{matrix}\right)P^{-1}
 \end{aligned}
 {{< /katex >}}
 
