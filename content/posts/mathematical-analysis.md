@@ -514,6 +514,21 @@ e^{-inx}&=\cos{nx}-i\sin{nx}
    {{< /katex >}}
    {{< /details >}}
 
+## ラグランジュの未定乗数法
+
+条件 {{< katex >}}g(x,y)=0{{< /katex >}} 下での {{< katex >}}f(x,y){{< /katex >}} の極値を考える。
+
+{{< katex >}}f(x,y),g(x,y){{< /katex >}} が {{< katex >}}C^1{{< /katex >}} 級であるとき、条件付き極値をとる点の候補は
+
+- {{< katex >}}\nabla{g(x,y)}=\bold{0}\land g(x,y)=0{{< /katex >}}
+- {{< katex >}}\nabla{f(x,y)}=\lambda g(x,y)\land g(x,y)=0{{< /katex >}} (**ラグランジュの未定乗数法**, method of Lagrange multiplier)
+
+を満たす点である。
+
+{{< hint info >}}
+以上の条件は、条件付き極値となるための**必要条件**であり、**十分条件ではない。**
+{{< /hint >}}
+
 ## 参考文献
 
 - 井上 満, 工業数学がわかる, 技術評論社, 2010
@@ -531,3 +546,4 @@ e^{-inx}&=\cos{nx}-i\sin{nx}
 - ヨビノリたくみ, [【大学数学】フーリエ解析入門 ④(フーリエ級数展開 IV)/全 5 講【解析学】](https://youtu.be/0UJhcP-Q8zQ), 2020
 - ヨビノリたくみ, [【大学数学】sup と inf(上限と下限)【解析学】](https://youtu.be/pySvmqhB6BY), 2018
 - ヨビノリたくみ, [【大学数学】ガンマ関数 ①(定義と性質)【解析学】](https://youtu.be/K-HwL3N4P5Q), 2019
+- ヨビノリたくみ, [ラグランジュの未定乗数法の気持ち【条件付き極値問題】](https://youtu.be/vAwqZmwf4W8), 2021
