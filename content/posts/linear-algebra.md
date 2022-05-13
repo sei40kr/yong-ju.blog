@@ -5,6 +5,43 @@ categories: ["数学"]
 tags: ["線形代数", "行列", "大学数学", "数学", "勉強ノート"]
 ---
 
+## 一次独立
+
+いずれも {{< katex >}}\bold{0}{{< /katex >}} でないベクトル {{< katex >}}\bold{a_1,a_2,\dots,a_n}{{< /katex >}} について {{< katex >}}c_1\bold{a_1}+c_2\bold{a_2}+\cdots+c_n\bold{a_n}=\bold{0}{{< /katex >}} が成り立つのが {{< katex >}}c_1=c_2=\cdots=c_n=0{{< /katex >}} だけの場合、{{< katex >}}\bold{a_1,a_2,\dots,a_n}{{< /katex >}} を**一次独立 (linearly independent)** という。
+また、一次独立でないものを**一次従属 (linearly dependent)** という。
+
+### 定理
+
+あるベクトル {{< katex >}}\bold{b}{{< /katex >}} が一次独立なベクトル {{< katex >}}\bold{a_1,a_2,\dots,a_n}{{< /katex >}} の線型結合で表されるとき、その表し方は1通りである。
+
+{{< details title="証明" >}}
+別の数の組 {{< katex >}}\{c_1,\dots,c_n\}{{< /katex >}} と {{< katex >}}\{c_1',\dots,c_n'\}{{< /katex >}} を用いて
+
+{{< katex display >}}
+\begin{aligned}
+\bold{b}&=c_1\bold{a_1}+\cdots+c_n\bold{a_n}\\
+\bold{b}&=c_1'\bold{a_1}+\cdots+c_n'\bold{a_n}
+\end{aligned}
+{{< /katex >}}
+
+と2通りの表し方ができると仮定する。
+
+このとき
+
+{{< katex display >}}
+(c_1-c_1')\bold{a_1}+\cdots+(c_n-c_n')\bold{a_n}=\bold{0}
+{{< /katex >}}
+
+となる。ここで {{< katex >}}\bold{a_1,\dots,a_n}{{< /katex >}} は一次独立であるので
+
+{{< katex display >}}
+c_1-c_1'=\cdots=c_n-c_n'=0\\
+\therefore c_1=c_1',\dots,c_n=c_n'
+{{< /katex >}}
+
+となり、これは矛盾する。
+{{< /details >}}
+
 ## 階数
 
 任意の行列 {{< katex >}}A{{< /katex >}} は行基本変形を繰り返すことによって階段行列にすることができる。
