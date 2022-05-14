@@ -288,9 +288,9 @@ V[X]&=E[(X-E[X])^2]\\
 
 ## 二項分布
 
-成功確率が {{< katex >}}p{{< /katex >}} であるベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う離散型確率分布を **二項分布 (binomial distribution)** といい、以下 {{< katex >}}\text{Bi}(n,p){{< /katex >}} で表す。
+成功確率が {{< katex >}}p{{< /katex >}} であるベルヌーイ試行を {{< katex >}}n{{< /katex >}} 回行った時の成功回数が従う離散型確率分布を **二項分布 (binomial distribution)** といい、以下 {{< katex >}}\text{Bin}(n,p){{< /katex >}} で表す。
 
-{{< katex >}}\text{Bi}(n,p){{< /katex >}} の密度関数は次のようになる。
+{{< katex >}}\text{Bin}(n,p){{< /katex >}} の密度関数は次のようになる。
 
 {{< katex display >}}
 f(x)=\begin{cases}
@@ -299,7 +299,7 @@ _nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\
 \end{cases}
 {{< /katex >}}
 
-{{< katex >}}X\sim\text{Bi}(n,p){{< /katex >}} のとき
+{{< katex >}}X\sim\text{Bin}(n,p){{< /katex >}} のとき
 
 {{< katex display >}}
 \begin{aligned}
@@ -308,7 +308,7 @@ V[X]&=np(1-p)
 \end{aligned}
 {{< /katex >}}
 
-確率変数 {{< katex >}}X\sim\text{Bi}(n,p){{< /katex >}} と {{< katex >}}Y\sim\text{Bi}(m,p){{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}\text{Bi}(n+m,p){{< /katex >}} に従う。 (**再生性**)
+確率変数 {{< katex >}}X\sim\text{Bin}(n,p){{< /katex >}} と {{< katex >}}Y\sim\text{Bin}(m,p){{< /katex >}} が互いに独立であるとき、確率変数の和 {{< katex >}}X+Y{{< /katex >}} は {{< katex >}}\text{Bin}(n+m,p){{< /katex >}} に従う。 (**再生性**)
 
 <!-- TODO V[X] の導出 -->
 
@@ -361,7 +361,7 @@ V[X]&=\lambda
 
 が成り立つ。
 
-ポアソン分布は、二項分布 {{< katex >}}\text{Bi}(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
+ポアソン分布は、二項分布 {{< katex >}}\text{Bin}(n,p){{< /katex >}} において {{< katex >}}n{{< /katex >}} が大きく {{< katex >}}p{{< /katex >}} が小さい場合の近似となる。
 
 {{< details title="二項分布からポアソン分布の導出 (ポアソンの極限定理)" >}}
 {{< katex display >}}
