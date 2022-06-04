@@ -66,18 +66,29 @@ u'x+u&=f(u)\\
 
 ## 一階線形微分方程式
 
-### 定義
+次式で表せる微分方程式を**一階線形微分方程式 (1st-order linear differential equation)** という。
 
 {{< katex display >}}
 y'+p(x)y=q(x)
 {{< /katex >}}
 
-{{< katex >}}q(x)=0{{< /katex >}} の場合、上式を**同次方程式**といい、変数分離形と同じように解ける。
-{{< katex >}}q(x)\ne0{{< /katex >}} の場合、上式を**非同次方程式**という。
+{{< katex >}}q(x)=0{{< /katex >}} の場合、上式を**同次方程式 (homogeneous equation)** といい、変数分離形となる。<br />
+{{< katex >}}q(x)\ne0{{< /katex >}} の場合、上式を**非同次方程式 (inhomogeneous equation)** という。
 
-### 解法
 
-#### 特殊解 {{< katex >}}\alpha(x){{< /katex >}} が分かっている場合
+この微分方程式の一般解は
+
+{{< katex display >}}
+\begin{aligned}
+h(x)&=\exp\int{p(x)dx}\\
+y&=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C\right\}\;(C\text{ は積分定数})
+\end{aligned}
+{{< /katex >}}
+
+となる。
+
+{{< hint info >}}
+**特殊解 α(x) が分かっている場合の解法**
 
 {{< katex display >}}
 \begin{cases}
@@ -102,63 +113,75 @@ Y'+p(x)Y=0
 
 これは同次方程式となり、変数分離形と同じように解ける。
 
-#### 定数変化法
+{{< /hint >}}
 
-同次方程式 {{< katex >}}y'+p(x)y=0{{< /katex >}} を解く。
-
-{{< katex display >}}
-\begin{aligned}
-y'+p(x)y&=0\\
-y&=C_1e^{-\int{p(x)dx}}
-\end{aligned}
-{{< /katex >}}
-
-ここで、 定数 {{< katex >}}C_1{{< /katex >}} を関数 {{< katex >}}C_1(x){{< /katex >}} に変化させ {{< katex >}}y{{< /katex >}} を代入する。
-
-{{< katex display >}}
-\begin{aligned}
-(C_1(x)e^{-\int{p(x)dx}})'+p(x)C_1(x)e^{-\int{p(x)dx}}&=q(x)\\
-C_1'(x)e^{-\int{p(x)dx}}-p(x)C_1(x)e^{-\int{p(x)dx}}+p(x)C_1(x)e^{-\int{p(x)dx}}&=q(x)\\
-C_1'(x)e^{-\int{p(x)dx}}&=q(x)\\
-C_1'(x)&=q(x)e^{\int{p(x)dx}}+C_2\\
-C_1(x)&=\int{q(x)e^{\int{p(x)dx}}+C_2}
-\end{aligned}
-{{< /katex >}}
-
-よって
-
-{{< katex display >}}
-y=\{\int{q(x)e^{\int{p(x)dx}}}+C_2\}e^{-\int{p(x)dx}}
-{{< /katex >}}
-
-ここで {{< katex >}}h(x)=e^{\int{p(x)dx}}{{< /katex >}} とおくと
-
-{{< katex display >}}
-y=\frac{1}{h(x)}\{\int{q(x)h(x)dx}+C_2\}
-{{< /katex >}}
-
-#### 積分因子
-
+{{< details title="一般解の導出: 定数変化法" >}}
 {{< katex display >}}
 y'+p(x)y=q(x)
 {{< /katex >}}
 
-の両辺に積分因子 {{< katex >}}e^{\int{p(x)dx}}{{< /katex >}} をかけて
+の {{< katex >}}q(x){{< /katex >}} を {{< katex >}}0{{< /katex >}} で置き換えた、同次方程式
+
+{{< katex display >}}
+y'+p(x)y=0
+{{< /katex >}}
+
+を解く。
 
 {{< katex display >}}
 \begin{aligned}
-e^{\int{p(x)dx}}y'+e^{\int{p(x)dx}}p(x)y&=e^{\int{p(x)dx}}q(x)\\
-\{e^{\int{p(x)dx}}y\}'&=e^{\int{p(x)dx}}q(x)\\
-e^{\int{p(x)dx}}y&=\int{q(x)e^{\int{p(x)dx}}+C}\\
-y&=\{\int{q(x)e^{\int{p(x)dx}}}+C\}e^{-\int{p(x)dx}}
+y'+p(x)y&=0\\
+y&=C_1\exp(-\int{p(x)dx})\;(C_1\text{ は積分定数})\tag{1}
 \end{aligned}
 {{< /katex >}}
 
-ここで {{< katex >}}h(x)=e^{\int{p(x)dx}}{{< /katex >}} とおくと
+ここで、 {{< katex >}}y{{< /katex >}} の定数 {{< katex >}}C_1{{< /katex >}} を {{< katex >}}x{{< /katex >}} の関数 {{< katex >}}C_1(x){{< /katex >}} に変化させ、微分方程式の左辺に代入する。
 
 {{< katex display >}}
-y=\frac{1}{h(x)}\{\int{q(x)h(x)dx}+C\}
+\begin{aligned}
+\text{(左辺)}&=\left\{C_1(x)\exp\left(-\int{p(x)dx}\right)\right\}'+p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)\\
+&=C_1'(x)\exp\left(-\int{p(x)dx}\right)-p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)+p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)\\
+&=C_1'(x)\exp\left(-\int{p(x)dx}\right)=q(x)\\
+C_1'(x)&=q(x)\exp\int{p(x)dx}\\
+C_1(x)&=\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C_2\;(C_2\text{ は積分定数})
+\end{aligned}
 {{< /katex >}}
+
+これを (1) に代入すると、求める一般解は
+
+{{< katex display >}}
+y=\left\{\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C_2\right\}\exp\left(-\int{p(x)dx}\right)
+{{< /katex >}}
+
+ここで {{< katex >}}h(x)=\exp\int{p(x)dx}{{< /katex >}} とおくと
+
+{{< katex display >}}
+y=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C_2\right\}
+{{< /katex >}}
+{{< /details >}}
+
+{{< details title="一般解の導出: 積分因子を使う方法" >}}
+{{< katex display >}}
+y'+p(x)y=q(x)
+{{< /katex >}}
+
+の両辺に積分因子 {{< katex >}}\exp\int{p(x)dx}{{< /katex >}} をかけると
+
+{{< katex display >}}
+\begin{aligned}
+\exp\left(\int{p(x)dx}\right)y'+\exp\left(\int{p(x)dx}\right)p(x)y&=\exp\left(\int{p(x)dx}\right)q(x)\\
+\left\{\exp\left(\int{p(x)dx}\right)y\right\}'&=\exp\left(\int{p(x)dx}\right)q(x)\\
+\exp\left(\int{p(x)dx}\right)y&=\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C\;(C\text{ は積分定数})\\
+y&=\left\{\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C\right\}\exp\left(-\int{p(x)dx}\right)
+\end{aligned}
+{{< /katex >}}
+
+ここで {{< katex >}}h(x)=\exp\int{p(x)dx}{{< /katex >}} とおくと
+
+{{< katex display >}}
+y=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C\right\}
+{{< /katex >}}
+{{< /details >}}
 
 ### 例題
 
