@@ -8,7 +8,7 @@
 
 {{- $inner := trim .Inner "\n" -}}
 {{- if (in .Params "display") }}
-  <div class="js-katex-display{{ with .Get "class" }} {{ . }}{{ end }}">
+  <div class="katex-display-outer js-katex-display{{ with .Get "class" }} {{ . }}{{ end }}">
       {{ $inner }}
   </div>
 {{ else -}}

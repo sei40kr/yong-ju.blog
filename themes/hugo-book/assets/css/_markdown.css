@@ -89,9 +89,13 @@
     }
   }
 
-  .katex-display,
   .mermaid {
     @apply my-4;
+  }
+
+
+  .katex-display-outer {
+    @apply my-6;
   }
 
   .katex {
