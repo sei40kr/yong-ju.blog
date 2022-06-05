@@ -259,3 +259,166 @@ A\sin\dfrac{n\pi}{2a}x\;(n=2,4,6,\dots)
 {{< /katex >}}
 
 ということが言える。
+
+## 一般的性質
+
+1. 束縛状態はすべて異なるエネルギー固有値をもつ (「**縮退 (degeneracy)** なし」という)
+
+   <!-- TODO 証明 -->
+
+1. {{< katex >}}V(x){{< /katex >}} が偶関数であるとき、束縛状態の波動関数は偶関数か奇関数のどちらかになる
+
+   <!-- TODO 証明 -->
+
+## 有限の深さの井戸型ポテンシャル
+
+一次元のS.eq
+
+{{< katex display >}}
+\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\varphi(x)=E\varphi(x)
+{{< /katex >}}
+
+において
+
+{{< katex display >}}
+V(x)=\begin{cases}
+0&(|x|\le a)\\
+V_0&(|x|>a)
+\end{cases}
+{{< /katex >}}
+
+のようなポテンシャルの形 (有限の深さの井戸型ポテンシャル) を考える。
+
+{{< katex >}}k=\dfrac{\sqrt{2mE}}\hbar{{< /katex >}} とおくと
+
+1. {{< katex >}}|x|\le a{{< /katex >}} のとき
+
+   {{< katex display >}}
+   \varphi(x)=A\sin{kx}+B\cos{kx}
+   {{< /katex >}}
+
+1. {{< katex >}}|x|>a{{< /katex >}} のとき
+
+   {{< katex display >}}
+   \begin{aligned}
+   \left(-\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2}+V_0\right)\varphi(x)&=E\varphi(x)\\
+   \dfrac{d^2}{dx^2}\varphi(x)&=\dfrac{2m(V_0-E)}{\hbar^2}\varphi(x)
+   \end{aligned}
+   {{< /katex >}}
+
+   ここで {{< katex >}}\rho=\dfrac{\sqrt{2m(V_0-E)}}{\hbar}\;(\rho>0){{< /katex >}} とおくと
+
+   {{< katex display >}}
+   \begin{aligned}
+   \dfrac{d^2}{dx^2}\varphi(x)&=\rho^2\varphi(x)\\
+   \therefore \varphi(x)&=C\exp{\rho x}+D\exp(-\rho x)
+   \end{aligned}
+   {{< /katex >}}
+
+   {{< katex >}}x\to\pm\infty{{< /katex >}} で {{< katex >}}\varphi(x)\to0{{< /katex >}} となるように任意定数を選ぶと
+   
+   {{< katex display >}}
+   \varphi(x)=\begin{cases}
+   C\exp{\rho x}&(x<-a)\\
+   D\exp(-\rho x)&(x>a)
+   \end{cases}
+   {{< /katex >}}
+
+ここで
+
+1. {{< katex >}}\varphi(x){{< /katex >}} が偶関数 ({{< katex >}}D=C{{< /katex >}}) である場合
+
+   {{< katex display >}}
+   \varphi(x)=\begin{cases}
+   C\exp{\rho x}&(x<-a)\\
+   B\cos{kx}&(-a\le x\le a)\\
+   C\exp(-\rho x)&(x>a)
+   \end{cases}
+   {{< /katex >}}
+
+   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続条件を課すと
+
+   {{< katex display >}}
+   C\exp(-\rho a)=B\cos{ka}\tag{1}
+   {{< /katex >}}
+
+   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi'(x){{< /katex >}} にも連続条件を課すと
+
+   {{< katex display >}}
+   C\rho\exp(-\rho a)=Bk\sin{ka}\tag{2}
+   {{< /katex >}}
+
+   {{< katex >}}\text{(2)}/\text{(1)}{{< /katex >}} より
+
+   {{< katex display >}}
+   \rho=k\tan{ka}
+   {{< /katex >}}
+   
+1. {{< katex >}}\varphi(x){{< /katex >}} が奇関数 ({{< katex >}}D=-C{{< /katex >}}) である場合
+
+   {{< katex display >}}
+   \varphi(x)=\begin{cases}
+   C\exp{\rho x}&(x<-a)\\
+   A\sin{kx}&(-a\le x\le a)\\
+   -C\exp(-\rho x)&(x>a)
+   \end{cases}
+   {{< /katex >}}
+
+   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続条件を課すと
+   
+   {{< katex display >}}
+   -C\exp(-\rho a)=A\sin{ka}\tag{3}
+   {{< /katex >}}
+
+   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi'(x){{< /katex >}} にも連続条件を課すと
+
+   {{< katex display >}}
+   C\rho\exp(-\rho a)=Ak\cos{ka}\tag{4}
+   {{< /katex >}}
+
+   {{< katex >}}\text{(4)}/\text{(3)}{{< /katex >}} より
+   
+   {{< katex display >}}
+   \rho=-k\cot{ka}
+   {{< /katex >}}
+
+以上をまとめると
+
+{{< katex display >}}
+\begin{aligned}
+\rho a&=ka\tan{ka}\\
+\rho a&=-ka\cot{ka}
+\end{aligned}
+{{< /katex >}}
+
+{{< katex >}}y=\rho a,x=ka{{< /katex >}} とおくと
+
+{{< katex display >}}
+\begin{aligned}
+y&=x\tan{x}\\
+y&=-x\cot{x}
+\end{aligned}
+{{< /katex >}}
+
+また、{{< katex >}}x,y{{< /katex >}} は {{< katex >}}x^2+y^2=\dfrac{2mV_0a^2}{\hbar^2}{{< /katex >}} を満たすので
+
+{{< katex display >}}
+\begin{aligned}
+y&=x\tan{x}\\
+y&=-x\cot{x}\\
+x^2+y^2&=\dfrac{2mV_0a^2}{\hbar^2}
+\end{aligned}
+{{< /katex >}}
+
+の {{< katex >}}x>0,y>0{{< /katex >}} における交点が {{< katex >}}\varphi(x){{< /katex >}} の解となる。
+
+よって
+
+{{< katex display >}}
+\begin{aligned}
+(n-1)\pi\le\dfrac{\sqrt{2mV_0}a}{\hbar}<n\pi&\implies\text{偶関数解が }n\text{ 個存在}\\
+(2n-1)\dfrac\pi2\le\dfrac{\sqrt{2mV_0}a}{\hbar}<(2n+1)\pi&\implies\text{奇関数解が }n\text{ 個存在}
+\end{aligned}
+{{< /katex >}}
+
+が言える。
