@@ -613,4 +613,5 @@ A=\dfrac12\left(1+\dfrac\rho{ik}\right)C+\dfrac12\left(1-\dfrac\rho{ik}\right)D
 ## 参考
 
 - ヨビノリたくみ, [【大学物理】量子力学入門](https://www.youtube.com/playlist?list=PLDJfzGjtVLHlY9nsj_zhgWhyOHnitF4xK), 2018-2021
+- K. Hiroe, [EMANの量子力学](https://eman-physics.net/quantum/contents.html)
 - Wikipedia, [トンネル効果](https://ja.wikipedia.org/wiki/%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AB%E5%8A%B9%E6%9E%9C)
