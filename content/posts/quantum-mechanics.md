@@ -422,3 +422,195 @@ x^2+y^2&=\dfrac{2mV_0a^2}{\hbar^2}
 {{< /katex >}}
 
 が言える。
+
+## トンネル効果
+
+古典力学では通過することができないと考えられているポテンシャル障壁を粒子が一定の確率で通過する現象のことを**トンネル効果 (tunneling effect)** という。
+
+{{< hint info >}}
+古典力学では、粒子がポテンシャル障壁を超えるだけのエネルギーをもっていない限りその障壁を透過することはできないと考えられている。
+
+しかし、量子力学のトンネル効果は原子核の**α崩壊**や**恒星内の核融合**などの様々な物理現象を説明する上で欠かせない役割を果たす。
+また、**トンネルダイオード**や**走査型トンネル顕微鏡**など、トンネル効果を応用した技術も既に多く存在する。
+{{< /hint >}}
+
+一次元の位置 {{< katex >}}x{{< /katex >}} に対するS.eq
+
+{{< katex display >}}
+\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\varphi(x)=E\varphi(x)
+{{< /katex >}}
+
+において
+
+{{< katex display >}}
+V(x)=\begin{cases}
+V_0&(0\le x\le d)\\
+0&(\text{otherwise})
+\end{cases}
+{{< /katex >}}
+
+のようなポテンシャル (高さ {{< katex >}}V_0{{< /katex >}} 厚さ {{< katex >}}d{{< /katex >}} のエネルギー障壁がある) の形を考え、{{< katex >}}x{{< /katex >}} 軸の負の方向から電子を入射させたときに、電子がエネルギー障壁を透過するトンネル確率を考える。
+
+1. {{< katex >}}x<0\enspace(V(x)=0){{< /katex >}} のとき
+
+   {{< katex >}}k=\dfrac{\sqrt{2mE}}\hbar{{< /katex >}} とおくと
+
+   {{< katex display >}}
+   \begin{aligned}
+   \dfrac{d^2}{dx^2}\varphi(x)&=-k^2\varphi(x)\\
+   \varphi(x)&=A\exp{ikx}+B\exp(-ikx)
+   \end{aligned}
+   {{< /katex >}}
+
+1. {{< katex >}}x>d\enspace(V(x)=0){{< /katex >}} のとき
+
+   {{< katex >}}k=\dfrac{\sqrt{2mE}}\hbar{{< /katex >}} とおくと、{{< katex >}}x<0{{< /katex >}} のときと同様に
+
+   {{< katex display >}}
+   \begin{aligned}
+   \varphi(x)&=F\exp{ikx}+G\exp(-ikx)
+   \end{aligned}
+   {{< /katex >}}
+
+1. {{< katex >}}0\le x\le d\enspace(V(x)=V_0){{< /katex >}} のとき
+
+   {{< katex >}}\rho=\dfrac{\sqrt{2m(V_0-E)}}\hbar{{< /katex >}} とおくと
+
+   {{< katex display >}}
+   \begin{aligned}
+   \dfrac{d^2}{dx^2}\varphi(x)&=\rho^2\varphi(x)\\
+   \varphi(x)&=C\exp{\rho x}+D\exp(-\rho x)
+   \end{aligned}
+   {{< /katex >}}
+   
+
+以上をまとめると
+
+{{< katex display >}}
+\varphi(x)=\begin{cases}
+A\exp{ikx}+B\exp(-ikx)&(x<0)\\
+C\exp{\rho x}+D\exp(-\rho x)&(0\le x\le d)\\
+F\exp{ikx}+G\exp(-ikx)&(x>d)
+\end{cases}
+{{< /katex >}}
+
+今、{{< katex >}}x{{< /katex >}} 軸の負の方向から電子を入射する場合を考えているので
+
+{{< katex display >}}
+\begin{aligned}
+A\exp{ikx}&:\text{入射波}\\
+B\exp(-ikx)&:\text{反射波}\\
+F\exp{ikx}&:\text{透過波}\\
+G\exp(-ikx)&:\text{存在しない波}
+\end{aligned}
+{{< /katex >}}
+
+となるため、{{< katex >}}\left|\dfrac{F}A\right|^2{{< /katex >}} が求めるトンネル確率になる。
+
+また、{{< katex >}}G\exp(-ikx){{< /katex >}} は存在しないため
+
+{{< katex display >}}
+\begin{aligned}
+G&=0\\
+\therefore\varphi(x)&=F\exp{ikx}
+\end{aligned}
+{{< /katex >}}
+
+としてよい。
+
+{{< hint info >}}
+**補足**
+
+仮に {{< katex >}}\varphi(x)=A\exp{ikx}{{< /katex >}} とすると、一次元の波動関数 {{< katex >}}\psi(x,t){{< /katex >}} は
+
+{{< katex display >}}
+\begin{aligned}
+\psi(x,t)&=\varphi(x)f(t)\\
+&=A\exp{i\left(kx-\dfrac{E}\hbar t\right)}
+\end{aligned}
+{{< /katex >}}
+
+ここで {{< katex >}}\omega=\dfrac{E}\hbar{{< /katex >}} とおくと
+
+{{< katex display >}}
+\begin{aligned}
+\psi(x,t)&=\exp{i(kx-\omega t)}\\
+&=\cos(kx-\omega t)+i\sin(kx-\omega t)
+\end{aligned}
+{{< /katex >}}
+
+であることから、波動関数 {{< katex >}}\psi(x,t){{< /katex >}} は {{< katex >}}x{{< /katex >}} 軸の方向に速度 {{< katex >}}\dfrac\omega{k}{{< /katex >}} で流れる波だということが分かる。
+{{< /hint >}}
+
+つまり
+
+{{< katex display >}}
+\varphi(x)=\begin{cases}
+A\exp{ikx}+B\exp(-ikx)&(x<0)\\
+C\exp{\rho x}+D\exp(-\rho x)&(0\le x\le d)\\
+F\exp{ikx}&(x>d)
+\end{cases}
+{{< /katex >}}
+
+を解けばよい。
+
+{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続性を課すと
+
+{{< katex display >}}
+A+B=C+D\tag{1}
+{{< /katex >}}
+
+また、{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\varphi(x){{< /katex >}} にも連続性を課すと
+
+{{< katex display >}}
+ik(A-B)=\rho(C-D)\tag{2}
+{{< /katex >}}
+
+{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続性を課すと
+
+{{< katex display >}}
+C\exp{\rho d}+D\exp(-\rho d)=F\exp{ikd}\tag{3}
+{{< /katex >}}
+
+また、{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\varphi(x){{< /katex >}} にも連続性を課すと
+
+{{< katex display >}}
+\rho\{C\exp{\rho d}-D\exp(-\rho d)\}=ikF\exp{ikd}\tag{4}
+{{< /katex >}}
+
+{{< katex >}}\text{(3)}+\dfrac{\text{(4)}}\rho{{< /katex >}} より
+{{< katex display >}}
+\begin{aligned}
+2C\exp{\rho d}&=F\left(1-\dfrac{ik}\rho\right)\exp{ikd}\\
+C&=\dfrac12\left(1+\dfrac{ik}\rho\right)\exp(ikd-\rho d)F\\
+D&=\dfrac12\left(1-\dfrac{ik}\rho\right)\exp(ikd+\rho d)F
+\end{aligned}
+{{< /katex >}}
+
+{{< katex >}}\text{(1)}+\dfrac{\text{(2)}}{ik}{{< /katex >}} より
+
+{{< katex display >}}
+A=\dfrac12\left(1+\dfrac\rho{ik}\right)C+\dfrac12\left(1-\dfrac\rho{ik}\right)D
+{{< /katex >}}
+
+ここに {{< katex >}}C,D{{< /katex >}} を代入して整理すると
+
+{{< katex display >}}
+\begin{aligned}
+\dfrac{F}A&=\dfrac{4ik\exp(-ikd)}{(k+i\rho)\exp(-\rho d)-(k-i\rho)\exp{\rho d}}\\
+\left|\dfrac{F}A\right|^2&=\left\{1+\dfrac{(k^2+\rho^2)\sinh^2{pd}}{4k^2\rho^2}\right\}^{-1}
+\end{aligned}
+{{< /katex >}}
+
+ここで {{< katex >}}k=\dfrac{\sqrt{2mE}}\hbar,\rho=\dfrac{\sqrt{2m(V_0-E)}}\hbar{{< /katex >}} に戻すと、求めるトンネル確率は
+
+{{< katex display >}}
+\left|\dfrac{F}A\right|^2=\left\{1+\dfrac{V_0^2\sinh^2\dfrac{\sqrt{2m(V_0-E)}}\hbar d}{4E(V_0-E)}\right\}^{-1}
+{{< /katex >}}
+
+となる。
+
+## 参考
+
+- ヨビノリたくみ, [【大学物理】量子力学入門](https://www.youtube.com/playlist?list=PLDJfzGjtVLHlY9nsj_zhgWhyOHnitF4xK), 2018-2021
+- Wikipedia, [トンネル効果](https://ja.wikipedia.org/wiki/%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AB%E5%8A%B9%E6%9E%9C)
