@@ -110,18 +110,18 @@ i\hbar\dfrac\delta{\delta t}\psi(\bold{r},t)=\left\{-\dfrac{\hbar^2}{2m}\nabla^2
 
 ## 定常状態
 
-{{< katex >}}\psi(\bold{r},t){{< /katex >}} が {{< katex >}}\psi(\bold{r},t)=\varphi(\bold{r})f(t){{< /katex >}} の形 (変数分離形) で表せるようなS.eqの解 (特解) を考える。
+{{< katex >}}\psi(\bold{r},t){{< /katex >}} が {{< katex >}}\psi(\bold{r},t)=\phi(\bold{r})f(t){{< /katex >}} の形 (変数分離形) で表せるようなS.eqの解 (特解) を考える。
 
-S.eqに {{< katex >}}\psi(\bold{r},t)=\varphi(\bold{r})f(t){{< /katex >}} を代入して
+S.eqに {{< katex >}}\psi(\bold{r},t)=\phi(\bold{r})f(t){{< /katex >}} を代入して
 
 {{< katex display >}}
 \begin{aligned}
-i\hbar\varphi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\varphi(\bold{r})\\
-\dfrac{i\hbar}{f(t)}\dfrac{d}{dt}f(t)&=\dfrac1{\varphi(\bold{r})}\hat{H}{\varphi(\bold{r})}
+i\hbar\phi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\phi(\bold{r})\\
+\dfrac{i\hbar}{f(t)}\dfrac{d}{dt}f(t)&=\dfrac1{\phi(\bold{r})}\hat{H}{\phi(\bold{r})}
 \end{aligned}
 {{< /katex >}}
 
-ここで、{{< katex >}}\dfrac{i\hbar}{f(t)}\dfrac{d}{dt}f(t)=\dfrac1{\varphi(\bold{r})}\hat{H}{\varphi(\bold{r})}=E{{< /katex >}} とおくと
+ここで、{{< katex >}}\dfrac{i\hbar}{f(t)}\dfrac{d}{dt}f(t)=\dfrac1{\phi(\bold{r})}\hat{H}{\phi(\bold{r})}=E{{< /katex >}} とおくと
 
 1. {{< katex >}}\dfrac{i\hbar}{f(t)}\dfrac{d}{dt}f(t)=E{{< /katex >}} より
 
@@ -132,16 +132,16 @@ i\hbar\varphi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\varphi(\bold{r})\\
    \end{aligned}
    {{< /katex >}}
 
-1. {{< katex >}}\dfrac1{\varphi(\bold{r})}\hat{H}\varphi(\bold{r})=E{{< /katex >}} より
+1. {{< katex >}}\dfrac1{\phi(\bold{r})}\hat{H}\phi(\bold{r})=E{{< /katex >}} より
 
    {{< katex display >}}
-   \hat{H}\varphi(\bold{r})=E\varphi(\bold{r})
+   \hat{H}\phi(\bold{r})=E\phi(\bold{r})
    {{< /katex >}}
  
    が導ける。この方程式を**固有値方程式 (eigen equation)** という。
  
-   固有値方程式を解くと {{< katex >}}(E,\varphi(\bold{r}))=(E_1,\varphi_1(\bold{r})),(E_2,\varphi_2(\bold{r})),\dots{{< /katex >}} のように独立な多数の解が得られる。<br />
-   このときの、{{< katex >}}E_1,E_2,\dots{{< /katex >}} を**エネルギー固有値 (energy eigenvalue)** といい、{{< katex >}}\varphi_1(\bold{r}),\varphi_2(\bold{r}),\dots{{< /katex >}} を**エネルギー固有状態 (energy eigenstate)** という。
+   固有値方程式を解くと {{< katex >}}(E,\phi(\bold{r}))=(E_1,\phi_1(\bold{r})),(E_2,\phi_2(\bold{r})),\dots{{< /katex >}} のように独立な多数の解が得られる。<br />
+   このときの、{{< katex >}}E_1,E_2,\dots{{< /katex >}} を**エネルギー固有値 (energy eigenvalue)** といい、{{< katex >}}\phi_1(\bold{r}),\phi_2(\bold{r}),\dots{{< /katex >}} を**エネルギー固有状態 (energy eigenstate)** という。
 
    とりうる状態の中でエネルギー固有値が最も低い状態を**基底状態 (ground state)**、それ以外の状態を**励起状態 (excited state)** という。<br />
    また、基底状態のときのエネルギー固有値を**零点エネルギー (zero-point energy)** という。
@@ -156,8 +156,8 @@ i\hbar\varphi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\varphi(\bold{r})\\
    {{< katex display >}}
    \begin{aligned}
    |\psi(\bold{r},t)|^2&=
-   \left|\varphi(\bold{r})C\exp\left({-i\dfrac{E}\hbar t}\right)\right|^2\\
-   &=|C|^2|\varphi(\bold{r})|^2
+   \left|\phi(\bold{r})C\exp\left({-i\dfrac{E}\hbar t}\right)\right|^2\\
+   &=|C|^2|\phi(\bold{r})|^2
    \end{aligned}
    {{< /katex >}}
    
@@ -167,7 +167,7 @@ i\hbar\varphi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\varphi(\bold{r})\\
 なお、S.eqの一般解は
 
 {{< katex display >}}
-\psi(\bold{r},t)=\sum_nC_n\exp\left(-i\dfrac{E_n}\hbar t\right)\varphi_n(\bold{r})
+\psi(\bold{r},t)=\sum_nC_n\exp\left(-i\dfrac{E_n}\hbar t\right)\phi_n(\bold{r})
 {{< /katex >}}
 
 となる。
@@ -179,7 +179,7 @@ i\hbar\varphi(\bold{r})\dfrac{d}{dt}f(t)&=f(t)\hat{H}\varphi(\bold{r})\\
 一次元のS.eq
 
 {{< katex display >}}
-\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\varphi(x)=E\varphi(x)
+\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\phi(x)=E\phi(x)
 {{< /katex >}}
 
 において
@@ -198,29 +198,29 @@ V(x)=\begin{cases}
 {{< katex display >}}
 \begin{cases}
 \begin{aligned}
--\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2}\varphi(x)&=E\varphi(x)&(|x|\le a)\\
-\varphi(x)&=0&(|x|>a)
+-\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2}\phi(x)&=E\phi(x)&(|x|\le a)\\
+\phi(x)&=0&(|x|>a)
 \end{aligned}
 \end{cases}
 {{< /katex >}}
 
 {{< hint info >}}
-{{< katex >}}\varphi(x)=0\thickspace(|x|>a){{< /katex >}} より、無限に深い井戸型ポテンシャルでは粒子は限られた範囲にのみ存在することが言える。<br />
+{{< katex >}}\phi(x)=0\thickspace(|x|>a){{< /katex >}} より、無限に深い井戸型ポテンシャルでは粒子は限られた範囲にのみ存在することが言える。<br />
 このような状態を**束縛状態 (bound state)** という。
 {{< /hint >}}
 
 {{< katex >}}|x|\le a{{< /katex >}} において
 
 {{< katex display >}}
-\dfrac{d^2}{dx^2}\varphi(x)=-\dfrac{2mE}{\hbar^2}\varphi(x)
+\dfrac{d^2}{dx^2}\phi(x)=-\dfrac{2mE}{\hbar^2}\phi(x)
 {{< /katex >}}
 
 ここで {{< katex >}}k=\dfrac{\sqrt{2mE}}\hbar{{< /katex >}} とおくと
 
 {{< katex display >}}
 \begin{aligned}
-\dfrac{d^2}{dx^2}\varphi(x)&=-k^2\varphi(x)\\
-\varphi(x)&=A\sin{kx}+B\cos{kx}
+\dfrac{d^2}{dx^2}\phi(x)&=-k^2\phi(x)\\
+\phi(x)&=A\sin{kx}+B\cos{kx}
 \end{aligned}
 {{< /katex >}}
 
@@ -228,8 +228,8 @@ V(x)=\begin{cases}
 
 {{< katex display >}}
 \begin{cases}
-\varphi(a)&=A\sin{ka}+B\cos{ka}=0\\
-\varphi(-a)&=-A\sin{ka}+B\cos{ka}=0
+\phi(a)&=A\sin{ka}+B\cos{ka}=0\\
+\phi(-a)&=-A\sin{ka}+B\cos{ka}=0
 \end{cases}
 {{< /katex >}}
 
@@ -245,7 +245,7 @@ B=0,ka=\dfrac{n\pi}2\;(n=2,4,6,\dots)
 {{< katex display >}}
 \begin{aligned}
 E&=\dfrac{\hbar^2k^2}{2m}=\dfrac{\hbar^2\pi^2}{8ma^2}n^2\;(n=1,2,3,\dots)\\
-\varphi(x)&=\begin{cases}
+\phi(x)&=\begin{cases}
 B\cos\dfrac{n\pi}{2a}x\;(n=1,3,5,\dots)\\
 A\sin\dfrac{n\pi}{2a}x\;(n=2,4,6,\dots)
 \end{cases}
@@ -275,7 +275,7 @@ A\sin\dfrac{n\pi}{2a}x\;(n=2,4,6,\dots)
 一次元のS.eq
 
 {{< katex display >}}
-\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\varphi(x)=E\varphi(x)
+\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\phi(x)=E\phi(x)
 {{< /katex >}}
 
 において
@@ -294,15 +294,15 @@ V_0&(|x|>a)
 1. {{< katex >}}|x|\le a{{< /katex >}} のとき
 
    {{< katex display >}}
-   \varphi(x)=A\sin{kx}+B\cos{kx}
+   \phi(x)=A\sin{kx}+B\cos{kx}
    {{< /katex >}}
 
 1. {{< katex >}}|x|>a{{< /katex >}} のとき
 
    {{< katex display >}}
    \begin{aligned}
-   \left(-\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2}+V_0\right)\varphi(x)&=E\varphi(x)\\
-   \dfrac{d^2}{dx^2}\varphi(x)&=\dfrac{2m(V_0-E)}{\hbar^2}\varphi(x)
+   \left(-\dfrac{\hbar^2}{2m}\dfrac{d^2}{dx^2}+V_0\right)\phi(x)&=E\phi(x)\\
+   \dfrac{d^2}{dx^2}\phi(x)&=\dfrac{2m(V_0-E)}{\hbar^2}\phi(x)
    \end{aligned}
    {{< /katex >}}
 
@@ -310,15 +310,15 @@ V_0&(|x|>a)
 
    {{< katex display >}}
    \begin{aligned}
-   \dfrac{d^2}{dx^2}\varphi(x)&=\rho^2\varphi(x)\\
-   \therefore \varphi(x)&=C\exp{\rho x}+D\exp(-\rho x)
+   \dfrac{d^2}{dx^2}\phi(x)&=\rho^2\phi(x)\\
+   \therefore \phi(x)&=C\exp{\rho x}+D\exp(-\rho x)
    \end{aligned}
    {{< /katex >}}
 
-   {{< katex >}}x\to\pm\infty{{< /katex >}} で {{< katex >}}\varphi(x)\to0{{< /katex >}} となるように任意定数を選ぶと
+   {{< katex >}}x\to\pm\infty{{< /katex >}} で {{< katex >}}\phi(x)\to0{{< /katex >}} となるように任意定数を選ぶと
    
    {{< katex display >}}
-   \varphi(x)=\begin{cases}
+   \phi(x)=\begin{cases}
    C\exp{\rho x}&(x<-a)\\
    D\exp(-\rho x)&(x>a)
    \end{cases}
@@ -326,57 +326,57 @@ V_0&(|x|>a)
 
 ここで
 
-1. {{< katex >}}\varphi(x){{< /katex >}} が偶関数 ({{< katex >}}D=C{{< /katex >}}) である場合
+1. {{< katex >}}\phi(x){{< /katex >}} が偶関数 ({{< katex >}}D=C{{< /katex >}}) である場合
 
    {{< katex display >}}
-   \varphi(x)=\begin{cases}
+   \phi(x)=\begin{cases}
    C\exp{\rho x}&(x<-a)\\
    B\cos{kx}&(-a\le x\le a)\\
    C\exp(-\rho x)&(x>a)
    \end{cases}
    {{< /katex >}}
 
-   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続条件を課すと
+   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\phi(x){{< /katex >}} に連続条件を課すと
 
    {{< katex display >}}
    C\exp(-\rho a)=B\cos{ka}\tag{1}
    {{< /katex >}}
 
-   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi'(x){{< /katex >}} にも連続条件を課すと
+   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\phi(x){{< /katex >}} にも連続条件を課すと
 
    {{< katex display >}}
    C\rho\exp(-\rho a)=Bk\sin{ka}\tag{2}
    {{< /katex >}}
 
-   {{< katex >}}\text{(2)}/\text{(1)}{{< /katex >}} より
+   {{< katex >}}\dfrac{\text{(2)}}{\text{(1)}}{{< /katex >}} より
 
    {{< katex display >}}
    \rho=k\tan{ka}
    {{< /katex >}}
    
-1. {{< katex >}}\varphi(x){{< /katex >}} が奇関数 ({{< katex >}}D=-C{{< /katex >}}) である場合
+1. {{< katex >}}\phi(x){{< /katex >}} が奇関数 ({{< katex >}}D=-C{{< /katex >}}) である場合
 
    {{< katex display >}}
-   \varphi(x)=\begin{cases}
+   \phi(x)=\begin{cases}
    C\exp{\rho x}&(x<-a)\\
    A\sin{kx}&(-a\le x\le a)\\
    -C\exp(-\rho x)&(x>a)
    \end{cases}
    {{< /katex >}}
 
-   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続条件を課すと
+   {{< katex >}}x=a{{< /katex >}} における {{< katex >}}\phi(x){{< /katex >}} に連続条件を課すと
    
    {{< katex display >}}
    -C\exp(-\rho a)=A\sin{ka}\tag{3}
    {{< /katex >}}
 
-   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\varphi'(x){{< /katex >}} にも連続条件を課すと
+   また、{{< katex >}}x=a{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\phi(x){{< /katex >}} にも連続条件を課すと
 
    {{< katex display >}}
    C\rho\exp(-\rho a)=Ak\cos{ka}\tag{4}
    {{< /katex >}}
 
-   {{< katex >}}\text{(4)}/\text{(3)}{{< /katex >}} より
+   {{< katex >}}\dfrac{\text{(4)}}{\text{(3)}}{{< /katex >}} より
    
    {{< katex display >}}
    \rho=-k\cot{ka}
@@ -410,7 +410,7 @@ x^2+y^2&=\dfrac{2mV_0a^2}{\hbar^2}
 \end{aligned}
 {{< /katex >}}
 
-の {{< katex >}}x>0,y>0{{< /katex >}} における交点が {{< katex >}}\varphi(x){{< /katex >}} の解となる。
+の {{< katex >}}x>0,y>0{{< /katex >}} における交点が {{< katex >}}\phi(x){{< /katex >}} の解となる。
 
 よって
 
@@ -437,7 +437,7 @@ x^2+y^2&=\dfrac{2mV_0a^2}{\hbar^2}
 一次元の位置 {{< katex >}}x{{< /katex >}} に対するS.eq
 
 {{< katex display >}}
-\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\varphi(x)=E\varphi(x)
+\left\{-\dfrac{t^2}{2m}\dfrac{d^2}{dx^2}+V(x)\right\}\phi(x)=E\phi(x)
 {{< /katex >}}
 
 において
@@ -457,8 +457,8 @@ V_0&(0\le x\le d)\\
 
    {{< katex display >}}
    \begin{aligned}
-   \dfrac{d^2}{dx^2}\varphi(x)&=-k^2\varphi(x)\\
-   \varphi(x)&=A\exp{ikx}+B\exp(-ikx)
+   \dfrac{d^2}{dx^2}\phi(x)&=-k^2\phi(x)\\
+   \phi(x)&=A\exp{ikx}+B\exp(-ikx)
    \end{aligned}
    {{< /katex >}}
 
@@ -468,7 +468,7 @@ V_0&(0\le x\le d)\\
 
    {{< katex display >}}
    \begin{aligned}
-   \varphi(x)&=F\exp{ikx}+G\exp(-ikx)
+   \phi(x)&=F\exp{ikx}+G\exp(-ikx)
    \end{aligned}
    {{< /katex >}}
 
@@ -478,8 +478,8 @@ V_0&(0\le x\le d)\\
 
    {{< katex display >}}
    \begin{aligned}
-   \dfrac{d^2}{dx^2}\varphi(x)&=\rho^2\varphi(x)\\
-   \varphi(x)&=C\exp{\rho x}+D\exp(-\rho x)
+   \dfrac{d^2}{dx^2}\phi(x)&=\rho^2\phi(x)\\
+   \phi(x)&=C\exp{\rho x}+D\exp(-\rho x)
    \end{aligned}
    {{< /katex >}}
    
@@ -487,7 +487,7 @@ V_0&(0\le x\le d)\\
 以上をまとめると
 
 {{< katex display >}}
-\varphi(x)=\begin{cases}
+\phi(x)=\begin{cases}
 A\exp{ikx}+B\exp(-ikx)&(x<0)\\
 C\exp{\rho x}+D\exp(-\rho x)&(0\le x\le d)\\
 F\exp{ikx}+G\exp(-ikx)&(x>d)
@@ -512,7 +512,7 @@ G\exp(-ikx)&:\text{存在しない波}
 {{< katex display >}}
 \begin{aligned}
 G&=0\\
-\therefore\varphi(x)&=F\exp{ikx}
+\therefore\phi(x)&=F\exp{ikx}
 \end{aligned}
 {{< /katex >}}
 
@@ -521,11 +521,11 @@ G&=0\\
 {{< hint info >}}
 **補足**
 
-仮に {{< katex >}}\varphi(x)=A\exp{ikx}{{< /katex >}} とすると、一次元の波動関数 {{< katex >}}\psi(x,t){{< /katex >}} は
+仮に {{< katex >}}\phi(x)=A\exp{ikx}{{< /katex >}} とすると、一次元の波動関数 {{< katex >}}\psi(x,t){{< /katex >}} は
 
 {{< katex display >}}
 \begin{aligned}
-\psi(x,t)&=\varphi(x)f(t)\\
+\psi(x,t)&=\phi(x)f(t)\\
 &=A\exp{i\left(kx-\dfrac{E}\hbar t\right)}
 \end{aligned}
 {{< /katex >}}
@@ -545,7 +545,7 @@ G&=0\\
 つまり
 
 {{< katex display >}}
-\varphi(x)=\begin{cases}
+\phi(x)=\begin{cases}
 A\exp{ikx}+B\exp(-ikx)&(x<0)\\
 C\exp{\rho x}+D\exp(-\rho x)&(0\le x\le d)\\
 F\exp{ikx}&(x>d)
@@ -554,25 +554,25 @@ F\exp{ikx}&(x>d)
 
 を解けばよい。
 
-{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続性を課すと
+{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\phi(x){{< /katex >}} に連続性を課すと
 
 {{< katex display >}}
 A+B=C+D\tag{1}
 {{< /katex >}}
 
-また、{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\varphi(x){{< /katex >}} にも連続性を課すと
+また、{{< katex >}}x=0{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\phi(x){{< /katex >}} にも連続性を課すと
 
 {{< katex display >}}
 ik(A-B)=\rho(C-D)\tag{2}
 {{< /katex >}}
 
-{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\varphi(x){{< /katex >}} に連続性を課すと
+{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\phi(x){{< /katex >}} に連続性を課すと
 
 {{< katex display >}}
 C\exp{\rho d}+D\exp(-\rho d)=F\exp{ikd}\tag{3}
 {{< /katex >}}
 
-また、{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\varphi(x){{< /katex >}} にも連続性を課すと
+また、{{< katex >}}x=d{{< /katex >}} における {{< katex >}}\dfrac{d}{dx}\phi(x){{< /katex >}} にも連続性を課すと
 
 {{< katex display >}}
 \rho\{C\exp{\rho d}-D\exp(-\rho d)\}=ikF\exp{ikd}\tag{4}
