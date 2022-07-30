@@ -42,9 +42,10 @@ tags: ["勉強ノート", "大学数学"]
 ### 平均値
 
 **平均値 (mean)** は、すべてのデータを合計してデータ数で割った値である。
+{{< katex >}}X{{< /katex >}} の平均値を {{< katex >}}\Bbb{E}[X]{{< /katex >}}、あるいは習慣的に文字 {{< katex >}}\mu{{< /katex >}} で表す。
 
 {{< katex display >}}
-\overline{x}=\frac{1}{n}\sum_{i=1}^n{x_i}
+\Bbb{E}[X]=\frac{1}{n}\sum_{i=1}^n{x_i}
 {{< /katex >}}
 
 {{< hint info >}}
@@ -56,10 +57,11 @@ tags: ["勉強ノート", "大学数学"]
 
 ### 分散
 
-分散 (variance) は、偏差の2乗を合計したもので、データのばらつきを表す指標。
+**分散 (variance)** は偏差の平方和であり、データのバラつきの指標となる。
+{{< katex >}}X{{< /katex >}} の分散を {{< katex >}}\Bbb{V}[X]{{< /katex >}}、あるいは習慣的に {{< katex >}}\sigma^2{{< /katex >}} で表す。
 
 {{< katex display >}}
-S^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2
+\Bbb{V}[X]=\frac{1}{n}\sum_{i=1}^n(x_i-\Bbb{E}[X])^2
 {{< /katex >}}
 
 ### 中央値
@@ -77,10 +79,12 @@ S^2=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2
 
 ### 標準偏差
 
-標準偏差 (standard deviation) は、分散のルートをとった、データと同じ単位をもつデータのばらつきを表す指標。
+**標準偏差 (standard deviation)** は分散のルートをとったものであり、データのばらつきを表す指標となる。
+分散のルートをとることでデータのバラつきをデータと同じ単位で見ることができる。
+標準偏差は習慣的に文字 {{< katex >}}\sigma{{< /katex >}} で表す。
 
 {{< katex display >}}
-S=\sqrt{S^2}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2}
+\sqrt{\Bbb{V}[X]}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\Bbb{E}[X])^2}
 {{< /katex >}}
 
 ### 四分位範囲
@@ -92,10 +96,10 @@ S=\sqrt{S^2}=\sqrt{\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})^2}
 
 ### 共分散
 
-共分散 (covariance) は 2 組の対応するデータの偏差積の平均値。
+**共分散 (covariance)** は、大きさが等しい2つのデータセット間における偏差積の平均値であり、{{< katex >}}X,Y{{< /katex >}} の共分散を {{< katex >}}\text{Cov}[X,Y]{{< /katex >}} で表す。
 
 {{< katex display >}}
-S_{xy}=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})(y_i-\overline{y})
+\text{Cov}[X,Y]=\frac{1}{n}\sum_{i=1}^n(x_i-\Bbb{E}[X])(y_i-\Bbb{E}[Y])
 {{< /katex >}}
 
 ### 相関係数
@@ -103,7 +107,7 @@ S_{xy}=\frac{1}{n}\sum_{i=1}^n(x_i-\overline{x})(y_i-\overline{y})
 相関係数 (correlation coefficient) は 2 つの確率変数の間にある関係の強弱を測る指標で、-1 から 1 の値をとる。
 
 {{< katex display >}}
-r_{xy}=\frac{S_{xy}}{S_xS_y}
+r_{xy}=\frac{\text{Cov}[X,Y]}{\Bbb{V}[X]\Bbb{V}[Y]}
 {{< /katex >}}
 
 1. {{< katex >}}r_{xy}>0\iff\text{データは正の相関をもつ}{{< /katex >}}
@@ -117,7 +121,7 @@ r_{xy}=\frac{S_{xy}}{S_xS_y}
 データから平均を引き、標準偏差で割る操作を標準化 (standardization) という。標準化されたデータを Z スコア (z-score) といい、平均が 0, 標準偏差が 1 となる。
 
 {{< katex display >}}
-z_i=\frac{x_i-\overline{x}}{S}
+z_i=\frac{x_i-\mu}{\sigma}
 {{< /katex >}}
 
 <!-- TODO データの整理, 表やグラフについて書く -->
@@ -167,12 +171,12 @@ z_i=\frac{x_i-\overline{x}}{S}
 
 ### 期待値
 
-確率変数 {{< katex >}}X{{< /katex >}} を無限回試行して得られた実現値の平均を**期待値 (expected value)** といい、以下 {{< katex >}}E(X){{< /katex >}} で表す。
+確率変数を無限回試行して得られた実現値の平均を**期待値 (expected value)** といい、確率変数 {{< katex >}}X{{< /katex >}} の期待値を {{< katex >}}E(X){{< /katex >}}、あるいは習慣的に文字 {{< katex >}}\mu{{< /katex >}} で表す。
 
 また、期待値について以下の式が成り立つ。
 
 {{< katex display >}}
-E[aX+b]=aE[X]+b
+\Bbb{E}[aX+b]=a\Bbb{E}[X]+b
 {{< /katex >}}
 
 {{< hint info >}}
@@ -181,25 +185,25 @@ E[aX+b]=aE[X]+b
 
 ### 分散
 
-確率変数 {{< katex >}}X{{< /katex >}} における分散もデータの分散と同様にばらつきを表す指標であり、以下 {{< katex >}}V[X]{{< /katex >}} で表す。
+確率変数における分散もデータの分散と同様にバラつきを表す指標であり、確率変数 {{< katex >}}X{{< /katex >}} における分散を {{< katex >}}\Bbb{V}[X]{{< /katex >}}、あるいは習慣的に {{< katex >}}\sigma^2{{< /katex >}} で表す。
 
 分散について、常に以下の式が成り立つ。
 
 {{< katex display >}}
 \begin{aligned}
-V[X]&=E[(E[X]-X)^2]\\
-&=E[X^2]-E[X]^2\\
-V[aX+b]&=a^2V[X]\\
+\Bbb{V}[X]&=\Bbb{E}[(\Bbb{E}[X]-X)^2]\\
+&=\Bbb{E}[X^2]-\Bbb{E}[X]^2\\
+\Bbb{V}[aX+b]&=a^2\Bbb{V}[X]\\
 \end{aligned}
 {{< /katex >}}
 
 {{< details title="V[X]=E[X^2]-E[X]^2 の証明" >}}
 {{< katex display >}}
 \begin{aligned}
-V[X]&=E[(X-E[X])^2]\\
-&=E[X^2-2E[X]X-E[X]^2]\\
-&=E[X^2]-2E[X]^2+E[X]^2\\
-&=E[X^2]-E[X]^2
+\Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2]\\
+&=\Bbb{E}[X^2-2\Bbb{E}[X]X-\Bbb{E}[X]^2]\\
+&=\Bbb{E}[X^2]-2\Bbb{E}[X]^2+\Bbb{E}[X]^2\\
+&=\Bbb{E}[X^2]-\Bbb{E}[X]^2
 \end{aligned}
 {{< /katex >}}
 {{< /details >}}
@@ -214,8 +218,8 @@ V[X]&=E[(X-E[X])^2]\\
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\sum_kx_kf(x_k)\\
-V[X]&=\sum_k(x_k-\mu)^2f(x_k)
+\Bbb{E}[X]&=\sum_kx_kf(x_k)\\
+\Bbb{V}[X]&=\sum_k(x_k-\mu)^2f(x_k)
 \end{aligned}
 {{< /katex >}}
 
@@ -242,8 +246,8 @@ P[x_0\le x\le x_1]=\int_{x_0}^{x_1}f(x)dx
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\int_{-\infty}^\infty xf(x)dx\\
-V[X]&=\int_{-\infty}^\infty(x-E[X])^2f(x)dx
+\Bbb{E}[X]&=\int_{-\infty}^\infty xf(x)dx\\
+\Bbb{V}[X]&=\int_{-\infty}^\infty(x-\Bbb{E}[X])^2f(x)dx
 \end{aligned}
 {{< /katex >}}
 
@@ -270,16 +274,16 @@ f(x)=\begin{cases}p^x(1-p)^{1-x}&(x\in\{0,1\})\\
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=p\\
-V[X]&=p(1-p)
+\Bbb{E}[X]&=p\\
+\Bbb{V}[X]&=p(1-p)
 \end{aligned}
 {{< /katex >}}
 
 {{< details title="V[X] の導出" >}}
 {{< katex display >}}
 \begin{aligned}
-V[X]&=E[(X-E[X])^2]\\
-&=E[X^2]-E[X]^2\\
+\Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2]\\
+&=\Bbb{E}[X^2]-\Bbb{E}[X]^2\\
 &=p-p^2\\
 &=p(1-p)
 \end{aligned}
@@ -303,8 +307,8 @@ _nC_xp^x(1-p)^{x-k}&(x\in\{0,1,\dots,n\})\\
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=np\\
-V[X]&=np(1-p)
+\Bbb{E}[X]&=np\\
+\Bbb{V}[X]&=np(1-p)
 \end{aligned}
 {{< /katex >}}
 
@@ -330,7 +334,7 @@ p(1-p)^{x-1}&(x\in\{1,2,3,\dots\})\\
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\frac{1}{p}\\
+\Bbb{E}[X]&=\frac{1}{p}\\
 P[X]&=\frac{1-p}{p^2}
 \end{aligned}
 {{< /katex >}}
@@ -354,8 +358,8 @@ f(x)=\begin{cases}
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\lambda\\
-V[X]&=\lambda
+\Bbb{E}[X]&=\lambda\\
+\Bbb{V}[X]&=\lambda
 \end{aligned}
 {{< /katex >}}
 
@@ -397,8 +401,8 @@ f(x)=\begin{cases}
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\dfrac1\lambda\\
-V[X]&=\dfrac1{\lambda^2}
+\Bbb{E}[X]&=\dfrac1\lambda\\
+\Bbb{V}[X]&=\dfrac1{\lambda^2}
 \end{aligned}
 {{< /katex >}}
 
@@ -425,8 +429,8 @@ f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\mu\\
-V[X]&=\sigma^2
+\Bbb{E}[X]&=\mu\\
+\Bbb{V}[X]&=\sigma^2
 \end{aligned}
 {{< /katex >}}
 
@@ -457,7 +461,7 @@ aX+b\sim\text{N}(a\mu+b,a^2\sigma^2)
 このとき、任意の {{< katex >}}c>0{{< /katex >}} に対して
 
 {{< katex display >}}
-P[X\ge c]\le\frac{E[X]}c
+P[X\ge c]\le\frac{\Bbb{E}[X]}c
 {{< /katex >}}
 
 が成り立つ。
@@ -465,7 +469,7 @@ P[X\ge c]\le\frac{E[X]}c
 {{< details title="証明" >}}
 {{< katex display >}}
 \begin{aligned}
-E[X]&=\int_0^\infty xf_X(x)dx\\
+\Bbb{E}[X]&=\int_0^\infty xf_X(x)dx\\
 &=\int_0^c xf_X(x)dx+\int_c^\infty xf_X(x)dx
 \end{aligned}
 {{< /katex >}}
@@ -473,23 +477,23 @@ E[X]&=\int_0^\infty xf_X(x)dx\\
 {{< katex >}}\int_0^cxf_X(x)dx\ge0{{< /katex >}} より
 
 {{< katex display >}}
-E[X]\le\int_c^\infty xf_X(x)dx
+\Bbb{E}[X]\le\int_c^\infty xf_X(x)dx
 {{< /katex >}}
 
 {{< katex >}}x\ge c{{< /katex >}} より
 
 {{< katex display >}}
 \begin{aligned}
-E[X]&\ge c\int_c^\infty f_X(x)dx\\
+\Bbb{E}[X]&\ge c\int_c^\infty f_X(x)dx\\
 &\ge cP[x\ge c]\\
-\therefore P[x\ge c]&\le\frac{E[X]}c
+\therefore P[x\ge c]&\le\frac{\Bbb{E}[X]}c
 \end{aligned}
 {{< /katex >}}
 {{< /details >}}
 
 ## チェビシェフの不等式
 
-{{< katex >}}E[Y]=\mu,V[Y]=\sigma^2{{< /katex >}} とする。
+{{< katex >}}\Bbb{E}[Y]=\mu,\Bbb{V}[Y]=\sigma^2{{< /katex >}} とする。
 このとき、任意の {{< katex >}}a>0{{< /katex >}} に対して
 
 {{< katex display >}}
@@ -503,7 +507,7 @@ P[|x-\mu|\ge a\sigma]\le\frac1{a^2}
 
 {{< katex display >}}
 \begin{aligned}
-P[(Y-\mu)^2\ge a^2\sigma^2]&\le\frac{E[(Y-\mu)^2]}{a^2\sigma^2}\\
+P[(Y-\mu)^2\ge a^2\sigma^2]&\le\frac{\Bbb{E}[(Y-\mu)^2]}{a^2\sigma^2}\\
 P[|Y-\mu|\ge a\sigma]&\le\frac1{a^2}
 \end{aligned}
 {{< /katex >}}
