@@ -305,4 +305,45 @@ f(z)&=\cdots+\dfrac{c_{-2}}{(z-\alpha)^2}
 \end{aligned}
 {{< /katex >}}
 
-ただし {{< katex >}}C{{< /katex >}} は {{< katex >}}\alpha{{< /katex >}} を内部に含む任意の円。
+ただし {{< katex >}}C{{< /katex >}} は {{< katex >}}D{{< /katex >}} 内の {{< katex >}}\alpha{{< /katex >}} を内部に含む任意の円。
+
+テイラー展開にはない {{< katex >}}z-\alpha{{< /katex >}} の負のべき乗を含む項の系列を**主要部**という。
+
+## 孤立特異点
+
+{{< katex >}}f(z){{< /katex >}} が {{< katex >}}D=\{z\in \Bbb{C}\mid0<|z-\alpha|<R\}\enspace(R\le\infty){{< /katex >}} で正則であり、{{< katex >}}z=\alpha{{< /katex >}} で正則でないとき、点 {{< katex >}}\alpha{{< /katex >}} を**孤立特異点 (isolated singularity)** という。
+
+特に、{{< katex >}}f(z){{< /katex >}} のローラン級数の主要部が
+
+1. 存在しない場合は**可除特異点 (removable singularity)** という
+1. {{< katex >}}k{{< /katex >}} 個存在 (有限かつ {{< katex >}}k\ne0{{< /katex >}}) する場合は **{{< katex >}}k{{< /katex >}} 位の極 (k-th pole)** という
+1. {{< katex >}}主要部が特異点{{< /katex >}} である場合は**真性特異点 (essential singularity)** という
+
+## 留数定理
+
+{{< katex >}}\alpha{{< /katex >}} を中心とするローラン展開における {{< katex >}}c_{-1}{{< /katex >}} を {{< katex >}}f(z){{< /katex >}} の {{< katex >}}z=\alpha{{< /katex >}} における**留数 (residue)** といい、{{< katex >}}\text{Res}(f(z),\alpha){{< /katex >}} で表す。
+
+{{< katex >}}f(z){{< /katex >}} が単純閉曲線 {{< katex >}}C{{< /katex >}} とその内部で {{< katex >}}C{{< /katex >}} 内の孤立特異点 {{< katex >}}\alpha_1,\alpha_2,\dots,\alpha_n{{< /katex >}} を除いて正則であるとき次の等式が成り立つ。
+
+{{< katex display >}}
+\oint_Cf(z)dz=2\pi i\sum_{k=1}^n\text{Res}(f(z),\alpha_k)
+{{< /katex >}}
+
+{{< hint info >}}
+{{< katex >}}f(z){{< /katex >}} の周回積分の値が内部の留数の和で求められている。
+{{< /hint >}}
+
+{{< details title="証明">}}
+{{< katex display >}}
+C_n=\dfrac1{2\pi i}\oint\dfrac{f(\zeta)}{(\zeta-\alpha)^{n+1}}d\zeta
+{{< /katex >}}
+
+ここで、両辺に {{< katex >}}n=-1{{< /katex >}} を代入すると
+
+{{< katex display >}}
+\begin{aligned}
+C_{-1}=\text{Res}(f(z),\alpha_k)&=\dfrac1{2\pi i}\oint{f(\zeta)}d\zeta\\
+2\pi i\cdot\text{Res}(f(z),\alpha_k)&=\oint_C{f(\zeta)d\zeta}
+\end{aligned}
+{{< /katex >}}
+{{< /details >}}
