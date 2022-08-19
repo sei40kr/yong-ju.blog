@@ -1,8 +1,24 @@
 .book-heading {
-  @apply flex items-center mb-2 mt-8;
+  @apply flex mb-2 mt-8;
+
+  &__anchor-outer {
+    @apply flex-shrink hover:text-link-hover mr-2;
+  }
+
+  &__anchor {
+    @apply text-gray-400 hover:text-link-hover;
+
+    .book-heading--level-2 &::before {
+      content: '#';
+    }
+
+    .book-heading--level-3 &::before {
+      content: '##';
+    }
+  }
 
   &--level-2 {
-    @apply border-b font-bold mb-4 pb-2 text-3xl;
+    @apply font-bold mb-4 text-3xl;
   }
 
   &--level-3 {
@@ -19,17 +35,5 @@
 
   &--level-6 {
     @apply font-bold text-base;
-  }
-
-  &__anchor-outer {
-    @apply hidden sm:block -ml-8 text-2xl text-center text-muted hover:text-link-hover opacity-0 w-8;
-  }
-
-  &:hover &__anchor-outer {
-    @apply opacity-100;
-  }
-
-  &__anchor {
-    @apply text-muted hover:text-link-hover;
   }
 }
