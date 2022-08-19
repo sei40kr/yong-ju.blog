@@ -22,7 +22,7 @@
   }
 
   &__summary {
-    @apply break-words;
+    @apply break-words font-serif;
   }
 
   &__footer {

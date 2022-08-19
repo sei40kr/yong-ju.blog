@@ -1,5 +1,5 @@
 .markdown {
-  @apply leading-8 text-base;
+  @apply font-serif leading-8 text-base;
 
   > :first-child {
     @apply mt-0;

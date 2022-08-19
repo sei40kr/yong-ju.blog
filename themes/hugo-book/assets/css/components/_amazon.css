@@ -1,5 +1,5 @@
 .amazon {
-  @apply bg-white block border max-w-md my-6 rounded-lg text-base;
+  @apply bg-white block border font-sans max-w-md my-6 rounded-lg text-base;
 
   &__img-outer {
     @apply flex justify-center;
