@@ -10,7 +10,11 @@
   }
 
   blockquote {
-    @apply my-6 text-xl;
+    @apply border-gray-300 border-l-4 my-6 py-2 pl-6;
+
+    > :last-child {
+      @apply mb-0;
+    }
   }
 
   code {
