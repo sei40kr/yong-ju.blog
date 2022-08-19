@@ -1,5 +1,5 @@
 .markdown {
-  @apply font-serif leading-8 text-base;
+  @apply font-serif leading-8 text-lg;
 
   > :first-child {
     @apply mt-0;
@@ -64,7 +64,7 @@
   }
 
   table {
-    @apply leading-normal my-6 text-sm sm:text-base w-full;
+    @apply leading-normal my-6 text-base w-full;
   }
 
   thead,

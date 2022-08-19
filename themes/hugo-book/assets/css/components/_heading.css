@@ -34,6 +34,6 @@
   }
 
   &--level-6 {
-    @apply font-bold text-base;
+    @apply font-bold text-lg;
   }
 }
