@@ -17,21 +17,20 @@ resource "aws_cloudfront_distribution" "blog" {
       cookies {
         forward = "none"
       }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.url_rewrite.arn
     }
 
     viewer_protocol_policy = "redirect-to-https"
   }
 
   origin {
-    domain_name = aws_s3_bucket.blog.website_endpoint
+    domain_name = aws_s3_bucket.blog.bucket_regional_domain_name
     origin_id   = "s3"
 
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["SSLv3"]
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.blog.id
   }
 
   restrictions {
@@ -45,4 +44,18 @@ resource "aws_cloudfront_distribution" "blog" {
     minimum_protocol_version = "TLSv1"
     ssl_support_method       = "sni-only"
   }
+}
+
+resource "aws_cloudfront_function" "url_rewrite" {
+  name    = "url-rewrite"
+  code    = file("${path.module}/url-rewrite.js")
+  runtime = "cloudfront-js-1.0"
+}
+
+resource "aws_cloudfront_origin_access_control" "blog" {
+  name                              = "yong-ju.blog"
+  description                       = ""
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }

@@ -1,16 +1,3 @@
-data "aws_iam_policy_document" "blog" {
-  statement {
-    sid       = "PublicReadGetObject"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.blog.arn}/*"]
-
-    principals {
-      type        = "*"
-      identifiers = ["*"]
-    }
-  }
-}
-
 resource "aws_s3_bucket" "blog" {
   bucket = "yong-ju.blog"
   tags   = {
@@ -18,15 +5,12 @@ resource "aws_s3_bucket" "blog" {
   }
 }
 
-resource "aws_s3_bucket_policy" "blog" {
+resource "aws_s3_bucket_acl" "blog" {
   bucket = aws_s3_bucket.blog.id
-  policy = data.aws_iam_policy_document.blog.json
+  acl    = "private"
 }
 
-resource "aws_s3_bucket_website_configuration" "blog" {
-  bucket = aws_s3_bucket.blog.bucket
-
-  index_document {
-    suffix = "index.html"
-  }
+resource "aws_s3_bucket_policy" "allow_cloudfront_service_principal_readonly" {
+  bucket = aws_s3_bucket.blog.id
+  policy = data.aws_iam_policy_document.allow_cloudfront_service_principal_readonly.json
 }

@@ -46,4 +46,4 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           aws s3 sync public s3://yong-ju.blog
-          aws cloudfront create-invalidation --distribution-id E2UWZGD7QU0B6Q --paths '/*'
+          aws cloudfront create-invalidation --distribution-id E1CW34R12A13S7 --paths '/*'
