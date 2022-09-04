@@ -3,7 +3,7 @@ resource "aws_cloudfront_distribution" "blog" {
   default_root_object = "index.html"
   enabled             = true
   is_ipv6_enabled     = true
-  tags                = {
+  tags = {
     Owner = "blog"
   }
 
@@ -14,9 +14,9 @@ resource "aws_cloudfront_distribution" "blog" {
 
     forwarded_values {
       query_string = false
-      cookies {
-        forward = "none"
-      }
+
+      cookies { forward = "none" }
+    }
 
     function_association {
       event_type   = "viewer-request"
