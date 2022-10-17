@@ -50,15 +50,16 @@ DRMフリーの電子書籍を入手する方法には、以下の3つがある�
 
 DRMフリーの電子書籍ファイルを公式ストアで提供している出版社も存在する。
 
-| ストア                                                        | 出版社         | ファイル形式 | 備考                                                                              |
-|:--------------------------------------------------------------|:---------------|:-------------|-----------------------------------------------------------------------------------|
-| [Gihyo Digital Publishing](https://gihyo.jp/dp)               | 技術評論社     | PDF, EPUB    | **WEB+DB PRESS** シリーズや **〜を支える技術** シリーズの出版社公式。             |
-| [インプレスブックス](https://book.impress.co.jp)              | impress        | PDF, EPUB    | **impress top gear** シリーズや資格試験対策本 **徹底攻略** シリーズの出版社公式。 |
-| [マイナビBOOKS](https://book.mynavi.jp)                       | マイナビ出版   | PDF, EPUB    | **徹底入門** シリーズの出版社公式。IT・コンピュータ関連以外の電子書籍も多数。     |
-| [O'Reilly Japan Ebook Store](https://www.oreilly.co.jp/ebook) | O'Reilly Japan | PDF, EPUB    | 言うまでもないO'Reilly本の出版社公式。                                            |
-| [SEshop](https://www.seshop.com)                              | 翔泳社         | PDF          |                                                                                   |
-| [達人出版会](https://tatsu-zine.com)                          | 達人出版会     | PDF, EPUB    |                                                                                   |
-| [BOOTH](https://booth.pm/ja)                                  | 様々           | 様々         | 技術書典で売られた技術書の電子版が多数。                                          |
+| ストア                                                        | 出版社         | ファイル形式 | 備考                                                                                                                                  |
+|:--------------------------------------------------------------|:---------------|:-------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| [Gihyo Digital Publishing](https://gihyo.jp/dp)               | 技術評論社     | PDF, EPUB    | **WEB+DB PRESS** シリーズや **〜を支える技術** シリーズの出版社公式。                                                                 |
+| [インプレスブックス](https://book.impress.co.jp)              | impress        | PDF, EPUB    | **impress top gear** シリーズや資格試験対策本 **徹底攻略** シリーズの出版社公式。                                                     |
+| [マイナビBOOKS](https://book.mynavi.jp)                       | マイナビ出版   | PDF, EPUB    | **徹底入門** シリーズの出版社公式。IT・コンピュータ関連以外の電子書籍も多数。                                                         |
+| [Manatee](https://book.mynavi.jp/manatee)                     | 様々           | PDF, EPUB    | マイナビBOOKSと同じくマイナビが運営するストアで、技術書が多数。**AWS認定アソシエイト3資格対策**などを出版するリックテレコム社も参画。 |
+| [O'Reilly Japan Ebook Store](https://www.oreilly.co.jp/ebook) | O'Reilly Japan | PDF, EPUB    | 言うまでもないO'Reilly本の出版社公式。                                                                                                |
+| [SEshop](https://www.seshop.com)                              | 翔泳社         | PDF          |                                                                                                                                       |
+| [達人出版会](https://tatsu-zine.com)                          | 達人出版会     | PDF, EPUB    |                                                                                                                                       |
+| [BOOTH](https://booth.pm/ja)                                  | 様々           | 様々         | 技術書典で売られた技術書の電子版が多数。                                                                                              |
 
 {{< hint info >}}
 impress社の資格試験対策本「徹底攻略シリーズ」は物理本を購入すると、PDF版の電子書籍を貰える。
