@@ -1,0 +1,142 @@
+---
+title: "高校数学"
+date: 2021-05-22T16:54:25+09:00
+categories: ["数学"]
+tags: ["勉強ノート"]
+---
+
+## 三角関数
+
+### 基本定理
+
+$$
+\begin{aligned}
+\sin(-\theta)&=-\sin\theta \\
+\cos(-\theta)&=\cos\theta \\
+\tan(-\theta)&=-\tan\theta \\
+\sin^2\theta+\cos^2\theta&=1
+\end{aligned}
+$$
+
+### 余弦定理
+
+$$
+\begin{aligned}
+a^2=b^2+c^2-2bc\cos\theta
+\end{aligned}
+$$
+
+### 加法定理
+
+$$
+\begin{aligned}
+\sin(\alpha+\beta)&=\sin\alpha\cos\beta+\cos\alpha\sin\beta \\
+\sin(\alpha-\beta)&=\sin\alpha\cos\beta-\cos\alpha\sin\beta \\
+\cos(\alpha+\beta)&=\cos\alpha\cos\beta-\sin\alpha\sin\beta \\
+\cos(\alpha-\beta)&=\cos\alpha\cos\beta+\sin\alpha\sin\beta \\
+\tan(\alpha+\beta)&=\frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta} \\
+\tan(\alpha-\beta)&=\frac{\tan\alpha-\tan\beta}{1+\tan\alpha\tan\beta}
+\end{aligned}
+$$
+
+### 2倍角の公式
+
+$$
+\begin{aligned}
+\sin2\alpha&=\sin(\alpha+\alpha) \\
+&=2\sin\alpha\cos\alpha \\
+\cos2\alpha&=\cos(\alpha+\alpha) \\
+&=\cos^2\alpha-\sin^2\alpha=2\cos^2\alpha-1=1-2\sin^2\alpha
+\end{aligned}
+$$
+
+### 半角の公式
+
+$$
+\begin{aligned}
+\sin^2\frac\alpha2&=\frac{1-\cos\alpha}2 \\
+\cos^2\frac\alpha2&=\frac{1+\cos\alpha}2 \\
+\tan^2\frac\alpha2&=\frac{\sin^2\frac\alpha2}{\cos^2\frac\alpha2}=\frac{1-\cos\alpha}{1+\cos\alpha}
+\end{aligned}
+$$
+
+#### 半角の公式の導出
+
+$\cos2\alpha=1-2\sin^2\alpha$ より
+
+$$
+sin^2\alpha=\frac{1-\cos2\alpha}2
+$$
+
+ここで $\alpha$ を $\dfrac\alpha2$ に置き換えると
+
+$$
+\sin^2\frac\alpha2=\frac{1-\cos\alpha}2
+$$
+
+となる。
+
+同様に $\cos2\alpha=2\cos^2\alpha-1$ より
+
+$$
+\cos^2\frac\alpha2=\frac{1+\cos\alpha}2
+$$
+
+が導ける。
+
+### 積和の公式
+
+$$
+\begin{aligned}
+\sin\alpha\cos\beta&=\frac12\{\sin(\alpha+\beta)+\sin(\alpha-\beta)\} \\
+\cos\alpha\cos\beta&=\frac12\{\cos(\alpha+\beta)+\cos(\alpha-\beta)\} \\
+\sin\alpha\sin\beta&=-\frac12\{\cos(\alpha+\beta)-\cos(\alpha-\beta)\}
+\end{aligned}
+$$
+
+### 和積の公式
+
+$$
+\begin{aligned}
+\sin x+\sin y&=2\sin\frac{x+y}2\cos\frac{x-y}2 \\
+\sin x-\sin y&=2\cos\frac{x+y}2\sin\frac{x-y}2 \\
+\cos x+\cos y&=2\cos\frac{x+y}2\cos\frac{x-y}2 \\
+\cos x-\cos y&=-2\sin\frac{x+y}2\sin\frac{x-y}2 \\
+\end{aligned}
+$$
+
+#### 和積の公式の導出
+
+積和の公式 $\sin\alpha\cos\beta=\dfrac12\{\sin(\alpha+\beta)+\sin(\alpha-\beta)\}$ に $(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2)$ を代入すると
+
+$$
+\begin{aligned}
+\sin\frac{x+y}2\cos\frac{x-y}2&=\frac12\{\sin(\frac{x+y}2+\frac{x-y}2)+\sin(\frac{x+y}2-\frac{x-y}2)\} \\
+&=\frac12(\sin x+\sin y) \\
+\sin x+\sin y&=2\sin\frac{x+y}2\cos\frac{x-y}2
+\end{aligned}
+$$
+
+となる。
+
+また、同式に $(\alpha,\beta)=(\dfrac{x-y}2,\dfrac{x+y}2)$ を代入して整理すると
+
+$$
+\sin x-\sin y=2\cos\frac{x+y}2\sin\frac{x-y}2
+$$
+
+となる。
+
+同様に、$\cos\alpha\cos\beta=\dfrac12\{\cos(\alpha+\beta)+\cos(\alpha-\beta)\}$ に、 $(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2)$ を代入して整理すると
+
+$$
+\cos x+\cos y=2\cos\frac{x+y}2\cos\frac{x-y}2
+$$
+
+$\sin\alpha\sin\beta=\dfrac12\{\cos(\alpha+\beta)-\cos(\alpha-\beta)\}$ に $(\alpha,\beta)=(\dfrac{x+y}2,\dfrac{x-y}2)$ を代入して整理すると
+
+$$
+\cos x-\cos y=2\sin\frac{x+y}2\sin\frac{x-y}2
+$$
+
+が導ける。

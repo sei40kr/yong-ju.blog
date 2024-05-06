@@ -1,0 +1,361 @@
+---
+title: "複素関数論"
+date: 2022-02-18T03:55:11+09:00
+categories: ["数学"]
+tags:
+  ["複素関数論", "複素解析", "複素数", "大学数学", "数学", "勉強ノート", "WIP"]
+---
+
+import { Details } from "~/components/post/details";
+import { Hint } from "~/components/post/hint";
+
+## ド・モアブルの定理
+
+$z=r(\cos\theta+i\sin\theta)$ のとき
+
+$$
+z^n=r^n(\cos{n\theta}+i\sin{n\theta})
+$$
+
+ただし、$n$ は任意の整数
+
+<Details title="証明">
+オイラーの公式より
+
+$$
+\begin{aligned}
+z&=r(\cos\theta+i\sin\theta)\\
+&=re^{i\theta}
+\end{aligned}
+$$
+
+両辺を $n$ 乗して
+
+$$
+\begin{aligned}
+z^n&=r^ne^{in\theta}\\
+&=r^n(\cos{n\theta}+i\sin{n\theta})
+\end{aligned}
+$$
+
+</Details>
+
+{/* TODO 複素数の対数関数 */}
+{/* TODO 複素数の累乗関数 */}
+
+## コーシー・リーマンの関係式
+
+複素関数 $f(x+iy)=u(x,y)+iv(x,y)$ において、以下の関係を**コーシー・リーマンの関係式** (以下、CRの関係式) という。
+
+$$
+\begin{aligned}
+\dfrac{\partial u}{\partial x}(x,y)&=\dfrac{\partial v}{\partial y}(x,y)\\
+\dfrac{\partial u}{\partial y}(x,y)&=-\dfrac{\partial v}{\partial x}(x,y)
+\end{aligned}
+$$
+
+**$f(z)$ が $z$ で微分可能であることは、$u(x,y),v(x,y)$ が全微分可能かつCRの関係式が成り立つことに等しい。**
+
+<Details title="CRの関係式の導出">
+$f(z)$ において $z$ が $\Delta z$ だけ増加したときの変化の割合を求めると
+
+$$
+\begin{aligned}
+&=\dfrac{f(z+\Delta z)-f(z)}{\Delta z}\\
+&=\dfrac{\{u(x+\Delta x,y+\Delta y)+iv(x+\Delta x,y+\Delta y)\}-\{u(x,y)+iv(x,y)\}}{\Delta x+i\Delta y}\\
+&=\dfrac{\{u(x+\Delta x,y+\Delta y)-u(x,y)\}+i\{v(x+\Delta x,y+\Delta y)-v(x,y)\}}{\Delta x+i\Delta y}
+\end{aligned}
+$$
+
+$\lim\Delta y\rightarrow0$ の場合 (実軸と平行に近づけて微分した場合)
+
+$$
+\begin{aligned}
+&=\lim_{\Delta x\rightarrow0}\dfrac{\{u(x+\Delta x,y)-u(x,y)\}+i\{v(x+\Delta x,y)-v(x,y)\}}{\Delta x}\\
+&=\dfrac{\partial u}{\partial x}(x,y)+i\dfrac{\partial v}{\partial x}(x,y)=f'(z)
+\end{aligned}
+$$
+
+$\lim\Delta x\rightarrow0$ の場合 (虚軸と平行に近づけて微分した場合)
+
+$$
+\begin{aligned}
+&=\lim_{\Delta y\rightarrow0}\dfrac{\{u(x,y+\Delta y)-u(x,y)\}+i\{v(x,y+\Delta y)-v(x,y)\}}{i\Delta y}\\
+&=-i\dfrac{\partial u}{\partial y}(x,y)+\dfrac{\partial v}{\partial y}(x,y)=f'(z)
+\end{aligned}
+$$
+
+これらの式の実部と虚部を比較すると
+
+$$
+\begin{cases}
+\dfrac{\partial u}{\partial x}(x,y)&=\dfrac{\partial v}{\partial y}(x,y)\\
+\dfrac{\partial u}{\partial y}(x,y)&=-\dfrac{\partial v}{\partial x}(x,y)
+\end{cases}
+$$
+
+が導ける。
+
+</Details>
+
+## 複素関数の積分
+
+区分的に滑らかな積分路 $C$ における複素関数 $f(z)$ の積分は、$z(t)=x(t)+y(t)\;(a\le t\le b)$ とおくと
+
+$$
+\int_Cf(z)dz=\int_a^bf(z(t))
+\dfrac{dz(t)}{dt}dt
+$$
+
+と表せる。
+
+### 性質
+
+1. $$\int_C\{f(z)+g(z)\}dz=\int_Cf(z)dz+\int_Cg(z)dz$$
+1. $$\int kf(z)dz=k\int f(z)dz$$
+1. $$\int_{-C}f(z)dz=-\int_Cf(z)dz$$
+1. $$\int_Cf(z)dz=\int_{C_1}f(z)dz+\int_{C_2}f(z)dz$$
+
+## コーシーの積分定理
+
+$f(z)=u+iv$ は $D$ で正則であり、かつ $u,v$ は $C^1$ 級であるとする。
+単純閉曲線 $C$ で囲まれた領域を $\Omega$ として、$\bar\Omega$ が $D$ に含まれるならば、次が成り立つ。
+
+$$
+\oint_{C}f(z)dz=0
+$$
+
+<Details title="証明">
+$$
+\begin{aligned} 
+\oint_Cf(z)dz&=\int_a^bf(z(t))z'(t)dt\\
+&=\int_a^b\{u(x(t),y(t))+iv(x(t),y(t))\}\{x'(t)+iy'(t)\}dt\\
+&=\int_a^b\{u(x(t),y(t))x'(t)-v(x(t),y(t))y'(t)\}dt+i\int_a^b\{u(x(t),y(t))y'(t)+v(x(t),y(t))x'(t)\}dt\\
+&=\oint_C\{u(x,y)dx-v(x,y)dy\}+i\oint_C\{u(x,y)dy+v(x,y)dx\}
+\end{aligned}
+$$
+
+グリーンの定理 (後述) より
+
+$$
+\oint_Cf(z)dz=\iint_\Omega\left(-\dfrac{\delta u}{\delta y}-\dfrac{\delta v}{\delta x}\right)dxdy+\iint_\Omega\left(\dfrac{\delta u}{\delta x}-\dfrac{\delta v}{\delta y}\right)dxdy
+$$
+
+コーシー・リーマンの方程式より
+
+$$
+\begin{cases}
+-\dfrac{\delta u}{\delta y}-\dfrac{\delta v}{\delta x}&=0\\
+\dfrac{\delta u}{\delta x}-\dfrac{\delta v}{\delta y}&=0
+\end{cases}
+$$
+
+代入して
+
+$$
+\oint_Cf(z)dz=0
+$$
+
+</Details>
+
+<Hint level="info">
+**グリーンの定理**
+
+単純閉曲線で囲まれた領域を $\Omega$ とし、$\bar\Omega=(\Omega+\partial\Omega)$ で $C^1$ 級である $P(x,y),Q(x,y)$ に対して、次が成り立つ。
+
+$$
+\oint_{\partial\Omega}(Pdx+Qdy)=\iint_\Omega\left(\dfrac{\partial Q}{\partial x}-\dfrac{\partial
+P}{\partial y}\right)dxdy
+$$
+
+</Hint>
+
+## 積分路の変形I
+
+$f(z)$ が単連結領域 $D$ で正則とする。2つの曲線 $C_1,C_2\in D$ が共通の始点と終点をもつとき
+
+$$
+\int_{C_1}f(z)dz=\int_{C_2}f(z)dz
+$$
+
+<Hint level="info">単連結な正則領域では積分が経路に依らない。</Hint>
+
+<Details title="証明">
+
+$C_1,C_2$ が端点以外で交差していない場合を考える。
+
+コーシーの積分定理より
+
+$$
+\begin{aligned}
+\oint_{C_1-C_2}f(z)dz&=\oint_{C_1}f(z)dz-\oint_{C_2}f(z)dz=0\\
+\therefore\oint_{C_1}f(z)dz&=\oint_{C_2}f(z)dz
+\end{aligned}
+$$
+
+また、$C_1,C_2$ が交差する場合でも、交差する点で積分路を分割すると自明に成り立つ。
+
+</Details>
+
+## 積分路の変形II
+
+単純閉曲線 $C_1,C_2$ で囲まれた環状領域を $D$ とし、$\bar D$ で正則な $f(z)$ に対して、次が成り立つ。
+
+$$
+\oint_{C_1}f(z)dz=\oint_{C_2}f(z)dz
+$$
+
+## コーシーの積分公式
+
+単純閉曲線 $C$ で囲まれる領域を $D$ とし、$f(z)$ は $\bar{D}$ で正則であるとする。
+このとき、任意の $z\in D$ に対し、次が成り立つ。
+
+$$
+f(z)=\dfrac1{2\pi i}\oint_C\dfrac{f(\zeta)}{\zeta-z}d\zeta
+$$
+
+<Hint level="info">
+  コーシーの積分公式では、ある点 $f(z)$ の周囲の値から、その点での関数 $f$ の値
+  $f(z)$ を求めることができている。
+</Hint>
+
+{/* TODO コーシーの積分公式を証明 */}
+
+## グルサの公式
+
+単純閉曲線 $C$ で囲まれる領域を $D$ とし、$f(z)$ は $\bar{D}$ で正則であるとする。
+このとき、$f(z)$ は $D$ 内の点 $z$ で何回でも微分可能となる。
+
+また、任意の自然数 $n$ に対して $f^{(n)}(z)$ は $D$ 上で正則となり次が成り立つ。
+
+$$
+f^{(n)}(z)=\dfrac{n!}{2\pi i}\oint_C\dfrac{f(\zeta)}{(\zeta-z)^{n+1}}d\zeta
+$$
+
+<Details title="証明 (注: 厳密でない)">
+$$
+f'(z)=\lim_{\Delta z\to0}\dfrac{f(z+\Delta z)-f(z)}{\Delta z}
+$$
+
+コーシーの積分公式より
+
+$$
+\begin{aligned}
+f'(z)&=\lim_{\Delta z\to0}\dfrac1{(\Delta z)2\pi i}\oint_C\left\{\dfrac1{\zeta-(z+\Delta z)}-\dfrac1{\zeta-z}\right\}f(\zeta)d\zeta\\
+&=\lim_{\Delta z\to0}\dfrac1{2\pi i}\oint_C\dfrac{f(\zeta)}{\{\zeta-(z+\Delta z)\}(\zeta-z)}d\zeta
+\end{aligned}
+$$
+
+$\Delta z\rightarrow0$ に近づけると
+
+$$
+f'(z)=\dfrac1{2\pi i}\oint_C\dfrac{f(\zeta)}{(\zeta-z)^2}d\zeta
+$$
+
+この操作を繰り返すと、一般に次の式が得られる。
+
+$$
+f^{(n)}(z)=\dfrac{n!}{2\pi i}\oint_C\dfrac{f(\zeta)}{(\zeta-z)^{n+1}}d\zeta
+$$
+
+</Details>
+
+## 複素関数のテイラー展開
+
+複素関数 $f(z)$ は閉円板 $\bar{D}(\alpha,R)$ で正則であるとする。このとき、任意の $z\in D(\alpha,R)$ に対し、次の等式が成り立つ。
+
+$$
+\begin{aligned}
+f(z)&=f(\alpha)+f'(\alpha)(z-\alpha)+\dfrac1{2!}f''(\alpha)(z-\alpha)^2+\cdots\\
+&=\sum_{n=0}^\infty\dfrac{f^{(n)}(\alpha)}{n!}(z-\alpha)^n
+\end{aligned}
+$$
+
+<Hint level="info">
+  実関数のテイラー展開の公式が複素関数にもそのまま使える。
+</Hint>
+
+<Details title="証明 (注: 厳密でない)">
+コーシーの積分公式より
+
+$$
+\begin{aligned}
+f(z)&=\dfrac1{2\pi i}\int_C\dfrac{f(\zeta)}{\zeta-z}d\zeta\\
+&=\dfrac1{2\pi i}\int_C\dfrac{f(\zeta)}{\zeta-\alpha}\dfrac1{1-\frac{z-\alpha}{\zeta-\alpha}}d\zeta
+\end{aligned}
+$$
+
+$\left|\dfrac{z-a}{\zeta-a}\right|<1$ であることから、等比級数の公式より
+
+$$
+\begin{aligned}
+f(z)&=\dfrac1{2\pi i}\int_C\dfrac{f(\zeta)}{\zeta-\alpha}\sum_{n=0}^\infty(\dfrac{z-\alpha}{\zeta-\alpha})^nd\zeta\\
+&=\sum_{n=0}^\infty\dfrac1{n!}\dfrac{n!}{2\pi i}\int_C\dfrac{f(\zeta)}{(\zeta-\alpha)^{n+1}}d\zeta(z-\alpha)^n
+\end{aligned}
+$$
+
+グルサの公式より
+
+$$
+f(z)=\sum_{n=0}^\infty\dfrac1{n!}f^{(n)}(\alpha)(z-\alpha)^n
+$$
+
+</Details>
+
+## ローラン展開
+
+$D=\{z\in\Bbb{C}\mid R_1<|z-\alpha|<R_2\}\;(0\le R_1<R_2\le\infty)$ とする。
+$f(z)$ が $\bar{D}$ で正則な関数であるとき、任意の $z\in D$ に対し、次の等式が成り立つ。
+
+$$
+\begin{aligned}
+c_n&=\dfrac1{2\pi i}\oint_C\dfrac{f(\zeta)}{(\zeta-\alpha)^{n+1}}d\zeta\;(n=0,\pm1,\pm2,\dots)\\
+f(z)&=\cdots+\dfrac{c_{-2}}{(z-\alpha)^2}
++\dfrac{c_{-1}}{(z-\alpha)}+c_0+c_1(z-\alpha)+c_2(z-\alpha)^2+\cdots\\
+&=\sum_{n=-\infty}^\infty c_n(z-\alpha)^n
+\end{aligned}
+$$
+
+ただし $C$ は $D$ 内の $\alpha$ を内部に含む任意の円。
+
+テイラー展開にはない $z-\alpha$ の負のべき乗を含む項の系列を**主要部**という。
+
+## 孤立特異点
+
+$f(z)$ が $D=\{z\in \Bbb{C}\mid0<|z-\alpha|<R\}\enspace(R\le\infty)$ で正則であり、$z=\alpha$ で正則でないとき、点 $\alpha$ を**孤立特異点 (isolated singularity)** という。
+
+特に、$f(z)$ のローラン級数の主要部が
+
+1. 存在しない場合は**可除特異点 (removable singularity)** という
+1. $k$ 個存在 (有限かつ $k\ne0$) する場合は **$k$ 位の極 (k-th pole)** という
+1. $\text{主要部が特異点}$ である場合は**真性特異点 (essential singularity)** という
+
+## 留数定理
+
+$\alpha$ を中心とするローラン展開における $c_{-1}$ を $f(z)$ の $z=\alpha$ における**留数 (residue)** といい、$\text{Res}(f(z),\alpha)$ で表す。
+
+$f(z)$ が単純閉曲線 $C$ とその内部で $C$ 内の孤立特異点 $\alpha_1,\alpha_2,\dots,\alpha_n$ を除いて正則であるとき次の等式が成り立つ。
+
+$$
+\oint_Cf(z)dz=2\pi i\sum_{k=1}^n\text{Res}(f(z),\alpha_k)
+$$
+
+<Hint level="info">
+  $f(z)$ の周回積分の値が内部の留数の和で求められている。
+</Hint>
+
+<Details title="証明">
+$$
+C_n=\dfrac1{2\pi i}\oint\dfrac{f(\zeta)}{(\zeta-\alpha)^{n+1}}d\zeta
+$$
+
+ここで、両辺に $n=-1$ を代入すると
+
+$$
+\begin{aligned}
+C_{-1}=\text{Res}(f(z),\alpha_k)&=\dfrac1{2\pi i}\oint{f(\zeta)}d\zeta\\
+2\pi i\cdot\text{Res}(f(z),\alpha_k)&=\oint_C{f(\zeta)d\zeta}
+\end{aligned}
+$$
+
+</Details>

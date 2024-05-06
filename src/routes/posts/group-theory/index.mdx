@@ -1,0 +1,625 @@
+---
+title: "群論"
+date: 2022-04-21T01:30:53+09:00
+categories: ["数学"]
+tags: ["数学", "代数学", "群論", "勉強ノート"]
+---
+
+import { Details } from "~/components/post/details";
+import { Hint } from "~/components/post/hint";
+
+## 群
+
+### 定義
+
+集合 $G$ に対して二項演算 $\circ$
+
+$$
+G\to G\\
+(a,b)\mapsto a\circ b
+$$
+
+が与えられていて、以下の条件を全て満たすとき、$G$ を**群**という。
+
+- **結合律**
+
+  $$
+  \forall{a,b,c\in G},(a\circ b)\circ c=a\circ(b\circ c)
+  $$
+
+- **単位元の存在**
+
+  $a\circ e=e\circ a=a$ を $G$ のどんな元 $a$ に対しても満たすような
+  $G$ の元 $e$ が存在する。
+
+  $$
+  \forall{a\in G},\exist{e\in G},a\circ e=e\circ a=a
+  $$
+
+  e は存在すれば一意であり、e を G の**単位元**という。
+
+- **逆元の存在**
+
+  $G$ のどんな元 $a$ に対しても
+  $a\circ x=x\circ a=e$ となるような $G$ の元 $x$ が存在する。
+
+  $$
+  \forall{a\in G},\exist{x\in G},a\circ x=x\circ a=e
+  $$
+
+  $x$ は存在すれば一意である。
+  $x$ を **$a$ の $G$ における逆元**といい、$a^{-1}$ で表す。
+
+また、群 $G$ の元の個数を $G$ の**位数**といい、$|G|$ で表す。
+
+**以降、$a\circ b$ を $ab$ で表す。**
+
+### 定理
+
+<ul>
+  <li>
+    群 $G$ に対し、単位元は一意である。
+
+    <Details title="証明">
+      2つの単位元を $e,e'$ とする。
+
+      $e$ は単位元であることから
+
+      $$
+      ee'=e'\tag{1}
+      $$
+
+      $e'$ は単位元であることから
+
+      $$
+      ee'=e\tag{2}
+      $$
+
+      (1), (2) より
+
+      $$
+      ee'=e=e'
+      $$
+    </Details>
+
+  </li>
+  <li>
+    任意の $a\in G$ に対し、逆元は一意である。
+
+    <Details title="証明">
+      $a$ の2つの逆元を $b,b'$ とする。
+      $b'a=e$ より
+
+      $$
+      b=(b'a)b=b'(ab)=b'
+      $$
+    </Details>
+
+  </li>
+</ul>
+
+{/* TODO 群となる集合と演算の例 */}
+
+## 可換群
+
+任意の $a,b\in G$ に対して**交換法則**を満たすとき、具体的には
+
+$$
+ab=ba
+$$
+
+が成立するとき、$G$ を**可換群 (アーベル群)** という。
+
+{/* TODO 対称群 */}
+
+## 部分群
+
+### 定義
+
+群 $G$ の空でない部分集合 $H$ が $G$ の二項演算によって群になるとき、$H$ を $G$ の部分群といい、$H\le G$ と表す。
+
+### 定理
+
+<ul>
+  <li>
+    $H$ の単位元 $e'$ と $G$ の単位元 $e$ は一致する。
+
+    <Details title="証明">
+      $e'$ の $G$ での逆元 $x\in G$ をとると
+
+      $$
+      e'=(xe')e'=x(e'e')=e
+      $$
+    </Details>
+
+  </li>
+  <li>
+    $H$ と $G$ の逆元は一致する。
+
+    <Details title="証明">
+      $c\in H$ の $H,G$ での逆元をそれぞれ $c',x$ とすると
+
+      $$
+      c'=c'e=c'(cx)=(cc')x=x
+      $$
+    </Details>
+
+  </li>
+  <li>
+    群 $G$ の空でない部分集合 $H$ に対し
+
+    $$
+    H\,\text{は}\,G\,\text{の部分群}\iff\forall a,b\in H,a^{-1}b\in H
+    $$
+
+    が成立。
+
+    <Details title="証明">
+      $\implies$ の成立は自明であるため、$\impliedby$ の成立を示す。
+
+      $H\ne\empty$ より、$a\in H$ がとれ
+
+      $a^{-1},b\in H$ に対し
+
+      $$
+      (a^{-1})^{-1}b=ab\in H
+      $$
+
+      よって**演算に対して閉じている**。
+
+      $a\in H$ より、$a^{-1}a=e\in H$
+
+      $$
+      a^{-1}a=e\in H
+      $$
+
+      よって**単位元が存在**。
+
+      $a,e\in H$ より、$a^{-1}e=a^{-1}\in H$
+
+      $$
+      a^{-1}e=a^{-1}\in H
+      $$
+
+      よって**逆元が存在**。
+
+      $H$ が $G$ と同じ演算について閉じているので、**結合律の成立は明らか**。
+    </Details>
+
+  </li>
+</ul>
+
+{/* TODO 部分群の例 */}
+
+## 同値関係/同値類
+
+### 同値関係の定義
+
+集合 $S$ において、関係 $\sim$ が定義されていて、2元 $x,y\in S$ に対し、$x\sim y$ であるか、$x\sim y$ でないかのいずれかが成立し、かつ次の3条件を満たすとき、関係 $\sim$ を**同値関係**という。
+
+- **反射律**を満たす
+
+  $$
+  x\sim x
+  $$
+
+- **対称律**を満たす
+
+  $$
+  x\sim y\implies y\sim x
+  $$
+
+- **推移律**を満たす
+
+  $$
+  x\sim y\land y\sim z\implies x\sim z
+  $$
+
+### 同値類の定義
+
+$\sim$ を集合 $S$ 上の同値関係とする。
+$x\in S$ に対し
+
+$$
+C(x)=\{y\in S\mid x\sim y\}
+$$
+
+を **$x$ の同値類**という。
+
+### 同値類の定理
+
+<ul>
+  <li>
+    $\forall{y,z\in C(x)},y\sim z$
+
+    <Details title="証明">
+      $y\in C(x)$ より
+
+      $$
+      x\sim y
+      $$
+
+      $z\in C(x)$ より
+
+      $$
+      x\sim z\\
+      \therefore{z\sim x}
+      $$
+
+      よって、推移律より
+
+      $$
+      x\sim z
+      $$
+    </Details>
+
+  </li>
+  <li>
+    $y\in C(x)\implies C(x)=C(y)$
+
+    <Details title="証明">
+      $y\in C(x)$ より
+
+      $$
+      \forall{z\in C(x)},y\sim z
+      $$
+
+      よって
+
+      $$
+      z\in C(y)\\
+      \therefore C(x)\subset C(y)\tag{1}
+      $$
+
+      $y\in C(x)$ より
+
+      $$
+      x\sim y\\
+      \therefore{y\sim x}
+      $$
+
+      $x\in C(y)$ であり
+
+      $$
+      \forall{w\in C(y)},x\sim w\\
+      \therefore{w\in C(x)}
+      $$
+
+      よって
+
+      $$
+      C(x)\supset C(y)\tag{2}
+      $$
+
+      (1), (2) より
+
+      $$
+      C(x)=C(y)
+      $$
+    </Details>
+
+  </li>
+  <li>
+    $C(x)\land C(y)\ne\empty\implies C(x)=C(y)$
+
+    <Details title="証明">
+      $z\in C(x)\land C(y)$ をとる。
+
+      このとき、$C(x)=C(z),C(y)=C(z)$ となるので
+
+      $$
+      C(x)=C(y)
+      $$
+    </Details>
+
+  </li>
+</ul>
+
+## 商集合
+
+集合 $S$ の同値関係 $\sim$ から定まる、同値類すべてを集めた集合のことを、
+$S$ の $\sim$ による商集合であるといい、$S/\sim$ で表す。
+
+$$
+S/\sim:=\{C(x_1),C(x_2),C(x_3),\dots\}
+$$
+
+<Hint level="info">
+  $C(x_1),C(x_2),C(x_3),\dots$ の各集合の要素に重複はない。
+</Hint>
+
+## 剰余類
+
+### 定義
+
+$H$ を群 $G$ の部分群とする。
+$a,b\in G$ に対し、$a^{-1}b\in H$ となるとき $a\sim b$ と定義する。
+
+これは同値関係であり、$a\in G$ の同値類を $a$ の $H$ による**左剰余類**という。
+また、$a,b\in H$ に対し、$ba^{-1}\in H$ を $a\sim b$ の定義としたものを、$a$ の $H$ による**右剰余類**という。
+
+<Hint level="info">$G$ が可換群であれば、左剰余類と右剰余類は同じ。</Hint>
+
+<Details title="関係 ~ が同値関係であることの証明">
+$a$ を $H$ の左剰余類とする。
+
+$x\in G$ より
+
+$$
+x^{-1}x=e\in H\\
+\therefore x\sim x
+$$
+
+よって、**反射律**を満たす。
+
+$x,y\in G$ で $x\sim y$ とすると
+
+$$
+x^{-1}y\in H
+$$
+
+$H$ は部分群なので
+
+$$
+(x^{-1}y)^{-1}=y^{-1}x\in H\\
+\therefore y\sim x
+$$
+
+よって、**対象律**を満たす。
+
+$x,y\in G$ で $x\sim y,y\sim z$ とすると
+
+$$
+x^{-1}y,y^{-z}z\in H
+$$
+
+$H$ は部分群なので
+
+$$
+(x^{-1}y)(y^{-1}z)=x^{-1}(yy^{-1})z=x^{-1}z\in H\\
+\therefore{x\sim z}
+$$
+
+よって、**推移律**を満たす。
+
+以上より関係 $\sim$ は同値関係である。
+
+また、右剰余類についても同様に証明できる。
+
+</Details>
+
+<Hint level="info">
+**左剰余類の意味の考察**
+
+左剰余類は $a$ を定数として群 $G$ の部分群 $H$ の元を左から掛けたもの。
+
+$$
+\begin{aligned}
+C(a)&=\{x\in G\mid a\sim x\}\\
+&=\{x\in G\mid a^{-1}x\in H\}\\
+&=\{ah\mid h\in H\}\\
+&=aH
+\end{aligned}
+$$
+
+</Hint>
+
+### 定理
+
+<ul>
+  <li>
+    $\forall a,b\in G,|aH|=|bH|$
+
+    <Details title="証明">
+      $\forall a\in G,|H|=|aH|$ を示せばよい。
+
+      $$
+      \begin{aligned}
+      f:&H&\to&\enspace aH\\
+      &h&\mapsto&\enspace ah
+      \end{aligned}
+      $$
+
+      $f$ は全単射になっており、$\therefore|H|=|aH|$
+    </Details>
+
+  </li>
+</ul>
+
+## 正規部分群
+
+### 定義
+
+$H$ を $G$ の部分群とする。
+すべての $a\in G$ に対し、$aH=Ha$ となるとき、$H$ を **$G$ の正規部分群**といい、$H\trianglelefteq G$ と表す。
+
+<Hint level="info">可換群 $G$ の部分群はすべて正規部分群。</Hint>
+
+<Hint level="info">
+**正規部分群の意味の考察**
+
+$$
+aH\cdot bH=abH\;(a,b\in G,H\le G)
+$$
+
+を満たす群 $H$ を考える。
+
+この演算がwell-definedであるためには
+
+$$
+aH=a'H,bH=b'H\implies abH=a'b'H
+$$
+
+を満たさなければならない。
+
+ここで $a'=ah_1,b'=bh_2\\;(h_1,h_2\in H)$ とおくと
+
+$$
+a'b'H=ah_1bh_2H
+$$
+
+**もし $H$ が正規部分群であれば**
+
+$$
+\begin{aligned}
+a'b'&=abh_1'h_2\;(h_1'\in H)\\
+&=abH\\
+\therefore a'b'H&=abH
+\end{aligned}
+$$
+
+となり成立する。
+
+</Hint>
+
+### 正規部分群の剰余類
+
+$N$ を $G$ の正規部分群とする。
+剰余類 $aN$ と $bN$ の積を $aN\cdot bN=abN$ と定義すると、
+$G/N$ はこの演算によって群となり、この群を **$G$ の正規部分群 $N$ に関する剰余類**という。
+
+<Details title="G/N が群であることの証明">
+- 演算に対して閉じていることは明らか。
+- 単位元 $eN$ が存在。
+- $aN$ の逆元 $a^{-1}N$ が存在。
+
+よって結合律の成立を示す。
+
+$$
+\begin{aligned}
+(aN\cdot bN)\cdot cN&=abN\cdot cN\\
+&=abcN\\
+&=aN\cdot(bN\cdot cN)
+\end{aligned}
+$$
+
+となり、結合律が成り立つため、$G/N$ は群である。
+
+</Details>
+
+## 準同型写像
+
+### 定義
+
+$G,G'$ が群であり、かつ写像 $f:G\to G'$ が
+
+$$
+\forall{x,y\in G},f(xy)=f(x)f(y)
+$$
+
+を満たすとき $f$ を準同型写像という。
+
+### 定理
+
+<ul>
+  <li>
+    $f(e)=e'$ ($e'$ は $G'$ の単位元)
+
+    <Details title="証明">
+      $$ \begin{aligned}
+      f(e)&=f(ee)=f(e)f(e)\\ &=e' \end{aligned}
+      $$
+    </Details>
+
+  </li>
+  <li>
+    $f(x^{-1})=f(x)^{-1}$
+
+    <Details title="証明">
+      $$
+      \begin{aligned}
+      f(x)f(x^{-1})=f(xx^{-1})=f(e)=e'\\
+      f(x^{-1})f(x)=f(x^{-1}x)=f(e)=e'
+      \end{aligned}
+      $$
+
+      よって
+
+      $$
+      f(x^{-1})=f(x)^{-1}
+      $$
+    </Details>
+
+  </li>
+</ul>
+
+### 核と像
+
+群の準同型写像 $f$ に対して
+
+$$
+\begin{aligned}
+\ker{f}&=\{x\in G\mid f(x)=e'\}\\
+\text{im}f&=\{f(x)\in G'\mid x\in G\}
+\end{aligned}
+$$
+
+### 核と像の定理
+
+<ul>
+  <li>
+    $\ker{f}\trianglelefteq G$
+
+    <Details title="証明">
+      $$
+      \begin{aligned}
+      \forall{a,b\in\ker{f}},f(a^{-1}b)&=f(a^{-1})f(b)=f(a)^{-1}f(b)=e'^{-1}e'=e'e'\\
+      &=e'
+      \end{aligned}
+      $$
+
+      よって $\ker{f}\le G$
+
+      $$
+      \begin{aligned}
+      \forall{a\in\ker{f}},\forall{x\in G},f(xax^{-1})&=f(x)f(a)f(x)^{-1}\\
+      &=f(x)f(x)^{-1}\\
+      &=e'\\
+      \therefore xax^{-1}&\in\ker{f}
+      \end{aligned}
+      $$
+
+      よって $\ker{f}\trianglelefteq G$
+    </Details>
+
+  </li>
+  <li>
+    $\text{im}f\le G$
+
+    <Details title="証明">
+      $$
+      \forall{f(a),f(b)\in\text{im}f},f(a)^{-1}f(b)=f(a^{-1}b)\in\text{im}f
+      $$
+
+      よって $\text{im}f\le G$
+    </Details>
+
+  </li>
+</ul>
+
+## 準同型定理
+
+$f:G\to G'$ を準同型写像とする。このとき
+
+$$
+\begin{aligned}
+\varphi:&G/\ker{f}&\to\text{im}f\\
+&x\ker{f}&\mapsto f(x)
+\end{aligned}
+$$
+
+は同型写像である。すなわち
+
+$$
+G/\ker{f}\simeq\text{im}f
+$$
+
+特に $f$ が全射であるとき
+
+$$
+G/\ker{f}\simeq{G'}
+$$
+
+が成り立つ。
+
+{/* TODO 準同型定理の証明 */}

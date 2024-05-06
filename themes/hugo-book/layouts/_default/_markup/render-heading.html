@@ -1,8 +1,0 @@
-<div class="book-heading book-heading--level-{{ .Level }}">
-  {{ if le .Level 3 }}
-    <div class="book-heading__anchor-outer">
-      <a href="#{{ .Anchor | safeURL }}" class="book-heading__anchor"></a>
-    </div>
-  {{ end }}
-  <h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}>
-</div>

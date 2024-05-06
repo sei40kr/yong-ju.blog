@@ -1,27 +1,57 @@
 {
-  "name": "yong-ju.blog",
-  "version": "1.0.0",
-  "description": "",
-  "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.6",
-    "postcss-cli": "^9.1.0",
-    "postcss-import": "^14.0.2",
-    "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.4",
-    "textlint": "^11.7.7",
-    "textlint-rule-preset-ja-technical-writing": "^4.0.1"
+  "name": "my-qwik-basic-starter",
+  "description": "Demo App with Routing built-in (recommended)",
+  "engines": {
+    "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
   },
+  "engines-annotation": "Mostly required by sharp which needs a Node-API v9 compatible runtime",
+  "private": true,
+  "trustedDependencies": [
+    "sharp"
+  ],
+  "trustedDependencies-annotation": "Needed for bun to allow running install scripts",
+  "type": "module",
   "scripts": {
-    "start": "hugo server --watch"
+    "build": "qwik build",
+    "build.client": "vite build",
+    "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.server": "vite build -c adapters/static/vite.config.ts",
+    "build.types": "tsc --incremental --noEmit",
+    "deploy": "echo 'Run \"npm run qwik add\" to install a server adapter'",
+    "dev": "vite --mode ssr",
+    "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check .",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "prebuild.pandacss": "panda codegen --silent",
+    "preview": "qwik build preview && vite preview --open",
+    "start": "vite --open --mode ssr",
+    "qwik": "qwik"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sei40kr/yong-ju.blog.git"
+  "devDependencies": {
+    "@builder.io/qwik": "^1.5.3",
+    "@builder.io/qwik-city": "^1.5.3",
+    "@builder.io/vite-plugin-macro": "~0.0.7",
+    "@pandacss/dev": "^0.36.1",
+    "@qwik-ui/headless": "^0.5.0",
+    "@qwikest/icons": "^0.0.13",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-qwik": "^1.5.3",
+    "glob": "^11.0.0",
+    "katex": "^0.16.10",
+    "prettier": "^3.2.5",
+    "rehype-katex": "^7.0.0",
+    "remark-math": "^6.0.0",
+    "typescript": "5.4.5",
+    "undici": "*",
+    "vite": "^5.2.10",
+    "vite-tsconfig-paths": "^4.2.1"
   },
-  "author": "Seong Yong-ju",
-  "license": "UNLICENSED",
   "dependencies": {
-    "tailwindcss": "^3.0.18"
+    "@fontsource/noto-serif-jp": "^5.0.12"
   }
 }

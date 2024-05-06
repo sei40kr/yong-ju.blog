@@ -1,0 +1,597 @@
+---
+title: "微分方程式"
+date: 2021-04-04T16:59:44+09:00
+categories: ["数学"]
+tags: ["勉強ノート", "大学数学"]
+---
+
+import { Details } from "~/components/post/details";
+import { Hint } from "~/components/post/hint";
+
+## 変数分離形
+
+### 定義
+
+$$
+y'=f(x)g(y)
+$$
+
+### 解法
+
+$$
+\frac{dy}{dx}=f(x)g(y)
+$$
+
+$g(y)\ne0$ のとき
+
+$$
+\begin{aligned}
+\frac{1}{g(y)}\frac{dy}{dx}&=f(x)\\
+\int{\frac{1}{g(y)}\frac{dy}{dx}dx}&=\int{f(x)dx}\\
+\int{\frac{1}{g(y)}dy}&=\int{f(x)dx}
+\end{aligned}
+$$
+
+{/* TODO 置換積分の注釈 */}
+
+### 例題
+
+1. $y'=2xy,y(0)=1$
+1. $y'=1-y^2$
+
+## 同次形
+
+### 定義
+
+$$
+y'=f(\frac{y}{x})
+$$
+
+### 解法
+
+$u=\dfrac{y}{x}$ とおく。このとき
+$y=ux$ であるので
+$y'=u'x+u$ を代入して
+
+$$
+\begin{aligned}
+u'x+u&=f(u)\\
+\frac{du}{dx}&=\frac{1}{x}\{f(u)-u\}
+\end{aligned}
+$$
+
+となり、変数分離形と同じように解ける。
+
+### 例題
+
+1. $y'=\dfrac{y^2}{x^2+xy}$
+1. $y'=\dfrac{y}x+\cos^2\dfrac{y}x,y(1)=\dfrac\pi4$
+
+## 一階線形微分方程式
+
+次式で表せる微分方程式を**一階線形微分方程式 (1st-order linear differential equation)** という。
+
+$$
+y'+p(x)y=q(x)
+$$
+
+$q(x)=0$ の場合、上式を**同次方程式 (homogeneous equation)** といい、変数分離形となる。<br />
+$q(x)\ne0$ の場合、上式を**非同次方程式 (inhomogeneous equation)** という。
+
+この微分方程式の一般解は
+
+$$
+\begin{aligned}
+h(x)&=\exp\int{p(x)dx}\\
+y&=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C\right\}\;(C\text{ は積分定数})
+\end{aligned}
+$$
+
+となる。
+
+<Hint level="info">
+**特殊解 α(x) が分かっている場合の解法**
+
+$$
+\begin{cases}
+\begin{aligned}
+y'+p(x)y&=q(x)\\
+\alpha'+p(x)\alpha&=q(x)
+\end{aligned}
+\end{cases}
+$$
+
+より
+
+$$
+(y-\alpha)'+p(x)(y-\alpha)=0
+$$
+
+$Y=y-\alpha$ とおくと
+
+$$
+Y'+p(x)Y=0
+$$
+
+これは同次方程式となり、変数分離形と同じように解ける。
+
+</Hint>
+
+<Details title="一般解の導出: 定数変化法">
+$$
+y'+p(x)y=q(x)
+$$
+
+の $q(x)$ を $0$ で置き換えた、同次方程式
+
+$$
+y'+p(x)y=0
+$$
+
+を解く。
+
+$$
+\begin{aligned}
+y'+p(x)y&=0\\
+y&=C_1\exp(-\int{p(x)dx})\;(C_1\text{ は積分定数})\tag{1}
+\end{aligned}
+$$
+
+ここで、 $y$ の定数 $C_1$ を $x$ の関数 $C_1(x)$ に変化させ、微分方程式の左辺に代入する。
+
+$$
+\begin{aligned}
+\text{(左辺)}&=\left\{C_1(x)\exp\left(-\int{p(x)dx}\right)\right\}'+p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)\\
+&=C_1'(x)\exp\left(-\int{p(x)dx}\right)-p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)+p(x)C_1(x)\exp\left(-\int{p(x)dx}\right)\\
+&=C_1'(x)\exp\left(-\int{p(x)dx}\right)=q(x)\\
+C_1'(x)&=q(x)\exp\int{p(x)dx}\\
+C_1(x)&=\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C_2\;(C_2\text{ は積分定数})
+\end{aligned}
+$$
+
+これを (1) に代入すると、求める一般解は
+
+$$
+y=\left\{\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C_2\right\}\exp\left(-\int{p(x)dx}\right)
+$$
+
+ここで $h(x)=\exp\int{p(x)dx}$ とおくと
+
+$$
+y=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C_2\right\}
+$$
+
+</Details>
+
+<Details title="一般解の導出: 積分因子を使う方法">
+$$
+y'+p(x)y=q(x)
+$$
+
+の両辺に積分因子 $\exp\int{p(x)dx}$ をかけると
+
+$$
+\begin{aligned}
+\exp\left(\int{p(x)dx}\right)y'+\exp\left(\int{p(x)dx}\right)p(x)y&=\exp\left(\int{p(x)dx}\right)q(x)\\
+\left\{\exp\left(\int{p(x)dx}\right)y\right\}'&=\exp\left(\int{p(x)dx}\right)q(x)\\
+\exp\left(\int{p(x)dx}\right)y&=\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C\;(C\text{ は積分定数})\\
+y&=\left\{\int{q(x)\exp\left(\int{p(x)dx}\right)dx}+C\right\}\exp\left(-\int{p(x)dx}\right)
+\end{aligned}
+$$
+
+ここで $h(x)=\exp\int{p(x)dx}$ とおくと
+
+$$
+y=\dfrac1{h(x)}\left\{\int{q(x)h(x)dx}+C\right\}
+$$
+
+</Details>
+
+### 例題
+
+1. $y'+2xy=2x$
+1. $y'-(2x+1)y=2xe^x$
+
+## ベルヌーイの微分方程式
+
+### 定義
+
+$$
+y'+p(x)y=q(x)y^\alpha
+$$
+
+### 解法
+
+$y^\alpha\ne0$ のとき、両辺を $y^\alpha$ で割って
+
+$$
+y^{-\alpha}y'+p(x)y^{1-\alpha}=q(x)
+$$
+
+$u=y^{1-\alpha}$ とおく。このとき
+$u'=(1-\alpha)y^{-\alpha}y'$ となるので
+
+$$
+\begin{aligned}
+\frac{1}{1-\alpha}u'+p(x)u&=q(x)\\
+u'+(1-\alpha)p(x)u&=(1-\alpha)q(x)
+\end{aligned}
+$$
+
+となり、線形微分方程式と同じように解ける。
+
+{/* TODO 完全微分方程式について書く */}
+
+### 例題
+
+1. $y'+y=e^xy^2$
+1. $w'=aw^\dfrac23-bw,w(0)=0$ (von Bertalanffy の成長曲線)
+
+## クレローの微分方程式
+
+### 定義
+
+$$
+y=xy'+f(y')
+$$
+
+### 解法
+
+$y'=p$ とおくと
+
+$$
+y=xp+f(p) \tag{*}
+$$
+
+両辺を $x$ で微分すると
+
+$$
+\begin{aligned}
+y'=p+xp'+f'(p)p'\\
+\{x+f'(p)\}p'=0
+\end{aligned}
+$$
+
+よって $p'=0$ または $x+f'(p)=0$
+
+1. $p'=0$ のとき
+
+   $p=C$ を $*$ に代入すると、一般解が得られる。
+
+   $$
+   y=Cx+f(C)
+   $$
+
+2. $x+f'(p)$ のとき
+
+   $$
+   \begin{cases}
+   \begin{aligned}
+   y&=xp+f(p)\\
+   x+f'(p)&=0
+   \end{aligned}
+   \end{cases}
+   $$
+
+   より、**特異解**が得られる。
+
+   $$
+   (x,y)=(-f'(p),-pf'(p)+f(p))
+   $$
+
+### 例題
+
+1. $y=xy'+(y')^2$
+1. $y=xp+\cos{p}$
+
+## 二階線形同次微分方程式
+
+### 定義
+
+$$
+y''+p(x)y'+q(x)y=0 \tag{1}
+$$
+
+### 重ね合わせの原理
+
+$y_1,y_2$ が式 (1) の解ならば
+
+$$
+y=C_1y_1+C_2y_2
+$$
+
+も式 (1) の解である。
+
+#### 証明
+
+$y=C_1y_1+C_2y_2$ を式 (1) の左辺に代入すると
+
+$$
+\begin{aligned}
+\text{(左辺)}&=C_1y_1''+C_2y_2''+p(x)(C_1y_1'+C_2y_2')+q(x)(C_1y_1+C_2y_2) \\
+&=C_1\{y_1''+p(x)y_1'+q(x)y_1\}+C_2\{y_2''+p(x)y_2'+q(x)y_2\}
+\end{aligned}
+$$
+
+ここで $y_1''+p(x)y_1'+q(x)y_1=y_2''+p(x)y_2'+q(x)y_2=0$ なので
+
+$$
+\text{(左辺)}=0
+$$
+
+となり、成り立つ。
+
+### 定理
+
+(1) の 2 つの解 $y_1,y_2$ が一次独立であるとき
+
+$$
+y=C_1y_1+C_2y_2
+$$
+
+が (1) の一般解となる。なお、特殊解はもたない。
+
+## 解法
+
+$$
+y''+ay'+by=0 \tag{2}
+$$
+
+式 (2) に $y=e^{\lambda x}$ (解の候補) を代入すると
+
+$$
+\lambda^2e^{\lambda x}+a\lambda e^{\lambda x}+be^{\lambda x}=0 \\
+$$
+
+$0<e^{\lambda x}$ なので、両辺を $e^{\lambda x}$ で割って
+
+$$
+\lambda^2+a\lambda+b=0
+$$
+
+特性方程式 $\lambda^2+a\lambda+b=0$ が
+
+1. 相異なる 2 つの実数解 $\lambda_1,\lambda_2$ をもつ場合
+
+   $$
+   y=C_1e^{\lambda_1 x}+C_2e^{\lambda_2 x}
+   $$
+
+2. 重解 $\lambda=-\dfrac{a}{2}$ をもつ場合
+
+   $y=C_1(x)e^{\lambda x}$ を式 (2) の左辺に代入する
+
+   $$
+   \begin{aligned}
+   \text{(左辺)}&=C_1''(x)y_1+2C_1'(x)y_1'+C_1(x)y_1''+a\{C_1'(x)y_1+C_1(x)y_1'\}+bC_1(x)y_1\\
+   &=C_1(x)(y_1''+ay_1'+by_1)+C_1'(x)(2y_1'+ay_1)+C_1''(x)y_1=0
+   \end{aligned}
+   $$
+
+   ここで $y_1''+ay_1'+by_1=2y_1'+ay_1=0$ なので
+
+   $$
+     \text{(左辺)}=C_1''(x)y_1=0
+   $$
+
+   よって $C_1''(x)=0$ となればよく、 $C_1(x)=C_2,C_3x$ はこれを満たす。よって
+
+   $$
+   y=C_2e^{\lambda x}+C_3xe^{\lambda x}
+   $$
+
+3. 2 つの複素数重解 $\lambda_1=\alpha+i\beta,\lambda_2=\alpha-i\beta$ をもつ場合
+
+   オイラーの公式 $e^{i\theta}=\cos\theta+\sin\theta$ より
+
+   $$
+   \begin{aligned}
+   Z_1&=e^{(\alpha+i\beta)x}=e^{\alpha x}e^{i\beta x}&=e^{\alpha x}(\cos{\beta x}+i\sin{\beta x})\\
+   Z_2&=e^{(\alpha-i\beta)x}=e^{\alpha x}e^{-i\beta x}&=e^{\alpha x}(\cos{\beta x}-i\sin{\beta x})
+   \end{aligned}
+   $$
+
+   重ね合わせの原理より
+
+   $$
+   \begin{aligned}
+   \frac{1}{2}(Z_1+Z_2)&=e^{\alpha x}\cos{\beta x}\\
+   \frac{1}{2}(Z_1-Z_2)&=e^{\alpha x}\sin{\beta x}
+   \end{aligned}
+   $$
+
+   も式 (2) の解となる。これらは一次独立なので
+
+   $$
+   y=C_1e^{\alpha x}\cos{\beta x}+C_2e^{\alpha x}\sin{\beta x}
+   $$
+
+## 二階線形非同次微分方程式
+
+### 定義
+
+$$
+y''+ay'+by=f(x)
+$$
+
+### 解法
+
+#### 特殊解 $\alpha(x)$ が分かっている場合
+
+$$
+\begin{cases}
+\begin{aligned}
+y''&+ay'&+&by&=f(x) \\
+\alpha''(x)&+a\alpha'(x)&+&b\alpha(x)&=f(x)
+\end{aligned}
+\end{cases}
+$$
+
+より
+
+$$
+\{y-\alpha(x)\}''+a\{y-\alpha(x)\}'+b\{y-\alpha(x)\}=0
+$$
+
+となり、ここで $Y=y-\alpha$ とおくと
+
+$$
+Y''+aY'+bY=0
+$$
+
+となり、二階線形同次微分方程式に帰着できた。
+
+#### 定数変化法
+
+$$
+y''+ay'+by=0 \tag{1}
+$$
+
+$$
+y=C_1y_1+C_2y_2 \tag{2}
+$$
+
+式 (2) の $C_1,C_2$ を、それぞれ $C_1(x),C_2(x)$ に変化させる。
+
+$y=C_1(x)y_1+C_2(x)y_2$ の形で、かつ $C_1'(x)y_1+C_2'(x)y_2=0$ を満たすもので、式 (1) の解となるような $C_1(x),C_2(x)$ を探す。
+
+$$
+\begin{cases}
+\begin{aligned}
+y'&=C_1'(x)y_1+C_1(x)y_1'+C_2'(x)y_2+C_2(x)y_2' \\
+&=C_1(x)y_1'+C_2(x)y_2' \\
+y''&=C_1'(x)y_1'+C_1(x)y_1''+C_2'(x)y_2'+C_2(x)y_2''
+\end{aligned}
+\end{cases}
+$$
+
+を式 (1) の左辺に代入して
+
+$$
+\begin{aligned}
+\text{(左辺)}=&C_1'(x)y_1'+C_1(x)y_1''+C_2'(x)y_2'+C_2(x)y_2'' \\
+&+a\{C_1(x)y_1'+C_2(x)y_2'\} \\
+&+b\{C_1'(x)y_1+C_1(x)y_1'+C_2'(x)y_2+C_2(x)y_2'\} \\
+=&C_1(x)(y_1''+ay_1'+by_1)+C_2(x)(y_2''+ay_2'+by_2)+C_1'(x)y_1'+C_2'(x)y_2'
+\end{aligned}
+$$
+
+ここで $y_1''+ay_1'+by_1=y_2''+ay_2'+by_2=0$ なので
+
+$$
+\text{(左辺)}=C_1'(x)y_1'+C_2'(x)y_2'=0
+$$
+
+よって
+
+$$
+\begin{cases}
+\begin{aligned}
+C_1'(x)y_1+C_2'(x)y_2&=0 \\
+C_1'(x)y_1'+C_2'(x)y_2'&=f(x)
+\end{aligned}
+\end{cases}
+$$
+
+$$
+\begin{aligned}
+\left(\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right)
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right) \\
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\left(\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right)^{-1}
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right)
+\end{aligned}
+$$
+
+$
+W(y_1,y_2)=\left|\begin{array}{cc}
+y_1&y_2 \\
+y_1'&y_2'
+\end{array}\right|
+$ とおくと、 $x$ の値によらず $W(y_1,y_2) \ne 0$ なので
+
+$$
+\begin{aligned}
+\left(\begin{array}{c}
+C_1'(x) \\
+C_2'(x)
+\end{array}\right)
+&=
+\frac{1}{W(y_1,y_2)}
+\left(\begin{array}{cc}
+y_2'&-y_2 \\
+-y_1'&y_1
+\end{array}\right)
+\left(\begin{array}{c}
+0 \\
+f(x)
+\end{array}\right) \\
+&=
+\frac{1}{W(y_1,y_2)}
+\left(\begin{array}{c}
+-y_2f(x) \\
+y_1f(x)
+\end{array}\right) \\
+\end{aligned}
+$$
+
+$$
+\begin{cases}
+\begin{aligned}
+C_1'(x)&=-\frac{y_2f(x)}{W(y_1,y_2)} \\
+C_2'(x)&=\frac{y_1f(x)}{W(y_1,y_2)}
+\end{aligned}
+\end{cases}
+$$
+
+よって
+
+$$
+\begin{cases}
+\begin{aligned}
+C_1(x)&=-\int{\frac{y_2f(x)}{W(y_1,y_2)}dx} \\
+C_2(x)&=\int{\frac{y_1f(x)}{W(y_1,y_2)}dx}
+\end{aligned}
+\end{cases}
+$$
+
+となり
+
+$$
+\alpha(x)=-y_1\int{\frac{y_2f(x)}{W(y_1,y_2)}dx}+y_2\int{\frac{y_1f(x)}{W(y_1,y_2)}dx} \\
+$$
+
+は特殊解である。
+
+## 参考文献
+
+- 井上 満, 工業数学がわかる, 技術評論社, 2010
+- ヨビノリたくみ, [【大学数学】偏微分とは何か【解析学】](https://youtu.be/UWFTIEIruyc), 2018
+- ヨビノリたくみ, [【大学数学】全微分とは何か【解析学】](https://youtu.be/ChoArVJnSjQ), 2018
+- ヨビノリたくみ, [【大学数学】微分方程式入門①(微分方程式とは)](https://youtu.be/po97dnBfoco), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門②(変数分離形)](https://youtu.be/uPRY-KUl4fg), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門③(同次形)](https://youtu.be/QeYOiFU6UNs), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門④(一階線形微分方程式)](https://youtu.be/Hfby9zyZ0HY)
+- ヨビノリたくみ, [【大学数学】微分方程式入門⑤(ベルヌーイの微分方程式)](https://youtu.be/TaVimHlrN4U), 2020
+- ヨビノリたくみ, [【大学数学】微分方程式入門⑦(クレローの微分方程式)](https://youtu.be/P1dh8bg2mus), 2020

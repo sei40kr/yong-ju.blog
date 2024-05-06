@@ -1,0 +1,100 @@
+---
+title: "ベクトル解析"
+date: 2022-05-07T21:10:30+09:00
+categories: ["数学"]
+tags: ["数学", "ベクトル", "勉強ノート"]
+---
+
+import { Details } from "~/components/post/details";
+
+## ベクトル空間
+
+空でない集合 $\Bbb{V}$ について $\Bbb{V}$ の任意の元 $\bold{a},\bold{b}$ に対して $\bold{a}+\bold{b}\in\Bbb{V}$、$\Bbb{V}$ の任意の元 $\bold{a}$ と $\Bbb{R}$ の任意の元 $k$ (スカラー) に対して $k\bold{a}\in\Bbb{V}$ が定義されていて、以下の性質を全て満たすとき、$\Bbb{V}$ を **$\Bbb{R}$ 上のベクトル空間**という。
+
+- **ベクトル加法の結合律を満たす。**
+  $$
+  (\bold{a}+\bold{b})+\bold{c}=\bold{a}+(\bold{b}+\bold{c})
+  $$
+- **ベクトル加法の可換律を満たす。**
+
+  $$
+  \bold{a}+\bold{b}=\bold{b}+\bold{a}
+  $$
+
+- **ベクトル加法の単位元が存在する。**
+
+  $$
+  \forall{\bold{a}\in\Bbb{V}},\bold{a}+\bold{0}=\bold{a}
+  $$
+
+- **ベクトル加法の逆元が存在する。**
+  $$
+  \forall{\bold{a}\in\Bbb{V}},\exist{\bold{x}\in\Bbb{V}},\bold{a}+\bold{x}=\bold{0}
+  $$
+- **ベクトル加法に対するスカラー乗法の分配律を満たす。**
+
+  $$
+  k(\bold{a}+\bold{b})=k\bold{a}+k\bold{b}
+  $$
+
+- **体の加法に対するスカラー乗法の分配律を満たす。**
+
+  $$
+  (k+l)\bold{a}=k\bold{a}+l\bold{a}
+  $$
+
+- **体の乗法とスカラー乗法の条件が両立する。**
+
+  $$
+  k(l\bold{a})=(kl)\bold{a}
+  $$
+
+- **スカラー乗法の単位元が存在する。**
+  $$
+  1\bold{a}=\bold{a}
+  $$
+
+### 定理
+
+- $0\bold{a}=\bold{0}$
+
+  <Details title="証明">
+    公理より
+
+    $$
+    k\bold{a}+l\bold{a}=(k+l)\bold{a}
+    $$
+
+    ここで $k=l=0$ とすると
+
+    $$
+    \begin{aligned}
+    0\bold{a}+0\bold{a}&=0\bold{a}\\
+    0\bold{a}+0\bold{a}-0\bold{a}&=0\bold{a}-0\bold{a}\\
+    \therefore0\bold{a}&=\bold{0}
+    \end{aligned}
+    $$
+
+  </Details>
+
+- $(-1)\bold{a}=-\bold{a}$
+
+  <Details title="証明">
+    公理より
+
+    $$
+    k\bold{a}+l\bold{a}=(k+l)\bold{a}
+    $$
+
+    ここで $k=1,l=-1$ とすると
+
+    $$
+    \begin{aligned}
+    1\bold{a}+(-1)\bold{a}&=0\bold{a}\\
+    \bold{a}+(-1)\bold{a}&=\bold{0}\\
+    \bold{a}+(-\bold{a})+(-1)\bold{a}&=\bold{0}+(-\bold{a})\\
+    \therefore(-1)\bold{a}&=-\bold{a}
+    \end{aligned}
+    $$
+
+  </Details>

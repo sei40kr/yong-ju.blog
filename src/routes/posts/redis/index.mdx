@@ -1,0 +1,153 @@
+---
+title: "Redis"
+date: 2022-12-05T01:57:18+09:00
+# bookComments: false
+# bookSearchExclude: false
+---
+
+import { Hint } from "~/components/post/hint";
+
+## 基本操作
+
+`SET` コマンドでキーに値を格納できる。
+
+```js
+SET key
+```
+
+`GET` コマンドでキーに格納された値を取得できる。
+
+```js
+GET key
+```
+
+`DEL` コマンドでキーを削除できる。
+
+```js
+DEL key [key ...]
+```
+
+キーが存在しているかを調べるには `EXISTS` コマンドで確認できる。
+
+```js
+EXISTS key
+```
+
+`KEYS` コマンドでパターンにマッチするキーを列挙できる。キーのパターンにはGlobが使える。
+
+```js
+KEYS pattern
+```
+
+`KEYS` コマンドはパターンにマッチするキーをすべて列挙してしまうため、特にキーの多い本番データベースでは実行しないことが推奨されている。
+
+代わりに `SCAN` コマンドを使うようにする。
+`SCAN` コマンドは `KEYS` コマンドと同様、パターンにマッチするキーをすべて列挙するが
+
+- 値の型で絞り込み
+- 一度に列挙する数を指定
+- 検索結果のページング
+
+を行うことができるため、本番環境では `KEYS` ではなく `SCAN` を使うことが推奨される。
+
+```js
+SCAN cursor [MATCH pattern] [COUNT count] [TYPE type]
+```
+
+- [SET | Redis](https://redis.io/commands/set/)
+- [GET | Redis](https://redis.io/commands/get/)
+- [EXISTS | Redis](https://redis.io/commands/exists/)
+
+## データ構造
+
+Redisにはストリング (string) やリスト、セット、ソート済みセットなどの**型 (type)** が存在する。
+
+- ストリング (string) 型
+  - バイナリデータ
+  - テキスト
+  - 整数
+  - 浮動小数点数
+- ハッシュ (hash)
+- リスト (list)
+- セット (set)
+- ソート済みセット (sorted set)
+
+あるキーの型は `TYPE` コマンドで確認できる。
+
+```js
+TYPE key
+```
+
+Redisのデータ構造はフラットなKVS (Key-Value Store) である。ハッシュやリスト、セット、ソート済みセットなどのコレクション型をネストすることはできない。Redisのデータ構造で深い階層構造を表現するには、複数のキーを用いてデータ構造をフラットにする必要がある。
+
+**例**
+
+- `user:1000`
+- `user:1000:followers`
+
+<Hint level="info">
+**キーの命名規則**
+
+複数のキーを用いてデータ構造をフラットにする場合、命名規則としてキーの区切り文字を決めておくことが推奨される。
+(前述の例では `:`)
+
+</Hint>
+<Hint level="info">
+**複数コマンドの実行**
+
+複数コマンドを実行する場合、処理の中断により更新時異状が起きないよう配慮が必要である。
+後述するトランザクション機能でこれを解決できる。
+
+</Hint>
+
+- [https://redis.io/commands/type/](https://redis.io/commands/type/)
+- [https://redis.io/commands/keys/](https://redis.io/commands/keys/)
+- [https://redis.io/commands/scan/](https://redis.io/commands/scan/)
+
+## ストリング型
+
+Redisではあらゆる単一の値はストリング (string) 型として表される。
+一つのストリング型の値は**512MB**までのデータを格納できる。
+
+<Hint level="info">
+  プログラミング言語の文脈で一般的に string は**文字列**と訳されるが、Redisの
+  string
+  を文字列と訳すとテキストの意味合いが強くなってしまうため、ここではストリングと訳している。
+</Hint>
+
+一方でストリング型に格納されている値の種類 (バイナリ, テキスト, 数値, 浮動小数点数) を**エンコーディング (encoding)** という。
+
+- ストリング (string) 型
+  - バイナリデータ
+  - テキスト
+  - 整数
+  - 浮動小数点数
+
+あるキーに格納している文字列のエンコーディングは `OBJECT ENCODING` コマンドで確認できる。
+
+```js
+OBJECT ENCODING key
+```
+
+### テキストに対するコマンド
+
+| コマンド           | 意味                                |
+| ------------------ | ----------------------------------- |
+| `STRLEN key`       | 文字列の長さを返す。                |
+| `APPEND key value` | 文字列の末尾に `value` を挿入する。 |
+
+### 整数に対するコマンド
+
+| コマンド               | 意味                                                  |
+| ---------------------- | ----------------------------------------------------- |
+| `INCR key`             | `key` に格納された整数を 1 だけ大きくする。           |
+| `DECR key`             | `key` に格納された整数を 1 だけ小さくする。           |
+| `INCRBY key increment` | `key` に格納された整数を `increment` だけ大きくする。 |
+| `DECRBY key increment` | `key` に格納された整数を `increment` だけ小さくする。 |
+
+### 浮動小数点数に対する操作
+
+| コマンド                    | 意味                                                          |
+| --------------------------- | ------------------------------------------------------------- |
+| `INCRFLOATBY key increment` | `key` に格納された浮動小数点数を `increment` だけ大きくする。 |
+| `DECRFLOATBY key increment` | `key` に格納された浮動小数点数を `increment` だけ小さくする。 |

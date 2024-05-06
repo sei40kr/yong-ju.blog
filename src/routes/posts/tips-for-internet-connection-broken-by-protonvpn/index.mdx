@@ -1,0 +1,26 @@
+---
+title: "ProtonVPNにインターネット接続をブッ壊されたときのTips"
+date: 2022-08-15T12:16:38+09:00
+categories: ["Linux", "ネットワーク"]
+tags: ["ProtonVPN", "Linux", "ネットワーク"]
+---
+
+## TL;DR
+
+```sh
+nmcli device delete ipv6leakintrf0
+```
+
+## 解説
+
+[ProtonVPNの公式Linuxクライアント](https://protonvpn.com/download-linux)には「キルスイッチ」という、VPN接続が切れたときにインターネット接続を遮断し、VPNを介さずにインターネットにアクセスしてしまうことを防ぐ機能がある。
+
+しかし、GNOME側でVPNの設定をいじったりしてしまうと、ProtonVPNクライアントで管理しているステートが壊れキルスイッチが作動しているにも関わらず解除できない状況に陥ることがある。
+しかも、インターネット接続ができないとProtonVPNにも繋げないため、結果的に八方塞がりとなる。
+
+そのため、インターネット接続を遮断している仮想デバイスを探して、自力でキルスイッチを解除してやる必要がある。
+
+---
+
+かなり手こずったが、解決後に `ipv6leakintrf0` でググると一発で出てきた。<br />
+参考: [[SOLVED\] no access to the internet after using protonvpn - Linux Mint Forums](https://forums.linuxmint.com/viewtopic.php?t=350047)

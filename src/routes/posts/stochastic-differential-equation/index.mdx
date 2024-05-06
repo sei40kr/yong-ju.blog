@@ -1,0 +1,47 @@
+---
+title: "確率微分方程式"
+date: 2022-06-04T19:09:52+09:00
+categories: ["数学"]
+tags: ["数学", "大学数学", "確率統計", "確率微分方程式", "WIP"]
+---
+
+import { Link } from "@builder.io/qwik-city";
+
+## 前提知識
+
+- <Link href="/posts/statistics">確率統計</Link>
+
+## ランダムウォーク
+
+$$
+\begin{aligned}
+S_n&=X_1+X_2+\cdots+X_n\\
+P[X_i=\sigma]&=P[X_i=-\sigma]=\dfrac12\;(1\le i\le n)
+\end{aligned}
+$$
+
+で与えられる確率変数 $S_n$ を (1次元) **ランダムウォーク (random walk)** という。
+
+$X_i$ の平均 $E[X_i]$ と分散 $V[X_i]$ は以下のようになる。
+
+$$
+\begin{aligned}
+E[X_i]&=0\\
+V[X_i]&=\sigma^2
+\end{aligned}
+$$
+
+また、$X_1,X_2,\dots,X_n$ は互いに独立であることから
+
+$$
+\begin{aligned}
+E[S_n]&=E[X_1+X_2+\cdots+X_n]\\
+&=E[X_1]+E[X_2]+\cdots+E[X_n]\\
+&=0\\
+V[S_n]&=V[X_1+X_2+\cdots+X_n]\\
+&=V[X_1]+V[X_2]+\cdots+V[X_n]\\
+&=\sigma^2n
+\end{aligned}
+$$
+
+が導ける。

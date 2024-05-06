@@ -1,7 +1,0 @@
-.book-tag {
-  @apply bg-slate-200 hover:bg-slate-300 block font-bold mr-2 px-3 py-0.5 rounded-l-full rounded-r-full text-black text-sm sm:text-base;
-
-  &::before {
-    content: "#";
-  }
-}

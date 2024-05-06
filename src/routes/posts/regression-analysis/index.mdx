@@ -1,0 +1,100 @@
+---
+title: "回帰分析"
+date: 2022-08-07T19:54:24+09:00
+categories: ["数学", "勉強ノート"]
+tags: ["数学", "大学数学", "勉強ノート"]
+---
+
+import { Details } from "~/components/post/details";
+import { Link } from "@builder.io/qwik-city";
+
+## 前提知識
+
+- <Link href="/posts/statistics">確率統計</Link>
+
+## 最小二乗法
+
+**最小二乗法 (least squares method)** は、測定で得られたデータセットを一次関数 (直線) で近似するときに、二乗誤差の和が最小になるように一次関数の係数を決定する方法である。
+
+$n$ 個のデータ $(X,Y)=\{(x_1,y_1),(x_2,y_2),\dots,(x_i,y_i)$ を最小二乗法で一次関数 $y=ax+b$ の形に近似すると、一次関数の係数 $a,b$ は
+
+$$
+\begin{aligned}
+a&=\dfrac{\text{Cov}[X,Y]}{\Bbb{V}[X]}\\
+b&=-a\Bbb{E}[X]+\Bbb{E}[Y]
+\end{aligned}
+$$
+
+となる。
+
+<Details title="導出">
+    
+一次関数 $y=ax+b$ の形で近似したときの二条誤差の和 $\epsilon(a,b)$ は
+
+$$
+\epsilon(a,b)=\sum_i(y_i-ax_i-b)^2
+$$
+
+となる。
+
+$a$ を定数とみなすと、$\epsilon(a,b)$ は下に凸な二次関数であるため
+
+$$
+\begin{aligned}
+\dfrac{\partial\epsilon(a,b)}{\partial b}&=0\\
+-2\sum_i(y_i-ax_i-b)&=0\\
+a\sum_i{x_i}+bn&=\sum_i{y_i}\\
+a\Bbb{E}[X]+bn&=\Bbb{E}[Y]
+\end{aligned}
+$$
+
+同様に $b$ を定数とみなすと、$\epsilon(a,b)$ は下に凸な二次関数であるため
+
+$$
+\begin{aligned}
+\dfrac{\partial\epsilon(a,b)}{\partial a}&=0\\
+-2\sum_ix_i(y_i-ax_i-b)&=0\\
+a\sum_i{x_i^2}+b\sum_i{x_i}&=\sum_i{x_iy_i}
+\end{aligned}
+$$
+
+ここで $b=\dfrac{-a\Bbb{E}[X]+\Bbb{E}[Y]}n$ を代入して
+
+$$
+a\sum_i{x_i^2}+\left(\dfrac{-a\Bbb{E}[X]+\Bbb{E}[Y]}n\right)\sum_i{x_i}=\sum_i{x_iy_i}
+$$
+
+両辺を $n$ で割ると
+
+$$
+\begin{aligned}
+a\Bbb{E}[X^2]+(-a\Bbb{E}[X]+\Bbb{E}[Y])\Bbb{E}[X]&=\Bbb{E}[XY]\\
+a&=\dfrac{\Bbb{E}[XY]-\Bbb{E}[X]\Bbb{E}[Y]}{\Bbb{E}[X^2]-\Bbb{E}[X]^2}
+\end{aligned}
+$$
+
+ここで $\Bbb{E}[XY]-\Bbb{E}[X]\Bbb{E}[Y]=\text{Cov}[X,Y],\Bbb{E}[X^2]-\Bbb{E}[X]^2=\Bbb{V}[X]$ より
+
+$$
+\begin{aligned}
+a&=\dfrac{\text{Cov}[X,Y]}{\Bbb{V}[X]}\\
+b&=-a\Bbb{E}[X]+\Bbb{E}[Y]
+\end{aligned}
+$$
+
+</Details>
+
+## TODO
+
+- [ ] 語句の定義
+- [ ] 最小二乗法の幾何学的な導出
+- [ ] 分類問題
+- [ ] 混同行列と分類問題の評価
+- [ ] ロジスティック回帰
+- [ ] 相関と因果
+- [ ] 分析結果の解釈
+
+## 参考
+
+- ヨビノリたくみ, [確率統計 - YouTube](https://www.youtube.com/playlist?list=PLDJfzGjtVLHmx7qMP410-9gx0weC9d90X)
+- 杉山 聡, 本質を捉えたデータ分析のための分析モデル入門, 2022

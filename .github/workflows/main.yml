@@ -14,16 +14,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 16
-          cache: npm
-            
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 0.92.0
+          bun-version: 1.1.8
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -32,18 +26,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - uses: actions/cache@v2
-        with:
-          path: /tmp/hugo_cache
-          key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-hugomod-
-
-      - run: npm ci
-      - run: hugo --minify
+      - run: bun install
+      - run: bun run build.server
 
       - name: Deploy
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          aws s3 sync public s3://yong-ju.blog
+          aws s3 sync dist s3://yong-ju.blog
           aws cloudfront create-invalidation --distribution-id E1CW34R12A13S7 --paths '/*'
