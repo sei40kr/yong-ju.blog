@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import type { Page } from "~/models/page";
 import type { PostInfo } from "~/models/post-info";
 
 export const getPostInfos = (): Promise<PostInfo[]> =>
@@ -12,12 +13,11 @@ export const getPostInfos = (): Promise<PostInfo[]> =>
       const id = path.replace(/^\/src\/routes\/posts\/(.+)\/index.mdx$/, "$1");
       const frontmatter = matter((await getContent()) as string).data as {
         title: string;
-        date: string;
+        date: Date;
         tags?: string[];
       };
 
-      const date = new Date(frontmatter.date);
-      if (Number.isNaN(date.getTime())) {
+      if (Number.isNaN(frontmatter.date.getTime())) {
         throw new Error(`Invalid date in post ${id}`);
       }
 
@@ -28,7 +28,7 @@ export const getPostInfos = (): Promise<PostInfo[]> =>
       return {
         id,
         title: frontmatter.title,
-        date,
+        date: frontmatter.date,
         tags,
       };
     }),
