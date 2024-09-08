@@ -5,9 +5,8 @@ function handler(event) {
   if (uri === "/") {
     request.uri = "/page/1/index.html";
   }
-
   // Check whether the URI is missing a file name.
-  if (uri.endsWith("/")) {
+  else if (uri.endsWith("/")) {
     request.uri += "index.html";
   }
   // Check whether the URI is missing a file extension.
