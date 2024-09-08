@@ -1,6 +1,6 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
-import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
+import type { RequestHandler } from "@builder.io/qwik-city";
 import { Header } from "~/components/header";
 import { Menu } from "~/components/menu";
 import { getTags } from "~/repositories/tags";
@@ -25,10 +25,6 @@ export const useServerTimeLoader = routeLoader$(() => {
 });
 
 export const useTags = routeLoader$(async () => await getTags());
-
-export const head: DocumentHead = ({ head }) => ({
-  title: `${head.title ? head.title + " | " : ""}よんログ`,
-});
 
 export default component$(() => {
   const tags = useTags().value;
