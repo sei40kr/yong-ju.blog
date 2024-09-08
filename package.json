@@ -42,7 +42,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-qwik": "^1.5.3",
     "glob": "^11.0.0",
-    "gray-matter": "^4.0.3",
     "katex": "^0.16.10",
     "prettier": "^3.2.5",
     "rehype-katex": "^7.0.0",
@@ -53,6 +52,7 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "dependencies": {
-    "@fontsource/noto-serif-jp": "^5.0.12"
+    "@fontsource/noto-serif-jp": "^5.0.12",
+    "gray-matter": "^4.0.3"
   }
 }
