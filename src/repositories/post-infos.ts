@@ -14,6 +14,7 @@ export const getPostInfos = (): Promise<PostInfo[]> =>
       const frontmatter = matter((await getContent()) as string).data as {
         title: string;
         date: Date;
+        categories?: string[];
         tags?: string[];
       };
 
@@ -21,6 +22,9 @@ export const getPostInfos = (): Promise<PostInfo[]> =>
         throw new Error(`Invalid date in post ${id}`);
       }
 
+      const categories = frontmatter.categories
+        ? new Set(frontmatter.categories)
+        : (new Set() as Set<string>);
       const tags = frontmatter.tags
         ? new Set(frontmatter.tags)
         : (new Set() as Set<string>);
@@ -29,6 +33,7 @@ export const getPostInfos = (): Promise<PostInfo[]> =>
         id,
         title: frontmatter.title,
         date: frontmatter.date,
+        categories,
         tags,
       };
     }),
@@ -44,6 +49,19 @@ export const findRecentPostInfos = (
       .sort((a, b) => b.date.getTime() - a.date.getTime())
       .slice(offset, offset + count),
   }));
+
+export const findPostInfosByCategory = (
+  category: string,
+  offset: number,
+  count: number,
+): Promise<Page<PostInfo>> =>
+  getPostInfos().then((posts) => {
+    const filteredPosts = posts.filter((post) => post.categories.has(category));
+    return {
+      totalCount: filteredPosts.length,
+      items: filteredPosts.slice(offset, offset + count),
+    };
+  });
 
 export const findPostsInfoByTag = (
   tag: string,

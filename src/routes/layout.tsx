@@ -3,7 +3,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
 import { Header } from "~/components/header";
 import { Menu } from "~/components/menu";
-import { getTags } from "~/repositories/tags";
+import { getCategories } from "~/repositories/categories";
 import { css } from "~/styled-system/css";
 import { Container, Flex } from "~/styled-system/jsx";
 
@@ -24,10 +24,10 @@ export const useServerTimeLoader = routeLoader$(() => {
   };
 });
 
-export const useTags = routeLoader$(async () => await getTags());
+export const useCategories = routeLoader$(async () => await getCategories());
 
 export default component$(() => {
-  const tags = useTags().value;
+  const categories = useCategories().value;
 
   return (
     <>
@@ -57,7 +57,7 @@ export default component$(() => {
               py: "8",
             })}
           >
-            <Menu tags={tags} />
+            <Menu categories={categories} />
           </div>
           <div
             class={css({
