@@ -7,6 +7,7 @@ import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 import { macroPlugin } from "@builder.io/vite-plugin-macro";
@@ -26,7 +27,7 @@ export default defineConfig(({ command, mode }): UserConfig => {
       qwikCity({
         mdx: {
           remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
+          rehypePlugins: [rehypeKatex, rehypeSlug],
         },
       }),
       qwikVite(),
