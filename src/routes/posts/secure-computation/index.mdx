@@ -1,0 +1,40 @@
+---
+title: "秘匿計算"
+date: 2024-09-17T00:39:00+09:00
+categories: ["アルゴリズム"]
+tags: ["秘匿計算", "暗号理論", "WIP"]
+---
+
+## 前提知識
+
+### モジュラ逆数
+
+**モジュラ逆数 (modular multiplicative inverse)** とは、互いに素な整数 $a, m$ に対して
+
+$$
+ax \equiv 1 \pmod{m}
+$$
+
+を満たす整数 $x$ のことである。
+
+### 中国剰余定理
+
+**中国剰余定理 (Chinese Remainder Theorem, CRT)** とは、同じ整数 $x$ に対して互いに素な整数 $m_1, m_2, \dots, m_n$ が与えられたとき、それぞれの剰余 $x \mod m_i$ が与えられたときに、$x$ を求める定理である。
+
+$$
+\begin{aligned}
+x &\equiv a_1 \pmod{m_1} \\
+x &\equiv a_2 \pmod{m_2} \\
+\vdots \\
+x &\equiv a_n \pmod{m_n}
+\end{aligned}
+$$
+
+の解は一意に存在し
+
+$$
+x \equiv \sum_{i=1}^{n} a_i M_i \pmod{M}\\
+\text{where}\quad M = \prod_{i=1}^{n} m_i,\quad M_i = \frac{M}{m_i}
+$$
+
+で求められる。
