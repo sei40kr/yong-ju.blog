@@ -1,0 +1,212 @@
+---
+title: "量子計算"
+date: 2024-09-18T14:37:00+09:00
+categories: ["低レイヤ"]
+tags: ["量子計算", "量子論", "量子力学", "勉強ノート", "WIP"]
+---
+
+import { Details } from "~/components/post/details";
+import { Hint } from "~/components/post/hint";
+
+|                   | 古典ビット          | 量子ビット                                  |
+| ----------------- | ------------------- | ------------------------------------------- |
+| 物理的実体        | 電圧の高低          | 量子状態 (電子のスピン, 光の偏光, ...)      |
+| 数学的理想化      | (古典) ビット $0,1$ | 量子ビット $\alpha \ket{0} + \beta \ket{1}$ |
+| 基本操作 (ゲート) | AND, OR, NOT, ...   | X, Y, Z, H, T, S, ...                       |
+
+## 量子ビットと確率
+
+量子ビット
+
+$$
+\alpha \ket{0} + \beta \ket{1} \quad (\alpha, \beta \in \mathbb{C}, |\alpha|^2 + |\beta|^2 = 1)
+$$
+
+を観測すると、確率 $|\alpha|^2, |\beta|^2$ で状態 $\ket{0}, \ket{1}$ が得られる。
+
+<Details title="例">
+
+1. $\ket{0} = 1 \times \ket{0} + 0 \times \ket{1}$ を観測すると、確率 $|1|^2$ で $\ket{0}$ が得られる。
+   つまり、確実に $\ket{0}$ が得られる。
+2. $\ket{1} = 0 \times \ket{0} + 1 \times \ket{1}$ を観測すると、確率 $|1|^2$ で $\ket{1}$ が得られる。
+   つまり、確実に $\ket{1}$ が得られる。
+3. $\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}$ を観測すると、確率 $\frac{1}{2}$ で $\ket{0}$ または $\ket{1}$ が得られる。
+4. $\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}$ を観測すると、確率 $\frac{1}{2}$ で $\ket{0}$ または $\ket{1}$ が得られる。
+   3.,4. より、異なる量子ビットが同じ確率分布をもちうることが分かる。
+
+</Details>
+
+## 量子ビットのベクトル表現
+
+量子ビット $\alpha \ket{0} + \beta \ket{1}$ は、
+
+$$
+\begin{bmatrix} \alpha \\ \beta \end{bmatrix} \in \mathbb{C}^2
+$$
+
+というベクトルで表現できる。
+
+<Details title="例">
+
+1. $\ket{0} = 1 \times \ket{0} + 0 \times \ket{1}$ は $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$
+1. $\ket{1} = 0 \times \ket{0} + 1 \times \ket{1}$ は $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$
+1. $\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}$ は $\begin{bmatrix} \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix}$
+1. $\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}$ は $\begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix}$
+
+</Details>
+
+## 量子ゲートの行列表現
+
+例えば $X$ ゲートは、$\ket{0} \mapsto \ket{1}, \ket{1} \mapsto \ket{0}$ という操作を表す。
+(つまり、$X$ ゲートはビット反転を表す)
+
+このとき $X$ ゲートは行列を用いて
+
+$$
+X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+$$
+
+と表せる。
+
+例えば $X$ ゲートを $\begin{bmatrix} \alpha \\ \beta \end{bmatrix}$ に作用させると
+
+$$
+X\left(\begin{bmatrix} \alpha \\ \beta \end{bmatrix}\right) = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \end{bmatrix} = \begin{bmatrix} \beta \\ \alpha \end{bmatrix}
+$$
+
+となり、$\ket{0} \mapsto \ket{1}, \ket{1} \mapsto \ket{0}$ が確認できる。
+
+### 他の量子ゲート
+
+$$
+\begin{aligned}
+Y &= \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \\
+Z &= \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \\
+H &= \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \\
+S &= \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix} \\
+R &= \begin{bmatrix} 1 & 0 \\ 0 & \exp(\frac{i\pi}{4}) \end{bmatrix}
+\end{aligned}
+$$
+
+## アダマールゲート $H$
+
+$$
+H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
+$$
+
+$\ket{0}, \ket{1}$ に $H$ ゲートを作用させると
+
+$$
+\begin{aligned}
+H\left( \begin{bmatrix} 1 \\ 0 \end{bmatrix} \right) &= \dfrac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} \\
+  &= \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{bmatrix} \\
+H\left( \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right) &= \dfrac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} \\
+  &= \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ -\dfrac{1}{\sqrt{2}} \end{bmatrix}
+\end{aligned}
+$$
+
+となり、$H$ ゲートは
+
+$$
+\begin{aligned}
+\ket{0} &\mapsto \dfrac{1}{\sqrt{2}} \ket{0} + \dfrac{1}{\sqrt{2}} \ket{1} \\
+\ket{1} &\mapsto \dfrac{1}{\sqrt{2}} \ket{0} - \dfrac{1}{\sqrt{2}} \ket{1}
+\end{aligned}
+$$
+
+という操作を表すことが分かる。
+
+また、$H^2 = I$ ($I$ は単位行列) であることから、$H$ ゲートを2回作用させると元の状態に戻ることが分かる。
+
+<Details title="Hゲートを2回作用させた例">
+  
+$$
+\begin{aligned}
+H^2\left( \begin{bmatrix} 1 \\ 0 \end{bmatrix} \right) &= H\left( \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{bmatrix} \right) \\
+  &= \dfrac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{bmatrix} \\
+  &= \begin{bmatrix} 1 \\ 0 \end{bmatrix} \\
+H^2\left( \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right) &= H\left( \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ -\dfrac{1}{\sqrt{2}} \end{bmatrix} \right) \\
+  &= \dfrac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix} \dfrac{1}{\sqrt{2}} \\ -\dfrac{1}{\sqrt{2}} \end{bmatrix} \\
+  &= \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\end{aligned}
+$$
+  
+</Details>
+
+## テンソル積
+
+2つの量子ビット $\psi = \alpha \ket{0} + \beta \ket{1}, \phi = \gamma \ket{0} + \delta \ket{1}$ があるとき、これらのテンソル積は
+
+$$
+\psi \otimes \phi
+$$
+
+で表される。
+
+これを計算すると
+
+$$
+\begin{aligned}
+\psi \otimes \phi &= (\alpha \ket{0} + \beta \ket{1}) \otimes (\gamma \ket{0} + \delta \ket {1}) \\
+  &= \alpha \ket{0} \otimes \gamma \ket{0} + \alpha \ket{0} \otimes \delta \ket{1} + \beta \ket{1} \otimes \gamma \ket{0} + \beta \ket{1} \otimes \delta \ket{1} \\
+  &= \alpha \gamma \ket{0} \otimes \ket{0} + \alpha \delta \ket{0} \otimes \ket{1} + \beta \gamma \ket{1} \otimes \ket{0} + \beta \delta \ket{1} \otimes \ket{1}
+\end{aligned}
+$$
+
+となる。
+
+また、あるテンソル積 $\ket{a} \otimes \ket{b}$ は $\ket{ab}$ と表すことができる。
+($ab$ は $a$ と $b$ の連結)
+これを用いると
+
+$$
+\psi \otimes \phi = \alpha \gamma \ket{00} + \alpha \delta \ket{01} + \beta \gamma \ket{10} + \beta \delta \ket{11} \\
+$$
+
+と表せる。
+
+量子ビット $\psi \otimes \phi$ を観測すると、確率 $|\alpha \gamma|^2, |\alpha \delta|^2, |\beta \gamma|^2, |\beta \delta|^2$ で状態 $\ket{00}, \ket{01}, \ket{10}, \ket{11}$ が得られる。
+
+## 2量子ビットと関数
+
+$x$ に対する関数 $y = f(x)$ を量子ビットで表現すると
+
+$$
+U_f (\ket{a} \otimes \ket{b}) = \ket{a} \otimes \ket{b \oplus f(a)}
+$$
+
+と表せる。
+
+<Hint level="info">
+
+**なぜ $V_f(\ket{a}) = \ket{f(a)}$ と表現できないのか**
+
+詳細は省く (というか私が分かってない) が、このような $V_f$ はハードウェアで実装できない。
+(ユニタリでない)
+
+</Hint>
+
+<Details title="例">
+
+$f(0) = 0, f(1) = 1$ の場合を考える。
+
+| $a$ | $b$ | $U_f(\ket{a} \otimes \ket{b})$ |
+| --- | --- | ------------------------------ |
+| $0$ | $0$ | $\ket{00}$                     |
+| $0$ | $1$ | $\ket{01}$                     |
+| $1$ | $0$ | $\ket{11}$                     |
+| $1$ | $1$ | $\ket{10}$                     |
+
+上2行を見ると、$f(a) = 0$ なので、2ビット目がそのまま $b$ になっている。
+下2行を見ると、$f(a) = 1$ なので、2ビット目が $b \oplus 1$ ($b$ の反転) になっている。
+
+$f(0) = 1, f(1) = 1$ の場合を考える。
+
+| $a$ | $b$ | $U_f(\ket{a} \otimes \ket{b})$ |
+| --- | --- | ------------------------------ |
+| $0$ | $0$ | $\ket{01}$                     |
+| $0$ | $1$ | $\ket{00}$                     |
+| $1$ | $0$ | $\ket{11}$                     |
+| $1$ | $1$ | $\ket{10}$                     |
+
+</Details>
