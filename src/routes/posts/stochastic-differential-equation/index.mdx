@@ -6,6 +6,8 @@ tags: ["数学", "大学数学", "確率統計", "確率微分方程式", "WIP"]
 ---
 
 import { Link } from "@builder.io/qwik-city";
+import { Details } from "~/components/post/details";
+import { Hint } from "~/components/post/hint";
 
 ## 前提知識
 
@@ -13,35 +15,113 @@ import { Link } from "@builder.io/qwik-city";
 
 ## ランダムウォーク
 
-$$
-\begin{aligned}
-S_n&=X_1+X_2+\cdots+X_n\\
-P[X_i=\sigma]&=P[X_i=-\sigma]=\dfrac12\;(1\le i\le n)
-\end{aligned}
-$$
+点 $P$ は時刻 $t=0$ で原点にあり、1秒ごとに等しい確率で $+\sigma$ または $-\sigma$ だけ移動するものとする。
+$t$ 秒後の点 $P$ の位置を $R(t)$ とすると、$R(t)$ を **ランダムウォーク (random walk)** という。
 
-で与えられる確率変数 $S_n$ を (1次元) **ランダムウォーク (random walk)** という。
-
-$X_i$ の平均 $E[X_i]$ と分散 $V[X_i]$ は以下のようになる。
+$R(t)$ は次のような確率変数となる。
 
 $$
 \begin{aligned}
-E[X_i]&=0\\
-V[X_i]&=\sigma^2
+E[R(t)] &= 0 \\
+V[R(t)] &= \sigma^2 t
 \end{aligned}
 $$
 
-また、$X_1,X_2,\dots,X_n$ は互いに独立であることから
+<Details title="E[R(t)], V[R(t)] の導出">
+
+$$
+\Delta R(t) = R(t + \Delta t) - R(t)
+$$
+
+とおくと、$\Delta R(t)$ は次のような確率変数となる。
 
 $$
 \begin{aligned}
-E[S_n]&=E[X_1+X_2+\cdots+X_n]\\
-&=E[X_1]+E[X_2]+\cdots+E[X_n]\\
-&=0\\
-V[S_n]&=V[X_1+X_2+\cdots+X_n]\\
-&=V[X_1]+V[X_2]+\cdots+V[X_n]\\
-&=\sigma^2n
+E[\Delta R(t)] &= 0 \\
+V[\Delta R(t)] &= \sigma^2
 \end{aligned}
 $$
 
-が導ける。
+よって
+
+$$
+\begin{aligned}
+E[R(t)] &= E[\Delta R(0) + \Delta R(1) + \cdots + \Delta R(t)] \\
+  &= E[\Delta R(0)] + E[\Delta R(1)] + \cdots + E[\Delta R(t)] \\
+  &= 0 \\
+V[R(t)] &= V[\Delta R(0) + \Delta R(1) + \cdots + \Delta R(t)] \\
+  &= V[\Delta R(0)] + V[\Delta R(1)] + \cdots + V[\Delta R(t)] \\
+  &= \sigma^2 + \sigma^2 + \cdots + \sigma^2 \\
+  &= \sigma^2 t
+\end{aligned}
+$$
+
+</Details>
+
+## ウィーナー過程
+
+点 $P$ は時刻 $t=0$ で原点にあり、$\Delta t = \frac{1}{n}$ ごとに等しい確率で $+\Delta W$ または $-\Delta W$ だけ移動するものとする。
+このとき $t$ 秒後の点 $P$ の位置を $W(t)$ とする。
+
+移動を $k$ 回行った後の点 $P$ の位置 $W(\frac{k}{n})$ は次のような確率変数となる。
+
+$$
+\begin{aligned}
+E[W(\frac{k}{n})] &= 0 \\
+V[W(\frac{k}{n})] &= \Delta W^2 k
+\end{aligned}
+$$
+
+$\Delta W = \pm \sigma \sqrt{\frac{1}{n}} = \pm \sigma \sqrt{\Delta t}$ としたときの $\lim_{n \to \infty} W(t)$ を **ウィーナー過程 (Wiener process)** という。
+
+<Hint level="info">
+  **ウィーナー過程はランダムウォークの連続極限である**
+  
+$n = 1, \Delta W = \pm \sigma \sqrt{\Delta t}$ としたときの $W(t)$ はランダムウォークとなる。
+  
+$$
+V[W(t)] = \sigma^2 t = V[R(t)]
+$$
+
+</Hint>
+
+<Hint level="info">
+  **ウィーナー過程の別の定義**
+
+$W(t)$ が次の条件を満たすとき、$W(t)$ をウィーナー過程という。
+
+$$
+\begin{aligned}
+W(0) &= 0 \\
+W(t_0 + t) - W(t_0) &\sim N(0, \sigma^2 t)
+\end{aligned}
+$$
+
+</Hint>
+
+<Hint level="info">
+  **ウィーナー過程の性質**
+  
+$W(t)$ の速度は $\frac{dW}{dt} = \pm \sigma \frac{1}{\sqrt{t}} = \pm \infty$ であるにも関わらず、$t = 0$ における点 $P$ の位置 $W(1)$ は
+
+$$
+\begin{aligned}
+W(1) &= \lim_{n \to \infty} \sum_{k=1}^{n} \Delta W
+\end{aligned}
+$$
+
+となり、$N(0, \sigma^2)$ に従う有限の値となる。
+
+$V[W(1)]$ も同様に
+
+$$
+\begin{aligned}
+V[W(1)] &= \lim_{n \to \infty} \sum_{k=1}^{n} V[\Delta W] \\
+  &= \lim_{n \to \infty} \sum_{k=1}^{n} \sigma^2 \Delta t \\
+  &= \sigma^2
+\end{aligned}
+$$
+
+となり、有限の値となる。
+
+</Hint>
