@@ -210,3 +210,99 @@ $f(0) = 1, f(1) = 1$ の場合を考える。
 | $1$ | $1$ | $\ket{10}$                     |
 
 </Details>
+
+## Deutsch アルゴリズム
+
+関数 $y = f(x)$ は $f(0) = f(1)$ または $f(0) \neq f(1)$ のどちらを満たすかを判定したいとする。
+
+古典計算では、$f(0) = f(1)$ か $f(0) \neq f(1)$ かを判定するためには、$f(0), f(1)$ を計算して比較する必要がある。
+量子計算では、Deutsch アルゴリズムを用いることで、この判定を1回の計算で行うことができる。
+
+具体的には
+
+$$
+(H \otimes 1) U_f (H \otimes H) \ket{01} \text{の左の量子ビット} = \begin{cases}
+  0 & (f(0) = f(1)) \\
+  1 & (f(0) \neq f(1))
+\end{cases}
+$$
+
+<Details title="証明">
+
+まず $H \otimes H \ket{01}$ を計算すると
+
+$$
+\begin{aligned}
+(H \otimes H) \ket{01} &= H \ket{0} \otimes H \ket{1} \\
+  &= (\dfrac{1}{\sqrt{2}} \ket{0} + \dfrac{1}{\sqrt{2}} \ket{1}) \otimes (\dfrac{1}{\sqrt{2}} \ket{0} - \dfrac{1}{\sqrt{2}} \ket{1}) \\
+  &= \dfrac{1}{2} \ket{00} - \dfrac{1}{2} \ket{01} + \dfrac{1}{2} \ket{10} - \dfrac{1}{2} \ket{11} \\
+  &= \dfrac{1}{2} [ \ket{0} \otimes (\ket{0} - \ket{1}) + \ket{1} \otimes (\ket{0} - \ket{1}) ] \\
+\end{aligned}
+$$
+
+これに $U_f$ を作用させると
+
+$$
+\begin{aligned}
+U_f (H \otimes H) \ket{01} &= U_f \left( \dfrac{1}{2} \{ \ket{0} \otimes (\ket{0} - \ket{1}) + \ket{1} \otimes (\ket{0} - \ket{1}) \} \right) \\
+  &= \dfrac{1}{2} \{ U_f [\ket{0} \otimes (\ket{0} - \ket{1})] + U_f [\ket{1} \otimes (\ket{0} - \ket{1})] \} \\
+  &= \dfrac{1}{2} [ \ket{0} \otimes ( \ket{0 \oplus f(0)} - \ket{1 \oplus f(0)} ) + \ket{1} \otimes ( \ket{0 \oplus f(1)} - \ket{1 \oplus f(1)} ) ] \\
+  &= \begin{cases}
+    \dfrac{1}{2} [ \ket{0} \otimes ( \ket{0} - \ket{1} ) + \ket{1} \otimes ( \ket{0} - \ket{1} ) ] & (f(0) = 0) \\
+    \dfrac{1}{2} [ \ket{0} \otimes ( \ket{1} - \ket{0} ) + \ket{1} \otimes ( \ket{1} - \ket{0} ) ] & (f(0) = 1)
+  \end{cases}
+\end{aligned}
+$$
+
+ここで $(-1)^{f(x)} = \begin{cases} 1 & (f(x) = 0) \\ -1 & (f(x) = 1) \end{cases}$ であることを用いると
+
+$$
+U_f (H \otimes H) \ket{01} = \dfrac{1}{2} [ (-1)^{f(0)} \ket{0} \otimes (\ket{0} - \ket{1}) + (-1)^{f(1)} \ket{1} \otimes (\ket{0} - \ket{1}) ]
+$$
+
+これに $H \otimes 1$ を作用させると
+
+$$
+\begin{aligned}
+(H \otimes 1) \dfrac{1}{2} U_f (H \otimes H) \ket{01} &= (H \otimes 1) \dfrac{1}{2} [ (-1)^{f(0)} \ket{0} \otimes (\ket{0} - \ket{1}) + (-1)^{f(1)} \ket{1} \otimes (\ket{0} - \ket{1}) ] \\
+  &= \dfrac{1}{2 \sqrt{2}} [ (-1)^{f(0)} (\ket{0} + \ket{1}) \otimes (\ket{0} - \ket{1}) + (-1)^{f(1)} (\ket{0} - \ket{1}) \otimes (\ket{0} - \ket{1}) ] \\
+  &= \dfrac{1}{2 \sqrt{2}} \{ [ (-1)^{f(0)} + (-1)^{f(1)} ] \ket{0} \otimes (\ket{0} - \ket{1}) + [ (-1)^{f(0)} - (-1)^{f(1)} ] \ket{1} \otimes (\ket{0} - \ket{1}) \}
+\end{aligned}
+$$
+
+ここで
+
+$$
+\begin{aligned}
+(-1)^{f(0)} + (-1)^{f(1)} &= \begin{cases}
+  2 (-1)^{f(0)} & (f(0) = f(1)) \\
+  0 & (f(0) \neq f(1))
+\end{cases} \\
+(-1)^{f(0)} - (-1)^{f(1)} &= \begin{cases}
+  0 & (f(0) = f(1)) \\
+  2 (-1)^{f(0)} & (f(0) \neq f(1))
+\end{cases}
+\end{aligned}
+$$
+
+であることを用いると
+
+$$
+(H \otimes 1) U_f (H \otimes H) \ket{01} = \begin{cases}
+  \dfrac{1}{\sqrt{2}} (-1)^{f(0)} \ket{0} \otimes (\ket{0} - \ket{1}) & (f(0) = f(1)) \\
+  \dfrac{1}{\sqrt{2}} (-1)^{f(0)} \ket{1} \otimes (\ket{0} - \ket{1}) & (f(0) \neq f(1))
+\end{cases}
+$$
+
+となり、これを観測すると
+
+$$
+\text{左の量子ビット} = \begin{cases}
+  0 & (f(0) = f(1)) \\
+  1 & (f(0) \neq f(1))
+\end{cases}
+$$
+
+となる。
+
+</Details>
