@@ -215,7 +215,7 @@ $$
 \Bbb{E}[aX+b]=a\Bbb{E}[X]+b
 $$
 
-<Hint level="info">このような性質を**線形性 (linearity)**という。</Hint>
+<Hint level="info">このような性質を **線形性 (linearity)** という。</Hint>
 
 ### 分散
 
@@ -232,12 +232,16 @@ $$
 $$
 
 <Details title="V[X]=E[X^2]-E[X]^2 の証明">
-  $$ \begin{aligned}
-  \Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2]\\ &=\Bbb{E}[X^2-2\Bbb{E}[X]X-\Bbb{E}[X]^2]\\
-  &=\Bbb{E}[X^2]-2\Bbb{E}[X]^2+\Bbb{E}[X]^2\\ &=\Bbb{E}[X^2]-\Bbb{E}[X]^2 \end{
-    aligned
-  }
-  $$
+
+$$
+\begin{aligned}
+\Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2]\\
+  &=\Bbb{E}[X^2-2\Bbb{E}[X]X-\Bbb{E}[X]^2]\\
+  &=\Bbb{E}[X^2]-2\Bbb{E}[X]^2+\Bbb{E}[X]^2\\
+  &=\Bbb{E}[X^2]-\Bbb{E}[X]^2
+\end{aligned}
+$$
+
 </Details>
 
 ## 離散型確率変数
@@ -312,10 +316,15 @@ $$
 $$
 
 <Details title="V[X] の導出">
-  $$ \begin{aligned}
-  \Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2]\\ &=\Bbb{E}[X^2]-\Bbb{E}[X]^2\\ &=p-p^2\\
-  &=p(1-p) \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+  \Bbb{V}[X]&=\Bbb{E}[(X-\Bbb{E}[X])^2] \\
+  &=\Bbb{E}[X^2]-\Bbb{E}[X]^2\\ &=p-p^2 \\
+  &=p(1-p)
+\end{aligned}
+$$
+
 </Details>
 
 ## 二項分布
