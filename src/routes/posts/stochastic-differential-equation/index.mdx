@@ -125,3 +125,84 @@ $$
 となり、有限の値となる。
 
 </Hint>
+
+## 確率微分方程式
+
+$X(t)$ が次の確率微分方程式を満たすとき、$X(t)$ を **確率微分方程式 (stochastic differential equation)** という。
+
+$$
+dX(t) = \mu(X(t), t) dt + \sigma(X(t), t) dW(t)
+$$
+
+この解は (存在すれば) 次のように表される。
+
+$$
+X(t) = X(0) + \int_{0}^{t} \mu(X(s), s) ds + \int_{0}^{t} \sigma(X(s), s) dW(s)
+$$
+
+## 伊藤積分
+
+確率微分方程式 $dX(t) = \mu(X(t), t) dt + \sigma(X(t), t) dW(t)$ の解において、右辺の第2項の積分 $\int_{0}^{t} \sigma(X(s), s) dW(s)$ は普通の積分とは異なる。
+この積分を次のように定義したものを **伊藤積分 (Itô integral)** という。
+
+$$
+\int_{0}^{t} \sigma(X(s), s) dW(s) = \sum_{k=1}^{n} \sigma(X(t_{k-1}), t_{k-1}) [W(t_k) - W(t_{k-1})]
+$$
+
+<Details title="伊藤積分を定義する理由">
+確率微分方程式 $dX = bW(t) dW$ の解を考える。
+
+普通に両辺を積分すると
+
+$$
+\begin{aligned}
+X(t) &= X(0) + \int_{0}^{t} b W(s) dW \\
+  &= X(0) + \dfrac{b}{2} W^2(t)
+\end{aligned}
+$$
+
+となりそうだが、$b = 1, X(0) = 0, X(5) = 10, W(5) = 10$ とすると
+
+$$
+\begin{aligned}
+\Delta X(5) &= X(6) - X(5) \\
+  &\approx b W(5) [W(6) - W(5)] \\
+  &= 10 [W(6) - W(5)]
+\end{aligned}
+$$
+
+ここで $W(6) - W(5) = \Delta W(5) \sim N(0, 1)$ なので、$0.17$ 程度の確率で $\Delta W(5) < -1, \Delta X(5) < -10$ となり、$X(6) < 0$ となる。
+しかし、普通の積分の解は $X(6) = \frac{1}{2} W^2(6) > 0$ となるため、矛盾する。
+
+伊藤積分の定義で $bW(t) dW$ を積分すると
+
+$$
+\begin{aligned}
+X(t) &= X(0) + \sum_{k=1}^{n} b W(t_{k-1}) [W(t_k) - W(t_{k-1})] \\
+  &= X(0) + \sum_{k=1}^{n} b \left\{ \dfrac{1}{2} [W(t_k) + W(t_{k-1})] - \dfrac{1}{2} [W(t_k) - W(t_{k-1})] \right\} [W(t_k) - W(t_{k-1})] \\
+  &= X(0) + \dfrac{b}{2} \sum_{k=1}^{n} [W^2(t_k) - W^2(t_{k-1})] - \dfrac{b}{2} \sum_{k=1}^{n} [W(t_k) - W(t_{k-1})]^2
+\end{aligned}
+$$
+
+ここで
+
+$$
+\begin{aligned}
+\sum_{k=1}^{n} [W^2(t_k) - W^2(t_{k-1})] &= W^2(t_n) - W^2(t_0) \\
+  &= W^2(t) - W^2(0) \\
+  &= W^2(t) \\
+\sum_{k=1}^{n} [W(t_k) - W(t_{k-1})]^2 &= \sum_{k=1}^{n} \Delta W^2(t_{k-1}) \\
+  &= \sum_{k=1}^{n} \sigma^2 (t_k - t_{k-1}) \\
+  &= \sigma^2 t
+\end{aligned}
+$$
+
+これを代入すると
+
+$$
+X(t) = X(0) + \dfrac{b}{2} W^2(t) - \dfrac{b}{2} \sigma^2 t
+$$
+
+となるため、矛盾が生じない。
+
+</Details>
