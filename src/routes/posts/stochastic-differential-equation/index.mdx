@@ -209,40 +209,40 @@ $$
 
 ## 伊藤の公式
 
-$X(t)$ が $dX(t) = f(t, X(t)) dt + g(t, X(t)) dW(t)$ を満たす確率微分方程式の解であるとき、$h(t, X(t))$ の微分 $dh(t, X(t))$ は次のように表される。
+$X(t)$ が $dX(t) = f(t, X(t)) dt + g(t, X(t)) dW(t)$ を満たす確率微分方程式の解であるとき、$H(t, X(t))$ の微分 $dH(t, X(t))$ は次のように表される。
 
 $$
-dh = \left( \dfrac{\partial h}{\partial t} + \dfrac{\partial h}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial X^2} g^2 \sigma^2 \right) dt + \dfrac{\partial h}{\partial X} g dW
+dH = \left( \dfrac{\partial H}{\partial t} + \dfrac{\partial H}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial X^2} g^2 \sigma^2 \right) dt + \dfrac{\partial H}{\partial X} g dW
 $$
 
 <Hint level="info">
   **伊藤の公式の考察**
 
-$h(t, X(t))$ を普通に全微分すると
+$H(t, X(t))$ を普通に全微分すると
 
 $$
 \begin{aligned}
-dh &= \dfrac{\partial h}{\partial t} dt + \dfrac{\partial h}{\partial X} dX \\
-  &= \dfrac{\partial h}{\partial t} dt + \dfrac{\partial h}{\partial X} ( f dt + g dW ) \\
-  &= \left( \dfrac{\partial h}{\partial t} + \dfrac{\partial h}{\partial X} f \right) dt + \dfrac{\partial h}{\partial X} g dW
+dH &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} dX \\
+  &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} ( f dt + g dW ) \\
+  &= \left( \dfrac{\partial H}{\partial t} + \dfrac{\partial H}{\partial X} f \right) dt + \dfrac{\partial H}{\partial X} g dW
 \end{aligned}
 $$
 
-となり、これに $\frac{1}{2} \frac{\partial^2 h}{\partial X^2} g^2 \sigma^2 dt$ を加えたものが伊藤の公式になる。
+となり、これに $\frac{1}{2} \frac{\partial^2 H}{\partial X^2} g^2 \sigma^2 dt$ を加えたものが伊藤の公式になる。
 
 </Hint>
 
 <Details title="導出">
 
-$dh$ をテイラー展開すると
+$dH$ をテイラー展開すると
 
 $$
 \begin{aligned}
-dh &= \dfrac{\partial h}{\partial t} dt + \dfrac{\partial h}{\partial X} dX \\
-  &+ \dfrac{1}{2} \dfrac{\partial^2 h}{\partial t^2} {dt}^2 + \dfrac{\partial^2 h}{\partial t \partial X} dt dX + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial X^2} {dX}^2 \\
+dH &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} dX \\
+  &+ \dfrac{1}{2} \dfrac{\partial^2 H}{\partial t^2} {dt}^2 + \dfrac{\partial^2 H}{\partial t \partial X} dt dX + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial X^2} {dX}^2 \\
   &+ \cdots \\
-  &= \dfrac{\partial h}{\partial t} dt + \dfrac{\partial h}{\partial X} ( f dt + g dW ) \\
-  &+ \dfrac{1}{2} \dfrac{\partial^2 h}{\partial t^2} {dt}^2 + \dfrac{\partial^2 h}{\partial t \partial X} dt ( f dt + g dW ) + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial X^2} ( f dt + g dW )^2 \\
+  &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} ( f dt + g dW ) \\
+  &+ \dfrac{1}{2} \dfrac{\partial^2 H}{\partial t^2} {dt}^2 + \dfrac{\partial^2 H}{\partial t \partial X} dt ( f dt + g dW ) + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial X^2} ( f dt + g dW )^2 \\
   &+ \cdots \\
 \end{aligned}
 $$
@@ -261,19 +261,19 @@ $$
 
 $$
 \begin{aligned}
-dh &= \dfrac{\partial h}{\partial t} dt + \dfrac{\partial h}{\partial X} ( f dt + g dW ) + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial X^2} g^2 \sigma^2 dt \\
-  &= \left( \dfrac{\partial h}{\partial t} + \dfrac{\partial h}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial X^2} g^2 \sigma^2 \right) dt + \dfrac{\partial h}{\partial X} g dW \\
+dH &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} ( f dt + g dW ) + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial X^2} g^2 \sigma^2 dt \\
+  &= \left( \dfrac{\partial H}{\partial t} + \dfrac{\partial H}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial X^2} g^2 \sigma^2 \right) dt + \dfrac{\partial H}{\partial X} g dW \\
 \end{aligned}
 $$
 
 </Details>
 
 <Details title="伊藤の公式を使って再び ∫WdW を考える">
-  $X(t) = W(t)$ のとき、$h(t, X(t)) = X^2(t)$ とすると、伊藤の公式より
+  $X(t) = W(t)$ のとき、$H(t, X(t)) = X^2(t)$ とすると、伊藤の公式より
 
 $$
 \begin{aligned}
-dh &= \left( \dfrac{\partial h}{\partial t} + \dfrac{\partial h}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 h}{\partial x^2} g^2 \sigma^2 \right) dt + \dfrac{\partial h}{\partial X} g dW \\
+dH &= \left( \dfrac{\partial H}{\partial t} + \dfrac{\partial H}{\partial X} f + \dfrac{1}{2} \dfrac{\partial^2 H}{\partial x^2} g^2 \sigma^2 \right) dt + \dfrac{\partial H}{\partial X} g dW \\
   &= \sigma^2 dt + 2 X dW \\
   &= \sigma^2 dt + 2 W dW \\
 \end{aligned}
@@ -283,7 +283,7 @@ $$
 
 $$
 \begin{aligned}
-\int_{0}^{t} dh &= \int_{0}^{t} \sigma^2 dt + 2 \int_{0}^{t} W dW \\
+\int_{0}^{t} dH &= \int_{0}^{t} \sigma^2 dt + 2 \int_{0}^{t} W dW \\
   &= \sigma^2 t + 2 \int_{0}^{t} W^2 dW
 \end{aligned}
 $$
@@ -291,7 +291,7 @@ $$
 また
 
 $$
-\int_{0}^{t} dh = h(t) - h(0) = W^2(t) - W^2(0) = W^2(t)
+\int_{0}^{t} dH = H(t) - H(0) = W^2(t) - W^2(0) = W^2(t)
 $$
 
 であることから
