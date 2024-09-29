@@ -16,6 +16,11 @@ tags:
 
 import { Details } from "~/components/post/details";
 import { Hint } from "~/components/post/hint";
+import { Link } from "@builder.io/qwik-city";
+
+## 前提知識
+
+- <Link href="/posts/stochastic-differential-equation">確率微分方程式</Link>
 
 ## ヨーロピアン・コール・オプション
 
@@ -104,3 +109,90 @@ $$
 が成り立つ。
 
 </Hint>
+
+## ブラック・ショールズ方程式の導出
+
+求めたいヨーロピアン・コール・オプションの時刻 $t$ における価格を $C(t)$ とする。
+また、時刻 $t$ における株式と債権の価格をそれぞれ $S(t), b(t)$ とし、次の確率微分方程式に従うとする。
+
+$$
+\begin{aligned}
+dS &= a S dt + b S dW \\
+db &= r b dt \\
+\end{aligned}
+$$
+
+<Hint level="info">
+  一般的に国債のリスクは極めて小さいと考えられているため、国債の価格 $b(t)$ は
+  $W$ に依存しないと仮定している。
+</Hint>
+
+時刻 $t$ において複製ポートフォリオに含まれる株式と債券の保有量をそれぞれ $p(t), q(t)$ とすると、複製ポートフォリオの価格は
+
+$$
+C(t) = p(t) S(t) + q(t) b(t)
+$$
+
+と表せる。
+
+両辺を微分すると
+
+$$
+dC = dp S + p dS + dq b + q db \tag{1}
+$$
+
+自己資金充足の性質から、$dp S + dq b = 0$ を代入すると
+
+$$
+dC = p dS + q db
+$$
+
+また
+
+$$
+\begin{aligned}
+dS &= a S dt + b S dW \\
+db &= r b dt \\
+\end{aligned}
+$$
+
+を代入すると
+
+$$
+\begin{aligned}
+dC &= p (a S dt + b S dW) + q r b dt \\
+  &= (a p S + q r b) dt + b p S dW \tag{2}
+\end{aligned}
+$$
+
+が導ける。
+
+また、$(1)$ に対して伊藤の公式を適用すると
+
+$$
+\begin{aligned}
+dC = \left[ \dfrac{\partial C}{\partial t} + \dfrac{\partial C}{\partial S} a S + \dfrac{1}{2} \dfrac{\partial^2 C}{\partial S^2} b^2 S^2 \sigma^2 \right] dt + \dfrac{\partial C}{\partial S} b S dW \tag{3}
+\end{aligned}
+$$
+
+$(2), (3)$ より $dC$ の $dt, dW$ の係数を比較すると
+
+$$
+\begin{aligned}
+a p S + q r b &= \dfrac{\partial C}{\partial t} + \dfrac{\partial C}{\partial S} a S + \dfrac{1}{2} \dfrac{\partial^2 C}{\partial S^2} b^2 \sigma^2 S^2 \\
+b S \dfrac{\partial C}{\partial S} &= b p S
+\end{aligned}
+$$
+
+が導ける。
+
+$p = \frac{\partial C}{\partial S}, q b = C - p S = C - S \frac{\partial C}{\partial S}$ を代入すると
+
+$$
+\begin{aligned}
+\dfrac{\partial C}{\partial t} + a S \dfrac{\partial C}{\partial S} + \dfrac{1}{2} b^2 \sigma^2 S^2 \dfrac{\partial^2 C}{\partial S^2} &= a S \dfrac{\partial C}{\partial S} + r (C - S \dfrac{\partial C}{\partial S}) \\
+\dfrac{\partial C}{\partial t} + r S \dfrac{\partial C}{\partial S} + \dfrac{1}{2} b^2 \sigma^2 S^2 \dfrac{\partial^2 C}{\partial S^2} &= r C
+\end{aligned}
+$$
+
+となり、ブラック・ショールズ方程式が導かれる。
