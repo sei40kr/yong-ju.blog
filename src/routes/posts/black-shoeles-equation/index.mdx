@@ -196,3 +196,69 @@ $$
 $$
 
 となり、ブラック・ショールズ方程式が導かれる。
+
+## ブラック・ショールズの公式の導出 (不完全)
+
+$$
+\dfrac{\partial C}{\partial t} + r S \dfrac{\partial C}{\partial S} + \dfrac{1}{2} b^2 \sigma^2 S^2 \dfrac{\partial^2 C}{\partial S^2} = r C
+$$
+
+ここで $S \frac{\partial}{\partial S}$ に注目すると
+
+$$
+S \dfrac{\partial}{\partial S} = \dfrac{\partial}{\frac{\partial S}{S}} = \dfrac{\partial}{\partial \log S}
+$$
+
+となることから $y = \log S$ とおいてみると
+
+$$
+\begin{aligned}
+S &= e^y \\
+\dfrac{\partial}{\partial S} &= \dfrac{\partial y}{\partial S} \dfrac{\partial}{\partial y} = \dfrac{1}{S} \dfrac{\partial}{\partial y} = e^{-y} \dfrac{\partial}{\partial y} \\
+S \dfrac{\partial C}{\partial S} &= e^y e^{-y} \dfrac{\partial C}{\partial y} = \dfrac{\partial C}{\partial y} \\
+S^2 \dfrac{\partial^2 C}{\partial S^2} &= e^{2y} \left( e^{-y} \dfrac{\partial}{\partial y} \right)^2 C = e^y \dfrac{\partial}{\partial y} \left( e^{-y} \dfrac{\partial C}{\partial y} \right) = e^y \left( -e^{-y} \dfrac{\partial C}{\partial y} + e^{-y} \dfrac{\partial^2 C}{\partial y^2} \right) = \dfrac{\partial^2 C}{\partial y^2} - \dfrac{\partial C}{\partial y}
+\end{aligned}
+$$
+
+より
+
+$$
+\dfrac{\partial C}{\partial t} + r \dfrac{\partial C}{\partial y} + \dfrac{1}{2} b^2 \sigma^2 \left( \dfrac{\partial^2 C}{\partial y^2} - \dfrac{\partial C}{\partial y} \right) = r C
+$$
+
+ここで
+
+$$
+\begin{aligned}
+u &= e^{r \tau} C \\
+\tau &= T - t \\
+x &= \dfrac{y + (r - \frac{1}{2} b^2 \sigma^2) \tau}{b \sigma}
+\end{aligned}
+$$
+
+とおくと以下の熱方程式に帰着できる。
+
+$$
+\frac{\partial u}{\partial \tau} = \frac{1}{2} \frac{\partial^2 u}{\partial x^2}
+$$
+
+この熱方程式の解は
+
+$$
+u(x, \tau) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} e^{-\frac{1}{2} x^2} \phi(x) dx
+$$
+
+であることが知られている。
+
+これを逆変換すると
+
+$$
+\begin{aligned}
+C(S, t) &= S \mathcal{N}(d_1) - K e^{-r (T - t)} \mathcal{N}(d_2) \\
+\text{where} \quad d_1 &= \dfrac{\log \left( \frac{S}{K} \right) + \left( r + \frac{1}{2} b^2 \sigma^2 \right) (T - t)}{b \sigma \sqrt{T - t}} \\
+d_2 &= \dfrac{\log \left( \frac{S}{K} \right) + \left( r - \frac{1}{2} b^2 \sigma^2 \right) (T - t)}{b \sigma \sqrt{T - t}} \\
+\mathcal{N}(x) &= \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^x e^{-\frac{1}{2} x^2} dx
+\end{aligned}
+$$
+
+となり、ブラック・ショールズの公式が導かれる。
