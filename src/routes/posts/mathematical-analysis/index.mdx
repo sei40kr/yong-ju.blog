@@ -543,18 +543,32 @@ $$
 
 ## ラグランジュの未定乗数法
 
-条件 $g(x,y)=0$ 下での $f(x,y)$ の極値を考える。
+一般に
 
-$f(x,y),g(x,y)$ が $C^1$ 級であるとき、条件付き極値をとる点の候補は
+$$
+\min f(\bold{x}) \\
+\text{subject to} \, \begin{cases}
+\bold{g}_i(\bold{x}) &= 0 \, (i = 1,2,\dots,m) \\
+\bold{h}_j(\bold{x}) &\le 0 \, (j = 1,2,\dots,l)
+\end{cases}
+$$
 
-- $\nabla{g(x,y)}=\bold{0}\land g(x,y)=0$
-- $\nabla{f(x,y)}=\lambda g(x,y)\land g(x,y)=0$ (**ラグランジュの未定乗数法**, method of Lagrange multiplier)
+の局所最小解が $\bar{\bold{x}}$ であるとき
+$\{\bold{g}_1(\bold{x}), \dots, \bold{g}_m(\bold{x}), \bold{h}_1(\bold{x}), \dots, \bold{h}_l(\bold{x})\}$ が一次独立ならば、
+ある実数 $\bm{\lambda}_i \, (i=1,2,\dots,m), \bm{\mu}_j \, (j=1,2,\dots,l)$ が存在し、以下が成り立つ。
 
-を満たす点である。
+$$
+\begin{aligned}
+-\nabla f(\bar{\bold{x}}) &= \sum_{i=1}^m {\bm{\lambda}_i \nabla \bold{g}_i(\bar{\bold{x}})} + \sum_{j=1}^l {\bm{\mu}_j \nabla \bold{h}_j(\bar{\bold{x}})} \\
+\bm{\lambda}_i \bold{g}_i(\bar{\bold{x}}) &= 0 \\
+\bm{\lambda}_i &\ge 0 \\
+\bold{g}_i(\bar{\bold{x}}) &\le 0 \\
+\bold{h}_i(\bar{\bold{x}}) &= 0
+\end{aligned}
+$$
 
-<Hint level="info">
-  以上の条件は、条件付き極値となるための**必要条件**であり、**十分条件ではない。**
-</Hint>
+これらの条件をKKT条件 (Karush-Kuhn-Tucker condition) という。
+**[凸最適化](https://ja.wikipedia.org/wiki/%E5%87%B8%E6%9C%80%E9%81%A9%E5%8C%96)問題において、KKT条件は最適解の必要十分条件となる。**
 
 ## 参考文献
 
