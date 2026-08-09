@@ -1,0 +1,16 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display math styled as in the design: a subtle bordered panel. Symmetric
+   vertical margins match the body's block rhythm (see flow-spacing.ts) and
+   collapse with neighbouring blocks to max(above, below). */
+.katex-display {
+  margin: 28px 0;
+  padding: 22px 24px;
+  background: var(--chakra-colors-bg-subtle);
+  border: 1px solid var(--chakra-colors-border-muted);
+  border-radius: var(--chakra-radii-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+}

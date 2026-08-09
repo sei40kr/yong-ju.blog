@@ -1,8 +1,6 @@
 # Build
-/dist
-/lib
-/lib-types
-/server
+/.next
+/out
 
 # Development
 node_modules
@@ -10,9 +8,8 @@ node_modules
 
 # Cache
 .cache
-.mf
-.rollup.cache
 tsconfig.tsbuildinfo
+next-env.d.ts
 
 # Logs
 logs
@@ -36,9 +33,6 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Yarn
-.yarn/*
-!.yarn/releases
 
-# Panda CSS
-src/styled-system
+# APM dependencies
+apm_modules/

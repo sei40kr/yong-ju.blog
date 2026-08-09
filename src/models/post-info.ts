@@ -1,7 +1,8 @@
 export interface PostInfo {
-  id: string;
+  slug: string;
   title: string;
   date: Date;
-  categories: Set<string>;
   tags: Set<string>;
+  excerpt: string;
+  readMinutes: number;
 }
