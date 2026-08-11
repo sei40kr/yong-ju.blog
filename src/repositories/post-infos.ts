@@ -23,7 +23,7 @@ interface PostFrontmatter {
 const getPostSource = (slug: string): Promise<string> =>
   fs.readFile(path.join(POSTS_DIR, `${slug}.mdx`), "utf-8");
 
-export const getPostInfos = async (): Promise<PostInfo[]> => {
+const collectPostInfos = async (): Promise<PostInfo[]> => {
   const files = await fs.readdir(POSTS_DIR);
   return Promise.all(
     files
@@ -49,6 +49,14 @@ export const getPostInfos = async (): Promise<PostInfo[]> => {
   );
 };
 
+let cachedPostInfos: Promise<PostInfo[]> | null = null;
+
+// Built once per build; development skips the cache so post edits show up.
+export const getPostInfos = (): Promise<PostInfo[]> =>
+  process.env.NODE_ENV === "development"
+    ? collectPostInfos()
+    : (cachedPostInfos ??= collectPostInfos());
+
 export const getPostHeadings = async (slug: string): Promise<PostHeading[]> => {
   const { content } = matter(await getPostSource(slug));
   return extractHeadings(content);
@@ -70,7 +78,7 @@ export const findRecentPostInfos = async (
   offset: number,
   count: number,
 ): Promise<Paginated<PostInfo>> =>
-  paginate((await getPostInfos()).sort(byDateDesc), offset, count);
+  paginate([...(await getPostInfos())].sort(byDateDesc), offset, count);
 
 export const findPostInfosByTag = async (
   tag: string,
