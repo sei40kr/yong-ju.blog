@@ -10,9 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -20,7 +18,7 @@ jobs:
           bun-version: 1.3.13
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -32,5 +30,6 @@ jobs:
       - name: Deploy
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          aws s3 sync out s3://yong-ju.blog
+          aws s3 sync out/_next/static s3://yong-ju.blog/_next/static --size-only
+          aws s3 sync out s3://yong-ju.blog --exclude '_next/static/*'
           aws cloudfront create-invalidation --distribution-id E1CW34R12A13S7 --paths '/*'
