@@ -20,11 +20,14 @@ const highlighter = createHighlighterCoreSync({
   langs: [bash, javascript, sql, nix, kotlin, ini, emacsLisp],
 });
 
-export const shikiAdapter = createShikiAdapter({
-  // `loadSync` is what matters: it makes the highlighter available on the very
-  // first render (server + hydration), so the exported HTML is already
-  // highlighted. `load` is required by the type; it returns the same singleton.
+const shikiAdapter = createShikiAdapter({
   loadSync: () => highlighter,
   load: async () => highlighter,
   theme: "night-owl",
 });
+
+const shikiHighlight = shikiAdapter.getHighlighter(highlighter);
+
+/** Server components only — a client import pulls ~1MB of grammars into the bundle. */
+export const highlight = (code: string, language?: string) =>
+  shikiHighlight({ code, language });

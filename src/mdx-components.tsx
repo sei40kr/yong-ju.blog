@@ -15,6 +15,7 @@ import type { ComponentProps, ReactElement } from "react";
 import { CodeBlock } from "~/components/mdx/code-block";
 import { Details } from "~/components/mdx/details";
 import { Hint } from "~/components/mdx/hint";
+import { highlight } from "~/lib/shiki";
 
 // Vertical rhythm of the article body.
 //
@@ -114,8 +115,7 @@ const components: MDXComponents = {
       <Code fontSize="1em" rounded="xs" {...props} />
     ),
   // A fenced block arrives as <pre><code class="language-xxx">…</code></pre>.
-  // Read the raw source and language straight off the child element and hand
-  // them to the stock Chakra CodeBlock, which highlights via the Shiki adapter.
+  // Highlighting happens here, on the server, so Shiki stays out of the bundle.
   pre: ({ children }) => {
     const child = children as ReactElement<{
       className?: string;
@@ -124,12 +124,10 @@ const components: MDXComponents = {
     const language = /language-([\w-]+)/.exec(
       child?.props?.className ?? "",
     )?.[1];
-    return (
-      <CodeBlock
-        code={String(child?.props?.children ?? "")}
-        language={language}
-      />
-    );
+    // CodeBlock.Root trims its own copy, so match it or the trailing newline
+    // renders as a blank line.
+    const code = String(child?.props?.children ?? "").trim();
+    return <CodeBlock code={code} highlighted={highlight(code, language)} />;
   },
   // Stock List with native markers (variant="marker"). Marker styling goes
   // through the `_marker` style prop on the item — never a raw `::marker`
