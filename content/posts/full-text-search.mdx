@@ -215,13 +215,13 @@ $$
 TF-IDFは文書に現れるタームの重要度を評価する文書のスコアリング手法の1つであり、文書 $D$ のスコアは次のように算出される。
 
 $$
-\text{TF-IDF}=\frac{D\,\text{中のタームの出現回数}}{D\,\text{中のワードの総数}}\cdot\log\frac\text{文書数}\text{タームを含む文書の数}
+\text{TF-IDF}=\frac{D\,\text{中のタームの出現回数}}{D\,\text{中のワードの総数}}\cdot\log\frac{\text{文書数}}{\text{タームを含む文書の数}}
 $$
 
 <Hint level="info">
 **Point**
 
-$\frac\text{文書数}\text{タームを含む文書の数}$ は**IDF (Inverse Document Frequency, 逆文書頻度)** と呼ばれる。
+$\frac{\text{文書数}}{\text{タームを含む文書の数}}$ は**IDF (Inverse Document Frequency, 逆文書頻度)** と呼ばれる。
 IDFを乗ずることにより、多くの文書に出現するターム (例: 日本語の `〜です`, `〜ます`, 英語の `a`, `the`) のスコアは下がる。
 つまり、TF-IDFのIDFは**一般語フィルタ**として機能する。
 
