@@ -10,10 +10,10 @@ import sql from "@shikijs/langs/sql";
 import nightOwl from "@shikijs/themes/night-owl";
 import { createHighlighterCoreSync } from "shiki/core";
 
-// A synchronous highlighter so code is highlighted during the static export
-// (build-time) — the same zero-flash behaviour rehype-pretty-code gave us,
-// now driven through Chakra's CodeBlock. `bash` covers the sh/zsh aliases and
-// `javascript` covers js; the rest map 1:1 to the fences used in content/.
+// A synchronous highlighter, so a fence can be highlighted inline while the
+// static export renders it rather than after the page reaches the browser.
+// `bash` covers the sh/zsh aliases and `javascript` covers js; the rest map
+// 1:1 to the fences used in content/.
 const highlighter = createHighlighterCoreSync({
   engine: createJavaScriptRegexEngine(),
   themes: [nightOwl],
