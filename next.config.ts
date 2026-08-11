@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // Allow .mdx files to be imported as pages/components.
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  // Dev only: production serves `/tags/:tag` from page 1 via CloudFront.
+  ...(process.env.NODE_ENV === "development" && {
+    redirects: async () => [
+      {
+        source: "/tags/:tag/",
+        destination: "/tags/:tag/page/1/",
+        permanent: false,
+      },
+    ],
+  }),
 };
 
 const withMDX = createMDX({

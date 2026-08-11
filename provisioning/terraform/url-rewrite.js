@@ -5,6 +5,10 @@ function handler(event) {
   if (uri === "/") {
     request.uri = "/page/1/index.html";
   }
+  // `/tags/<tag>` is not exported; serve page 1 of that tag's archive.
+  else if (/^\/tags\/[^/]+\/?$/.test(uri)) {
+    request.uri = uri.replace(/\/$/, "") + "/page/1/index.html";
+  }
   // Check whether the URI is missing a file name.
   else if (uri.endsWith("/")) {
     request.uri += "index.html";
