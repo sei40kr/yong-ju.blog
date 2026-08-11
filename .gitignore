@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # APM dependencies
 apm_modules/
+
+*storybook.log
+storybook-static

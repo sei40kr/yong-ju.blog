@@ -8,7 +8,9 @@
     "build": "next build",
     "build.types": "tsc --noEmit",
     "fmt": "prettier --write .",
-    "fmt.check": "prettier --check ."
+    "fmt.check": "prettier --check .",
+    "storybook": "storybook dev -p 6006",
+    "build.storybook": "storybook build"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.36.1",
@@ -37,11 +39,16 @@
     "shiki": "^4.4.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.5.7",
+    "@storybook/addon-docs": "^10.5.7",
+    "@storybook/nextjs-vite": "^10.5.7",
     "@types/mdx": "^2.0.14",
     "@types/node": "^20.12.7",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.5"
+    "storybook": "^10.5.7",
+    "typescript": "^5.4.5",
+    "vite": "^8.2.1"
   }
 }
