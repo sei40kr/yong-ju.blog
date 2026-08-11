@@ -11,8 +11,10 @@ tags: ["数学", "代数学", "群論", "勉強ノート"]
 集合 $G$ に対して二項演算 $\circ$
 
 $$
-G\to G\\
-(a,b)\mapsto a\circ b
+\begin{aligned}
+G &\to G\\
+(a,b) &\mapsto a\circ b
+\end{aligned}
 $$
 
 が与えられていて、以下の条件を全て満たすとき、$G$ を**群**という。
@@ -238,8 +240,10 @@ $$
       $z\in C(x)$ より
 
       $$
-      x\sim z\\
-      \therefore{z\sim x}
+      \begin{aligned}
+      x &\sim z\\
+      \therefore z &\sim x
+      \end{aligned}
       $$
 
       よって、推移律より
@@ -263,22 +267,28 @@ $$
       よって
 
       $$
+      \begin{gathered}
       z\in C(y)\\
       \therefore C(x)\subset C(y)\tag{1}
+      \end{gathered}
       $$
 
       $y\in C(x)$ より
 
       $$
-      x\sim y\\
-      \therefore{y\sim x}
+      \begin{aligned}
+      x &\sim y\\
+      \therefore y &\sim x
+      \end{aligned}
       $$
 
       $x\in C(y)$ であり
 
       $$
+      \begin{gathered}
       \forall{w\in C(y)},x\sim w\\
       \therefore{w\in C(x)}
+      \end{gathered}
       $$
 
       よって
@@ -342,8 +352,10 @@ $a$ を $H$ の左剰余類とする。
 $x\in G$ より
 
 $$
+\begin{gathered}
 x^{-1}x=e\in H\\
 \therefore x\sim x
+\end{gathered}
 $$
 
 よって、**反射律**を満たす。
@@ -357,8 +369,10 @@ $$
 $H$ は部分群なので
 
 $$
+\begin{gathered}
 (x^{-1}y)^{-1}=y^{-1}x\in H\\
 \therefore y\sim x
+\end{gathered}
 $$
 
 よって、**対象律**を満たす。
@@ -372,8 +386,10 @@ $$
 $H$ は部分群なので
 
 $$
+\begin{gathered}
 (x^{-1}y)(y^{-1}z)=x^{-1}(yy^{-1})z=x^{-1}z\in H\\
 \therefore{x\sim z}
+\end{gathered}
 $$
 
 よって、**推移律**を満たす。
