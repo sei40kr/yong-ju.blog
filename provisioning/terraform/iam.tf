@@ -21,7 +21,6 @@ data "aws_iam_policy_document" "allow_cloudfront_service_principal_readonly" {
 
 resource "aws_iam_user" "blog" {
   name = "blog"
-  tags = { Project = "yong-ju.blog" }
 }
 
 resource "aws_iam_access_key" "blog" {

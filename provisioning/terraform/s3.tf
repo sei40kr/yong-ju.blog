@@ -1,8 +1,5 @@
 resource "aws_s3_bucket" "blog" {
   bucket = "yong-ju.blog"
-  tags   = {
-    Owner = "blog"
-  }
 }
 
 resource "aws_s3_bucket_acl" "blog" {

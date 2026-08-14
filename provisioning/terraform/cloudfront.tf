@@ -3,9 +3,6 @@ resource "aws_cloudfront_distribution" "blog" {
   default_root_object = "index.html"
   enabled             = true
   is_ipv6_enabled     = true
-  tags = {
-    Owner = "blog"
-  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
