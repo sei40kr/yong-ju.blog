@@ -1,5 +1,6 @@
 import {
   Blockquote,
+  Box,
   Code,
   Heading,
   Image,
@@ -15,6 +16,7 @@ import type { ComponentProps, ReactElement } from "react";
 import { CodeBlock } from "~/components/mdx/code-block";
 import { Details } from "~/components/mdx/details";
 import { Hint } from "~/components/mdx/hint";
+import { Mermaid } from "~/components/mdx/mermaid";
 import { highlight } from "~/lib/shiki";
 
 // Vertical rhythm of the article body.
@@ -127,6 +129,16 @@ const components: MDXComponents = {
     // CodeBlock.Root trims its own copy, so match it or the trailing newline
     // renders as a blank line.
     const code = String(child?.props?.children ?? "").trim();
+    // ```mermaid is a diagram, not source: it never reaches Shiki (which would
+    // throw on the unregistered language) and renders in the browser instead.
+    // The frame around it is the article's, not the component's.
+    if (language === "mermaid") {
+      return (
+        <Box my="7" px="4" py="6" bg="bg" borderWidth="1px" rounded="md">
+          <Mermaid code={code} />
+        </Box>
+      );
+    }
     return <CodeBlock code={code} highlighted={highlight(code, language)} />;
   },
   // Stock List with native markers (variant="marker"). Marker styling goes
