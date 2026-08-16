@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { TagArchive, TagResults } from "~/containers/tag-archive";
+import { PostList } from "~/components/post-list/post-list";
+import { TagArchive } from "~/components/tag/tag-archive";
 import { POSTS_PER_PAGE } from "~/models/paginated";
 import { withDevEncodedVariants } from "~/lib/static-params";
 import { findPostInfosByTag } from "~/repositories/post-infos";
@@ -45,11 +46,12 @@ export default async function TagPostsPage({
 
   return (
     <TagArchive tags={tags} currentTag={tag}>
-      <TagResults
-        tag={tag}
-        posts={paginatedPostInfos.items}
+      <PostList
+        heading={`#${tag} の記事`}
         totalCount={paginatedPostInfos.totalCount}
         currentPage={currentPage}
+        posts={paginatedPostInfos.items}
+        basePath={`/tags/${encodeURIComponent(tag)}/page`}
       />
     </TagArchive>
   );

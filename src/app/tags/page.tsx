@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TagArchive } from "~/containers/tag-archive";
+import { TagArchive } from "~/components/tag/tag-archive";
 import { getTagCounts } from "~/repositories/tags";
 
 export const metadata: Metadata = {

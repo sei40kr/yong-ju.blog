@@ -1,8 +1,6 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import type { ReactNode } from "react";
-import { PostList } from "~/components/post-list/post-list";
 import { TagCloud } from "~/components/tag/tag-cloud";
-import type { PostInfo } from "~/models/post-info";
 
 export const TagArchive = ({
   tags,
@@ -31,24 +29,4 @@ export const TagArchive = ({
     </Box>
     {children}
   </Box>
-);
-
-export const TagResults = ({
-  tag,
-  posts,
-  totalCount,
-  currentPage,
-}: {
-  tag: string;
-  posts: PostInfo[];
-  totalCount: number;
-  currentPage: number;
-}) => (
-  <PostList
-    heading={`#${tag} の記事`}
-    totalCount={totalCount}
-    currentPage={currentPage}
-    posts={posts}
-    basePath={`/tags/${encodeURIComponent(tag)}/page`}
-  />
 );
