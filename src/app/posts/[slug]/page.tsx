@@ -15,7 +15,11 @@ import { Tag } from "~/components/tag/tag";
 import { PostArticle } from "~/containers/post-article";
 import { humanizeDate } from "~/lib/format";
 import type { PostInfo } from "~/models/post-info";
-import { getPostHeadings, getPostInfos } from "~/repositories/post-infos";
+import {
+  findPostWithNeighbors,
+  getPostHeadings,
+  getPostInfosNewestFirst,
+} from "~/repositories/post-infos";
 
 import "katex/dist/katex.min.css";
 
@@ -34,7 +38,7 @@ const importPost = async (slug: string) => {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return (await getPostInfos()).map(({ slug }) => ({ slug }));
+  return (await getPostInfosNewestFirst()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -100,17 +104,10 @@ export default async function PostPage({
   const { slug } = await params;
   const { PostContent } = await importPost(slug);
 
-  const [allPosts, headings] = await Promise.all([
-    getPostInfos(),
+  const [{ post, newer, older }, headings] = await Promise.all([
+    findPostWithNeighbors(slug),
     getPostHeadings(slug),
   ]);
-  const posts = [...allPosts].sort(
-    (a, b) => b.date.getTime() - a.date.getTime(),
-  );
-  const index = posts.findIndex((post) => post.slug === slug);
-  const post = posts[index];
-  const newer = index > 0 ? posts[index - 1] : undefined;
-  const older = index < posts.length - 1 ? posts[index + 1] : undefined;
   const tags = [...post.tags];
 
   return (

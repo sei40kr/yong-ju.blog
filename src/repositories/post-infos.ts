@@ -23,9 +23,12 @@ interface PostFrontmatter {
 const getPostSource = (slug: string): Promise<string> =>
   fs.readFile(path.join(POSTS_DIR, `${slug}.mdx`), "utf-8");
 
+const byDateDesc = (a: PostInfo, b: PostInfo) =>
+  b.date.getTime() - a.date.getTime();
+
 const collectPostInfos = async (): Promise<PostInfo[]> => {
   const files = await fs.readdir(POSTS_DIR);
-  return Promise.all(
+  const postInfos = await Promise.all(
     files
       .filter((file) => file.endsWith(".mdx"))
       .map(async (file) => {
@@ -47,12 +50,13 @@ const collectPostInfos = async (): Promise<PostInfo[]> => {
         };
       }),
   );
+  return postInfos.sort(byDateDesc);
 };
 
 let cachedPostInfos: Promise<PostInfo[]> | null = null;
 
-// Built once per build; development skips the cache so post edits show up.
-export const getPostInfos = (): Promise<PostInfo[]> =>
+// Collected once per build; development skips the cache so post edits show up.
+export const getPostInfosNewestFirst = (): Promise<PostInfo[]> =>
   process.env.NODE_ENV === "development"
     ? collectPostInfos()
     : (cachedPostInfos ??= collectPostInfos());
@@ -61,9 +65,6 @@ export const getPostHeadings = async (slug: string): Promise<PostHeading[]> => {
   const { content } = matter(await getPostSource(slug));
   return extractHeadings(content);
 };
-
-const byDateDesc = (a: PostInfo, b: PostInfo) =>
-  b.date.getTime() - a.date.getTime();
 
 const paginate = <T>(
   items: T[],
@@ -78,7 +79,7 @@ export const findRecentPostInfos = async (
   offset: number,
   count: number,
 ): Promise<Paginated<PostInfo>> =>
-  paginate([...(await getPostInfos())].sort(byDateDesc), offset, count);
+  paginate(await getPostInfosNewestFirst(), offset, count);
 
 export const findPostInfosByTag = async (
   tag: string,
@@ -86,9 +87,20 @@ export const findPostInfosByTag = async (
   count: number,
 ): Promise<Paginated<PostInfo>> =>
   paginate(
-    (await getPostInfos())
-      .filter((post) => post.tags.has(tag))
-      .sort(byDateDesc),
+    (await getPostInfosNewestFirst()).filter((post) => post.tags.has(tag)),
     offset,
     count,
   );
+
+/** A post plus its date-order neighbors, for the prev/next links. */
+export const findPostWithNeighbors = async (
+  slug: string,
+): Promise<{ post: PostInfo; newer?: PostInfo; older?: PostInfo }> => {
+  const posts = await getPostInfosNewestFirst();
+  const index = posts.findIndex((post) => post.slug === slug);
+  return {
+    post: posts[index],
+    newer: index > 0 ? posts[index - 1] : undefined,
+    older: index < posts.length - 1 ? posts[index + 1] : undefined,
+  };
+};

@@ -1,12 +1,12 @@
 import { PostListPage } from "~/components/post-list/post-list";
 import { POSTS_PER_PAGE } from "~/models/paginated";
-import { findRecentPostInfos, getPostInfos } from "~/repositories/post-infos";
+import { findRecentPostInfos, getPostInfosNewestFirst } from "~/repositories/post-infos";
 import { getTagCounts } from "~/repositories/tags";
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const postInfos = await getPostInfos();
+  const postInfos = await getPostInfosNewestFirst();
   const totalPages = Math.ceil(postInfos.length / POSTS_PER_PAGE);
   return Array.from({ length: totalPages }, (_, i) => ({ page: `${i + 1}` }));
 }
