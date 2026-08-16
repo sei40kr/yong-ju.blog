@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { Provider } from "~/components/provider";
+import { SITE_URL } from "~/config";
 
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
@@ -17,7 +18,7 @@ import "@fontsource/noto-serif-jp/700.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yong-ju.blog"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "よんログ",
     template: "%s | よんログ",
