@@ -1,8 +1,5 @@
 import { getPostInfos } from "./post-infos";
 
-export const getUniqueTags = async () =>
-  new Set([...(await getPostInfos()).flatMap(({ tags }) => [...tags])]);
-
 /** Tag → number of posts, sorted by count descending. */
 export const getTagCounts = async (): Promise<Map<string, number>> => {
   const counts = new Map<string, number>();
