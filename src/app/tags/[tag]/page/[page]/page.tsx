@@ -39,7 +39,7 @@ export default async function TagPostsPage({
   const currentPage = Number.parseInt(page);
 
   const [paginatedPostInfos, tags] = await Promise.all([
-    findPostInfosByTag(tag, (currentPage - 1) * POSTS_PER_PAGE, POSTS_PER_PAGE),
+    findPostInfosByTag(tag, currentPage),
     getTagCounts(),
   ]);
 

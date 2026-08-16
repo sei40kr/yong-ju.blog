@@ -6,7 +6,7 @@ import {
   extractHeadings,
   toExcerpt,
 } from "~/lib/post-content";
-import type { Paginated } from "~/models/paginated";
+import { type Paginated, POSTS_PER_PAGE } from "~/models/paginated";
 import type { PostHeading } from "~/models/post-heading";
 import type { PostInfo } from "~/models/post-info";
 
@@ -66,28 +66,28 @@ export const getPostHeadings = async (slug: string): Promise<PostHeading[]> => {
 
 const paginate = <T>(
   items: T[],
-  offset: number,
-  count: number,
+  page: number,
+  perPage: number,
 ): Paginated<T> => ({
   totalCount: items.length,
-  items: items.slice(offset, offset + count),
+  items: items.slice((page - 1) * perPage, page * perPage),
 });
 
 export const findRecentPostInfos = async (
-  offset: number,
-  count: number,
+  page: number,
+  perPage: number = POSTS_PER_PAGE,
 ): Promise<Paginated<PostInfo>> =>
-  paginate(await getPostInfosNewestFirst(), offset, count);
+  paginate(await getPostInfosNewestFirst(), page, perPage);
 
 export const findPostInfosByTag = async (
   tag: string,
-  offset: number,
-  count: number,
+  page: number,
+  perPage: number = POSTS_PER_PAGE,
 ): Promise<Paginated<PostInfo>> =>
   paginate(
     (await getPostInfosNewestFirst()).filter((post) => post.tags.has(tag)),
-    offset,
-    count,
+    page,
+    perPage,
   );
 
 /** A post plus its date-order neighbors, for the prev/next links. */

@@ -1,5 +1,4 @@
 import { PostListPage } from "~/components/post-list/post-list";
-import { POSTS_PER_PAGE } from "~/models/paginated";
 import { findRecentPostInfos } from "~/repositories/post-infos";
 import { getTagCounts } from "~/repositories/tags";
 
@@ -8,7 +7,7 @@ import { getTagCounts } from "~/repositories/tags";
 // server redirects, so render the first page directly instead.
 export default async function HomePage() {
   const [paginatedPostInfos, tags] = await Promise.all([
-    findRecentPostInfos(0, POSTS_PER_PAGE),
+    findRecentPostInfos(1),
     getTagCounts(),
   ]);
 

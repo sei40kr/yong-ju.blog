@@ -19,7 +19,7 @@ export default async function RecentPostsPage({
   const currentPage = Number.parseInt((await params).page);
 
   const [paginatedPostInfos, tags] = await Promise.all([
-    findRecentPostInfos((currentPage - 1) * POSTS_PER_PAGE, POSTS_PER_PAGE),
+    findRecentPostInfos(currentPage),
     getTagCounts(),
   ]);
 
