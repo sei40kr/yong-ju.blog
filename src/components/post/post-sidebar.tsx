@@ -44,14 +44,17 @@ export const PostSidebar = ({
       display={{ base: "none", lg: "flex" }}
       pos="sticky"
       top="20"
+      maxH="calc(100dvh - 6rem)"
       direction="column"
       gap="6"
     >
       {headings.length > 0 && (
-        <Box>
+        <Flex direction="column" minH="0">
           <AsideHeading>目次</AsideHeading>
-          <Toc headings={headings} activeHeadingId={activeHeadingId} />
-        </Box>
+          <Box overflowY="auto" minH="0">
+            <Toc headings={headings} activeHeadingId={activeHeadingId} />
+          </Box>
+        </Flex>
       )}
       <Box>
         <AsideHeading>共有</AsideHeading>
