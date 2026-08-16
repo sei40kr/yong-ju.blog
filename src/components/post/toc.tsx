@@ -2,7 +2,7 @@
 
 import { Box, Flex, Link } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
-import type { PostHeading } from "~/repositories/post-infos";
+import type { PostHeading } from "~/models/post-heading";
 
 export const Toc = ({
   headings,

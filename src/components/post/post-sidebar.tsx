@@ -1,6 +1,6 @@
 import { Box, Button, Clipboard, Flex, Heading, Text } from "@chakra-ui/react";
 import { BsLink45Deg, BsTwitterX } from "react-icons/bs";
-import type { PostHeading } from "~/repositories/post-infos";
+import type { PostHeading } from "~/models/post-heading";
 import { Toc } from "./toc";
 
 const SITE_URL = "https://yong-ju.blog";

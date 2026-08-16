@@ -1,5 +1,5 @@
 import type { PostInfo } from "~/models/post-info";
-import type { PostHeading } from "~/repositories/post-infos";
+import type { PostHeading } from "~/models/post-heading";
 
 /**
  * Sample data for the stories. It deliberately does not mirror anything in

@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { PostSidebar } from "~/components/post/post-sidebar";
-import type { PostHeading } from "~/repositories/post-infos";
+import type { PostHeading } from "~/models/post-heading";
 
 // Track the heading in view, scoped to the body so the observer never
 // reaches a sibling subtree via a global `document` lookup.

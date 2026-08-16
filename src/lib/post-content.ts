@@ -1,4 +1,5 @@
 import GithubSlugger from "github-slugger";
+import type { PostHeading } from "~/models/post-heading";
 
 // Regex, not a remark AST pass: @next/mdx already parses each file once, so
 // re-parsing here to read headings/prose would be a second, far slower parse
@@ -45,12 +46,6 @@ export const toExcerpt = (content: string): string => {
 /** Rough Japanese reading speed: ~500 characters per minute. */
 export const estimateReadMinutes = (content: string): number =>
   Math.max(1, Math.round(content.replace(/\s/g, "").length / 500));
-
-export interface PostHeading {
-  depth: 2 | 3;
-  text: string;
-  id: string;
-}
 
 /**
  * Extract h2/h3 headings for the table of contents. Ids must match what

@@ -4,13 +4,11 @@ import matter from "gray-matter";
 import {
   estimateReadMinutes,
   extractHeadings,
-  type PostHeading,
   toExcerpt,
 } from "~/lib/post-content";
 import type { Paginated } from "~/models/paginated";
+import type { PostHeading } from "~/models/post-heading";
 import type { PostInfo } from "~/models/post-info";
-
-export type { PostHeading };
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
