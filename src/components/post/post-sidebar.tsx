@@ -51,9 +51,7 @@ export const PostSidebar = ({
       {headings.length > 0 && (
         <Flex direction="column" minH="0">
           <AsideHeading>目次</AsideHeading>
-          <Box overflowY="auto" minH="0">
-            <Toc headings={headings} activeHeadingId={activeHeadingId} />
-          </Box>
+          <Toc headings={headings} activeHeadingId={activeHeadingId} />
         </Flex>
       )}
       <Box>
