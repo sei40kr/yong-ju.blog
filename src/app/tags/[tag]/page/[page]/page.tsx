@@ -2,19 +2,13 @@ import type { Metadata } from "next";
 import { TagArchive, TagResults } from "~/containers/tag-archive";
 import { POSTS_PER_PAGE } from "~/models/paginated";
 import { withDevEncodedVariants } from "~/lib/static-params";
-import { findPostInfosByTag, getPostInfos } from "~/repositories/post-infos";
+import { findPostInfosByTag } from "~/repositories/post-infos";
 import { getTagCounts } from "~/repositories/tags";
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const postInfos = await getPostInfos();
-  const postCountByTag = postInfos.reduce((acc, postInfo) => {
-    for (const tag of postInfo.tags) {
-      acc.set(tag, (acc.get(tag) ?? 0) + 1);
-    }
-    return acc;
-  }, new Map<string, number>());
+  const postCountByTag = await getTagCounts();
   return withDevEncodedVariants(
     Array.from(postCountByTag.entries()).flatMap(([tag, count]) => {
       const totalPages = Math.ceil(count / POSTS_PER_PAGE);
