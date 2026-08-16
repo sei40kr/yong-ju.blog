@@ -34,7 +34,8 @@ const withMDX = createMDX({
     // Syntax highlighting is no longer done here: fenced code blocks pass
     // through untouched and are highlighted by the stock Chakra CodeBlock via
     // a Shiki adapter (Night Owl) — see src/lib/shiki.ts and code-block.tsx.
-    rehypePlugins: ["rehype-katex", "rehype-slug"],
+    // Slug before KaTeX, whose output repeats math in the heading text.
+    rehypePlugins: ["rehype-slug", "rehype-katex"],
   },
 });
 
