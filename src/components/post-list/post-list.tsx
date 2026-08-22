@@ -14,7 +14,7 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { PostItem } from "~/components/post-list/post-item";
 import { PostListSidebar } from "~/components/post-list/post-list-sidebar";
 import { POSTS_PER_PAGE } from "~/models/paginated";
-import type { PostInfo } from "~/models/post-info";
+import type { PostData } from "~/models/post-data";
 
 /**
  * A page of posts: section heading, result range, the items, and pagination.
@@ -34,7 +34,7 @@ export const PostList = ({
   heading: string;
   totalCount: number;
   currentPage: number;
-  posts: PostInfo[];
+  posts: PostData[];
   basePath: string;
 }) => {
   const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
@@ -128,7 +128,7 @@ export const PostListPage = ({
 }: {
   totalCount: number;
   currentPage: number;
-  posts: PostInfo[];
+  posts: PostData[];
   basePath: string;
   tags: Map<string, number>;
 }) => (

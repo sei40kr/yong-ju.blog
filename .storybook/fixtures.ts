@@ -1,4 +1,4 @@
-import type { PostInfo } from "~/models/post-info";
+import type { PostData } from "~/models/post-data";
 import type { PostHeading } from "~/models/post-heading";
 
 /**
@@ -11,7 +11,7 @@ import type { PostHeading } from "~/models/post-heading";
  * tagged vs untagged, and length. Dates are absolute so `humanizeDate` prints
  * the same string on every run.
  */
-export const SAMPLE_POSTS: PostInfo[] = [
+export const SAMPLE_POSTS: PostData[] = [
   {
     slug: "sample-post",
     title: "サンプル記事のタイトル",

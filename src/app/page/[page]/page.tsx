@@ -1,13 +1,13 @@
 import { PostListPage } from "~/components/post-list/post-list";
 import { POSTS_PER_PAGE } from "~/models/paginated";
-import { findRecentPostInfos, getPostInfosNewestFirst } from "~/repositories/post-infos";
+import { findRecentPostData, getPostDataNewestFirst } from "~/repositories/post-data";
 import { getTagCounts } from "~/repositories/tags";
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const postInfos = await getPostInfosNewestFirst();
-  const totalPages = Math.ceil(postInfos.length / POSTS_PER_PAGE);
+  const postData = await getPostDataNewestFirst();
+  const totalPages = Math.ceil(postData.length / POSTS_PER_PAGE);
   return Array.from({ length: totalPages }, (_, i) => ({ page: `${i + 1}` }));
 }
 
@@ -18,16 +18,16 @@ export default async function RecentPostsPage({
 }) {
   const currentPage = Number.parseInt((await params).page);
 
-  const [paginatedPostInfos, tags] = await Promise.all([
-    findRecentPostInfos(currentPage),
+  const [paginatedPostData, tags] = await Promise.all([
+    findRecentPostData(currentPage),
     getTagCounts(),
   ]);
 
   return (
     <PostListPage
-      totalCount={paginatedPostInfos.totalCount}
+      totalCount={paginatedPostData.totalCount}
       currentPage={currentPage}
-      posts={paginatedPostInfos.items}
+      posts={paginatedPostData.items}
       basePath="/page"
       tags={tags}
     />

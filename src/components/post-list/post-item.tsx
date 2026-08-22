@@ -9,12 +9,12 @@ import {
 import NextLink from "next/link";
 import { humanizeDate } from "~/lib/format";
 import { Tag } from "~/components/tag/tag";
-import type { PostInfo } from "~/models/post-info";
+import type { PostData } from "~/models/post-data";
 
 export const PostItem = ({
   post: { slug, title, date, tags, excerpt, readMinutes },
 }: {
-  post: PostInfo;
+  post: PostData;
 }) => (
   <LinkBox
     as="article"

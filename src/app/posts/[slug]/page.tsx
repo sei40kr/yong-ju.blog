@@ -14,12 +14,12 @@ import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Tag } from "~/components/tag/tag";
 import { PostArticle } from "~/containers/post-article";
 import { humanizeDate } from "~/lib/format";
-import type { PostInfo } from "~/models/post-info";
+import type { PostData } from "~/models/post-data";
 import {
   findPostWithNeighbors,
   getPostHeadings,
-  getPostInfosNewestFirst,
-} from "~/repositories/post-infos";
+  getPostDataNewestFirst,
+} from "~/repositories/post-data";
 
 import "katex/dist/katex.min.css";
 
@@ -38,7 +38,7 @@ const importPost = async (slug: string) => {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return (await getPostInfosNewestFirst()).map(({ slug }) => ({ slug }));
+  return (await getPostDataNewestFirst()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -56,7 +56,7 @@ const AdjacentPostCard = ({
   label,
   align = "left",
 }: {
-  post: PostInfo;
+  post: PostData;
   label: string;
   align?: "left" | "right";
 }) => (

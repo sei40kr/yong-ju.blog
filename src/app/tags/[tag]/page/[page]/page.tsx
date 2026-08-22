@@ -3,7 +3,7 @@ import { PostList } from "~/components/post-list/post-list";
 import { TagArchive } from "~/components/tag/tag-archive";
 import { POSTS_PER_PAGE } from "~/models/paginated";
 import { withDevEncodedVariants } from "~/lib/static-params";
-import { findPostInfosByTag } from "~/repositories/post-infos";
+import { findPostDataByTag } from "~/repositories/post-data";
 import { getTagCounts } from "~/repositories/tags";
 
 export const dynamicParams = false;
@@ -39,8 +39,8 @@ export default async function TagPostsPage({
   const tag = decodeURIComponent(rawTag);
   const currentPage = Number.parseInt(page);
 
-  const [paginatedPostInfos, tags] = await Promise.all([
-    findPostInfosByTag(tag, currentPage),
+  const [paginatedPostData, tags] = await Promise.all([
+    findPostDataByTag(tag, currentPage),
     getTagCounts(),
   ]);
 
@@ -48,9 +48,9 @@ export default async function TagPostsPage({
     <TagArchive tags={tags} currentTag={tag}>
       <PostList
         heading={`#${tag} の記事`}
-        totalCount={paginatedPostInfos.totalCount}
+        totalCount={paginatedPostData.totalCount}
         currentPage={currentPage}
-        posts={paginatedPostInfos.items}
+        posts={paginatedPostData.items}
         basePath={`/tags/${encodeURIComponent(tag)}/page`}
       />
     </TagArchive>

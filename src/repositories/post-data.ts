@@ -8,7 +8,7 @@ import {
 } from "~/lib/post-content";
 import { type Paginated, POSTS_PER_PAGE } from "~/models/paginated";
 import type { PostHeading } from "~/models/post-heading";
-import type { PostInfo } from "~/models/post-info";
+import type { PostData } from "~/models/post-data";
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
@@ -21,12 +21,12 @@ interface PostFrontmatter {
 const getPostSource = (slug: string): Promise<string> =>
   fs.readFile(path.join(POSTS_DIR, `${slug}.mdx`), "utf-8");
 
-const byDateDesc = (a: PostInfo, b: PostInfo) =>
+const byDateDesc = (a: PostData, b: PostData) =>
   b.date.getTime() - a.date.getTime();
 
-const collectPostInfos = async (): Promise<PostInfo[]> => {
+const collectPostData = async (): Promise<PostData[]> => {
   const files = await fs.readdir(POSTS_DIR);
-  const postInfos = await Promise.all(
+  const postData = await Promise.all(
     files
       .filter((file) => file.endsWith(".mdx"))
       .map(async (file) => {
@@ -48,16 +48,16 @@ const collectPostInfos = async (): Promise<PostInfo[]> => {
         };
       }),
   );
-  return postInfos.sort(byDateDesc);
+  return postData.sort(byDateDesc);
 };
 
-let cachedPostInfos: Promise<PostInfo[]> | null = null;
+let cachedPostData: Promise<PostData[]> | null = null;
 
 // Collected once per build; development skips the cache so post edits show up.
-export const getPostInfosNewestFirst = (): Promise<PostInfo[]> =>
+export const getPostDataNewestFirst = (): Promise<PostData[]> =>
   process.env.NODE_ENV === "development"
-    ? collectPostInfos()
-    : (cachedPostInfos ??= collectPostInfos());
+    ? collectPostData()
+    : (cachedPostData ??= collectPostData());
 
 export const getPostHeadings = async (slug: string): Promise<PostHeading[]> => {
   const { content } = matter(await getPostSource(slug));
@@ -73,19 +73,19 @@ const paginate = <T>(
   items: items.slice((page - 1) * perPage, page * perPage),
 });
 
-export const findRecentPostInfos = async (
+export const findRecentPostData = async (
   page: number,
   perPage: number = POSTS_PER_PAGE,
-): Promise<Paginated<PostInfo>> =>
-  paginate(await getPostInfosNewestFirst(), page, perPage);
+): Promise<Paginated<PostData>> =>
+  paginate(await getPostDataNewestFirst(), page, perPage);
 
-export const findPostInfosByTag = async (
+export const findPostDataByTag = async (
   tag: string,
   page: number,
   perPage: number = POSTS_PER_PAGE,
-): Promise<Paginated<PostInfo>> =>
+): Promise<Paginated<PostData>> =>
   paginate(
-    (await getPostInfosNewestFirst()).filter((post) => post.tags.has(tag)),
+    (await getPostDataNewestFirst()).filter((post) => post.tags.has(tag)),
     page,
     perPage,
   );
@@ -93,8 +93,8 @@ export const findPostInfosByTag = async (
 /** A post plus its date-order neighbors, for the prev/next links. */
 export const findPostWithNeighbors = async (
   slug: string,
-): Promise<{ post: PostInfo; newer?: PostInfo; older?: PostInfo }> => {
-  const posts = await getPostInfosNewestFirst();
+): Promise<{ post: PostData; newer?: PostData; older?: PostData }> => {
+  const posts = await getPostDataNewestFirst();
   const index = posts.findIndex((post) => post.slug === slug);
   return {
     post: posts[index],
