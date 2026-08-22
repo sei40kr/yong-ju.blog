@@ -1,5 +1,7 @@
-import { Box, Flex, HStack, Link, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Icon, Link, Spacer, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { BsGithub } from "react-icons/bs";
+import { GITHUB_REPO_URL } from "~/config";
 
 const NavLink = ({ href, label }: { href: string; label: string }) => (
   <Link
@@ -40,6 +42,18 @@ export const Header = () => (
       <HStack as="nav" gap="5" fontSize="md">
         <NavLink href="/" label="記事" />
         <NavLink href="/tags" label="タグ" />
+        <Link
+          href={GITHUB_REPO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="このブログの GitHub リポジトリ"
+          color="fg.muted"
+          _hover={{ color: "fg", textDecoration: "none" }}
+        >
+          <Icon size="md">
+            <BsGithub />
+          </Icon>
+        </Link>
       </HStack>
     </Flex>
   </Box>
