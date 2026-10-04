@@ -1,0 +1,637 @@
+---
+title: "ガロア理論"
+date: 2026-10-04T19:23:02+09:00
+tags: ["数学", "代数学", "ガロア理論", "群論", "大学数学", "勉強ノート"]
+---
+
+ガロア理論は、体の拡大と群を対応させることで、方程式の解の構造を群の言葉で調べる理論である。
+群の基本事項 (部分群、正規部分群、剰余群、準同型定理) は[群論](/posts/group-theory/)のノートを前提とする。
+
+## 体
+
+### 定義
+
+集合 $K$ に2つの二項演算 $+,\cdot$ が与えられていて、以下の条件を全て満たすとき、$K$ を**体**という。
+
+- $K$ は $+$ について可換群である。その単位元を $0$ と書く。
+- $K^\times=K\setminus\{0\}$ は $\cdot$ について可換群である。その単位元を $1$ と書く。
+- **分配律**
+
+  $$
+  \forall{a,b,c\in K},a(b+c)=ab+ac
+  $$
+
+体 $L$ の部分集合 $K$ が $L$ の演算によって体になるとき、$K$ を $L$ の**部分体**という。
+
+<Hint level="info">
+
+$\mathbb{Q},\mathbb{R},\mathbb{C}$ は体である。$\mathbb{Z}$ は乗法の逆元が存在しないため体ではない。
+また、$p$ を素数とすると $\mathbb{Z}/p\mathbb{Z}$ は体であり、$\mathbb{F}_p$ と書く。
+
+</Hint>
+
+### 標数
+
+$1$ を $n$ 回足したものが $0$ となるような最小の正の整数 $n$ が存在するとき、その $n$ を $K$ の**標数**という。
+そのような $n$ が存在しないとき、$K$ の標数は $0$ であるという。
+
+$\mathbb{Q},\mathbb{R},\mathbb{C}$ の標数は $0$、$\mathbb{F}_p$ の標数は $p$ である。
+
+**以降、特に断らない限り体の標数は $0$ とする。**
+
+### 体の準同型写像
+
+体 $K,K'$ に対し、写像 $\sigma:K\to K'$ が
+
+$$
+\begin{aligned}
+\sigma(a+b)&=\sigma(a)+\sigma(b)\\
+\sigma(ab)&=\sigma(a)\sigma(b)\\
+\sigma(1)&=1
+\end{aligned}
+$$
+
+を満たすとき、$\sigma$ を**体の準同型写像**という。
+
+<Hint level="info">
+
+体の準同型写像は必ず単射である。$\sigma(a)=0$ かつ $a\ne0$ とすると
+$1=\sigma(1)=\sigma(a)\sigma(a^{-1})=0$ となり矛盾するので、$\ker\sigma=\{0\}$ となるからである。
+
+</Hint>
+
+## 体の拡大
+
+### 定義
+
+$K$ が $L$ の部分体であるとき、$L/K$ と書いて**体の拡大**という。
+また、$K\subset M\subset L$ となる体 $M$ を $L/K$ の**中間体**という。
+
+$L$ は $K$ 上のベクトル空間とみなせる。その次元を $L/K$ の**拡大次数**といい、$[L:K]$ で表す。
+$[L:K]$ が有限であるとき、$L/K$ を**有限次拡大**という。
+
+<Hint level="info">
+
+$\mathbb{C}$ は $\mathbb{R}$ 上 $1,i$ を基底とするベクトル空間なので、$[\mathbb{C}:\mathbb{R}]=2$。
+
+</Hint>
+
+### 拡大次数の連鎖律
+
+$K\subset M\subset L$ のとき
+
+$$
+[L:K]=[L:M][M:K]
+$$
+
+<Details title="証明">
+$\{\alpha_i\}$ を $L/M$ の基底、$\{\beta_j\}$ を $M/K$ の基底とし、$\{\alpha_i\beta_j\}$ が $L/K$ の基底となることを示す。
+
+**生成すること**
+
+任意の $x\in L$ は $c_i\in M$ を用いて $x=\sum_ic_i\alpha_i$ と書ける。
+さらに各 $c_i$ は $d_{ij}\in K$ を用いて $c_i=\sum_jd_{ij}\beta_j$ と書けるので
+
+$$
+x=\sum_{i,j}d_{ij}\alpha_i\beta_j
+$$
+
+**一次独立であること**
+
+$d_{ij}\in K$ に対し $\sum_{i,j}d_{ij}\alpha_i\beta_j=0$ とする。
+
+$$
+\sum_i\Bigl(\sum_jd_{ij}\beta_j\Bigr)\alpha_i=0
+$$
+
+括弧内は $M$ の元であり、$\{\alpha_i\}$ は $M$ 上一次独立なので、各 $i$ について $\sum_jd_{ij}\beta_j=0$。
+さらに $\{\beta_j\}$ は $K$ 上一次独立なので、$d_{ij}=0$。
+
+以上より $\{\alpha_i\beta_j\}$ は $L/K$ の基底であり、その個数は $[L:M][M:K]$ である。
+
+</Details>
+
+## 代数的元と最小多項式
+
+### 定義
+
+$L/K$ を体の拡大とする。
+$\alpha\in L$ が $K$ 係数の $0$ でない多項式の根となるとき、$\alpha$ は **$K$ 上代数的**であるという。
+
+$\alpha$ を根に持つ $K$ 係数のモニック多項式のうち、次数が最小のものはただ1つに定まる。
+これを **$\alpha$ の $K$ 上の最小多項式**という。最小多項式は $K$ 上既約である。
+
+また、$K$ と $\alpha$ を含む $L$ の最小の部分体を $K(\alpha)$ で表し、$K$ に $\alpha$ を**添加した体**という。
+$K(\alpha_1,\dots,\alpha_n)$ も同様に定義する。
+
+<Hint level="info">
+
+$\sqrt{2}$ の $\mathbb{Q}$ 上の最小多項式は $x^2-2$、
+$\sqrt[3]{2}$ の $\mathbb{Q}$ 上の最小多項式は $x^3-2$ である。
+
+</Hint>
+
+### 単拡大の定理
+
+$\alpha$ が $K$ 上代数的で、その最小多項式 $f$ の次数が $n$ であるとき
+
+$$
+K(\alpha)\simeq K[x]/(f)
+$$
+
+であり、$1,\alpha,\dots,\alpha^{n-1}$ は $K(\alpha)/K$ の基底となる。特に
+
+$$
+[K(\alpha):K]=\deg f
+$$
+
+<Details title="証明">
+代入による環準同型写像
+
+$$
+\begin{aligned}
+\varphi:&K[x]&\to&\enspace L\\
+&g(x)&\mapsto&\enspace g(\alpha)
+\end{aligned}
+$$
+
+を考える。$\ker\varphi$ は $\alpha$ を根に持つ多項式全体であり、最小多項式の最小性より $\ker\varphi=(f)$。
+
+$f$ は既約なので $(f)$ は極大イデアルであり、$K[x]/(f)\simeq\text{im}\varphi$ は体である。
+$\text{im}\varphi$ は $K$ と $\alpha$ を含む体であり、かつ $K(\alpha)$ に含まれるので、$\text{im}\varphi=K(\alpha)$。
+
+任意の $g\in K[x]$ を $f$ で割ると $g=qf+r\;(\deg r\lt n)$ と書けて、$g(\alpha)=r(\alpha)$ となる。
+よって $K(\alpha)$ は $1,\alpha,\dots,\alpha^{n-1}$ で生成される。
+また、これらが一次従属であれば次数 $n$ 未満の $0$ でない多項式が $\alpha$ を根に持つことになり、最小性に反する。
+
+</Details>
+
+## 分解体
+
+$f\in K[x]$ が $L$ 上で一次式の積に分解し、かつ $L=K(\alpha_1,\dots,\alpha_n)$ ($\alpha_1,\dots,\alpha_n$ は $f$ の根全体) となるとき、
+$L$ を **$f$ の $K$ 上の分解体**という。分解体は同型を除いて一意に存在する。
+
+<Hint level="info">
+
+$x^3-2$ の根は $\omega=\frac{-1+\sqrt{-3}}{2}$ を用いて $\sqrt[3]{2},\omega\sqrt[3]{2},\omega^2\sqrt[3]{2}$ と書けるので、
+その $\mathbb{Q}$ 上の分解体は $\mathbb{Q}(\sqrt[3]{2},\omega)$ である。
+
+$\mathbb{Q}(\sqrt[3]{2})\subset\mathbb{R}$ には $\omega\sqrt[3]{2}$ が含まれないので、
+$\mathbb{Q}(\sqrt[3]{2})$ は分解体ではない。
+
+</Hint>
+
+## 正規拡大と分離拡大
+
+### 正規拡大
+
+$L/K$ を代数拡大とする。$K$ 上既約な多項式が $L$ に1つでも根を持てば、$L$ 上で一次式の積に分解するとき、
+$L/K$ を**正規拡大**という。
+
+有限次拡大 $L/K$ が正規拡大であることは、$L$ が $K$ 係数のある多項式の分解体であることに等しい。
+
+<Hint level="info">
+
+$\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ は正規拡大ではない。
+$x^3-2$ は $\mathbb{Q}(\sqrt[3]{2})$ に根 $\sqrt[3]{2}$ を持つが、残りの2つの根を持たないからである。
+
+</Hint>
+
+### 分離拡大
+
+既約多項式 $f$ が重根を持たないとき、$f$ は**分離的**であるという。
+$L/K$ の任意の元の最小多項式が分離的であるとき、$L/K$ を**分離拡大**という。
+
+### 定理
+
+標数 $0$ の体上の既約多項式は分離的である。したがって、標数 $0$ の体の代数拡大は常に分離拡大である。
+
+<Details title="証明">
+$f$ が重根 $\alpha$ を持つとすると、$f=(x-\alpha)^2g$ と書けるので
+
+$$
+f'=2(x-\alpha)g+(x-\alpha)^2g'
+$$
+
+より $f'(\alpha)=0$ となる。
+
+$f$ は $\alpha$ の最小多項式 (の定数倍) なので、$f'$ は $f$ で割り切れる。
+ところが標数 $0$ では $\deg f\ge1$ のとき $f'\ne0$ かつ $\deg f'\lt\deg f$ なので、これは矛盾である。
+
+</Details>
+
+<Hint level="warn">
+
+標数 $p$ の体では $(x^p)'=px^{p-1}=0$ となるため、この議論は成り立たない。
+例えば $\mathbb{F}_p(t)$ 上の $x^p-t$ は既約だが分離的でない。
+
+</Hint>
+
+## ガロア拡大とガロア群
+
+### 自己同型群
+
+$L/K$ を体の拡大とする。$L$ から $L$ への体の同型写像で、$K$ の元を動かさないもの全体
+
+$$
+\text{Aut}(L/K)=\{\sigma:L\to L\mid\sigma\,\text{は同型写像},\forall{a\in K},\sigma(a)=a\}
+$$
+
+は写像の合成について群となる。これを **$L/K$ の自己同型群**という。
+
+### 共役を移す定理
+
+$\sigma\in\text{Aut}(L/K)$、$\alpha\in L$ とし、$f\in K[x]$ を $f(\alpha)=0$ となる多項式とすると
+
+$$
+f(\sigma(\alpha))=0
+$$
+
+すなわち、**$\sigma$ は $\alpha$ を $\alpha$ の共役 (最小多項式の他の根) に移す。**
+
+<Details title="証明">
+$f(x)=\sum_ia_ix^i\;(a_i\in K)$ とすると、$\sigma(a_i)=a_i$ より
+
+$$
+f(\sigma(\alpha))=\sum_ia_i\sigma(\alpha)^i=\sigma\Bigl(\sum_ia_i\alpha^i\Bigr)=\sigma(f(\alpha))=\sigma(0)=0
+$$
+
+</Details>
+
+<Hint level="info">
+
+$\sigma$ は $K$ の元を固定するので、$L=K(\alpha_1,\dots,\alpha_n)$ のとき $\sigma$ は $\alpha_1,\dots,\alpha_n$ の行き先だけで決まる。
+特に単拡大 $K(\alpha)/K$ では、$\sigma$ は $\sigma(\alpha)$ で決まり、その候補は最小多項式の根に限られるので
+
+$$
+|\text{Aut}(K(\alpha)/K)|\le[K(\alpha):K]
+$$
+
+一般に、有限次拡大 $L/K$ に対して $|\text{Aut}(L/K)|\le[L:K]$ が成り立つ。
+
+</Hint>
+
+### ガロア拡大の定義
+
+有限次拡大 $L/K$ が正規拡大かつ分離拡大であるとき、$L/K$ を**ガロア拡大**といい、
+$\text{Aut}(L/K)$ を **$L/K$ のガロア群**と呼んで $\text{Gal}(L/K)$ で表す。
+
+### 固定体
+
+$H$ を $\text{Aut}(L/K)$ の部分群とする。
+
+$$
+L^H=\{x\in L\mid\forall{\sigma\in H},\sigma(x)=x\}
+$$
+
+は $L/K$ の中間体となる。これを **$H$ の固定体**という。
+
+<Details title="中間体であることの証明">
+$K\subset L^H$ は $\text{Aut}(L/K)$ の定義より明らか。
+
+$x,y\in L^H$、$\sigma\in H$ に対して
+
+$$
+\begin{aligned}
+\sigma(x-y)&=\sigma(x)-\sigma(y)=x-y\\
+\sigma(xy^{-1})&=\sigma(x)\sigma(y)^{-1}=xy^{-1}\;(y\ne0)
+\end{aligned}
+$$
+
+よって $L^H$ は減法と除法について閉じており、$L$ の部分体である。
+
+</Details>
+
+### ガロア拡大の特徴付け
+
+有限次拡大 $L/K$ に対して、以下は同値である。
+
+1. $L/K$ はガロア拡大
+2. $|\text{Aut}(L/K)|=[L:K]$
+3. $L^{\text{Aut}(L/K)}=K$
+4. $L$ は $K$ 上の分離的な多項式の分解体
+
+また、有限群 $H\le\text{Aut}(L)$ に対して $L/L^H$ はガロア拡大であり、$[L:L^H]=|H|$ となる (**アルティンの定理**)。
+
+{/* TODO ガロア拡大の特徴付けとアルティンの定理の証明 */}
+
+<Hint level="info">
+
+ガロア拡大は「自己同型が最大限にある拡大」と捉えるとよい。
+$\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ では $\sqrt[3]{2}$ の移り先の候補のうち実数は $\sqrt[3]{2}$ 自身しかないので、
+$\text{Aut}(\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q})=\{\text{id}\}$ となり、$|\text{Aut}|=1\lt3=[\mathbb{Q}(\sqrt[3]{2}):\mathbb{Q}]$ である。
+
+</Hint>
+
+## ガロアの基本定理
+
+$L/K$ をガロア拡大とし、$G=\text{Gal}(L/K)$ とする。
+
+- $G$ の部分群全体と $L/K$ の中間体全体の間に、**包含関係を逆転する**一対一対応が存在する。
+
+  $$
+  \begin{aligned}
+  \{G\,\text{の部分群}\}&\to\{L/K\,\text{の中間体}\} & H&\mapsto L^H\\
+  \{L/K\,\text{の中間体}\}&\to\{G\,\text{の部分群}\} & M&\mapsto\text{Gal}(L/M)
+  \end{aligned}
+  $$
+
+  これらは互いに逆写像である。
+
+  すなわち $H_1\subset H_2\iff L^{H_1}\supset L^{H_2}$ が成り立つ。
+
+- 中間体 $M$ と部分群 $H$ が対応するとき
+
+  $$
+  [L:M]=|H|,\quad[M:K]=(G:H)
+  $$
+
+- $M/K$ がガロア拡大であることと、$\text{Gal}(L/M)$ が $G$ の正規部分群であることは同値であり、このとき
+
+  $$
+  \text{Gal}(M/K)\simeq G/\text{Gal}(L/M)
+  $$
+
+<Details title="一対一対応と次数の証明">
+中間体 $M$ に対して、$L/K$ は $K$ 上の分離的な多項式の分解体なので、同じ多項式を $M$ 係数とみれば $L/M$ もガロア拡大である。
+よって特徴付けの 3 より
+
+$$
+L^{\text{Gal}(L/M)}=M
+$$
+
+部分群 $H$ に対して、アルティンの定理より $L/L^H$ はガロア拡大で $[L:L^H]=|H|$。
+$\text{Gal}(L/L^H)\supset H$ は定義より明らかで、特徴付けの 2 より $|\text{Gal}(L/L^H)|=[L:L^H]=|H|$ なので
+
+$$
+\text{Gal}(L/L^H)=H
+$$
+
+以上より2つの写像は互いに逆写像である。
+包含関係の逆転は定義から明らか。
+
+また、$[L:M]=|\text{Gal}(L/M)|=|H|$ であり、連鎖律とラグランジュの定理より
+
+$$
+[M:K]=\frac{[L:K]}{[L:M]}=\frac{|G|}{|H|}=(G:H)
+$$
+
+</Details>
+
+<Details title="正規部分群との対応の証明">
+まず、$\sigma\in G$ に対して
+
+$$
+\text{Gal}(L/\sigma(M))=\sigma\,\text{Gal}(L/M)\,\sigma^{-1}\tag{1}
+$$
+
+が成り立つことを示す。$\tau\in G$ について
+
+$$
+\begin{aligned}
+\tau\in\text{Gal}(L/\sigma(M))
+&\iff\forall{x\in M},\tau(\sigma(x))=\sigma(x)\\
+&\iff\forall{x\in M},\sigma^{-1}\tau\sigma(x)=x\\
+&\iff\sigma^{-1}\tau\sigma\in\text{Gal}(L/M)
+\end{aligned}
+$$
+
+$\implies$
+
+$M/K$ がガロア拡大であるとする。
+$x\in M$ と $\sigma\in G$ について、共役を移す定理より $\sigma(x)$ は $x$ の最小多項式の根であり、
+$M/K$ は正規拡大なので $\sigma(x)\in M$。よって $\sigma(M)=M$ となり、制限写像
+
+$$
+\begin{aligned}
+\text{res}:&G&\to&\enspace\text{Gal}(M/K)\\
+&\sigma&\mapsto&\enspace\sigma|_M
+\end{aligned}
+$$
+
+は群の準同型写像である。$\ker(\text{res})=\text{Gal}(L/M)$ なので、核の定理より $\text{Gal}(L/M)\trianglelefteq G$。
+
+また、準同型定理より $G/\text{Gal}(L/M)\simeq\text{im}(\text{res})$ であり
+
+$$
+|\text{im}(\text{res})|=\frac{|G|}{|\text{Gal}(L/M)|}=\frac{[L:K]}{[L:M]}=[M:K]=|\text{Gal}(M/K)|
+$$
+
+より $\text{res}$ は全射。よって $\text{Gal}(M/K)\simeq G/\text{Gal}(L/M)$。
+
+$\impliedby$
+
+$H=\text{Gal}(L/M)\trianglelefteq G$ とする。$\sigma\in G$ に対して、(1) より
+
+$$
+\text{Gal}(L/\sigma(M))=\sigma H\sigma^{-1}=H=\text{Gal}(L/M)
+$$
+
+一対一対応より $\sigma(M)=M$ となるので、上と同様に制限写像 $\text{res}:G\to\text{Aut}(M/K)$ が定まり、その核は $H$ である。
+よって
+
+$$
+|\text{Aut}(M/K)|\ge|G/H|=(G:H)=[M:K]
+$$
+
+$|\text{Aut}(M/K)|\le[M:K]$ と合わせて等号が成立し、特徴付けの 2 より $M/K$ はガロア拡大である。
+
+</Details>
+
+## 例: ℚ(√2, √3)/ℚ
+
+$L=\mathbb{Q}(\sqrt{2},\sqrt{3})$ は $(x^2-2)(x^2-3)$ の $\mathbb{Q}$ 上の分解体なので、ガロア拡大である。
+
+### 拡大次数
+
+$\sqrt{3}\notin\mathbb{Q}(\sqrt{2})$ を示せば、$x^2-3$ が $\mathbb{Q}(\sqrt{2})$ 上既約となり、連鎖律より
+
+$$
+[L:\mathbb{Q}]=[L:\mathbb{Q}(\sqrt{2})][\mathbb{Q}(\sqrt{2}):\mathbb{Q}]=2\cdot2=4
+$$
+
+<Details title="√3 ∉ Q(√2) の証明">
+$\sqrt{3}=a+b\sqrt{2}\;(a,b\in\mathbb{Q})$ と書けたとする。両辺を2乗して
+
+$$
+3=a^2+2b^2+2ab\sqrt{2}
+$$
+
+$\sqrt{2}\notin\mathbb{Q}$ より $ab=0$。
+
+- $b=0$ のとき、$\sqrt{3}=a\in\mathbb{Q}$ となり矛盾。
+- $a=0$ のとき、$3=2b^2$ より $\sqrt{6}=2b\in\mathbb{Q}$ となり矛盾。
+
+</Details>
+
+### ガロア群
+
+$\sigma\in\text{Gal}(L/\mathbb{Q})$ は $\sqrt{2}\mapsto\pm\sqrt{2}$、$\sqrt{3}\mapsto\pm\sqrt{3}$ で決まり、$|\text{Gal}(L/\mathbb{Q})|=4$ なので4通り全てが実現する。
+
+|              | $\sqrt{2}$  | $\sqrt{3}$  | $\sqrt{6}$  |
+| :----------: | :---------: | :---------: | :---------: |
+| $\text{id}$  | $\sqrt{2}$  | $\sqrt{3}$  | $\sqrt{6}$  |
+|   $\sigma$   | $-\sqrt{2}$ | $\sqrt{3}$  | $-\sqrt{6}$ |
+|    $\tau$    | $\sqrt{2}$  | $-\sqrt{3}$ | $-\sqrt{6}$ |
+| $\sigma\tau$ | $-\sqrt{2}$ | $-\sqrt{3}$ | $\sqrt{6}$  |
+
+どの元も2乗すると $\text{id}$ になるので
+
+$$
+\text{Gal}(L/\mathbb{Q})=\{\text{id},\sigma,\tau,\sigma\tau\}\simeq\mathbb{Z}/2\mathbb{Z}\times\mathbb{Z}/2\mathbb{Z}
+$$
+
+### 中間体との対応
+
+上の表から各部分群が固定する元を読み取ると
+
+|           部分群           |         固定体         | $[L:M]$ |
+| :------------------------: | :--------------------: | :-----: |
+|      $\{\text{id}\}$       |          $L$           |    1    |
+|   $\langle\sigma\rangle$   | $\mathbb{Q}(\sqrt{3})$ |    2    |
+|    $\langle\tau\rangle$    | $\mathbb{Q}(\sqrt{2})$ |    2    |
+| $\langle\sigma\tau\rangle$ | $\mathbb{Q}(\sqrt{6})$ |    2    |
+| $\text{Gal}(L/\mathbb{Q})$ |      $\mathbb{Q}$      |    4    |
+
+$\text{Gal}(L/\mathbb{Q})$ は可換群なので全ての部分群が正規部分群であり、対応する中間体は全て $\mathbb{Q}$ のガロア拡大となる。
+
+## 例: x³ − 2 の分解体
+
+$L=\mathbb{Q}(\sqrt[3]{2},\omega)$ とする。$\omega$ の $\mathbb{Q}$ 上の最小多項式は $x^2+x+1$ であり、
+$\mathbb{Q}(\sqrt[3]{2})\subset\mathbb{R}$ は虚数 $\omega$ を含まないので
+
+$$
+[L:\mathbb{Q}]=[L:\mathbb{Q}(\sqrt[3]{2})][\mathbb{Q}(\sqrt[3]{2}):\mathbb{Q}]=2\cdot3=6
+$$
+
+### ガロア群
+
+$G=\text{Gal}(L/\mathbb{Q})$ の元は $x^3-2$ の3つの根を置換し、置換によって元が決まるので $G$ は $S_3$ の部分群とみなせる。
+$|G|=6=|S_3|$ より $G\simeq S_3$ である。
+
+$G$ の生成元として次の2つがとれる。
+
+$$
+\begin{aligned}
+\rho&:\sqrt[3]{2}\mapsto\omega\sqrt[3]{2},\;\omega\mapsto\omega\quad(\text{位数}\,3)\\
+\tau&:\sqrt[3]{2}\mapsto\sqrt[3]{2},\;\omega\mapsto\omega^2\quad(\text{位数}\,2\text{、複素共役})
+\end{aligned}
+$$
+
+### 中間体との対応
+
+|             部分群             |              固定体               | 正規部分群か | 中間体はガロア拡大か |
+| :----------------------------: | :-------------------------------: | :----------: | :------------------: |
+|        $\{\text{id}\}$         |                $L$                |      ○       |          ○           |
+| $\langle\rho\rangle\simeq A_3$ |       $\mathbb{Q}(\omega)$        |      ○       |          ○           |
+|      $\langle\tau\rangle$      |     $\mathbb{Q}(\sqrt[3]{2})$     |      ×       |          ×           |
+|    $\langle\tau\rho\rangle$    |  $\mathbb{Q}(\omega\sqrt[3]{2})$  |      ×       |          ×           |
+|    $\langle\rho\tau\rangle$    | $\mathbb{Q}(\omega^2\sqrt[3]{2})$ |      ×       |          ×           |
+|              $G$               |           $\mathbb{Q}$            |      ○       |          ○           |
+
+<Details title="τρ が ω∛2 を固定することの確認">
+$$
+\tau\rho(\omega\sqrt[3]{2})=\tau(\omega\cdot\omega\sqrt[3]{2})=\tau(\omega^2\sqrt[3]{2})=\omega^4\sqrt[3]{2}=\omega\sqrt[3]{2}
+$$
+
+$\rho\tau(\omega^2\sqrt[3]{2})=\rho(\omega^4\sqrt[3]{2})=\rho(\omega\sqrt[3]{2})=\omega^2\sqrt[3]{2}$ も同様に確認できる。
+
+</Details>
+
+<Hint level="info">
+
+位数2の部分群はどれも $S_3$ の正規部分群ではなく、それに対応して $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ は正規拡大でない。
+一方で $A_3\trianglelefteq S_3$ に対応する $\mathbb{Q}(\omega)/\mathbb{Q}$ はガロア拡大であり
+
+$$
+\text{Gal}(\mathbb{Q}(\omega)/\mathbb{Q})\simeq S_3/A_3\simeq\mathbb{Z}/2\mathbb{Z}
+$$
+
+となる。基本定理の正規部分群に関する主張がそのまま見て取れる。
+
+</Hint>
+
+## 方程式の可解性
+
+### 可解群
+
+群 $G$ に部分群の列
+
+$$
+G=G_0\trianglerighteq G_1\trianglerighteq\cdots\trianglerighteq G_n=\{e\}
+$$
+
+が存在して、各 $G_{i}/G_{i+1}$ が可換群となるとき、$G$ を**可解群**という。
+
+<Hint level="info">
+
+- 可換群は可解群である ($G\trianglerighteq\{e\}$)。
+- $S_3\trianglerighteq A_3\trianglerighteq\{e\}$ より $S_3$ は可解群である。
+- $S_4\trianglerighteq A_4\trianglerighteq V_4\trianglerighteq\{e\}$ ($V_4$ はクラインの四元群) より $S_4$ は可解群である。
+- $n\ge5$ のとき $A_n$ は非可換な単純群であるため、$S_n$ は可解群ではない。
+
+</Hint>
+
+### ガロアの定理
+
+$K$ を標数 $0$ の体、$f\in K[x]$ とし、$L$ を $f$ の $K$ 上の分解体とする。このとき
+
+$$
+f(x)=0\,\text{が代数的に解ける}\iff\text{Gal}(L/K)\,\text{が可解群}
+$$
+
+ここで「代数的に解ける」とは、$f$ の根が $K$ の元から四則演算と累乗根を有限回用いて表せることをいう。
+
+{/* TODO ガロアの定理の証明 (クンマー拡大と冪根拡大) */}
+
+<Hint level="info">
+
+冪根拡大 $K\subset K(\sqrt[n]{a})$ は、1 の $n$ 乗根を含む体の上では巡回群をガロア群に持つ。
+「累乗根を1つずつ添加していく」という操作が、「可換な剰余群で1段ずつ割っていく」という可解群の列に対応している。
+
+</Hint>
+
+### 2〜4次方程式
+
+$n$ 次方程式のガロア群は $S_n$ の部分群であり、$S_2,S_3,S_4$ の部分群は全て可解群なので、4次以下の方程式は常に代数的に解ける。
+これが2次方程式の解の公式、カルダノの公式、フェラーリの公式の存在を説明している。
+
+### 5次方程式
+
+$f(x)=x^5-4x+2$ のガロア群は $S_5$ であり、$f(x)=0$ は代数的に解けない。
+
+<Details title="証明">
+**既約であること**
+
+$p=2$ についてのアイゼンシュタインの判定法より、$f$ は $\mathbb{Q}$ 上既約。
+
+**実根がちょうど3つであること**
+
+$$
+f(-2)=-22,\quad f(-1)=5,\quad f(1)=-1,\quad f(2)=26
+$$
+
+より、中間値の定理から $f$ は少なくとも3つの実根を持つ。
+一方 $f'(x)=5x^4-4$ の実根は2つなので、ロルの定理より $f$ の実根は高々3つ。
+よって $f$ はちょうど3つの実根と、互いに複素共役な2つの虚根を持つ。
+
+**ガロア群が $S_5$ であること**
+
+$G=\text{Gal}(L/\mathbb{Q})$ を $f$ の5つの根の置換群として $S_5$ の部分群とみなす。
+
+- $\alpha$ を $f$ の根とすると $[\mathbb{Q}(\alpha):\mathbb{Q}]=5$ であり、連鎖律より $5\mid[L:\mathbb{Q}]=|G|$。
+  コーシーの定理より $G$ は位数5の元、すなわち5-巡回置換を含む。
+- 複素共役は $L$ の自己同型であり、3つの実根を固定し2つの虚根を入れ替えるので、$G$ は互換を含む。
+
+$p$ が素数のとき、$p$-巡回置換と互換は $S_p$ を生成するので、$G=S_5$。
+
+$S_5$ は可解群ではないので、ガロアの定理より $f(x)=0$ は代数的に解けない。
+
+</Details>
+
+<Hint level="warn">
+
+これは「5次方程式は**どれも**解けない」という意味ではない。$x^5-1=0$ のように代数的に解ける5次方程式もある。
+解の公式が存在しないのは、一般の5次方程式に適用できる公式が存在しないということである。
+
+</Hint>
