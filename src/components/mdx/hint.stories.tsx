@@ -43,3 +43,8 @@ export const MultipleParagraphs: Story = {
     ),
   },
 };
+
+/** A custom title stands in for the level's default heading. */
+export const WithTitle: Story = {
+  args: { level: "info", title: "用語の補足" },
+};

@@ -14,18 +14,20 @@ const HINT_META: Record<
 
 export const Hint = ({
   level,
+  title,
   children,
 }: {
   level: HintLevel;
+  title?: string;
   children: ReactNode;
 }) => {
-  const { status, title } = HINT_META[level];
+  const { status, title: defaultTitle } = HINT_META[level];
 
   return (
     <Alert.Root status={status} variant="surface" my="7" rounded="md">
       <Alert.Indicator />
       <Alert.Content>
-        <Alert.Title>{title}</Alert.Title>
+        <Alert.Title>{title ?? defaultTitle}</Alert.Title>
         <Alert.Description
           display="block"
           fontSize="md"
