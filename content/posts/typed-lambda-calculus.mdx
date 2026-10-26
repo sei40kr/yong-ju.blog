@@ -1,0 +1,493 @@
+---
+title: "型付きラムダ計算"
+date: 2026-10-22T12:00:00+09:00
+tags: ["ラムダ計算", "型理論", "プログラミング言語", "勉強ノート"]
+---
+
+単純型付きラムダ計算 (simply typed lambda calculus) は、**関数の定義と適用だけからなる最小のプログラミング言語 (ラムダ計算) に型を付けたもの**。
+型が付いた項は「関数でないものを呼ぶ」「Boolに数を渡す」といった状態に陥らない (型安全性)。
+
+## 前提知識
+
+- 集合の記法 ($\in$、$\subseteq$)
+
+## 型なしラムダ計算
+
+### 項
+
+項 (term) は次の3つの形のどれか。
+文字の約束: $t$ (添字つきの $t_1$、$t'$ も) は「任意の項」を指すmeta変数で、項の中には現れない。項の中の変数は $x, y, z, f$ など別の文字で書く。
+
+$$
+t ::= x \mid \lambda x.\, t \mid t\ t
+$$
+
+- $\lambda x.\, t$: 関数抽象。引数 $x$ を受け取って $t$ を返す関数
+- $t_1\ t_2$: 関数適用
+
+引数は常に1つで、2引数は「1つ受け取って、残りを受け取る関数を返す」形で書く (currying)。
+$\lambda x.\, \lambda y.\, x + y$ は2つの数を受け取って和を返す関数 (数と $+$ は本来この文法にないが、後で足すので先取りして使う)。
+$1$ を渡すと、$x$ が $1$ に置き換わった $\lambda y.\, 1 + y$ (残り1つを待つ関数) が返り、それに $2$ を渡して $1 + 2$ になる。
+Haskellではそのまま書ける。
+
+```haskell
+\x -> x               -- λx. x
+f a                   -- f a  (f を a に適用)
+\x -> \y -> x + y     -- λx. λy. x + y
+\x y -> x + y         -- 同じものの略記
+(\x y -> x + y) 1     -- = \y -> 1 + y  (1つだけ渡すと、残りを待つ関数が返る)
+```
+
+括弧を減らすための約束が3つある。
+
+- 適用は左結合。$t_1\ t_2\ t_3$ は $(t_1\ t_2)\ t_3$ のこと
+- $\lambda$ の本体は右へできるだけ伸びる。$\lambda x.\, t_1\ t_2$ は $\lambda x.\, (t_1\ t_2)$ であって $(\lambda x.\, t_1)\ t_2$ ではない
+- 入れ子の $\lambda$ はまとめて書く。$\lambda x\, y.\, t$ は $\lambda x.\, \lambda y.\, t$ の略記
+
+$\lambda x.\, t$ の $x$ は本体 $t$ の中で束縛されている (bound)。どの $\lambda$ にも束縛されていない変数が自由変数 (free variable) で、自由変数を持たない項を閉じた項と呼ぶ。
+束縛変数の名前は意味に関係なく、$\lambda x.\, x$ と $\lambda y.\, y$ は同一視する ($\alpha$ 変換)。
+
+### 代入
+
+項の中の変数を別の項で置き換える操作を代入 (substitution) と呼び、$t[x \mapsto s]$ と書く。
+「$t$ の中の自由な $x$ をすべて $s$ に置き換えた項」と読む。
+
+$$
+(x + 1)[x \mapsto 5] = 5 + 1
+$$
+
+置き換えるのは自由な $x$ だけで、内側の $\lambda x$ が束縛している $x$ は別物なので触らない。
+
+$$
+(\lambda x.\, x)\ x\,[x \mapsto 5] = (\lambda x.\, x)\ 5
+$$
+
+置き換える $s$ の中の自由変数が、置き換え先の $\lambda$ に捕まってしまうなら、先に $\alpha$ 変換で名前をずらす。
+$(\lambda y.\, x)[x \mapsto y]$ を素直にやると $\lambda y.\, y$ になり意味が変わるので、$\lambda z.\, y$ にする。
+
+### $\beta$ 簡約
+
+計算の規則は1つだけ。関数に引数を渡した項は、本体の仮引数に実引数を代入した項に書き換わる。
+
+$$
+(\lambda x.\, t)\ s \longrightarrow t[x \mapsto s]
+$$
+
+左辺は「$x$ を受け取って $t$ を返す関数」に $s$ を渡した形、右辺は本体 $t$ の $x$ を $s$ で置き換えた結果。
+関数適用とは代入のことであり、プログラミングで言う「仮引数を実引数に束縛して本体を評価する」を項の書き換えとして表したもの。
+
+$$
+(\lambda x.\, x + 1)\ 5 \longrightarrow (x + 1)[x \mapsto 5] = 5 + 1
+$$
+
+2引数は規則を2回使う。
+
+$$
+(\lambda x\, y.\, x + y)\ 1\ 2
+= ((\lambda x.\, \lambda y.\, x + y)\ 1)\ 2
+\longrightarrow (\lambda y.\, x + y)[x \mapsto 1]\ 2
+= (\lambda y.\, 1 + y)\ 2
+\longrightarrow (1 + y)[y \mapsto 2]
+= 1 + 2
+$$
+
+簡約できる部分項を簡約基 (redex)、簡約基のない項を正規形 (normal form) と呼ぶ。正規形が計算結果。
+
+簡約基が複数あるときどれから簡約してもよく、**正規形に着くならどの順でも同じ正規形に着く** (Church-Rosserの定理)。
+$(\lambda x.\, x\ x)\ ((\lambda y.\, y)\ a)$ には簡約基が2つある。
+
+- 引数の部分 $(\lambda y.\, y)\ a$。$\lambda y.\, y$ に $a$ を渡している
+- 項全体。$\lambda x.\, x\ x$ に $(\lambda y.\, y)\ a$ を渡している
+
+引数の簡約基を先に潰すと、$a$ になった引数を渡して2手で終わる。
+
+$$
+(\lambda x.\, x\ x)\ ((\lambda y.\, y)\ a)
+\longrightarrow (\lambda x.\, x\ x)\ a
+\longrightarrow a\ a
+$$
+
+項全体の簡約基を先に潰すと、まだ簡約していない引数がそのまま本体の $x$ に2箇所代入され、その後で2箇所を別々に簡約するので3手かかる。
+
+$$
+(\lambda x.\, x\ x)\ ((\lambda y.\, y)\ a)
+\longrightarrow ((\lambda y.\, y)\ a)\ ((\lambda y.\, y)\ a)
+\longrightarrow a\ ((\lambda y.\, y)\ a)
+\longrightarrow a\ a
+$$
+
+手数は違うが、着く先は同じ $a\ a$。
+
+ただし着けるかどうかは順序に依る。
+$\Omega = (\lambda x.\, x\ x)\ (\lambda x.\, x\ x)$ と置く。$\Omega$ は1歩簡約すると自分自身に戻る。
+
+$$
+\begin{aligned}
+(\lambda x.\, x\ x)\ (\lambda x.\, x\ x)
+&\longrightarrow (x\ x)[x \mapsto \lambda x.\, x\ x] \\
+&= (\lambda x.\, x\ x)\ (\lambda x.\, x\ x)
+\end{aligned}
+$$
+
+$(\lambda x.\, y)\ \Omega$ は、項全体の簡約基を先に潰すと引数を捨てて1歩で $y$ に着く。
+
+$$
+(\lambda x.\, y)\ \Omega \longrightarrow y[x \mapsto \Omega] = y
+$$
+
+引数の $\Omega$ を先に簡約すると、何歩進めても同じ項のまま。
+
+$$
+(\lambda x.\, y)\ \Omega
+\longrightarrow (\lambda x.\, y)\ \Omega
+\longrightarrow (\lambda x.\, y)\ \Omega
+\longrightarrow \cdots
+$$
+
+実際の言語は順序を固定していて、引数を先に簡約する値呼び (call-by-value) が大半。Haskellは引数を簡約せずに渡し、使われたときに簡約する (call-by-need)。
+
+### 関数だけで何でも書ける
+
+関数しかないので、真偽値や数も関数で表す。方針は、値を「その値の使い方」で表すこと。
+
+### Churchのboolean
+
+真偽値の使い方は、2つの候補からどちらかを選ぶことだけ。
+普通の言語では $\text{if}$ が真偽値のタグを見て選ぶが、ここにはタグがないので、選ぶ仕事を真偽値そのものにやらせる。
+真を「2つ受け取って1つ目を返す関数」、偽を「2つ受け取って2つ目を返す関数」と定める (Churchのboolean)。
+
+$$
+\text{tru} = \lambda x\, y.\, x, \qquad
+\text{fls} = \lambda x\, y.\, y
+$$
+
+真か偽かの情報は、どちらの引数を返すかという振る舞いの違いだけで表されている。
+すると条件分岐は、真偽値に候補を2つ渡すだけで書ける。
+
+$$
+\text{if}\ t_1\ \text{then}\ t_2\ \text{else}\ t_3 \;=\; t_1\ t_2\ t_3
+$$
+
+$t_1$ が $\text{tru}$ なら $\beta$ 簡約で $t_3$ が捨てられ、$\text{fls}$ なら $t_2$ が捨てられる。この「片方を捨てる」が分岐になる。
+
+$$
+\begin{aligned}
+\text{tru}\ t_2\ t_3 &= (\lambda x\, y.\, x)\ t_2\ t_3 \longrightarrow (\lambda y.\, t_2)\ t_3 \longrightarrow t_2 \\
+\text{fls}\ t_2\ t_3 &= (\lambda x\, y.\, y)\ t_2\ t_3 \longrightarrow (\lambda y.\, y)\ t_3 \longrightarrow t_3
+\end{aligned}
+$$
+
+$t_2$ と $t_3$ は両方とも引数として渡されるが、引数を簡約せずに渡す順序なら、選ばれなかった方は簡約されずに捨てられる。$t_3$ に $\Omega$ が入っていても $\text{tru}\ t_2\ t_3$ は $t_2$ に着く。
+
+### Church数
+
+数も同じ方針で関数として表す。この表し方をChurch数と呼ぶ。**Church数は数そのものではなく、successor と zero の2つを引数に取る関数**。
+
+- 1つ目の引数 $s$ (successor): 「次の数」を作る関数
+- 2つ目の引数 $z$ (zero): 数え始めの値
+
+自然数 $n$ は、$s$ と $z$ を受け取り、$z$ に $s$ を $n$ 回適用して返す関数と定める。
+数の使い方は「何かを $n$ 回繰り返す」ことであり、何を繰り返すか ($s$) と何から始めるか ($z$) は、Church数を使う側が引数で渡す。
+
+$$
+c_0 = \lambda s\, z.\, z, \qquad
+c_1 = \lambda s\, z.\, s\ z, \qquad
+c_2 = \lambda s\, z.\, s\ (s\ z), \qquad
+c_3 = \lambda s\, z.\, s\ (s\ (s\ z))
+$$
+
+Church数の中身は「何回」だけで、数そのものは入っていない。本物の数が欲しければ、$s$ に「1を足す関数」$\lambda n.\, n + 1$ を、$z$ に $0$ を渡す。
+
+$$
+c_2\ (\lambda n.\, n + 1)\ 0
+\longrightarrow (\lambda n.\, n + 1)\ ((\lambda n.\, n + 1)\ 0)
+\longrightarrow (\lambda n.\, n + 1)\ (0 + 1)
+\longrightarrow (0 + 1) + 1
+= 2
+$$
+
+```haskell
+two :: (a -> a) -> a -> a
+two s z = s (s z)
+
+two (+ 1) 0        -- 2
+two (++ "!") "a"   -- "a!!"   同じ「2回」を別の s と z に使う
+```
+
+「次の数」は、受け取った数 $m$ に $s$ と $z$ を渡して $m$ 回適用させ、その結果にさらに $s$ を1回かける数。
+
+$$
+\text{succ} = \lambda m.\, \lambda s\, z.\, s\ (m\ s\ z)
+$$
+
+$$
+\text{succ}\ c_1
+\longrightarrow \lambda s\, z.\, s\ (c_1\ s\ z)
+\longrightarrow \lambda s\, z.\, s\ (s\ z)
+= c_2
+$$
+
+足し算も同じで、$m + n$ は「$n$ 回適用した結果にさらに $m$ 回適用する」数 $\lambda m\, n.\, \lambda s\, z.\, m\ s\ (n\ s\ z)$。
+
+### loop
+
+前述の $\Omega = (\lambda x.\, x\ x)\ (\lambda x.\, x\ x)$ は、左の $\lambda x.\, x\ x$ の本体 $x\ x$ に右の $\lambda x.\, x\ x$ を2箇所代入すると元の $\Omega$ になるので、何歩簡約しても $\Omega$ のまま。
+
+$$
+\Omega \longrightarrow \Omega \longrightarrow \Omega \longrightarrow \cdots
+$$
+
+簡約基が常に残るので、正規形を持たない。
+
+### 再帰
+
+$\Omega$ と同じ「自分を自分に適用する」仕組みで、任意の関数の不動点を作る項があり、
+
+$$
+\text{fix} = \lambda f.\, (\lambda x.\, f\ (x\ x))\ (\lambda x.\, f\ (x\ x))
+$$
+
+は $\text{fix}\ f \longrightarrow^* f\ (\text{fix}\ f)$ を満たす。$g = \lambda x.\, f\ (x\ x)$ と置くと、
+
+$$
+\begin{aligned}
+\text{fix}\ f
+&\longrightarrow g\ g \\
+&= (\lambda x.\, f\ (x\ x))\ g \\
+&\longrightarrow f\ (g\ g) \\
+&\longrightarrow f\ (f\ (g\ g)) \longrightarrow \cdots
+\end{aligned}
+$$
+
+$g\ g$ は $\Omega$ と同じ形で、簡約するたびに外側に $f$ が1つ増える。$f$ が引数を見て止まる (再帰しない枝を選ぶ) なら、そこで増殖が止まる。$f$ を「自分自身を引数で受け取る1段分の再帰」として書けば $\text{fix}\ f$ が再帰関数になり、計算できるものはすべて書ける (Turing完全)。
+
+### 型がないと何が困るか
+
+意味のない項を止める手段がない。
+$\text{tru}\ c_2$ (真偽値に数を渡す) も $c_2\ \text{tru}$ (数を関数として使う) も文法上は正しく、簡約すると何かの「関数」になってエラーにはならない。
+「$\text{tru}$ は真偽値、$c_2$ は数」というのは人の頭の中だけの区別で、項の上には書かれていない。
+Haskellで言えば、これが通って意味不明な値を返す状態。
+
+```haskell
+True 2    -- tru c2
+2 True    -- c2 tru
+```
+
+型は**項に「何として使うか」を書き込み、規則に反する適用を実行前に弾く**。
+
+## 単純型付きラムダ計算
+
+### 型と項
+
+$$
+T ::= B \mid T \to T
+\qquad\qquad
+t ::= x \mid \lambda x : T.\, t \mid t\ t
+$$
+
+$B$ は基本型 ($\text{Bool}$、$\text{Nat}$ など)、$T_1 \to T_2$ は関数の型。$\to$ は右結合で、curryingと対応する。
+項は型なしと同じだが、$\lambda$ の引数に型を書く。
+
+```haskell
+f :: Bool -> Bool    -- Bool → Bool
+f = \x -> x          -- λx : Bool. x
+
+g :: Bool -> Bool -> Bool    -- Bool → (Bool → Bool)
+g = \x y -> x                -- λx : Bool. λy : Bool. x
+```
+
+簡約の規則は型なしと同じで、型は実行前の検査にだけ使う (GHCもcompile後のcodeに型を残さない)。
+
+引数に型を書く流儀をChurch式、書かずに推論する流儀をCurry式と呼ぶ。ここではChurch式。HaskellはCurry式で、署名を書くのは慣習にすぎない。
+
+### 型環境
+
+自由変数を含む項は、それだけでは型が決まらない。$f\ x$ の型は $f$ と $x$ が何かに依る。
+そこで、自由変数それぞれに型を割り当てた表を用意し、その表のもとで型を決める。この表が型環境 (typing context) $\Gamma$。
+
+$$
+\Gamma ::= \varnothing \mid \Gamma, x : T
+$$
+
+空の環境 $\varnothing$ に $x : T$ を1つずつ足して作る、変数と型の対の並び。$f : \text{Bool} \to \text{Bool}, x : \text{Bool}$ のように書く。
+
+- $x : T \in \Gamma$: $\Gamma$ に $x$ の型が $T$ と書いてある
+- $\Gamma, x : T$: $\Gamma$ に $x : T$ を足した環境。$\lambda x : T.\, t$ の本体 $t$ を見るときに使う。本体の中では $x$ が自由変数になるので、その型を足してから中に入る
+
+「$\Gamma$ のもとで項 $t$ の型は $T$」を $\Gamma \vdash t : T$ と書く (型判断)。
+$\Gamma$ が空なら $\vdash t : T$ と書き、これは閉じた項の型。
+たとえば $f : \text{Bool} \to \text{Bool}, x : \text{Bool} \vdash f\ x : \text{Bool}$ だが、$x : \text{Nat}$ の環境では $f\ x$ に型は付かない。
+
+### 推論規則の記法
+
+型付け規則は、横線で前提と結論を分けた形で書く。
+
+$$
+\frac{\text{前提}_1 \qquad \text{前提}_2 \qquad \cdots}{\text{結論}}\ \text{(規則の名前)}
+$$
+
+「横線の上の判断がすべて成り立つなら、下の判断も成り立つ」と読む。前提は0個以上で、横に並べる。
+前提が0個の規則は無条件に成り立つ判断 (公理) で、横線の上が空になる。
+右の括弧は規則の名前で、導出のどこでどの規則を使ったかを指すためのもの。
+
+ある判断を示すには、その判断を結論に持つ規則を選び、前提のそれぞれをまた別の規則で示す、を公理に着くまで繰り返す。規則を積み上げたこの図を導出 (derivation) と呼び、木の形になる (例は後述)。
+
+### 型付け規則
+
+型判断は次の3つの規則から導かれるものだけが成り立つ。
+
+$$
+\frac{x : T \in \Gamma}{\Gamma \vdash x : T}\ \text{(T-Var)}
+$$
+
+$$
+\frac{\Gamma, x : T_1 \vdash t : T_2}{\Gamma \vdash \lambda x : T_1.\, t : T_1 \to T_2}\ \text{(T-Abs)}
+$$
+
+$$
+\frac{\Gamma \vdash t_1 : T_1 \to T_2 \qquad \Gamma \vdash t_2 : T_1}{\Gamma \vdash t_1\ t_2 : T_2}\ \text{(T-App)}
+$$
+
+名前の `T-` は型付け規則 (typing) の印で、後ろに項の形 (Var = 変数、Abs = 関数抽象、App = 関数適用) が付く。項の形が3つなので規則も3つ。
+
+- T-Var: 変数の型は、環境に書いてある通り
+- T-Abs: 環境に $x : T_1$ を足したもとで本体が $T_2$ なら、関数全体は $T_1 \to T_2$
+- T-App: $t_1$ が $T_1 \to T_2$ の関数で、$t_2$ がちょうど $T_1$ なら、適用した結果は $T_2$
+
+導出の例。$\lambda f : \text{Bool} \to \text{Bool}.\, \lambda x : \text{Bool}.\, f\ (f\ x)$ なら ($\Gamma = f : \text{Bool} \to \text{Bool}, x : \text{Bool}$ と置いて)、
+
+$$
+\frac{
+  \frac{
+    \frac{
+      \frac{}{\Gamma \vdash f : \text{Bool} \to \text{Bool}}
+      \qquad
+      \frac{
+        \frac{}{\Gamma \vdash f : \text{Bool} \to \text{Bool}}
+        \qquad
+        \frac{}{\Gamma \vdash x : \text{Bool}}
+      }{\Gamma \vdash f\ x : \text{Bool}}
+    }{\Gamma \vdash f\ (f\ x) : \text{Bool}}
+  }{f : \text{Bool} \to \text{Bool} \vdash \lambda x : \text{Bool}.\, f\ (f\ x) : \text{Bool} \to \text{Bool}}
+}{\vdash \lambda f : \text{Bool} \to \text{Bool}.\, \lambda x : \text{Bool}.\, f\ (f\ x) : (\text{Bool} \to \text{Bool}) \to \text{Bool} \to \text{Bool}}
+$$
+
+規則を結論から前提へ (木を上へ) 読むと、そのまま型checkerになる。項の形ごとに当てはまる規則が1つに決まるので、再帰1本。
+
+### 型が付かない項
+
+$x\ x$ に型を付けるには、T-Appから $x : T_1 \to T_2$ かつ $x : T_1$、つまり $T_1 = T_1 \to T_2$ が必要。
+型は有限の式なので自分自身を真に含む型はなく、**$\Omega$ も $\text{fix}$ も書けない**。
+$\text{tru}\ c_2$ の類も、$\text{tru} : T \to T \to T$ と $c_2 : (S \to S) \to S \to S$ を一致させられず弾かれる。
+
+一方、意味のある項は型注釈を足せば型が付く。ただし $\text{tru}$ は「$\text{Bool}$ の2択」「$\text{Nat}$ の2択」ごとに別の項になり、1つで済ませるには多相が要り、単純型付きラムダ計算にはない。
+
+### 基本型の定数
+
+矢印型だけでは基本型の閉じた項が作れないので、実用には基本型ごとに定数と規則を足す。$\text{Bool}$ なら、
+
+$$
+\frac{}{\Gamma \vdash \text{true} : \text{Bool}}
+$$
+
+$$
+\frac{}{\Gamma \vdash \text{false} : \text{Bool}}
+$$
+
+$$
+\frac{\Gamma \vdash t_1 : \text{Bool} \qquad \Gamma \vdash t_2 : T \qquad \Gamma \vdash t_3 : T}{\Gamma \vdash \text{if}\ t_1\ \text{then}\ t_2\ \text{else}\ t_3 : T}\ \text{(T-If)}
+$$
+
+then節とelse節が同じ型なのは、どちらを通っても結果の型を1つに言い当てるため。Haskellで両腕の型が揃わないとcompile errorになるのはこの規則。
+
+```haskell
+if b then 1 else 2        -- OK: 両腕とも Int
+if b then 1 else True     -- error: Int と Bool
+```
+
+## 型安全性
+
+### 進行と保存
+
+簡約を値呼びに固定する。値は $\lambda$ 抽象と定数で、規則は3つ。
+
+$$
+\frac{t_1 \longrightarrow t_1'}{t_1\ t_2 \longrightarrow t_1'\ t_2}
+$$
+
+$$
+\frac{t_2 \longrightarrow t_2'}{v_1\ t_2 \longrightarrow v_1\ t_2'}
+$$
+
+$$
+\frac{}{(\lambda x : T.\, t)\ v \longrightarrow t[x \mapsto v]}
+$$
+
+この規則で簡約できず、値でもない項が行き詰まり (stuck)。$\text{true}\ \text{false}$ がそれで、実行時型エラーに当たる。
+**型安全性とは、型が付いた閉じた項は行き詰まらないこと**で、2つの定理に分けて証明する。
+
+- 進行 (progress): $\vdash t : T$ なら、$t$ は値であるか、$t \longrightarrow t'$ となる $t'$ がある
+- 保存 (preservation): $\Gamma \vdash t : T$ かつ $t \longrightarrow t'$ なら $\Gamma \vdash t' : T$
+
+進行は「いま行き詰まっていない」、保存は「1歩進めても型が付いたまま」。合わせると、何歩進めても行き詰まらない。
+証明はどちらも導出に関する帰納法。
+進行の肝は、$\to$ 型の値は $\lambda$ 抽象しかないので、T-Appで両辺が値なら必ず $\beta$ 簡約できること。
+保存の肝は代入の補題: $\Gamma, x : S \vdash t : T$ かつ $\Gamma \vdash t' : S$ なら $\Gamma \vdash t[x \mapsto t'] : T$。
+
+「well-typed programs don't go wrong」という標語の現在の標準的な意味がこれで、型システムを設計したらこの2つが成り立つかを確かめる。
+
+### 強正規化
+
+この記事で定義した体系 (T-Var、T-Abs、T-Appの3規則 + 基本型の定数) では、型が付いた項は**どの順で簡約しても有限歩で正規形に着く** (強正規化)。
+証明は「型 $T$ の項は止まる」では帰納法が回らず (適用の場合に仮定が足りない)、「止まり、かつ止まる引数に適用した結果も止まる」という強い述語を型ごとに定義して回す (logical relation)。型システムの証明で一番よく出てくる技法。
+
+裏を返すと、**この体系では止まらないプログラムが書けない**。型なしで止まらなかった $\Omega$ も、再帰を作る $\text{fix}$ も型が付かない (型が付かない項 の節)。
+壊さずに使える再帰は、Church数の「$n$ 回繰り返す」のように回数が最初から決まっているもの (構造的再帰) だけ。
+
+### 停止性とTuring完全性
+
+全プログラムが止まることは、「プログラムの停止性は判定できない」という定理と矛盾しない。言語 $L$ について、停止性問題の定理が言うのは
+
+$$
+L \text{ はTuring完全} \implies L \text{ の停止性は判定できない}
+$$
+
+一方、すべてのプログラムが止まるなら判定は自明 (常に「止まる」と答える) なので
+
+$$
+L \text{ の全プログラムが停止する} \implies L \text{ の停止性は判定できる}
+$$
+
+2つを合わせて対偶を取ると、
+
+$$
+L \text{ の全プログラムが停止する} \implies L \text{ はTuring完全ではない}
+$$
+
+この記事の体系は全プログラムが停止する側で、停止性は判定できるが、Turing完全ではない。
+止まらないプログラムが書けることと停止性が判定できないことは、Turing完全性の表と裏で、どちらか片方だけを取ることはできない。
+
+### 再帰を足す
+
+実際の言語はTuring完全を選ぶ。型なしで $\Omega$ や $\text{fix}$ が使っていた「自分を自分に適用する」仕組みを、定数 $\text{fix}$ として規則ごと足す (再帰的な定義や loop は、これの糖衣として扱える)。
+
+$$
+\frac{\Gamma \vdash t : T \to T}{\Gamma \vdash \text{fix}\ t : T}\ \text{(T-Fix)}
+$$
+
+$$
+\text{fix}\ (\lambda x : T.\, t) \longrightarrow t[x \mapsto \text{fix}\ (\lambda x : T.\, t)]
+$$
+
+$\text{fix}\ t$ は簡約するたびに自分自身を含む項に戻るので、$\Omega$ と同じく正規形に着かない項が型付きで書けるようになる。
+この記事の体系に $\text{fix}$ を足したものはPCF (Programming Computable Functions) と呼ばれ、Turing完全で、強正規化は成り立たず、停止性は判定できない。Haskellもこちら側で、`fix` (`Data.Function`) がこの定数そのもの。
+
+```haskell
+fix :: (a -> a) -> a    -- T-Fix
+fix f = f (fix f)       -- 簡約規則そのもの
+
+loop :: Int -> Int
+loop x = loop x         -- 止まらないが型は付く
+```
+
+進行と保存は $\text{fix}$ を足しても成り立つ。型安全性 (行き詰まらない) と停止性 (正規形に着く) は別の性質で、実際の言語が型で保証しているのは前者だけ。
