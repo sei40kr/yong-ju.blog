@@ -1,0 +1,393 @@
+---
+title: "代数的データ型"
+date: 2026-10-22T13:00:00+09:00
+tags: ["型理論", "プログラミング言語", "Haskell", "Rust", "Java", "勉強ノート"]
+---
+
+代数的データ型 (algebraic data type、ADT) は、**既にある型を「かつ」(直積) と「or」(直和) で組み合わせて作る型**。
+
+## 直積と直和
+
+新しい型を作る方法は、突き詰めると2つしかない。
+
+- 直積 (product): $A$ の値 **かつ** $B$ の値を持つ型。座標は「x座標 かつ y座標」なので直積
+- 直和 (sum): $A$ の値 **or** $B$ の値を持ち、どちらなのかが分かる型。図形は「円 or 長方形」なので直和
+
+直積はどの言語にもある (classのフィールドがそれ)。
+直和は長らく関数型言語にしかなく、OOP言語には無かった。
+継承やnullableやフラグで似せることはできても、場合の集合をコンパイラが知らないので、代わりにはならない。
+
+<Hint level="info" title="直和型の言語対応">
+  Haskellには最初からある。Rustは `enum`、Javaは17の `sealed interface`
+  で、直和型が言語の機能になった。
+</Hint>
+
+### 直積型
+
+型 $A$ と $B$ の直積 $A \times B$ は、$A$ の値と $B$ の値の組の型。
+型の値を作る関数を構成子 (constructor) と呼ぶ。
+直積の構成子は両方の値を受け取って組を返し (例では `Point`)、使うときは射影 (projection) で片方ずつ取り出す。
+
+<Details title="Haskell">
+
+```haskell
+data Point = Point { x :: Double, y :: Double }
+```
+
+</Details>
+
+<Details title="Rust">
+
+```rust
+struct Point { x: f64, y: f64 }
+```
+
+</Details>
+
+<Details title="Java">
+
+```java
+record Point(double x, double y) {}
+```
+
+</Details>
+
+フィールドに名前が付いているかどうかは本質ではなく、タプルと同じ型。
+要素が0個の直積がunit型で、値は1つだけ。
+
+### 直和型
+
+型 $A$ と $B$ の直和 $A + B$ は、$A$ の値か $B$ の値のどちらか一方で、**どちらなのかが値自身に記録されている**型。
+構成子は場合ごとに1つずつあり (例では `Circle` と `Rect`)、各構成子に型が付く。
+
+<Details title="Haskell">
+
+```haskell
+data Shape
+  = Circle { radius :: Double }
+  | Rect { width :: Double, height :: Double }
+```
+
+</Details>
+
+<Details title="Rust">
+
+```rust
+enum Shape {
+    Circle { radius: f64 },
+    Rect { width: f64, height: f64 },
+}
+```
+
+</Details>
+
+<Details title="Java">
+
+```java
+sealed interface Shape permits Circle, Rect {}
+record Circle(double radius) implements Shape {}
+record Rect(double width, double height) implements Shape {}
+```
+
+</Details>
+
+`Shape` は `Circle` と `Rect` の直和で、各場合が直積になっている (sum of products)。
+実用上のADTはだいたいこの形。
+
+場合が0個の直和が空型で、値を1つも持たない。
+各場合が値を持たない直和が、いわゆるenum。
+
+<Hint level="info" title="空型とenumの書き方">
+
+|      | Haskell             | Rust              | Java   |
+| ---- | ------------------- | ----------------- | ------ |
+| 空型 | `Void`              | 場合のない `enum` | 無い   |
+| enum | 構成子だけの `data` | 中身のない `enum` | `enum` |
+
+</Hint>
+
+## 前提知識
+
+- 集合の記法 ($\times$、$+$、$|A|$)
+
+## 代数的データ型のコンセプト
+
+直積と直和だけで型を組み立てると、次の2つが型の構成法から機械的に出てくる。
+
+### 代数的データ型の値はパターンマッチで使う
+
+直和型の値を使うには、どの場合かで分岐する (パターンマッチ)。
+型が場合の集合を知っているので、コンパイラは分岐がすべての場合を尽くしているか (網羅性) を検査できる。
+これが代数的データ型を使う最大の理由。
+
+### 代数的データ型は数えられる
+
+型を「その型の値の集合」と見て値の個数を数えると、直積型の個数は掛け算、直和型の個数は足し算になる。
+場合の数の積の法則と和の法則そのもの。
+型の間の等式を普通の代数と同じ規則で扱えて、listのように自分自身を含む型 (再帰型) は方程式の解として読める。
+「代数的」と呼ぶのはこのため。
+
+## Option と Result
+
+身近なものが実は直和になっている。
+
+- nullableは直和。$A$ の値 **or** null、のどちらか一方で、どちらなのかは値を見れば分かる。nullを値が1つだけのunit型と見て $1$ と書けば $A + 1$
+- 「結果を返す or エラー (例外) を投げる」も直和。$A$ の値 **or** $E$ の値のどちらか一方。$A + E$
+
+これを直和型として書いたものが、最もよく使う2つの直和型。
+
+- Option: 「値がある or 値がない」。nullableの直和型版
+- Result: 「成功して値がある or 失敗してエラーがある」。例外の直和型版
+
+どちらも「値がない」「失敗した」場合を**型に書く**ことで、呼び出し側に分岐を強制する。
+nullや例外との違いは、checkをコンパイラが肩代わりすること。
+
+<Hint level="info" title="各言語での名前">
+
+|        | Haskell  | Rust     | Java       |
+| ------ | -------- | -------- | ---------- |
+| Option | `Maybe`  | `Option` | `Optional` |
+| Result | `Either` | `Result` | 無い       |
+
+</Hint>
+
+## パターンマッチ
+
+直和型の値はパターンマッチで使う。
+
+<Details title="Haskell">
+
+```haskell
+area :: Shape -> Double
+area (Circle r) = pi * r * r
+area (Rect w h) = w * h
+```
+
+</Details>
+
+<Details title="Rust">
+
+```rust
+fn area(shape: &Shape) -> f64 {
+    match shape {
+        Shape::Circle { radius } => std::f64::consts::PI * radius * radius,
+        Shape::Rect { width, height } => width * height,
+    }
+}
+```
+
+</Details>
+
+<Details title="Java">
+
+```java
+static double area(Shape shape) {
+    return switch (shape) {
+        case Circle(double r) -> Math.PI * r * r;
+        case Rect(double w, double h) -> w * h;
+    };
+}
+```
+
+</Details>
+
+分岐は式で、コンパイラは**すべての場合を尽くしているか** (網羅性、exhaustiveness) を検査する。
+これが直和型を使う最大の理由で、場合を1つ足すと、分岐漏れのある箇所がすべてコンパイル時にエラーになる。
+`Shape` に `Triangle` を足すと、`area` を含む `Shape` のパターンマッチがすべてエラーになって、直すべき箇所を漏れなく教えてくれる。
+
+```rust
+enum Shape {
+    Circle { radius: f64 },
+    Rect { width: f64, height: f64 },
+    Triangle { base: f64, height: f64 },
+}
+
+fn area(shape: &Shape) -> f64 {
+    // error[E0004]: non-exhaustive patterns: `&Shape::Triangle { .. }` not covered
+    match shape {
+        Shape::Circle { radius } => std::f64::consts::PI * radius * radius,
+        Shape::Rect { width, height } => width * height,
+    }
+}
+```
+
+継承で同じことを書くと、`Triangle` が `area` を実装し忘れたことは (abstract methodなら) エラーになるが、型の外に書かれた分岐 (型を調べるifの連鎖) の漏れは検出できない。
+
+何にでも合うwildcardの腕を書くと網羅性checkを放棄したことになるので、直和型の分岐には原則として書かない。
+
+<Hint level="info" title="網羅性検査の言語差">
+  Rustの `match` は網羅していないとエラー。Javaは `switch`
+  式ならエラーだが、`switch`
+  文は型のパターンをcaseに使ったときだけ検査され、enumの定数を並べる従来の形では検査されない。Haskellは既定では警告で、`-Wincomplete-patterns`
+  を `-Werror` に上げてエラーにする。
+</Hint>
+
+## 型の代数
+
+### 値の個数
+
+型 $A$ の値の個数を $|A|$ と書く。
+
+| 型                | 個数                                  |
+| ----------------- | ------------------------------------- |
+| 空型 $0$          | $0$                                   |
+| unit型 $1$        | $1$                                   |
+| 直積 $A \times B$ | $\lvert A\rvert \cdot \lvert B\rvert$ |
+| 直和 $A + B$      | $\lvert A\rvert + \lvert B\rvert$     |
+| 関数 $A \to B$    | $\lvert B\rvert^{\lvert A\rvert}$     |
+
+直積が積で直和が和なのは、組の作り方が $|A| \cdot |B|$ 通り、どちらか一方の選び方が $|A| + |B|$ 通りだから。
+関数が冪なのは、$A$ の各値に $B$ の値を1つずつ割り当てる方法が $|B|^{|A|}$ 通りだから。
+
+$\text{Bool} = 1 + 1$ で個数は2。
+$\text{Option}\langle A\rangle = 1 + A$ で個数は $|A| + 1$。
+$\text{Result}\langle A, E\rangle = A + E$。
+$\text{Bool} \to A = A^2 = A \times A$ で、Boolから引く関数は値の組と同じ。
+
+### 同型
+
+個数が等しい2つの型の間には、情報を落とさない相互変換 (同型、isomorphism) がある。
+型の等式は同型の意味で読む。
+高校の代数の等式がそのまま成り立つ。
+
+$$
+\begin{aligned}
+A \times 1 &\cong A \\
+A \times 0 &\cong 0 \\
+A + 0 &\cong A \\
+A \times (B + C) &\cong (A \times B) + (A \times C) \\
+(A + B) \to C &\cong (A \to C) \times (B \to C) \\
+A \to (B \times C) &\cong (A \to B) \times (A \to C) \\
+(A \times B) \to C &\cong A \to (B \to C)
+\end{aligned}
+$$
+
+それぞれに意味がある。
+
+- $A \times 0 \cong 0$: 空型を含む直積は作れない。空型との組の値は存在しない
+- $A \times (B + C) \cong (A \times B) + (A \times C)$ (分配則): 「`Circle` か `Rect` に色を付けたもの」と「色付き `Circle` か色付き `Rect`」は同じ。フィールドを共通の外側に出すか各場合に持たせるかは表現の違いだけ
+- $(A + B) \to C \cong (A \to C) \times (B \to C)$: **直和型から引く関数は、場合ごとの関数の組**。パターンマッチが各場合に1本ずつ腕を持つのはこれ。冪で書くと $C^{A+B} = C^A \cdot C^B$ (指数法則)
+- $(A \times B) \to C \cong A \to (B \to C)$: 2引数の関数は、1つ目の引数を受け取って「2つ目の引数を受け取る関数」を返す1引数の関数と同じ (currying)。冪で書くと $C^{A \times B} = (C^B)^A$
+
+### 再帰型は方程式の解
+
+listは「空 or 先頭とlistの組」。
+
+<Details title="Haskell">
+
+```haskell
+data List a = Nil | Cons a (List a)
+```
+
+</Details>
+
+<Details title="Rust">
+
+```rust
+enum List<A> {
+    Nil,
+    Cons(A, Box<List<A>>),
+}
+```
+
+</Details>
+
+<Details title="Java">
+
+```java
+sealed interface List<A> permits Nil, Cons {}
+record Nil<A>() implements List<A> {}
+record Cons<A>(A head, List<A> tail) implements List<A> {}
+```
+
+</Details>
+
+型の等式で書くと $L = 1 + A \times L$ で、$L$ について解くと
+
+$$
+L = \frac{1}{1 - A} = 1 + A + A^2 + A^3 + \cdots
+$$
+
+listは「要素0個の組 or 1個の組 or 2個の組 or …」と読める。
+右辺の $L$ に左辺を代入し続けても同じ無限和になる。
+
+<Hint level="info" title="1/(1-A) の読み方">
+  ただし $1/(1-A)$ は個数の等式ではない ($|A|=2$ なら $-1/2$
+  になるが、listは無限にある)。 $A$ を不定元と見た形式冪級数 $\sum_nc_nA^n$
+  (母関数) の等式で、$c_n$ は「要素を $n$ 個持つ形の数」。listなら $c_n=1$。
+  型に割り算はないが、自然数係数の多項式から引き算や割り算を経由して自然数係数の多項式に戻った等式は型の同型としても成り立つので、$1+A+A^2+\cdots$
+  は型の等式として正しい (有限listとの同型)。
+</Hint>
+
+二分木も同様。「空 or 要素と左右の部分木の組」なので、
+
+<Details title="Haskell">
+
+```haskell
+data Tree a = Leaf | Node (Tree a) a (Tree a)
+```
+
+</Details>
+
+<Details title="Rust">
+
+```rust
+enum Tree<A> {
+    Leaf,
+    Node(Box<Tree<A>>, A, Box<Tree<A>>),
+}
+```
+
+</Details>
+
+<Details title="Java">
+
+```java
+sealed interface Tree<A> permits Leaf, Node {}
+record Leaf<A>() implements Tree<A> {}
+record Node<A>(Tree<A> left, A value, Tree<A> right) implements Tree<A> {}
+```
+
+</Details>
+
+型の等式は $T = 1 + A \times T \times T$ で、$T = 1 + A T^2$ を形式冪級数として解くと $c_n$ がカタラン数になる。
+
+<Hint level="info" title="カタラン数">
+  カタラン数は 1, 1, 2, 5, 14, 42, … と続く数列で、$n$ 番目 $C_n$ が「要素 $n$
+  個の二分木の形の数」。根に1個使い、残り $n-1$
+  個を左右の部分木に振り分けるので、$C_n$ は左に $k$ 個、右に $n-1-k$
+  個としたときの形の数の積を $k$ について足したもの。これは $T=1+AT^2$ の両辺で
+  $A^n$ の係数を比べた式そのもの。閉じた形は
+  $C_n=(2n)!/(n!(n+1)!)$。括弧の対応の付け方や凸多角形の三角形分割の数も同じ数列になる。
+</Hint>
+
+### 型の微分
+
+$A$ を含む型の値から、$A$ の要素を1つだけ取り除いて、そこを空席 (穴) にしたものを考える。
+たとえば組 $(a_1, a_2)$ から $a_2$ を取り除くと $(a_1, \_)$、listの $[a_1, a_2, a_3]$ から $a_2$ を取り除くと、残るのは穴の前の $[a_1]$ と穴の後の $[a_3]$。
+残った「穴が1つ空いた構造」の型を、元の型の $A$ についての one-hole context と呼び、$\partial_A$ で書く。
+穴に $A$ の値を入れ直すと元の値に戻るので、$\partial_A F \times A$ は「$F$ の値と、その中の1箇所」の組と同じ。
+
+one-hole contextの個数は、普通の微分の規則に従う。
+
+$$
+\begin{aligned}
+\partial_A (A \times A) &= 2 \times A \\
+\partial_A (A^n) &= n \times A^{n-1}
+\end{aligned}
+$$
+
+$A \times A$ なら、穴は左か右のどちらか (2通り) で、残るのは $A$ が1つ。
+だから $2 \times A$。
+listなら $\partial_A L = \partial_A \frac{1}{1-A} = \frac{1}{(1-A)^2} = L \times L$ で、「穴の前のlist」と「穴の後のlist」の組 ($([a_1], [a_3])$) になる。
+この one-hole context と穴に入っていた要素の組 ($\partial_A F \times A$) をzipperと呼ぶ。
+元の値に「いま注目している1箇所」を付けたもので、不変なデータ構造にcursorを持たせる表現。
+listのzipperは「穴の前のlist (逆順)」「注目している要素」「穴の後のlist」の3つ組で、次の操作がすべて定数時間になる。
+
+- 注目している要素を読む、差し替える: 3つ組の真ん中を見る、置き換えるだけ
+- cursorを右へ動かす: 注目している要素を前のlistの先頭へ押し込み、後のlistの先頭を新しい注目要素にする。左へは逆
+- 元のlistに戻す: 前のlistを逆順にして、注目要素と後のlistをつなぐ
+
+不変なlistの途中の要素を普通に差し替えると先頭からそこまでを作り直すが、zipperならcursorの位置での読み書きが定数時間で済む。
+前後2本のlistの間で要素が行き来する様子が名前の由来。
+木の微分を取ると、木のzipper (注目している部分木と、根までの経路の各段にある親の要素と兄弟部分木) が同じように機械的に出てくる。

@@ -2,11 +2,14 @@ import { createShikiAdapter } from "@chakra-ui/react";
 import { createJavaScriptRegexEngine } from "@shikijs/engine-javascript";
 import bash from "@shikijs/langs/bash";
 import emacsLisp from "@shikijs/langs/emacs-lisp";
+import haskell from "@shikijs/langs/haskell";
 import ini from "@shikijs/langs/ini";
+import java from "@shikijs/langs/java";
 import javascript from "@shikijs/langs/javascript";
 import kotlin from "@shikijs/langs/kotlin";
 import nix from "@shikijs/langs/nix";
 import python from "@shikijs/langs/python";
+import rust from "@shikijs/langs/rust";
 import sql from "@shikijs/langs/sql";
 import nightOwl from "@shikijs/themes/night-owl";
 import { createHighlighterCoreSync } from "shiki/core";
@@ -18,7 +21,19 @@ import { createHighlighterCoreSync } from "shiki/core";
 const highlighter = createHighlighterCoreSync({
   engine: createJavaScriptRegexEngine(),
   themes: [nightOwl],
-  langs: [bash, javascript, sql, nix, kotlin, ini, emacsLisp, python],
+  langs: [
+    bash,
+    javascript,
+    sql,
+    nix,
+    kotlin,
+    ini,
+    emacsLisp,
+    python,
+    rust,
+    java,
+    haskell,
+  ],
 });
 
 const shikiAdapter = createShikiAdapter({
