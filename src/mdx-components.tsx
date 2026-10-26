@@ -17,6 +17,7 @@ import { CodeBlock } from "~/components/mdx/code-block";
 import { Details } from "~/components/mdx/details";
 import { Hint } from "~/components/mdx/hint";
 import { Mermaid } from "~/components/mdx/mermaid";
+import { Quiz, QuizItem } from "~/components/mdx/quiz";
 import { highlight } from "~/lib/shiki";
 
 // Vertical rhythm of the article body.
@@ -29,6 +30,8 @@ import { highlight } from "~/lib/shiki";
 const components: MDXComponents = {
   Details,
   Hint,
+  Quiz,
+  QuizItem,
   Link: (props: ComponentProps<typeof NextLink>) => (
     <ChakraLink
       asChild
