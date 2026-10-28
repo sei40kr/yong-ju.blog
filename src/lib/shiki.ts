@@ -7,6 +7,7 @@ import ini from "@shikijs/langs/ini";
 import java from "@shikijs/langs/java";
 import javascript from "@shikijs/langs/javascript";
 import kotlin from "@shikijs/langs/kotlin";
+import lean from "@shikijs/langs/lean";
 import nix from "@shikijs/langs/nix";
 import python from "@shikijs/langs/python";
 import rust from "@shikijs/langs/rust";
@@ -30,6 +31,7 @@ const highlighter = createHighlighterCoreSync({
     ini,
     emacsLisp,
     python,
+    lean,
     rust,
     java,
     haskell,

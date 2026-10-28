@@ -1,0 +1,470 @@
+---
+title: "サポートベクターマシン"
+date: 2026-08-10T14:20:00+09:00
+tags: ["機械学習", "数学", "大学数学", "勉強ノート"]
+---
+
+## 前提知識
+
+- <Link href="/posts/linear-algebra">線形代数</Link>
+- <Link href="/posts/mathematical-analysis">解析学</Link>
+  (ラグランジュの未定乗数法・KKT 条件)
+
+## 問題設定
+
+訓練データを
+
+$$
+\{ (\bold{x}_i, y_i) \}_{i=1}^n, \quad \bold{x}_i \in \Bbb{R}^d, \, y_i \in \{ -1, +1 \}
+$$
+
+とし、分類に用いる**決定関数 (decision function)** を
+
+$$
+f(\bold{x}) = \bold{w}^\top \bold{x} + b
+$$
+
+と定める。予測は $\text{sign}(f(\bold{x}))$ で行う。
+
+データを分離する超平面は (存在するなら) 無数にあるが、SVM はその中から「両クラスから最も遠い」ものをただ 1 つ選ぶ。
+
+![分離超平面は無数にあるが、マージン最大の超平面はただ 1 つに定まる](/img/svm-hyperplanes.svg)
+
+<Hint level="info">
+  ラベルを $\{ 0, 1 \}$ ではなく $\{ -1, +1 \}$ に取るのは、「正しく分類できている」という条件が
+  $y_i f(\bold{x}_i) > 0$ という 1 本の式で書けるようにするためである。
+  この記法のおかげで以降の式変形で場合分けが不要になる。
+</Hint>
+
+## マージン
+
+超平面 $f(\bold{x}) = 0$ と点 $\bold{x}_i$ との距離は
+
+$$
+\dfrac{|\bold{w}^\top \bold{x}_i + b|}{\| \bold{w} \|}
+$$
+
+で与えられる。
+
+<Details title="点と超平面の距離の導出">
+
+超平面上の任意の点を $\bold{x}_0$ とすると $\bold{w}^\top \bold{x}_0 + b = 0$ が成り立つ。
+$\bold{w}$ は超平面の法線ベクトルであるから、点 $\bold{x}_i$ から超平面までの距離は $\bold{x}_i - \bold{x}_0$ を単位法線ベクトル $\bold{w} / \| \bold{w} \|$ に射影した長さに等しい。
+
+$$
+\begin{aligned}
+\left| \dfrac{\bold{w}^\top}{\| \bold{w} \|} (\bold{x}_i - \bold{x}_0) \right|
+&= \dfrac{|\bold{w}^\top \bold{x}_i - \bold{w}^\top \bold{x}_0|}{\| \bold{w} \|} \\
+&= \dfrac{|\bold{w}^\top \bold{x}_i + b|}{\| \bold{w} \|}
+\end{aligned}
+$$
+
+</Details>
+
+すべての訓練データが正しく分類されているとき $y_i (\bold{w}^\top \bold{x}_i + b) = |\bold{w}^\top \bold{x}_i + b|$ であるから、超平面と最も近いデータ点との距離
+
+$$
+\gamma = \min_{i} \dfrac{y_i (\bold{w}^\top \bold{x}_i + b)}{\| \bold{w} \|}
+$$
+
+を**マージン (margin)** という。SVM はこのマージンを最大化する $\bold{w}, b$ を求める。
+
+![決定境界・マージン境界・サポートベクターの関係](/img/svm-margin.svg)
+
+## ハードマージン SVM の主問題
+
+マージン最大化問題は、そのままでは解が一意に定まらない。
+$(\bold{w}, b)$ を $c > 0$ 倍した $(c \bold{w}, c b)$ は同じ超平面を表し、マージンの値も変わらないからである。
+
+そこで、この**スケールの自由度**を使って
+
+$$
+\min_{i} y_i (\bold{w}^\top \bold{x}_i + b) = 1
+$$
+
+となるように正規化する。
+$1 / \| \bold{w} \|$ は $i$ に依存しない正の定数なので $\min$ の外に出せる。
+すると残った $\min_i y_i (\bold{w}^\top \bold{x}_i + b)$ が正規化条件によってちょうど $1$ になり、マージンは
+
+$$
+\begin{aligned}
+\gamma
+&= \min_{i} \dfrac{y_i (\bold{w}^\top \bold{x}_i + b)}{\| \bold{w} \|} \\
+&= \dfrac{1}{\| \bold{w} \|} \min_{i} y_i (\bold{w}^\top \bold{x}_i + b) \\
+&= \dfrac{1}{\| \bold{w} \|} \cdot 1 \\
+&= \dfrac{1}{\| \bold{w} \|}
+\end{aligned}
+$$
+
+と $\bold{w}$ だけの式になる。よってマージンの最大化は $\| \bold{w} \|$ の最小化に帰着する。
+
+$$
+\begin{aligned}
+& \min_{\bold{w}, b} \dfrac{1}{2} \| \bold{w} \|^2 \\
+& \text{subject to} \quad y_i (\bold{w}^\top \bold{x}_i + b) \ge 1 \quad (i = 1, 2, \dots, n)
+\end{aligned}
+$$
+
+これを**ハードマージン SVM (hard margin SVM)** の**主問題 (primal problem)** という。
+
+<Hint level="info">
+  $\| \bold{w} \|$ ではなく $\frac{1}{2} \| \bold{w} \|^2$ を最小化しているのは、
+  平方根を外して微分しやすくするためと、係数 $\frac{1}{2}$ で微分後の係数を $1$ に揃えるためである。
+  $t \mapsto \frac{1}{2} t^2$ は $t \ge 0$ で単調増加なので、最小解は変わらない。
+
+また、制約を $\min_i y_i(\bold{w}^\top \bold{x}_i + b) = 1$ ではなく $\ge 1$ の不等式で書いてよいのは、
+最適解では $\| \bold{w} \|$ を小さくする方向に圧力がかかり、等号がどこかで必ず成立するためである。
+
+</Hint>
+
+目的関数は凸二次関数、制約は線形なので、これは**凸二次計画問題 (convex QP)** であり、局所最適解が大域最適解になる。
+
+## 双対問題の導出
+
+主問題をそのまま解くと変数の数は $d + 1$ 個であり、特徴量の次元 $d$ に依存する。
+ここではラグランジュの未定乗数法によって**双対問題 (dual problem)** に変換する。
+変数の数が常に $n$ 個になるほか、後述するように解の構造がはっきり見えるようになる。
+
+制約 $1 - y_i (\bold{w}^\top \bold{x}_i + b) \le 0$ に対して乗数 $\alpha_i \ge 0$ を導入すると、ラグランジュ関数は
+
+$$
+L(\bold{w}, b, \bm{\alpha}) = \dfrac{1}{2} \| \bold{w} \|^2 - \sum_{i=1}^n \alpha_i \left[ y_i (\bold{w}^\top \bold{x}_i + b) - 1 \right]
+$$
+
+となる。KKT 条件のうち停留条件より
+
+$$
+\begin{aligned}
+\dfrac{\partial L}{\partial \bold{w}}
+&= \bold{w} - \sum_{i=1}^n \alpha_i y_i \bold{x}_i = \bold{0} \\
+&\Longrightarrow \quad \bold{w} = \sum_{i=1}^n \alpha_i y_i \bold{x}_i
+\end{aligned} \tag{1}
+$$
+
+$$
+\begin{aligned}
+\dfrac{\partial L}{\partial b}
+&= - \sum_{i=1}^n \alpha_i y_i = 0 \\
+&\Longrightarrow \quad \sum_{i=1}^n \alpha_i y_i = 0
+\end{aligned} \tag{2}
+$$
+
+が得られる。
+
+$(1)$ は「**最適な重みベクトルは訓練データの線形結合で表される**」ことを示しており、SVM の最も重要な性質のひとつである。
+
+$(1), (2)$ を $L$ に代入する。まず $L$ を展開すると
+
+$$
+\begin{aligned}
+L
+&= \dfrac{1}{2} \| \bold{w} \|^2 - \sum_{i=1}^n \alpha_i \left[ y_i (\bold{w}^\top \bold{x}_i + b) - 1 \right] \\
+&= \dfrac{1}{2} \| \bold{w} \|^2 - \sum_{i=1}^n \alpha_i y_i \bold{w}^\top \bold{x}_i - b \sum_{i=1}^n \alpha_i y_i + \sum_{i=1}^n \alpha_i
+\end{aligned}
+$$
+
+であり、右辺の各項は $(1), (2)$ より
+
+$$
+\begin{aligned}
+\dfrac{1}{2} \| \bold{w} \|^2
+&= \dfrac{1}{2} \left( \sum_{i=1}^n \alpha_i y_i \bold{x}_i \right)^\top \left( \sum_{j=1}^n \alpha_j y_j \bold{x}_j \right) \\
+&= \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j \\
+\sum_{i=1}^n \alpha_i y_i \bold{w}^\top \bold{x}_i
+&= \bold{w}^\top \sum_{i=1}^n \alpha_i y_i \bold{x}_i = \| \bold{w} \|^2 \\
+&= \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j \\
+b \sum_{i=1}^n \alpha_i y_i
+&= b \cdot 0 = 0
+\end{aligned}
+$$
+
+となる。したがって
+
+$$
+\begin{aligned}
+L
+&= \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j
+ - \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j - 0 + \sum_{i=1}^n \alpha_i \\
+&= \sum_{i=1}^n \alpha_i - \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j
+\end{aligned}
+$$
+
+となり、双対問題
+
+$$
+\begin{aligned}
+& \max_{\bm{\alpha}} \quad \sum_{i=1}^n \alpha_i - \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j \\
+& \text{subject to} \quad \begin{cases}
+\alpha_i \ge 0 \quad (i = 1, 2, \dots, n) \\
+\sum_{i=1}^n \alpha_i y_i = 0
+\end{cases}
+\end{aligned}
+$$
+
+が導かれる。
+
+<Hint level="info">
+  主問題は凸で、制約は線形なのでスレイターの条件が満たされる。
+  よって**強双対性**が成り立ち、双対問題の最適値は主問題の最適値と一致する。
+  つまり双対問題を解けば主問題を解いたことになる。
+</Hint>
+
+また、この双対問題では**データ $\bold{x}_i$ が内積 $\bold{x}_i^\top \bold{x}_j$ の形でしか現れない**。
+この性質はカーネル法の出発点になるが、本記事では扱わない。
+
+## サポートベクター
+
+KKT 条件の相補性条件より
+
+$$
+\alpha_i \left[ y_i (\bold{w}^\top \bold{x}_i + b) - 1 \right] = 0
+$$
+
+が成り立つ。すなわち各データ点について次のいずれかが成立する。
+
+1. $\alpha_i = 0$ かつ $y_i f(\bold{x}_i) \ge 1$ — マージンの外側にある点
+1. $\alpha_i > 0$ かつ $y_i f(\bold{x}_i) = 1$ — マージン境界上にある点
+
+$(1)$ 式 $\bold{w} = \sum_i \alpha_i y_i \bold{x}_i$ において $\alpha_i = 0$ の項は寄与しないから、**決定境界は $\alpha_i > 0$ となる点、すなわちマージン境界上の点だけで決まる**。これらの点を**サポートベクター (support vector)** という。
+
+バイアス項 $b$ は、任意のサポートベクター $\bold{x}_s$ について $y_s (\bold{w}^\top \bold{x}_s + b) = 1$ が成り立つことから求められる。両辺に $y_s$ を掛けて $y_s^2 = 1$ を使うと
+
+$$
+\begin{aligned}
+y_s (\bold{w}^\top \bold{x}_s + b) &= 1 \\
+\bold{w}^\top \bold{x}_s + b &= y_s \\
+b &= y_s - \bold{w}^\top \bold{x}_s \\
+&= y_s - \sum_{i=1}^n \alpha_i y_i \bold{x}_i^\top \bold{x}_s
+\end{aligned}
+$$
+
+実際には数値誤差を抑えるため、サポートベクターの集合 $S$ 全体で平均を取る。
+
+$$
+b = \dfrac{1}{|S|} \sum_{s \in S} \left( y_s - \sum_{i=1}^n \alpha_i y_i \bold{x}_i^\top \bold{x}_s \right)
+$$
+
+以上より、決定関数は
+
+$$
+f(\bold{x}) = \sum_{i=1}^n \alpha_i y_i \bold{x}_i^\top \bold{x} + b
+$$
+
+と書ける。ここでも $\bold{x}$ は内積の形でしか現れない。
+
+## ソフトマージン SVM
+
+ハードマージン SVM は訓練データが線形分離可能でなければ実行可能解を持たない。
+また、外れ値が 1 つ混じるだけでマージンが極端に狭くなる。
+
+そこで、制約の違反を許す**スラック変数 (slack variable)** $\xi_i \ge 0$ を導入する。
+
+$$
+\begin{aligned}
+& \min_{\bold{w}, b, \bm{\xi}} \quad \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \xi_i \\
+& \text{subject to} \quad \begin{cases}
+y_i (\bold{w}^\top \bold{x}_i + b) \ge 1 - \xi_i \\
+\xi_i \ge 0
+\end{cases} \quad (i = 1, 2, \dots, n)
+\end{aligned}
+$$
+
+これを**ソフトマージン SVM (soft margin SVM)** という。
+
+$\xi_i$ は「その点がマージン境界からどれだけはみ出したか」を表す。
+
+![スラック変数がマージンからのはみ出し量を表す様子](/img/svm-slack.svg)
+
+$C > 0$ はマージンの広さと制約違反の少なさのトレードオフを決めるハイパーパラメータであり、$C \to \infty$ の極限ではすべての $\xi_i$ が $0$ に押し込まれ、ハードマージン SVM に一致する。
+
+![C を変えたときのマージン幅とサポートベクター数の変化](/img/svm-c-comparison.svg)
+
+$C$ が小さいほどマージンが広がり、多くの点がサポートベクターになる (後述の通り、マージンの内側に入った点はすべてサポートベクターである)。
+
+### 双対問題
+
+制約 $1 - \xi_i - y_i (\bold{w}^\top \bold{x}_i + b) \le 0$ に乗数 $\alpha_i \ge 0$ を、$-\xi_i \le 0$ に乗数 $\mu_i \ge 0$ を導入すると
+
+$$
+L(\bold{w}, b, \bm{\xi}, \bm{\alpha}, \bm{\mu}) = \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \xi_i - \sum_{i=1}^n \alpha_i \left[ y_i (\bold{w}^\top \bold{x}_i + b) - 1 + \xi_i \right] - \sum_{i=1}^n \mu_i \xi_i
+$$
+
+停留条件は
+
+$$
+\begin{aligned}
+\dfrac{\partial L}{\partial \bold{w}} = \bold{0} &\Longrightarrow \quad \bold{w} = \sum_{i=1}^n \alpha_i y_i \bold{x}_i \\
+\dfrac{\partial L}{\partial b} = 0 &\Longrightarrow \quad \sum_{i=1}^n \alpha_i y_i = 0 \\
+\dfrac{\partial L}{\partial \xi_i} = C - \alpha_i - \mu_i = 0 &\Longrightarrow \quad \alpha_i + \mu_i = C \tag{3}
+\end{aligned}
+$$
+
+$(3)$ と $\mu_i \ge 0$ より $\alpha_i \le C$ が従う。すなわち乗数に上限が付き
+
+$$
+0 \le \alpha_i \le C
+$$
+
+という**箱型制約 (box constraint)** が現れる。
+
+また $\xi_i$ を含む項は $(3)$ により
+
+$$
+\begin{aligned}
+C \sum_{i=1}^n \xi_i - \sum_{i=1}^n \alpha_i \xi_i - \sum_{i=1}^n \mu_i \xi_i
+&= \sum_{i=1}^n (C - \alpha_i - \mu_i) \xi_i \\
+&= 0
+\end{aligned}
+$$
+
+と消えるため、残りの計算はハードマージンの場合とまったく同じになる。よって双対問題は
+
+$$
+\begin{aligned}
+& \max_{\bm{\alpha}} \quad \sum_{i=1}^n \alpha_i - \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j \\
+& \text{subject to} \quad \begin{cases}
+0 \le \alpha_i \le C \quad (i = 1, 2, \dots, n) \\
+\sum_{i=1}^n \alpha_i y_i = 0
+\end{cases}
+\end{aligned}
+$$
+
+**目的関数はハードマージンと同一で、$\alpha_i$ に上限 $C$ が付くだけ**である。
+スラック変数 $\xi_i$ も乗数 $\mu_i$ も双対問題からは消えている。
+
+### KKT 条件による分類
+
+相補性条件
+
+$$
+\begin{aligned}
+\alpha_i \left[ y_i f(\bold{x}_i) - 1 + \xi_i \right] &= 0 \\
+\mu_i \xi_i = (C - \alpha_i) \xi_i &= 0
+\end{aligned}
+$$
+
+から、各データ点は $\alpha_i$ の値によって次の 3 通りに分類される。
+
+| $\alpha_i$         | $\xi_i$ | 位置                                                   |
+| ------------------ | ------- | ------------------------------------------------------ |
+| $\alpha_i = 0$     | $0$     | マージンの外側 ($y_i f(\bold{x}_i) \ge 1$)             |
+| $0 < \alpha_i < C$ | $0$     | マージン境界上 ($y_i f(\bold{x}_i) = 1$)               |
+| $\alpha_i = C$     | $\ge 0$ | マージンの内側または誤分類 ($y_i f(\bold{x}_i) \le 1$) |
+
+<Details title="導出">
+
+- $\alpha_i = 0$ のとき、$(3)$ より $\mu_i = C > 0$ であるから $\mu_i \xi_i = 0$ より $\xi_i = 0$。
+  よって制約 $y_i f(\bold{x}_i) \ge 1 - \xi_i = 1$ が成り立つ。
+- $0 < \alpha_i < C$ のとき、$\mu_i = C - \alpha_i > 0$ であるから $\xi_i = 0$。
+  また $\alpha_i > 0$ より $y_i f(\bold{x}_i) - 1 + \xi_i = 0$、すなわち $y_i f(\bold{x}_i) = 1$。
+- $\alpha_i = C$ のとき、$\mu_i = 0$ なので $\xi_i$ は $0$ 以上の任意の値を取りうる。
+  $\alpha_i > 0$ より $y_i f(\bold{x}_i) = 1 - \xi_i \le 1$。
+  特に $\xi_i > 1$ ならば $y_i f(\bold{x}_i) < 0$ となり、この点は誤分類されている。
+
+</Details>
+
+したがってバイアス $b$ は、$\xi_i = 0$ が保証される $0 < \alpha_s < C$ なるサポートベクター (**自由サポートベクター**) を使って計算する必要がある。
+
+$$
+b = \dfrac{1}{|S_\text{free}|} \sum_{s \in S_\text{free}} \left( y_s - \sum_{i=1}^n \alpha_i y_i \bold{x}_i^\top \bold{x}_s \right), \quad S_\text{free} = \{ i \mid 0 < \alpha_i < C \}
+$$
+
+## ヒンジ損失としての解釈
+
+ソフトマージン SVM の主問題において、$\bold{w}, b$ を固定して $\xi_i$ について最小化してみる。
+制約 $\xi_i \ge 1 - y_i f(\bold{x}_i)$ と $\xi_i \ge 0$ より
+
+$$
+\xi_i \ge \max \left( 0, \, 1 - y_i f(\bold{x}_i) \right)
+$$
+
+であり、目的関数は $\xi_i$ について ($C > 0$ より) 単調増加であるから、最適解では等号が成立する。これを代入すると
+
+$$
+\begin{aligned}
+& \min_{\bold{w}, b, \bm{\xi}} \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \xi_i \\
+&\quad \Longrightarrow \quad
+\min_{\bold{w}, b} \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \max \left( 0, \, 1 - y_i (\bold{w}^\top \bold{x}_i + b) \right)
+\end{aligned}
+$$
+
+という制約なしの最小化問題が得られる。ここで
+
+$$
+\ell_\text{hinge}(z) = \max(0, 1 - z)
+$$
+
+を**ヒンジ損失 (hinge loss)** という。
+
+最小化する関数を正の定数 $C n$ で割っても最適解は変わらないから
+
+$$
+\begin{aligned}
+& \dfrac{1}{C n} \left( \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \ell_\text{hinge} \left( y_i f(\bold{x}_i) \right) \right) \\
+&= \dfrac{1}{n} \sum_{i=1}^n \ell_\text{hinge} \left( y_i f(\bold{x}_i) \right) + \dfrac{1}{2 C n} \| \bold{w} \|^2
+\end{aligned}
+$$
+
+となり、$\lambda = 1 / (2 C n)$ とおけば
+
+$$
+\min_{\bold{w}, b} \quad \dfrac{1}{n} \sum_{i=1}^n \ell_\text{hinge} \left( y_i f(\bold{x}_i) \right) + \lambda \| \bold{w} \|^2
+$$
+
+という、正則化つき経験損失最小化の標準形になる。
+つまり **SVM は「ヒンジ損失 + L2 正則化」の経験損失最小化と等価である**。
+
+![ヒンジ損失・ロジスティック損失・指数損失の比較](/img/svm-hinge-loss.svg)
+
+<Hint level="info">
+  損失関数を差し替えると他の手法になる。
+
+| 損失関数           | 手法               |
+| ------------------ | ------------------ |
+| $\max(0, 1 - z)$   | SVM                |
+| $\log(1 + e^{-z})$ | ロジスティック回帰 |
+| $e^{-z}$           | AdaBoost           |
+
+ヒンジ損失は $z \ge 1$ で完全に $0$ になるため、マージンの外側の点が解に影響しない。これがサポートベクターの疎性 (多くの $\alpha_i$ が $0$ になること) の源である。
+
+</Hint>
+
+## まとめ
+
+$$
+\begin{aligned}
+\text{主問題} \quad
+& \min_{\bold{w}, b, \bm{\xi}} \dfrac{1}{2} \| \bold{w} \|^2 + C \sum_{i=1}^n \xi_i \\
+& \text{s.t.} \quad y_i (\bold{w}^\top \bold{x}_i + b) \ge 1 - \xi_i, \; \xi_i \ge 0 \\[0.8em]
+\text{双対問題} \quad
+& \max_{\bm{\alpha}} \sum_{i=1}^n \alpha_i - \dfrac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j \bold{x}_i^\top \bold{x}_j \\
+& \text{s.t.} \quad 0 \le \alpha_i \le C, \; \sum_{i=1}^n \alpha_i y_i = 0 \\[0.8em]
+\text{決定関数} \quad
+& f(\bold{x}) = \sum_{i=1}^n \alpha_i y_i \bold{x}_i^\top \bold{x} + b
+\end{aligned}
+$$
+
+導出の流れは次のとおりである。
+
+1. マージン $\gamma = \min_i y_i f(\bold{x}_i) / \| \bold{w} \|$ を最大化したい
+1. スケールの自由度を使って $\min_i y_i f(\bold{x}_i) = 1$ と正規化すると、$\| \bold{w} \|^2 / 2$ の最小化になる
+1. 線形分離できない場合に備えてスラック変数 $\xi_i$ を導入する
+1. ラグランジュの未定乗数法で双対問題に変換すると、データは内積の形でしか現れなくなる
+1. KKT 条件の相補性条件から、解が少数のサポートベクターだけで決まることが分かる
+1. スラック変数を消去すると、ヒンジ損失 + L2 正則化の最小化と等価であることが分かる
+
+## TODO
+
+- [ ] カーネル法 (カーネルトリック、マーサーの定理、ガウスカーネル)
+- [ ] SMO (sequential minimal optimization) による双対問題の解法
+- [ ] 多クラス分類への拡張 (one-vs-rest / one-vs-one)
+- [ ] $\nu$-SVM
+- [ ] サポートベクター回帰 ($\varepsilon$-不感損失)
+- [ ] VC 次元とマージンによる汎化誤差の上界
+
+## 参考文献
+
+- C. Cortes, V. Vapnik, [Support-Vector Networks](https://link.springer.com/article/10.1007/BF00994018), Machine Learning, 1995
+- C. M. Bishop, Pattern Recognition and Machine Learning, Springer, 2006
+- 竹内 一郎, 烏山 昌幸, サポートベクトルマシン (機械学習プロフェッショナルシリーズ), 講談社, 2015
+- 平井 有三, はじめてのパターン認識, 森北出版, 2012

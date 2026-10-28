@@ -22,6 +22,10 @@ V[R(t)] &= \sigma^2 t
 \end{aligned}
 $$
 
+標本路は $\pm \sigma \sqrt{t}$ の幅で広がっていき、時刻を固定して多数の試行を集めると正規分布に近づく。
+
+![ランダムウォークの標本路は ±σ√t の幅で広がり、時刻を固定した分布は正規分布に近づく](/img/sde-random-walk.svg)
+
 <Details title="E[R(t)], V[R(t)] の導出">
 
 $$
@@ -69,6 +73,10 @@ $$
 
 $\Delta W = \pm \sigma \sqrt{\frac{1}{n}} = \pm \sigma \sqrt{\Delta t}$ としたときの $\lim_{n \to \infty} W(t)$ を **ウィーナー過程 (Wiener process)** という。
 
+$\Delta t$ を小さくしていくと、折れ線は全体の形を保ったまま細かくなり、連続な軌道に近づく。
+
+![Δt を小さくするほどランダムウォークの折れ線が細かくなり、連続な軌道に近づく](/img/sde-wiener-limit.svg)
+
 <Hint level="info">
   **ウィーナー過程はランダムウォークの連続極限である**
   
@@ -93,6 +101,10 @@ W(t_0 + t) - W(t_0) &\sim N(0, \sigma^2 t)
 $$
 
 </Hint>
+
+標本路を多数重ねると、広がりが $\pm \sigma \sqrt{t}$ に沿っていることと、時刻を固定した断面が $N(0, \sigma^2 t)$ になっていることが見て取れる。
+
+![ウィーナー過程の標本路の束は ±σ√t に沿って広がり、時刻を固定した断面は正規分布になる](/img/sde-wiener-paths.svg)
 
 <Hint level="info">
   **ウィーナー過程の性質**
@@ -121,6 +133,10 @@ $$
 
 </Hint>
 
+軌道をどこまで拡大してもギザギザは消えず、傾きは一定の値に落ち着かない。
+
+![ウィーナー過程の軌道を拡大してもギザギザが消えない様子](/img/sde-nowhere-differentiable.svg)
+
 ## 確率微分方程式
 
 $X(t)$ が次の確率微分方程式を満たすとき、$X(t)$ を **確率微分方程式 (stochastic differential equation)** という。
@@ -135,6 +151,11 @@ $$
 X(t) = X(0) + \int_{0}^{t} \mu(X(s), s) ds + \int_{0}^{t} \sigma(X(s), s) dW(s)
 $$
 
+第1項 ($dt$ の項) が平均的な動きを、第2項 ($dW$ の項) がばらつきを決める。
+$\mu(X, t) = \mu, \sigma(X, t) = \nu$ とした場合と、$\mu(X, t) = \mu X, \sigma(X, t) = \nu X$ とした場合 (幾何ブラウン運動) を比べると次のようになる。
+
+![ドリフト項と拡散項が定数の場合と X に比例する場合の解の比較](/img/sde-sde-paths.svg)
+
 ## 伊藤積分
 
 確率微分方程式 $dX(t) = \mu(X(t), t) dt + \sigma(X(t), t) dW(t)$ の解において、右辺の第2項の積分 $\int_{0}^{t} \sigma(X(s), s) dW(s)$ は普通の積分とは異なる。
@@ -143,6 +164,11 @@ $$
 $$
 \int_{0}^{t} \sigma(X(s), s) dW(s) = \sum_{k=1}^{n} \sigma(X(t_{k-1}), t_{k-1}) [W(t_k) - W(t_{k-1})]
 $$
+
+ポイントは、各区間の**左端** $t_{k-1}$ で被積分関数を評価することである。
+普通の積分と違い、分割を細かくしても左端で評価した和と右端で評価した和は一致せず、その差は $\sigma^2 t$ のまま残る。
+
+![左端点で評価した和と右端点で評価した和は、分割を細かくしても σ²t だけ異なる値に収束する](/img/sde-ito-integral.svg)
 
 <Details title="伊藤積分を定義する理由">
 確率微分方程式 $dX = bW(t) dW$ の解を考える。
@@ -262,6 +288,11 @@ dH &= \dfrac{\partial H}{\partial t} dt + \dfrac{\partial H}{\partial X} ( f dt 
 $$
 
 </Details>
+
+伊藤の公式に $\frac{1}{2} \frac{\partial^2 H}{\partial X^2} g^2 \sigma^2 dt$ の項が現れるのは、$dW^2 = \sigma^2 dt$ が消えずに残るからである。
+実際、分割を細かくしていくと $\sum \Delta t^2$ と $\sum \Delta t \Delta W$ は $0$ に向かうが、$\sum \Delta W^2$ だけは $\sigma^2 t$ に収束する。
+
+![Δt→0 で Σ Δt² と Σ ΔtΔW は 0 に向かうが、Σ ΔW² は σ²t に収束する](/img/sde-quadratic-variation.svg)
 
 <Details title="伊藤の公式を使って再び ∫WdW を考える">
   $X(t) = W(t)$ のとき、$H(t, X(t)) = X^2(t)$ とすると、伊藤の公式より

@@ -1,0 +1,713 @@
+---
+title: "Clean Code"
+date: 2026-10-22T18:00:00+09:00
+tags: ["Clean Code", "ソフトウェア設計", "勉強ノート"]
+---
+
+Clean Codeは、**コードは書く時間より読まれる時間のほうがはるかに長い**という前提に立って、読み手の負担を減らすための規律をまとめたもの。
+対象は設計やアーキテクチャではなく、名前、関数、クラスといったコードそのものの単位。
+
+本に書かれているルールは多いが、ほぼ次の2つに還元できる。
+
+- 読み手が頭の中に保持しなければならないものを減らす (名前を見れば中身が分かる、関数は1画面に収まる、引数は少ない)
+- 変更の影響が及ぶ範囲を狭くする (1つのことだけをする、重複を消す、境界を隔てる)
+
+以下、章立てに沿って要点を整理する。
+例はJavaとKotlin。
+
+## コンセプト
+
+### コードは読まれる
+
+コードを書いている時間のうち、新しい行を書いている時間は少ない。
+大半は、既存のコードを読み、理解し、どこを変えるか決める時間。
+その比は10:1とも言われる。
+
+したがって、**書きやすさを犠牲にしてでも読みやすさを取る**のが基本方針。
+型を省略できる、1行にまとめられる、といった書き手の都合は、読み手の負担を増やすなら捨てる。
+
+### ボーイスカウトルール
+
+**来たときより綺麗にして帰る。**
+触ったコードを、触る前よりわずかでも良くしておく。
+名前を1つ直す、長い関数を1つ分割する程度でよい。
+
+大規模なrewriteをしなくても、継続的に手を入れれば劣化は止まる、という考え方。
+逆に、これをしなければコードは必ず劣化する (割れ窓)。
+
+### 汚いコードのコスト
+
+汚いコードの上では、変更のたびに読解のコストがかかり、変更が別の場所を壊すリスクが上がる。
+最初は速く進んでも、数か月で生産性がゼロに近づく。
+「後で綺麗にする」の「後」は来ない。
+
+## 名前
+
+名前は、コードを読む人が最初に、そして最も多く目にする情報。
+
+### 意図を表す
+
+**名前を読めば、それが何で、なぜ存在し、どう使うかが分かる**ようにする。
+コメントで補足が必要な名前は、名前として失敗している。
+
+```java
+// 悪い
+int d; // 経過日数
+
+// 良い
+int elapsedTimeInDays;
+```
+
+### 誤解を招かない
+
+- 型と違う名前をつけない: `accountList` が `List` でないなら `accounts`
+- 似た名前を並べない: `XYZControllerForEfficientHandlingOfStrings` と `XYZControllerForEfficientStorageOfStrings`
+- `l` と `1`、`O` と `0` のような紛らわしい文字を避ける
+
+### 区別に意味をもたせる
+
+`a1`, `a2` や `ProductInfo`, `ProductData` のように、違いを表さない区別をしない。
+読み手は違いを探すが、違いはない。
+
+### 発音できる、検索できる
+
+- 発音できない名前 (`genymdhms`) は議論の対象にできない
+- 1文字の名前や数値リテラルは検索できない。`7` より `MAX_CLASSES_PER_STUDENT`
+- 名前の長さはスコープの長さに比例させる。loop変数の `i` はよいが、クラスのfieldの `i` は不可
+
+### 名前の種類
+
+- クラス名: 名詞。`Customer`, `WikiPage`, `AddressParser`。`Manager`, `Processor`, `Data`, `Info` は避ける (何でも入るため)
+- メソッド名: 動詞。`postPayment`, `deletePage`, `save`
+- accessor / mutator / predicate: `get`, `set`, `is` prefix
+- constructorを overloadするなら、引数を説明するstatic factory methodにする
+
+```java
+// 悪い
+Complex fulcrumPoint = new Complex(23.0);
+
+// 良い
+Complex fulcrumPoint = Complex.fromRealNumber(23.0);
+```
+
+### 1つの概念に1つの単語
+
+同じ操作に `fetch`, `retrieve`, `get` を混ぜない。
+逆に、1つの単語を複数の意味で使わない (`add` が「加算」と「collectionへの追加」を兼ねる、など)。
+
+### 文脈を補う、余計な文脈を消す
+
+- `firstName`, `lastName`, `street`, `city` が並んでいれば住所だと分かるが、`state` だけが単独で現れれば分からない。`Address` クラスにまとめる
+- 逆に、`GSDAccountAddress` のようにアプリケーション名を全クラスに prefixするのは無意味
+
+<Hint level="info">
+**接頭辞・Hungarian記法**
+
+型を名前に含める (`strName`, `iCount`) やmember変数の `m_` prefixは不要。
+IDEが型を教えてくれる現代では、読み手の負担を増やすだけ。
+インターフェースの `I` prefix (`IShapeFactory`) も同様で、必要なら実装側に `ShapeFactoryImpl` とつける。
+
+</Hint>
+
+## 関数
+
+### 小さく
+
+**関数は小さくする。それからさらに小さくする。**
+目安は数行。1画面に収まるのは最低条件で、20行でも長い。
+
+`if` / `while` の中身は1行、つまり関数呼び出し1つであるべき。
+これにより、indentは1〜2段で収まる。
+
+### 1つのことをする
+
+**関数は1つのことをし、それをうまくやり、それ以外をしない。**
+
+「1つのこと」の判定法は、**関数名より1段下の抽象度のstepだけで中身が書けているか**。
+関数から別の関数を意味のある名前で抽出できるなら、それは複数のことをしている。
+
+```java
+// 複数のことをしている: ページの種類判定、設定の組み込み、HTML化
+public static String renderPageWithSetupsAndTeardowns(PageData pageData, boolean isSuite) {
+    boolean isTestPage = pageData.hasAttribute("Test");
+    if (isTestPage) {
+        WikiPage testPage = pageData.getWikiPage();
+        StringBuffer newPageContent = new StringBuffer();
+        includeSetupPages(testPage, newPageContent, isSuite);
+        newPageContent.append(pageData.getContent());
+        includeTeardownPages(testPage, newPageContent, isSuite);
+        pageData.setContent(newPageContent.toString());
+    }
+    return pageData.getHtml();
+}
+
+// 1つのこと: 「テストページならsetup/teardownを組み込んでからHTML化する」
+public static String renderPageWithSetupsAndTeardowns(PageData pageData, boolean isSuite) {
+    if (isTestPage(pageData)) {
+        includeSetupAndTeardownPages(pageData, isSuite);
+    }
+    return pageData.getHtml();
+}
+```
+
+### 抽象度を揃える
+
+1つの関数の中で、`getHtml()` のような高い抽象度と `.append("\n")` のような低い抽象度を混ぜない。
+混ざっていると、読み手はどれが本質的な操作でどれが詳細かを判断しながら読むことになる。
+
+### 上から下へ読める (stepdown rule)
+
+関数を、呼び出す側の直後に呼ばれる側を置く順に並べる。
+ファイルを上から下へ読むと、抽象度が1段ずつ下がっていく。
+「〜するには、〜して、〜する」という段落の連なりとして読める。
+
+### switch文
+
+`switch` は本質的に複数のことをする (N通りの分岐)。
+型で分岐する `switch` は、同じ分岐があちこちにコピーされる原因になる。
+
+対処は、**`switch` を1か所に閉じ込め、多態なオブジェクトを生成するfactoryに使う**。
+以降の分岐は多態に任せる。
+
+```java
+public abstract class Employee {
+    public abstract boolean isPayday();
+    public abstract Money calculatePay();
+}
+
+public class EmployeeFactoryImpl implements EmployeeFactory {
+    public Employee makeEmployee(EmployeeRecord r) {
+        return switch (r.type) {
+            case COMMISSIONED -> new CommissionedEmployee(r);
+            case HOURLY -> new HourlyEmployee(r);
+            case SALARIED -> new SalariedEmployee(r);
+        };
+    }
+}
+```
+
+<Hint level="info">
+**sealed class / enumの場合**
+
+Kotlinの `sealed class` やJavaの `sealed interface` に対する `when` / `switch` は、網羅性がコンパイラで検査されるため、分岐の追加漏れという問題はない。
+代数的データ型として扱うなら、分岐を散らすのは不自然ではない (式木の評価など)。
+多態にするか分岐にするかは、「型を追加することが多いか、操作を追加することが多いか」で決める (expression problem)。
+
+</Hint>
+
+### 引数
+
+**引数は少ないほどよい。** 0が理想、1か2が普通、3は要注意、4以上は正当化が要る。
+
+- 引数が増えるとテストの組み合わせが増える
+- 引数は関数名と抽象度が違うことが多く、読み手は毎回それを解釈する
+
+```java
+// フラグ引数: 関数が2つのことをしていると宣言している
+render(true);
+
+// 分ける
+renderForSuite();
+renderForSingleTest();
+```
+
+- フラグ引数 (boolean) は使わない。関数を2つに分ける
+- 出力引数 (引数を書き換えて結果を返す) は使わない。読み手は引数を入力だと思う。状態を変えるなら `this` を変える
+- 引数が複数まとまって現れるなら、オブジェクトにする: `makeCircle(double x, double y, double radius)` → `makeCircle(Point center, double radius)`
+- 動詞と名詞の対にする: `write(name)` より `writeField(name)`
+
+### 副作用をもたない
+
+関数名が約束していないことをしない。
+`checkPassword()` の中で `Session.initialize()` を呼ぶのは、名前と中身の不一致 (時間的結合も生む)。
+
+### command / query分離
+
+**何かをするか、何かに答えるか、どちらか一方。**
+
+```java
+// 悪い: 設定して、成功したかを返す
+if (set("username", "unclebob")) { ... }
+
+// 良い
+if (attributeExists("username")) {
+    setAttribute("username", "unclebob");
+}
+```
+
+### 例外を使う、error codeを返さない
+
+error codeを返すと、呼び出し側は即座にそれを処理する `if` のネストを書くことになる。
+例外なら、正常系と異常系を分けて書ける。
+
+`try` / `catch` のブロックはそれ自体が1つのことなので、**`try` の中身は関数1つの呼び出しにする**。
+
+```java
+public void delete(Page page) {
+    try {
+        deletePageAndAllReferences(page);
+    } catch (Exception e) {
+        logError(e);
+    }
+}
+```
+
+### 重複を消す (DRY)
+
+重複はソフトウェアのあらゆる悪の根源。
+同じ処理が複数あれば、変更時に全部を直す必要があり、1つ直し忘れればバグ。
+
+### 関数はどう書かれるか
+
+最初から上の規律を守って書くのではない。
+まず長く汚い関数を書き、テストで動かし、そこからテストを通したまま分割、改名、重複除去をしていく。
+
+## コメント
+
+**コメントは、コードで意図を表現できなかった失敗を補うもの。**
+書く前に、コードで表現できないかをまず考える。
+
+コメントはコードに追従しない。コードは変わるがコメントは残り、嘘をつき始める。
+
+### 良いコメント
+
+- 法的なコメント (license)
+- 意図の説明: 「なぜそう決めたか」。コードは「何をしているか」しか語れない
+- 警告: 「このテストは実行に数時間かかる」
+- `TODO`
+- 公開APIのドキュメント
+
+```java
+// 正規表現は kk:mm:ss EEE, MMM dd, yyyy の形式にマッチする
+Pattern timeMatcher = Pattern.compile("\\d*:\\d*:\\d* \\w*, \\w* \\d*, \\d*");
+```
+
+### 悪いコメント
+
+- 冗長なコメント: コードを読めば分かることを繰り返す。`i++; // iを1増やす`
+- 誤解を招くコメント: コードと微妙に違うことを言っている
+- 義務的なコメント: 全関数にJavadocを書くルールが生む、何も語らないコメント
+- 日誌・署名: `// 2026-10-22 yongju 修正`。VCSが持っている
+- 位置を示すbanner: `// ---- Actions ----`
+- 閉じ括弧のコメント: `} // while`。関数が長い証拠なので、関数を短くする
+- コメントアウトされたコード: 誰も消す勇気が出なくなる。VCSが覚えているので消す
+- 非公開コードのJavadoc
+
+<Hint level="info">
+**コメントの代わりに関数を抽出する**
+
+```java
+// 従業員が福利厚生の対象かどうか
+if ((employee.flags & HOURLY_FLAG) && (employee.age > 65))
+
+// 名前にする
+if (employee.isEligibleForFullBenefits())
+```
+
+条件式に名前をつけられるなら、コメントではなく関数にする。
+
+</Hint>
+
+## 書式
+
+書式はチームで決め、全員が従う。
+個人の好みより、**コード全体で一貫していること**が重要。
+
+### 縦方向
+
+- ファイルは短く。目安200〜500行
+- 新聞のように: 上に概要 (高い抽象度)、下に詳細
+- 概念の間は空行で区切る。関連の強い行は空行を挟まず近くに置く
+- 変数はできるだけ使う場所の近くで宣言する。instance変数はクラスの先頭にまとめる
+- 呼び出す関数の下に呼ばれる関数を置く (前述のstepdown rule)
+
+### 横方向
+
+- 1行は短く。目安は80〜120文字。横scrollさせない
+- 演算子の優先順位を空白で示す: `b*b - 4*a*c`
+- indentでスコープを示す。短い `if` だからといって1行に潰さない
+- 空の `while` 本体には、見落とされないように `;` を独立した行に置く
+
+## オブジェクトとデータ構造
+
+### 対称性
+
+- **オブジェクト**はデータを隠蔽し、データを操作する関数を公開する
+- **データ構造**はデータを公開し、意味のある関数を持たない
+
+```java
+// データ構造: 新しい図形を足すのは簡単、新しい操作を足すには全図形のswitchを直す
+public class Square { public Point topLeft; public double side; }
+public class Geometry {
+    public double area(Object shape) {
+        if (shape instanceof Square s) return s.side * s.side;
+        ...
+    }
+}
+
+// オブジェクト: 新しい操作を足すには全図形を直す、新しい図形を足すのは簡単
+public interface Shape { double area(); }
+public class Square implements Shape {
+    private Point topLeft;
+    private double side;
+    public double area() { return side * side; }
+}
+```
+
+**どちらが正しいということはない。** 何を変更することが多いかで選ぶ。
+全てをオブジェクトにすべきという思い込みは捨てる。
+
+### データ抽象化
+
+getter / setterを全fieldに生やしたクラスは、`public` fieldと変わらない。
+隠蔽とは、実装の詳細を知らなくても使えるインターフェースを提供すること。
+
+```java
+// 実装を晒している
+public interface Vehicle {
+    double getFuelTankCapacityInGallons();
+    double getGallonsOfGasoline();
+}
+
+// 抽象化している
+public interface Vehicle {
+    double getPercentFuelRemaining();
+}
+```
+
+### Demeterの法則
+
+**モジュールは、自分が操作するオブジェクトの内部を知ってはならない。**
+クラス $C$ のメソッド $f$ が呼んでよいのは次のメソッドだけ。
+
+- $C$ 自身のメソッド
+- $f$ が生成したオブジェクトのメソッド
+- $f$ の引数として渡されたオブジェクトのメソッド
+- $C$ のinstance変数が保持するオブジェクトのメソッド
+
+これに反するのが**train wreck**。
+
+```java
+final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();
+```
+
+ただし、これが問題になるのは `ctxt`, `Options`, `ScratchDir` がオブジェクト (内部を隠蔽している) の場合。
+データ構造なら内部を晒すのが仕事なので、chainしても問題ない。
+
+直すときは、**なぜそのpathが要るのか**まで遡る。
+pathからfileを作るのが目的なら、`ctxt.createScratchFileStream(classFileName)` と、やりたいことをそのまま頼む。
+
+### ハイブリッド
+
+半分オブジェクト、半分データ構造のクラスは最悪。
+新しい関数を足すのも、新しいデータ構造を足すのも難しくなる。
+getter / setterと、重要な処理をするメソッドが同居しているクラスがこれ。
+
+### DTO / Active Record
+
+- DTO: `public` な変数だけ、または getter / setter だけのクラス。DBや通信との境界で使う
+- Active Record: DTOに `save()`, `find()` がついたもの。これはデータ構造として扱い、業務ルールを乗せない。業務ルールは別のオブジェクトに置く
+
+## エラー処理
+
+エラー処理が本来の処理を覆い隠してしまうなら、それは間違っている。
+
+- **return codeではなく例外を使う。** 呼び出し側の正常系と異常系が分離される
+- **`try` から書き始める。** `try` ブロックはtransactionのようなもので、途中で抜けても一貫した状態であるべき。失敗するテストを先に書くと、`catch` 側から自然に設計できる
+- **unchecked例外を使う。** checked例外は、低い層でthrowを追加すると呼び出し階層のsignature全てが変わる (Open/Closed原則違反)。重要なlibraryでなければ、得るものよりコストが大きい
+- **例外に文脈をもたせる。** 失敗した操作と種類をメッセージに入れる。stack traceだけでは意図が分からない
+- **呼び出し側の都合で例外クラスを定義する。** 3rd-party APIが投げる複数の例外を、1つのwrapperクラスで包んで1つの例外に変換する。APIへの依存も薄まる
+- **特殊ケースオブジェクト (special case pattern)。** 「対象がないとき」を例外で表す代わりに、空を表すオブジェクトを返す。呼び出し側の `try` / `catch` が消える
+
+```java
+// 悪い
+try {
+    MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
+    m_total += expenses.getTotal();
+} catch (MealExpensesNotFound e) {
+    m_total += getMealPerDiem();
+}
+
+// 良い: 見つからないときは per diem を返す MealExpenses を返す
+MealExpenses expenses = expenseReportDAO.getMeals(employee.getID());
+m_total += expenses.getTotal();
+```
+
+- **nullを返さない。** 呼び出し側が全箇所でnull checkを強いられ、1つ忘れればNPE。空のcollectionや特殊ケースオブジェクトを返す
+- **nullを渡さない。** 引数のnullを正当に処理する方法はない。assertで弾くか、そもそも渡せない設計にする
+
+<Hint level="info">
+**Kotlinの場合**
+
+nullabilityが型に乗るので、「nullを返すな」は「戻り値を `T?` にするな」に読み替える。
+`T?` を返すのは、呼び出し側に分岐を強いる設計判断であり、null checkの漏れとは別の問題。
+検査例外もないので、例外についての節はほぼそのまま当てはまる。
+
+</Hint>
+
+## 境界
+
+3rd-party libraryは、提供側はできるだけ汎用に、利用側はできるだけ自分の用途に特化して使いたい。
+この緊張が境界の問題。
+
+- **境界をwrapする。** `Map<String, Sensor>` をそのまま引き回すと、`Map` のAPI変更がシステム全体に波及する。`Sensors` クラスで包めば、変更は1か所
+- **学習テスト (learning test)。** libraryの使い方を覚えるために、本番コードではなくテストで試す。libraryをupgradeしたとき、動作が変わっていないことの確認にもなる
+- **まだ存在しないコードとの境界。** 相手のAPIが決まっていないなら、こちらが欲しいインターフェースを先に定義して進める。決まったらadapterで繋ぐ
+
+```kotlin
+// 境界をwrapする
+class Sensors {
+    private val sensors = mutableMapOf<String, Sensor>()
+    fun getById(id: String): Sensor = sensors.getValue(id)
+}
+```
+
+## ユニットテスト
+
+### TDDの3原則
+
+1. 失敗するテストを書くまで、production codeを書かない
+1. 失敗させるのに十分な量だけテストを書く (コンパイルエラーも失敗)
+1. 現在失敗しているテストを通すのに十分な量だけproduction codeを書く
+
+### テストコードも綺麗に保つ
+
+**テストコードはproduction codeと同じくらい重要。**
+汚いテストは、production codeを変えるたびに直す必要があり、やがて捨てられる。
+テストが捨てられると、production codeを安心して変更できなくなり、腐っていく。
+
+テストはproduction codeの柔軟性、保守性、再利用性を支えるもの。
+**テストがあるから、変更を恐れずに済む。**
+
+### 読みやすいテスト
+
+- **build-operate-check** (arrange-act-assert): 準備、実行、検証の3段を明示する
+- テストに特化したAPI (DSL) を作って、詳細を隠す
+- 二重基準: テストコードでは、効率より読みやすさを優先してよい (本番では避ける `String` 結合など)
+- **1テスト1概念**: 1つのテストで複数の概念を検証しない。1概念につきassertは少なく
+
+### F.I.R.S.T.
+
+- **Fast**: 遅いテストは実行されなくなる
+- **Independent**: テスト同士が依存しない。どの順で実行してもよい
+- **Repeatable**: どの環境でも同じ結果
+- **Self-validating**: 結果はboolean。logを読んで人が判断するテストはテストでない
+- **Timely**: production codeの直前に書く。後からだとテストしにくいコードになる
+
+## クラス
+
+### 小さく
+
+関数と同じく、クラスも小さく。
+ただし尺度は行数ではなく**責務の数**。
+
+クラスの名前が責務を表す。
+`Processor`, `Manager`, `Super` のような曖昧な名前が必要になるなら、責務が複数ある。
+また、クラスを「〜し、〜する」と `and` なしで25語以内で説明できなければ、責務が多い。
+
+### 単一責任の原則 (SRP)
+
+**クラスを変更する理由は1つだけであるべき。**
+
+多くの開発者は、小さいクラスが多数あると全体像が掴めなくなると心配する。
+だが、道具を引き出しにしまうのに、全部を1つの引き出しに入れるか、分類するか、という話。
+どちらにせよ知るべきことの総量は同じで、分類されていれば必要なものだけ見ればよい。
+
+### 凝集度
+
+クラスのinstance変数は少なく、各メソッドができるだけ多くのinstance変数を使っているのが高凝集。
+一部のメソッドだけが使うinstance変数があるなら、そこは別のクラスに分かれたがっている。
+
+**関数を小さくし、引数を減らしていくと、一部の関数だけが使うinstance変数が増える。これはクラスを分割するサイン。**
+
+### 変更のために組織する
+
+変更を加えるときに、既存のクラスを開いて書き換えるのではなく、新しいクラスを追加して対応できる構造にする (Open/Closed原則)。
+
+```java
+// SQLを組み立てるクラスに update 文を足すには、このクラスを開く必要がある
+public class Sql {
+    public String create();
+    public String insert(Object[] fields);
+    public String select(Column[] columns, Criteria c);
+    ...
+}
+
+// 文の種類ごとにクラスを分ければ、update は UpdateSql を足すだけ
+abstract public class Sql {
+    abstract public String generate();
+}
+public class CreateSql extends Sql { ... }
+public class SelectSql extends Sql { ... }
+```
+
+### 詳細ではなく抽象に依存する
+
+具象クラスに依存すると、その詳細が変わるたびに影響を受ける。
+インターフェースに依存すれば、実装を差し替えられ、テストではstubに替えられる (依存性逆転の原則)。
+
+## システム
+
+### 構築と利用を分ける
+
+オブジェクトを**生成する**コードと、生成されたオブジェクトを**使う**コードは分ける。
+`main` 、あるいはfactory、あるいはDIコンテナに生成を集め、利用側は生成されたものを受け取るだけにする。
+
+```java
+// 構築と利用が混ざっている (lazy initialization)
+public Service getService() {
+    if (service == null) {
+        service = new MyServiceImpl(...); // 具象クラスへの依存。テストで差し替えにくい
+    }
+    return service;
+}
+```
+
+### スケールアップ
+
+最初から正しいシステムを作ることはできない。
+今日の要件を満たすものを作り、明日拡張する。
+**関心事を分離できていれば**、アーキテクチャは段階的に成長させられる。
+
+横断的関心事 (永続化、transaction、logging) は、業務logicに混ぜず、AOPやproxyで分離する。
+EJB2のように、frameworkの都合が業務オブジェクトに侵食している状態が反面教師。
+
+### 決定を遅らせる
+
+最適な決定は、十分な情報が集まった最後の瞬間に下す。
+早すぎる決定は、情報不足の中での決定。
+モジュール化され、関心事が分離されていれば、決定を遅らせても困らない。
+
+## 創発
+
+**単純な設計の4つのルール**。優先順位順。
+
+1. **全テストが通る。** テスト可能なシステムは、必然的に小さく、単一責務で、疎結合になる
+1. **重複がない**
+1. **意図を表現している**: 名前、小さい関数とクラス、標準的なpattern名、整ったテスト
+1. **クラスとメソッドが最小限**: ただし上の3つの後。dogmaticに「全クラスにインターフェースを切る」などとしない
+
+テストが通っていれば、2〜4はrefactoringで後から達成できる。
+テストがなければ、どれも危なくて手が出せない。
+
+## 並行処理
+
+並行処理は「何を」と「いつ」を分離する戦略。
+構造の改善にもなるが、難しい。
+
+- 並行処理のコードは他のコードから分離する。並行処理には並行処理特有の変更理由がある
+- 共有データを限定する。可能なら共有しない。データのcopyを渡す
+- threadはできるだけ独立にする。他のthreadとデータを共有しないthreadは単なる逐次処理
+- 使うlibraryを知る: `java.util.concurrent`、thread-safe collection、executor、non-blocking
+- 実行モデルを知る: producer-consumer、readers-writers、dining philosophers
+- 同期するブロック (`synchronized`) は小さく。1つのメソッドで複数のblockを持たない
+- 終了処理 (shutdown) は難しい。早めに設計する
+- テスト: 問題のないように見える失敗を偶然として片付けない。thread数、環境を変えて実行する。コードを計装して失敗を誘発する
+
+<Hint level="info">
+**Kotlin / 現代のJavaでは**
+
+coroutine、structured concurrency、virtual threadで、「threadを直接扱わない」が標準になった。
+ただし、共有可変状態の問題は何も変わらない。
+`Mutex` や `Atomic*`、immutableなデータ、channelでの受け渡しという選択肢の中で、「共有しない」を最初に選ぶ原則はそのまま。
+テストが難しいのも同じで、本当に検証したいなら [モデル検査](/posts/model-checking/) の領域。
+
+</Hint>
+
+## 匂いと経験則
+
+本の最後の章は、コードの「匂い」のカタログ。主要なもの。
+
+### コメント
+
+- 不適切な情報 (VCSにあるべき変更履歴)
+- 陳腐化したコメント
+- 冗長なコメント
+- コメントアウトされたコード
+
+### 環境
+
+- ビルドに複数のstepが要る。1コマンドであるべき
+- テストに複数のstepが要る。1コマンドであるべき
+
+### 関数
+
+- 引数が多い
+- 出力引数
+- フラグ引数
+- 呼ばれていない関数 (dead function)
+
+### 全般
+
+- 1ファイルに複数の言語 (Javaの中のHTML、SQL、JS)
+- 明白な振る舞いが実装されていない: `Day.StringToDay("Monday")` が大文字小文字を無視しないと驚く (最小驚きの原則)
+- 境界での誤り: 境界条件をテストしていない
+- 安全性の無視: 失敗するテストをコメントアウトする、compilerの警告を消す
+- 重複: 同じコードの重複、同じ条件の `switch` / `if` の重複、似たアルゴリズムの重複。順にtemplate methodやstrategyで消す
+- 抽象度の違うコードが同じ層にいる
+- 基底クラスが派生クラスに依存する
+- 情報過多: インターフェースが広い。公開するものは少なく
+- dead code: 到達しない `if` / `catch`
+- 垂直分離: 変数と関数は使う場所の近くに定義する
+- 一貫性がない: 同じことを同じやり方でやらない
+- 雑然: 使われないdefault constructor、使われない変数
+- 人工的な結合: 依存関係のないもの同士が結合している。`enum` を無関係なクラスの中に定義する、など
+- 機能の横恋慕 (feature envy): あるクラスのメソッドが、他のクラスのデータを使ってばかりいる
+- 選択的引数: フラグ引数と同じ。関数を分ける
+- 意図が不明瞭: 短いが読めないコード
+- 責務の置き場所が違う: 読み手が「あの定数はどこにあるだろう」と探して見つけられる場所に置く (最小驚きの原則)
+- 不適切なstatic: 多態にしたくなる可能性があるメソッドを `static` にしない
+- 条件のカプセル化: `if (shouldBeDeleted(timer))` と `if (timer.hasExpired() && !timer.isRecurrent())` では前者
+- 否定の条件を避ける: `if (buffer.shouldCompact())` > `if (!buffer.shouldNotCompact())`
+- 隠された時間的結合: 呼び出し順序に意味があるなら、前の関数の戻り値を次の関数の引数にして順序を強制する
+- magic numberを名前つき定数に
+- 正確に: `float` で金額を扱わない、`List` で返るものを `ArrayList` で受けない、最初の1件が1件しかないと決めつけない
+- 慣例よりも構造: `switch` / `case` の慣例を守らせるより、多態で構造的に強制する
+- 条件文をカプセル化する
+- 境界条件をカプセル化する: `level + 1` が散らばっているなら `nextLevel` 変数にする
+- 関数は抽象度1段だけ下に降りる
+- 設定情報は上位に置く。低い層にdefault値を埋め込まない
+- 推移的なnavigationを避ける (Demeterの法則)
+
+### 名前
+
+- 記述的な名前を選ぶ
+- 適切な抽象度で名前をつける: modemの `dial()` は、電話回線の実装を前提にしている。`connect()`
+- 標準的な名前を使う: patternの名前 (`Decorator`, `Visitor`)、`toString()` などの慣習
+- 曖昧でない名前
+- スコープの長さに応じた名前の長さ
+- encodingを避ける (Hungarian記法)
+- 名前は副作用を表す: `getOos()` が存在しなければ生成するなら `createOrReturnOos()`
+
+### テスト
+
+- テストが不十分
+- カバレッジツールを使う
+- 些細なテストを省かない
+- 無視されたテストは曖昧さの表れ (要件が不明)
+- 境界条件をテストする
+- バグの近くを徹底的にテストする (バグは群れる)
+- 失敗の仕方のpatternから原因を見つける
+- テストは速く
+
+## 批判
+
+Clean Codeは広く読まれた分、批判も多い。
+主な論点。
+
+- **関数の過剰な分割**: 「数行」「1つのこと」を徹底すると、1画面で済んだlogicが10個の関数に散り、読むために何度もjumpする。小さい関数の集合は、1つの関数の中の状態をinstance変数として共有しがちで、むしろ理解しにくくなる。本の中の例自体が、refactoring後に多数の `private` fieldを持つクラスになっている
+- **多態の過剰な推奨**: `switch` を全て多態に置き換えると、1つの振る舞いを読むのに複数のファイルを行き来する。データ指向の観点からは、分岐が1か所に集まっている方が読みやすく、速い
+- **性能の無視**: 抽象化、小さい関数、間接参照は、measurableな性能コストをもつ。全てのコードで無視できるわけではない
+- **Java中心**: 例と原則の多くはJava (特に2008年頃) の制約に基づく。checked例外、getter / setter、インターフェースの扱いは、言語が変われば前提が変わる
+- **ルールの根拠が経験則**: 「〜すべき」の多くは著者の経験であり、計測に基づくものではない
+
+**ルールの背後にある動機 (読み手の負担を減らす、変更の影響を狭める) は妥当**で、個別のルールはその動機に照らして取捨選択するのが現実的。
+「関数は数行」を文字通り守るより、「読み手が1度に頭に置くものを減らせているか」を問う。
+
+## 参考文献
+
+- R. C. Martin, Clean Code: A Handbook of Agile Software Craftsmanship, Prentice Hall, 2008 (邦訳: 『Clean Code アジャイルソフトウェア達人の技』KADOKAWA, 2017)
+- R. C. Martin, Agile Software Development, Principles, Patterns, and Practices, Prentice Hall, 2002
+- M. Fowler, Refactoring: Improving the Design of Existing Code, 2nd ed., Addison-Wesley, 2018
+- J. Ousterhout, A Philosophy of Software Design, Yaknyam Press, 2018 (関数の長さについて反対の立場)
+- C. Muratori, ["Clean" Code, Horrible Performance](https://www.computerenhance.com/p/clean-code-horrible-performance), 2023

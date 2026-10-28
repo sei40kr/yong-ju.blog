@@ -6,6 +6,10 @@
 node_modules
 *.local
 
+# 図の生成スクリプト (scripts/) 用
+.venv
+__pycache__
+
 # Cache
 .cache
 tsconfig.tsbuildinfo

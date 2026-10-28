@@ -1,0 +1,1018 @@
+---
+title: "モデル検査の実例"
+date: 2026-10-21T15:00:00+09:00
+tags: ["モデル検査", "形式手法", "並行処理", "勉強ノート"]
+---
+
+production codeによくある4つのパターンを、<Link href="/posts/model-checking">モデル検査</Link>の記事で書いたcheckerにかける。
+4つとも**「読んでから書く」間に他のprocessが割り込む**形のバグで、テストでは再現しにくいが、到達可能な状態を列挙すれば数状態の反例として出てくる。
+後半では、業務フローのstep関数そのものをcheckerに実行させてunit testにする方法と、TLA+とPromelaで同じものを書いた場合を示す。
+
+| パターン                | 割り込まれる区間                 | 破れる性質                  | 修正                              |
+| ----------------------- | -------------------------------- | --------------------------- | --------------------------------- |
+| 遅延初期化              | `if x is None` と `x = ...` の間 | 初期化は1回だけ             | lockの中でもう一度確かめる        |
+| DBの読んで書く          | `SELECT` と `UPDATE` の間        | 残高と引き出し合計が一致    | 読んだ値を条件にして更新          |
+| cacheの読み込みと無効化 | `db.get` と `cache.set` の間     | 終わったときcacheがDBと一致 | 世代tokenで古い書き込みを捨てる   |
+| TTL付きの分散lock       | lock取得と仕事の完了の間         | 同時に仕事をしない          | fencing tokenで古い書き込みを拒否 |
+
+## 前提知識
+
+- <Link href="/posts/model-checking">モデル検査</Link>
+  (`check_invariant`、Kripke構造、invariant)
+
+## モデルの書き方
+
+checkerは前の記事のものをそのまま使う (`reach` で到達可能な状態を列挙し、`check_invariant` で各状態を調べる)。
+状態は `frozen=True` のdataclassで書き、各processの位置を `pc` に持つ。
+`advance` はprocess $i$ を次の位置へ進めた状態を返す補助関数。
+
+<Details title="コード: 状態空間の探索 (reach)">
+
+```python
+from collections import deque
+from dataclasses import dataclass, replace
+
+
+def reach(init, next_states):
+    """初期状態から到達可能な状態をBFSで列挙し、各状態をその親 (最初に見つけた遷移元) に対応づけて返す"""
+    parent = {init: None}
+    queue = deque([init])
+    while queue:
+        s = queue.popleft()
+        for t in next_states(s):
+            if t not in parent:
+                parent[t] = s
+                queue.append(t)
+    return parent
+```
+
+</Details>
+
+<Details title="コード: invariantの判定 (check_invariant)">
+
+```python
+def check_invariant(parent, invariant):
+    """到達可能な各状態でinvariantを調べ、破る状態があれば初期状態からそこへ至る状態の列を返す"""
+    for s in parent:
+        if not invariant(s):
+            trace = []
+            while s is not None:
+                trace.append(s)
+                s = parent[s]
+            return trace[::-1]
+    print(f"OK: {len(parent)} states")
+    return None
+```
+
+</Details>
+
+<Details title="コード: advance">
+
+```python
+def advance(s, i, pc, **changes):
+    """process i を pc へ進め、changes も反映した新しい状態を返す"""
+    return replace(s, pc=s.pc[:i] + (pc,) + s.pc[i + 1 :], **changes)
+```
+
+</Details>
+
+モデル化で決めるのは**どこで遷移を切るか**だけ。
+**他のprocessが割り込みうる境界ごとに1遷移にする。**
+DBへの問い合わせ、cacheへのアクセス、lockの取得は、それぞれ別の遷移。
+逆に、1つのprocessの中でlocalに済む計算はまとめて1遷移でよい。
+切り方が粗すぎると、現実には起きる割り込みがモデルから消え、バグを見逃す。
+
+## 遅延初期化
+
+```python
+_instance = None
+
+
+def get_instance():
+    global _instance
+    if _instance is None:
+        _instance = Connection()  # 重い
+    return _instance
+```
+
+2つのthreadが同時に呼ぶと、両方が `None` を見てから両方が `Connection()` を作る。
+初期化が1回だけかを調べる。
+
+<Details title="コード: 遅延初期化のモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    pc: tuple          # 各threadの位置
+    instance: bool     # _instance が作られているか
+    created: int       # Connection() が呼ばれた回数
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start":
+            # if _instance is None:
+            yield advance(s, i, "create") if not s.instance else advance(s, i, "done")
+        elif pc == "create":
+            # _instance = Connection()
+            yield advance(s, i, "done", instance=True, created=s.created + 1)
+
+
+init = State(pc=("start", "start"), instance=False, created=0)
+for s in check_invariant(reach(init, next_states), lambda s: s.created <= 1) or []:
+    print(s)
+```
+
+</Details>
+
+```
+State(pc=('start', 'start'), instance=False, created=0)
+State(pc=('create', 'start'), instance=False, created=0)
+State(pc=('create', 'create'), instance=False, created=0)
+State(pc=('done', 'create'), instance=True, created=1)
+State(pc=('done', 'done'), instance=True, created=2)
+```
+
+thread 0が `None` を見て `create` に進んだところで、thread 1も `None` を見る。
+`check` と `create` の間に遷移の切れ目があるのは、`if` の判定と代入が別の文だから。
+
+修正はdouble-checked locking。
+lockを取ってから**もう一度** `None` かを確かめる。
+
+```python
+_instance = None
+_lock = threading.Lock()
+
+
+def get_instance():
+    global _instance
+    if _instance is None:
+        with _lock:
+            if _instance is None:
+                _instance = Connection()
+    return _instance
+```
+
+lockの保持者を状態に足し、lockは空いているときしか取れないようにする。
+
+<Details title="コード: double-checked lockingのモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    pc: tuple
+    instance: bool
+    created: int
+    lock: int | None   # lockを持っているthread
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start":
+            # if _instance is None:
+            yield advance(s, i, "acquire") if not s.instance else advance(s, i, "done")
+        elif pc == "acquire" and s.lock is None:
+            # with _lock:
+            yield advance(s, i, "recheck", lock=i)
+        elif pc == "recheck":
+            # if _instance is None:  (lockの中でもう一度)
+            yield advance(s, i, "create") if not s.instance else advance(s, i, "release")
+        elif pc == "create":
+            yield advance(s, i, "release", instance=True, created=s.created + 1)
+        elif pc == "release":
+            yield advance(s, i, "done", lock=None)
+
+
+init = State(pc=("start", "start"), instance=False, created=0, lock=None)
+for s in check_invariant(reach(init, next_states), lambda s: s.created <= 1) or []:
+    print(s)
+```
+
+</Details>
+
+```
+OK: 25 states
+```
+
+lockの中の2回目の `if` を外す (`recheck` で必ず `create` へ進む) と、反例が戻る。
+最初の `if` は、初期化後のlock取得を省くための最適化で、正しさには寄与していない。
+
+## DBの読んで書く
+
+```python
+def withdraw(conn, account_id, amount):
+    balance = conn.execute(
+        "SELECT balance FROM accounts WHERE id = ?", (account_id,)
+    ).fetchone()[0]
+    if balance >= amount:
+        conn.execute(
+            "UPDATE accounts SET balance = ? WHERE id = ?",
+            (balance - amount, account_id),
+        )
+```
+
+残高100から2つのtransactionが70ずつ引き出す。
+`SELECT` と `UPDATE` の間に割り込まれると、両方が100を読んで両方が30を書く (lost update)。
+残高と引き出した合計の辻褄を調べる。
+
+<Details title="コード: lost updateのモデル">
+
+```python
+AMOUNT = 70
+
+
+@dataclass(frozen=True)
+class State:
+    pc: tuple
+    read: tuple        # 各transactionがSELECTで読んだbalance
+    balance: int       # DBのbalance
+    withdrawn: int     # 実際に引き出した合計
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start":
+            # balance = SELECT balance ...
+            yield advance(s, i, "check", read=s.read[:i] + (s.balance,) + s.read[i + 1 :])
+        elif pc == "check":
+            # if balance >= amount:
+            yield advance(s, i, "update") if s.read[i] >= AMOUNT else advance(s, i, "done")
+        elif pc == "update":
+            # UPDATE accounts SET balance = balance_read - amount
+            yield advance(s, i, "done", balance=s.read[i] - AMOUNT, withdrawn=s.withdrawn + AMOUNT)
+
+
+init = State(pc=("start", "start"), read=(0, 0), balance=100, withdrawn=0)
+consistent = lambda s: s.balance == 100 - s.withdrawn
+for s in check_invariant(reach(init, next_states), consistent) or []:
+    print(s)
+```
+
+</Details>
+
+```
+State(pc=('start', 'start'), read=(0, 0), balance=100, withdrawn=0)
+State(pc=('check', 'start'), read=(100, 0), balance=100, withdrawn=0)
+State(pc=('update', 'start'), read=(100, 0), balance=100, withdrawn=0)
+State(pc=('update', 'check'), read=(100, 100), balance=100, withdrawn=0)
+State(pc=('done', 'check'), read=(100, 100), balance=30, withdrawn=70)
+State(pc=('done', 'update'), read=(100, 100), balance=30, withdrawn=70)
+State(pc=('done', 'done'), read=(100, 100), balance=30, withdrawn=140)
+```
+
+140引き出したのに残高は30。
+`read` を状態に持たせているのが肝で、「古い値を握ったまま書く」がそのまま遷移になる。
+
+修正は、読んだ値が変わっていないときだけ更新する (optimistic lock)。
+0行しか更新されなければ最初からやり直す。
+
+```python
+def withdraw(conn, account_id, amount):
+    while True:
+        balance = conn.execute(
+            "SELECT balance FROM accounts WHERE id = ?", (account_id,)
+        ).fetchone()[0]
+        if balance < amount:
+            return
+        updated = conn.execute(
+            "UPDATE accounts SET balance = ? WHERE id = ? AND balance = ?",
+            (balance - amount, account_id, balance),
+        ).rowcount
+        if updated == 1:
+            return
+```
+
+<Details title="コード: optimistic lockのモデル">
+
+```python
+AMOUNT = 70
+
+
+@dataclass(frozen=True)
+class State:
+    pc: tuple
+    read: tuple
+    balance: int
+    withdrawn: int
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start":
+            yield advance(s, i, "check", read=s.read[:i] + (s.balance,) + s.read[i + 1 :])
+        elif pc == "check":
+            yield advance(s, i, "update") if s.read[i] >= AMOUNT else advance(s, i, "done")
+        elif pc == "update":
+            # UPDATE ... SET balance = ? WHERE id = ? AND balance = ?  (読んだ値のままなら更新)
+            if s.balance == s.read[i]:
+                yield advance(s, i, "done", balance=s.read[i] - AMOUNT, withdrawn=s.withdrawn + AMOUNT)
+            else:
+                yield advance(s, i, "start")  # 0 rows updated → 最初からやり直す
+
+
+init = State(pc=("start", "start"), read=(0, 0), balance=100, withdrawn=0)
+consistent = lambda s: s.balance == 100 - s.withdrawn
+for s in check_invariant(reach(init, next_states), consistent) or []:
+    print(s)
+```
+
+</Details>
+
+```
+OK: 21 states
+```
+
+`SELECT ... FOR UPDATE` で行をlockしても同じ結果になる (モデルではlockの保持者を足す)。
+このモデルで調べたのはinvariantだけで、「retryがいつか成功する」 (活性) は調べていない。
+相手が毎回先に書き換え続ける公平でないschedulingでは、retryは永遠に終わらない。
+
+## cacheの読み込みと無効化
+
+```python
+def get_user(user_id):
+    user = cache.get(user_id)
+    if user is None:
+        user = db.get(user_id)
+        cache.set(user_id, user)
+    return user
+
+
+def update_user(user_id, data):
+    db.update(user_id, data)
+    cache.delete(user_id)
+```
+
+cache-asideの定番で、writerはDBを更新してからcacheを消す。
+readerがDBから読んだ後、`cache.set` する前にwriterが更新と削除を済ませると、readerは古い値をcacheに書き、次の更新まで古いまま残る。
+両方が終わったときにcacheが空かDBと同じ値か、を調べる。
+
+<Details title="コード: cache-asideのモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    reader: str        # get_user の位置
+    writer: str        # update_user の位置
+    read: int          # readerがDBから読んだ値
+    db: int
+    cache: int | None
+
+
+def next_states(s):
+    # reader: cache miss → db.get → cache.set
+    if s.reader == "start":
+        yield replace(s, reader="done" if s.cache is not None else "db_get")
+    elif s.reader == "db_get":
+        yield replace(s, reader="cache_set", read=s.db)
+    elif s.reader == "cache_set":
+        yield replace(s, reader="done", cache=s.read)
+    # writer: db.update → cache.delete
+    if s.writer == "start":
+        yield replace(s, writer="cache_delete", db=2)
+    elif s.writer == "cache_delete":
+        yield replace(s, writer="done", cache=None)
+
+
+init = State(reader="start", writer="start", read=0, db=1, cache=None)
+# 両方終わったとき、cacheは空かDBと同じ値
+fresh = lambda s: not (s.reader == "done" and s.writer == "done") or s.cache in (None, s.db)
+for s in check_invariant(reach(init, next_states), fresh) or []:
+    print(s)
+```
+
+</Details>
+
+```
+State(reader='start', writer='start', read=0, db=1, cache=None)
+State(reader='db_get', writer='start', read=0, db=1, cache=None)
+State(reader='cache_set', writer='start', read=1, db=1, cache=None)
+State(reader='cache_set', writer='cache_delete', read=1, db=2, cache=None)
+State(reader='cache_set', writer='done', read=1, db=2, cache=None)
+State(reader='done', writer='done', read=1, db=2, cache=1)
+```
+
+DBは2なのにcacheは1。
+「両方が終わったとき」という条件を付けているのは、途中の状態ではcacheが古くても仕方がないから。
+性質を「いつか一致する」と書けば活性になるが、終了状態だけを見るinvariantにすれば安全性で足りる。
+
+修正は、cacheに世代 (token) を持たせ、readerがmissしたときの世代と `set` するときの世代が違えば捨てる (Memcachedのlease)。
+writerの `delete` は世代を進める。
+
+```python
+def get_user(user_id):
+    user, lease = cache.get_with_lease(user_id)
+    if user is None:
+        user = db.get(user_id)
+        cache.set_if_lease_valid(user_id, user, lease)
+    return user
+```
+
+<Details title="コード: leaseのモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    reader: str
+    writer: str
+    read: int
+    db: int
+    cache: int | None
+    token: int         # cacheの世代。deleteのたびに進む
+    lease: int         # readerがmiss時に受け取った世代
+
+
+def next_states(s):
+    if s.reader == "start":
+        yield replace(s, reader="done" if s.cache is not None else "db_get", lease=s.token)
+    elif s.reader == "db_get":
+        yield replace(s, reader="cache_set", read=s.db)
+    elif s.reader == "cache_set":
+        # cache.set(id, u, lease)  世代が変わっていたら捨てる
+        yield replace(s, reader="done", cache=s.read if s.lease == s.token else s.cache)
+    if s.writer == "start":
+        yield replace(s, writer="cache_delete", db=2)
+    elif s.writer == "cache_delete":
+        yield replace(s, writer="done", cache=None, token=s.token + 1)
+
+
+init = State(reader="start", writer="start", read=0, db=1, cache=None, token=0, lease=0)
+fresh = lambda s: not (s.reader == "done" and s.writer == "done") or s.cache in (None, s.db)
+for s in check_invariant(reach(init, next_states), fresh) or []:
+    print(s)
+```
+
+</Details>
+
+```
+OK: 19 states
+```
+
+`delete` を2回する (更新の前後で消す) 修正もよく見るが、モデルにすると反例は消えない。
+2回目の `delete` の後にreaderの `set` が来る順序が残るため。
+
+## TTL付きの分散lock
+
+```python
+def process(job_id):
+    if redis.set(f"lock:{job_id}", worker_id, nx=True, ex=30):
+        try:
+            do_work(job_id)  # 30秒で終わる想定
+        finally:
+            redis.delete(f"lock:{job_id}")
+```
+
+`do_work` がGCの停止やネットワークの遅延で30秒を超えると、lockはTTLで消え、別のworkerが同じjobを始める。
+時間はモデルに入れず、「lockを持っている間、TTL切れはいつでも起きうる」遷移として書く。
+
+<Details title="コード: TTL付きlockのモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    pc: tuple
+    holder: int | None   # Redisのlock keyを持っているclient (TTL切れでNoneになる)
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start" and s.holder is None:
+            # SET lock me NX EX 30
+            yield advance(s, i, "working", holder=i)
+        elif pc == "working":
+            # do_work(job) が終わる
+            yield advance(s, i, "release")
+        elif pc == "release":
+            # DEL lock
+            yield advance(s, i, "done", holder=None)
+    # TTLが切れる (いつ切れるかは分からないので、持っている間はいつでも起きうる)
+    if s.holder is not None:
+        yield replace(s, holder=None)
+
+
+init = State(pc=("start", "start"), holder=None)
+mutex = lambda s: s.pc.count("working") <= 1
+for s in check_invariant(reach(init, next_states), mutex) or []:
+    print(s)
+```
+
+</Details>
+
+```
+State(pc=('start', 'start'), holder=None)
+State(pc=('working', 'start'), holder=0)
+State(pc=('working', 'start'), holder=None)
+State(pc=('working', 'working'), holder=1)
+```
+
+2つ目の遷移 (`holder` が0から `None` になる) がTTL切れ。
+worker 0は自分がまだlockを持っていると思って `working` のまま。
+
+lockだけではこれを防げない。
+TTLを伸ばしても「仕事がTTLより長くかかる」可能性が消えないので、状態の列挙では同じ反例が出る。
+修正は、lock取得時に単調増加のfencing tokenを受け取り、storage側で古いtokenの書き込みを拒否すること。
+
+```python
+def process(job_id):
+    token = lock_service.acquire(job_id)   # 取得ごとに増える整数
+    if token is None:
+        return
+    try:
+        storage.write(job_id, do_work(job_id), token=token)  # storageはtokenが過去最大より小さければ拒否
+    finally:
+        lock_service.release(job_id, token)
+```
+
+調べる性質も変わる。
+「同時に `working` にならない」は守れないので、**storageが受け付けた書き込みのtokenが単調増加** (古いholderの書き込みが後から混ざらない) を調べる。
+
+<Details title="コード: fencing tokenのモデル">
+
+```python
+@dataclass(frozen=True)
+class State:
+    pc: tuple
+    token: tuple         # 各clientがlock取得時に受け取ったfencing token
+    holder: int | None
+    next_token: int      # lock serviceが次に発行するtoken
+    applied: tuple       # storageが受け付けた書き込みのtoken (順に)
+    max_seen: int        # storageが受け付けた最大のtoken
+
+
+def next_states(s):
+    for i, pc in enumerate(s.pc):
+        if pc == "start" and s.holder is None:
+            yield advance(s, i, "working", holder=i, token=s.token[:i] + (s.next_token,) + s.token[i + 1 :], next_token=s.next_token + 1)
+        elif pc == "working":
+            # storage.write(data, token): 古いtokenは拒否
+            t = s.token[i]
+            if t > s.max_seen:
+                yield advance(s, i, "release", applied=s.applied + (t,), max_seen=t)
+            else:
+                yield advance(s, i, "release")  # rejected
+        elif pc == "release":
+            yield advance(s, i, "done", holder=None if s.holder == i else s.holder)
+    if s.holder is not None:
+        yield replace(s, holder=None)
+
+
+init = State(pc=("start", "start"), token=(0, 0), holder=None, next_token=1, applied=(), max_seen=0)
+# 受け付けた書き込みのtokenは単調増加 (古いholderの書き込みが後から混ざらない)
+ordered = lambda s: all(a < b for a, b in zip(s.applied, s.applied[1:]))
+for s in check_invariant(reach(init, next_states), ordered) or []:
+    print(s)
+```
+
+</Details>
+
+```
+OK: 53 states
+```
+
+同じモデルで `s.pc.count("working") <= 1` を調べると、最初と同じ反例が出る。
+2つのworkerが同時に仕事をすること自体は起きるが、古い方の結果はstorageに入らない。
+
+## 業務フローをそのままテストにかける
+
+ここまでは、コードを読んで手でモデルを書いた。
+モデルはコードと別物なので、コードを直してもモデルを直し忘れれば検査は意味を失う。
+業務フローがstepの列 (sagaやworkflow engineの各step) として書かれているなら、**step関数そのものを遷移関係にして**、checkerに実行させられる。
+モデル検査をunit testとして置いておく形になる。
+
+注文のsagaを例にする。
+各stepは1つのDB transactionにあたり、在庫と注文を保持するstoreを書き換える。
+ユーザーは途中でキャンセルできる。
+
+<Details title="コード: order_saga.py">
+
+```python
+"""注文のsaga。各stepは1つのDB transaction (storeの読み書き) に対応する。"""
+from copy import deepcopy
+
+
+def new_store():
+    return {
+        "inventory": {"sku-1": 1},                   # 在庫
+        "orders": {"o-1": {"status": "new", "sku": "sku-1", "charged": False, "refunded": False}},
+    }
+
+
+# --- 注文フロー: 在庫を引き当て → 決済 → 出荷 ---
+
+def reserve(store, order_id):
+    order = store["orders"][order_id]
+    if store["inventory"][order["sku"]] > 0:
+        store["inventory"][order["sku"]] -= 1
+        order["status"] = "reserved"
+    else:
+        order["status"] = "rejected"
+
+
+def charge(store, order_id, gateway_ok):
+    order = store["orders"][order_id]
+    if order["status"] != "reserved":
+        return
+    if gateway_ok:
+        order["charged"] = True
+        order["status"] = "paid"
+    else:
+        store["inventory"][order["sku"]] += 1
+        order["status"] = "payment_failed"
+
+
+def ship(store, order_id):
+    order = store["orders"][order_id]
+    if order["charged"]:
+        order["status"] = "shipped"
+
+
+# --- キャンセルフロー: ユーザーが途中でキャンセルする ---
+
+def cancel(store, order_id):
+    order = store["orders"][order_id]
+    if order["status"] == "shipped":
+        return
+    if order["status"] in ("reserved", "paid"):
+        store["inventory"][order["sku"]] += 1
+    if order["charged"]:
+        order["refunded"] = True
+    order["status"] = "cancelled"
+```
+
+</Details>
+
+checkerは、各processの次のstepをstoreのコピーに対して実際に実行し、結果を新しい状態として積む。
+storeをJSONに直したものと各processの位置の組を状態のkeyにする。
+決済gatewayの成否のように外から決まる分岐は、stepに関数のlistを渡して全部試す。
+
+<Details title="コード: explore.py">
+
+```python
+"""stepの関数をそのまま使って、全interleavingを列挙するchecker"""
+import json
+from collections import deque
+from copy import deepcopy
+
+
+def key(store, pcs):
+    return json.dumps(store, sort_keys=True) + "|" + json.dumps(pcs)
+
+
+def check(init_store, processes, invariant):
+    """processes: 名前 → stepの列。各stepは (label, fn) で、fnは store を書き換える。
+    fnが選択肢を持つなら、stepは (label, [fn_a, fn_b, ...])。"""
+    init = (init_store, {name: 0 for name in processes})
+    parent = {key(*init): None}
+    trace_of = {key(*init): []}
+    queue = deque([init])
+    while queue:
+        store, pcs = queue.popleft()
+        k = key(store, pcs)
+        if not invariant(store, pcs):
+            return trace_of[k], store
+        for name, steps in processes.items():
+            if pcs[name] >= len(steps):
+                continue
+            label, fns = steps[pcs[name]]
+            for fn in (fns if isinstance(fns, list) else [fns]):
+                s2 = deepcopy(store)
+                fn(s2)
+                pcs2 = {**pcs, name: pcs[name] + 1}
+                k2 = key(s2, pcs2)
+                if k2 not in parent:
+                    parent[k2] = k
+                    trace_of[k2] = trace_of[k] + [f"{name}: {label}" + (f" [{fn.__name__}]" if isinstance(fns, list) else "")]
+                    queue.append((s2, pcs2))
+    print(f"OK: {len(parent)} states")
+    return None, None
+```
+
+</Details>
+
+テストでは、注文フローとキャンセルを並行に走らせ、業務上のinvariantを書く。
+
+<Details title="コード: test_order_saga.py">
+
+```python
+from explore import check
+from order_saga import cancel, charge, new_store, reserve, ship
+
+O = "o-1"
+
+
+def gateway_ok(store):
+    charge(store, O, gateway_ok=True)
+
+
+def gateway_ng(store):
+    charge(store, O, gateway_ok=False)
+
+
+PROCESSES = {
+    "order": [
+        ("reserve", lambda s: reserve(s, O)),
+        ("charge", [gateway_ok, gateway_ng]),
+        ("ship", lambda s: ship(s, O)),
+    ],
+    "user": [
+        ("cancel", lambda s: cancel(s, O)),
+    ],
+}
+
+
+def done(pcs):
+    return all(pcs[n] >= len(PROCESSES[n]) for n in PROCESSES)
+
+
+def invariant(store, pcs):
+    order = store["orders"][O]
+    reserved = 1 if order["status"] in ("reserved", "paid", "shipped") else 0
+    if store["inventory"]["sku-1"] < 0:
+        return False
+    if store["inventory"]["sku-1"] + reserved != 1:          # 在庫 + 引き当て = 初期在庫
+        return False
+    if order["status"] == "shipped" and order["refunded"]:  # 出荷したのに返金
+        return False
+    if done(pcs) and order["charged"] and not (order["status"] == "shipped" or order["refunded"]):
+        return False                                          # 請求だけして出荷も返金もしない
+    return True
+
+
+def test_order_and_cancel():
+    trace, store = check(new_store(), PROCESSES, invariant)
+    if trace is not None:
+        print("\n".join(trace))
+        print(store["orders"][O], "inventory:", store["inventory"])
+    assert trace is None
+
+
+if __name__ == "__main__":
+    test_order_and_cancel()
+```
+
+</Details>
+
+```
+order: reserve
+order: charge [gateway_ok]
+user: cancel
+order: ship
+{'status': 'shipped', 'sku': 'sku-1', 'charged': True, 'refunded': True} inventory: {'sku-1': 1}
+```
+
+決済の直後にキャンセルが入ると、返金したうえで出荷している。
+`ship` が `charged` しか見ていないため。
+`cancel` は `status` を `cancelled` にしているので、`ship` もstatusを条件にすればよい。
+SQLなら `UPDATE orders SET status = 'shipped' WHERE id = ? AND status = 'paid'` の形。
+
+```python
+def ship(store, order_id):
+    order = store["orders"][order_id]
+    if order["status"] == "paid":
+        order["status"] = "shipped"
+```
+
+```
+OK: 17 states
+```
+
+このテストが守っているのは、`reserve`、`charge`、`ship`、`cancel` をどの順で実行しても、どのgatewayの結果でも、在庫の辻褄が合い、出荷と返金が両立せず、請求したら出荷か返金のどちらかに至ること。
+stepを足したり順序を変えたりしたときも、同じテストがそのまま効く。
+
+制約は2つ。
+
+- stepはstoreだけを読み書きする純粋な関数である必要がある。実際のDBやHTTPを呼ぶstepは、unit testと同じくin-memoryのrepositoryに差し替える
+- stateの数はstepの数と分岐の数で決まる。step 10個、process 3本程度なら数千状態で、テストとして毎回回せる
+
+## 専用の検査言語で書く
+
+自作のcheckerは数千状態までの道具で、活性や公平性は調べられない。
+その先は専用の言語とcheckerを使う。
+よく使われるのはTLA+ (checkerはTLC) とPromela (checkerはSPIN) で、どちらも前の記事の「到達可能な状態の列挙」をそのまま実装したもの。
+
+| 言語    | checker | 向いているもの                                   | 性質の書き方                       |
+| ------- | ------- | ------------------------------------------------ | ---------------------------------- |
+| TLA+    | TLC     | 分散システムや業務フローの設計 (AWSが使っている) | invariantと時相的な性質 (TLA+の式) |
+| Promela | SPIN    | process間の通信やlockの手順                      | `assert` とLTL                     |
+
+### TLA+で書いた注文のsaga
+
+TLA+では、各stepを「実行前の変数と実行後の変数 (`'` 付き) の関係」として書く。
+`Reserve` なら「`pc` が `"reserve"` で、在庫があれば在庫を1減らして `status` を `"reserved"` にし、`pc` を `"charge"` に進める」。
+`Next` はどれか1つのstepが起きること、`Spec` は初期状態から `Next` を繰り返すこと。
+
+<Details title="コード: OrderSaga.tla">
+
+```
+---- MODULE OrderSaga ----
+EXTENDS Integers
+
+VARIABLES inventory, status, charged, refunded, pc, userDone
+
+vars == <<inventory, status, charged, refunded, pc, userDone>>
+
+Init ==
+  /\ inventory = 1
+  /\ status = "new"
+  /\ charged = FALSE
+  /\ refunded = FALSE
+  /\ pc = "reserve"
+  /\ userDone = FALSE
+
+\* 注文フロー: 在庫を引き当て → 決済 → 出荷
+Reserve ==
+  /\ pc = "reserve"
+  /\ IF inventory > 0
+       THEN inventory' = inventory - 1 /\ status' = "reserved"
+       ELSE inventory' = inventory /\ status' = "rejected"
+  /\ pc' = "charge"
+  /\ UNCHANGED <<charged, refunded, userDone>>
+
+ChargeOK ==
+  /\ pc = "charge"
+  /\ IF status = "reserved"
+       THEN charged' = TRUE /\ status' = "paid"
+       ELSE UNCHANGED <<charged, status>>
+  /\ pc' = "ship"
+  /\ UNCHANGED <<inventory, refunded, userDone>>
+
+ChargeNG ==
+  /\ pc = "charge"
+  /\ IF status = "reserved"
+       THEN inventory' = inventory + 1 /\ status' = "payment_failed"
+       ELSE UNCHANGED <<inventory, status>>
+  /\ pc' = "ship"
+  /\ UNCHANGED <<charged, refunded, userDone>>
+
+Ship ==
+  /\ pc = "ship"
+  /\ IF charged THEN status' = "shipped" ELSE UNCHANGED status
+  /\ pc' = "done"
+  /\ UNCHANGED <<inventory, charged, refunded, userDone>>
+
+\* キャンセルフロー: ユーザーが1回だけキャンセルする
+Cancel ==
+  /\ ~userDone
+  /\ userDone' = TRUE
+  /\ IF status = "shipped"
+       THEN UNCHANGED <<inventory, status, refunded>>
+       ELSE /\ inventory' = IF status \in {"reserved", "paid"} THEN inventory + 1 ELSE inventory
+            /\ refunded' = charged
+            /\ status' = "cancelled"
+  /\ UNCHANGED <<charged, pc>>
+
+Terminating == pc = "done" /\ userDone /\ UNCHANGED vars
+
+Next == Reserve \/ ChargeOK \/ ChargeNG \/ Ship \/ Cancel \/ Terminating
+
+Spec == Init /\ [][Next]_vars
+
+\* 業務上のinvariant
+Reserved == IF status \in {"reserved", "paid", "shipped"} THEN 1 ELSE 0
+InventoryOK == inventory >= 0 /\ inventory + Reserved = 1
+NoShipAndRefund == ~(status = "shipped" /\ refunded)
+ChargeSettled == (pc = "done" /\ userDone /\ charged) => (status = "shipped" \/ refunded)
+====
+```
+
+</Details>
+
+TLCに渡す設定で、調べるinvariantを指定する。
+
+```
+SPECIFICATION Spec
+INVARIANTS InventoryOK NoShipAndRefund ChargeSettled
+```
+
+```
+$ java -cp tla2tools.jar tlc2.TLC OrderSaga.tla
+Error: Invariant InventoryOK is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+...
+State 4: <Cancel line 49, col 3 to line 56, col 30 of module OrderSaga>
+/\ refunded = TRUE
+/\ inventory = 1
+/\ status = "cancelled"
+/\ userDone = TRUE
+/\ pc = "ship"
+/\ charged = TRUE
+
+State 5: <Ship line 42, col 3 to line 45, col 57 of module OrderSaga>
+/\ refunded = TRUE
+/\ inventory = 1
+/\ status = "shipped"
+/\ userDone = TRUE
+/\ pc = "done"
+/\ charged = TRUE
+
+17 states generated, 15 distinct states found, 5 states left on queue.
+```
+
+Pythonのcheckerと同じ反例 (キャンセルの後に出荷) が、どのstepでどう変数が変わったかの形で出る。
+TLCはinvariantを書いた順に調べるので、同じ状態で破れている `NoShipAndRefund` ではなく `InventoryOK` (出荷済みなのに在庫が戻っている) が先に報告されている。
+
+`Ship` の条件を `charged` から `status = "paid"` に変えると通る。
+
+```
+Ship ==
+  /\ pc = "ship"
+  /\ IF status = "paid" THEN status' = "shipped" ELSE UNCHANGED status
+  /\ pc' = "done"
+  /\ UNCHANGED <<inventory, charged, refunded, userDone>>
+```
+
+```
+Model checking completed. No error has been found.
+25 states generated, 17 distinct states found, 0 states left on queue.
+```
+
+TLCは複数のworkerで並列に探索し、対称性簡約も持つ。
+活性は `WF_vars(Next)` のような公平性の仮定と `<>`、`[]` の時相演算子で書き、同じ設定ファイルの `PROPERTIES` に指定する。
+
+### Promelaで書いた遅延初期化
+
+Promelaはprocessを書く言語で、Cに似た文法で逐次処理を書き、`active [2]` で2つ起動する。
+`if :: 条件 -> ...` は条件が成り立つまで待つ分岐で、各文が1遷移。
+
+<Details title="コード: lazy.pml">
+
+```
+bool instance = false;
+byte created = 0;
+
+active [2] proctype get_instance() {
+    if
+    :: !instance ->          /* if _instance is None: */
+        instance = true;     /*     _instance = Connection() */
+        created++
+    :: else
+    fi
+}
+
+ltl once { [] (created <= 1) }
+```
+
+</Details>
+
+```
+$ spin -run -a lazy.pml
+pan:1: assertion violated  !( !((created<=1))) (at depth 14)
+State-vector 28 byte, depth reached 14, errors: 1
+       15 states, stored
+$ spin -t -p lazy.pml
+  2:	proc  1 (get_instance:1) lazy.pml:6 (state 1)	[(!(instance))]
+  4:	proc  0 (get_instance:1) lazy.pml:6 (state 1)	[(!(instance))]
+  6:	proc  1 (get_instance:1) lazy.pml:7 (state 2)	[instance = 1]
+  8:	proc  1 (get_instance:1) lazy.pml:8 (state 3)	[created = (created+1)]
+ 12:	proc  0 (get_instance:1) lazy.pml:7 (state 2)	[instance = 1]
+ 14:	proc  0 (get_instance:1) lazy.pml:8 (state 3)	[created = (created+1)]
+```
+
+`ltl once { [] (created <= 1) }` がLTLで書いた性質で、SPINはこれをBüchiオートマトンに変換してprocessと積を取る (前の記事の「LTLのモデル検査」)。
+`spin -t -p` で反例の遷移列を再生できる。
+
+lockを足す。
+`atomic { !locked -> locked = true }` が「空いていれば取る」を1遷移で行う部分。
+
+<Details title="コード: lazy_fix.pml">
+
+```
+bool instance = false;
+bool locked = false;
+byte created = 0;
+
+active [2] proctype get_instance() {
+    if
+    :: !instance ->                          /* if _instance is None: */
+        atomic { !locked -> locked = true }; /*     with _lock: */
+        if
+        :: !instance ->                      /*         if _instance is None: */
+            instance = true;                 /*             _instance = Connection() */
+            created++
+        :: else
+        fi;
+        locked = false
+    :: else
+    fi
+}
+
+ltl once { [] (created <= 1) }
+```
+
+</Details>
+
+```
+State-vector 28 byte, depth reached 21, errors: 0
+       37 states, stored
+```
+
+Pythonのcheckerでは25状態だったものが37状態になっているのは、Promelaでは `locked = false` や `if` の判定がそれぞれ別の遷移になるため。
+どちらも同じ結論に至るが、遷移の切り方が言語で決まるぶん、Promelaのほうが「切り方が粗すぎてバグを見逃す」ことが起きにくい。
+
+## まとめ
+
+- 遷移は、他のprocessが割り込みうる境界 (DB、cache、lock、外部serviceへのアクセス) ごとに切る
+- 「読んだ値」を状態に持たせると、古い値のまま書くバグがそのまま遷移として現れる
+- 時間はモデルに入れない。TTL切れやtimeoutは「いつでも起きうる遷移」にする
+- 性質は「全部終わったときに〜」の形にすると、活性を使わずinvariantで書ける
+- 修正を入れたら、修正の一部を外して反例が戻ることも確かめる。戻らなければ、その部分は正しさに寄与していない

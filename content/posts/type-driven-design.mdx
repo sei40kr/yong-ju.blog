@@ -1,0 +1,290 @@
+---
+title: "Type Driven Design"
+date: 2026-10-22T18:00:00+09:00
+tags: ["ソフトウェア設計", "型理論", "Kotlin", "Rust", "勉強ノート"]
+---
+
+Type Driven Design (型駆動設計) は、**domainの制約を型に書き、守られているかの確認をcompilerに任せる設計の進め方**。
+「この値は空でない」「この注文は確定済み」といった前提をcommentやassertではなく型で表し、前提を破るcodeをcompileできなくする。
+実装の前に型と関数のsignatureを書き、compilerのエラーを手がかりに中身を埋めていく開発手順 (Type Driven Development) も同じ考え方から来ている。
+
+このノートで扱うのは次の4つ。
+
+- 不正な状態を表せなくする: 直和型で状態を組み直す
+- Parse, don't validate: 検査の結果を型に残す
+- 状態遷移を型にする: typestate
+- 型を先に書く: signatureから実装を導く
+
+## 前提知識
+
+- KotlinかRustでcodeを書いた経験 (例は両方で書く)
+- 直積型と直和型 ([代数的データ型](/posts/algebraic-data-types/) のノートで扱った)
+
+## コンセプト
+
+### 型は証拠
+
+`String` を受け取る関数は、その文字列がemail addressかどうかを知らない。
+呼び出し元で検査済みでも、型の上では検査前の値と区別がつかないので、受け取った側でもう一度検査するか、検査済みだと信じるしかない。
+
+`Email` 型を受け取る関数なら、`Email` の値を作る手段が検査を通る経路しかない限り、値があること自体が検査済みの証拠になる。
+Type Driven Designの道具はほぼすべて、この「型を作れる経路を絞り、型を証拠として持ち回る」形をしている。
+
+### 確認する場所が1か所に集まる
+
+前提を型で表さない場合、前提に依存するすべての箇所で確認が要る。
+
+```
+checkoutはcartが空でない前提
+→ checkoutを呼ぶ箇所すべてで空checkが要る
+→ 1か所でも漏れるとruntimeで落ちる
+```
+
+型で表すと、確認は値を作る1か所に集まり、使う側は何もしなくてよい。
+漏れはcompile時にエラーになる。
+
+## 不正な状態を表せなくする
+
+nullableなfieldやBooleanのフラグを並べた型は、意味のない組み合わせも作れてしまう。
+
+```kotlin
+data class Payment(
+    val paid: Boolean,
+    val paidAt: Instant?,
+    val refundedAt: Instant?,
+)
+```
+
+`paid = false` なのに `paidAt` がある、`paidAt` がないのに `refundedAt` がある、といった値が作れる。
+状態ごとに必要なfieldだけを持つ直和型にすると、意味のある状態だけが残る。
+
+```kotlin
+sealed interface Payment {
+    data object Unpaid : Payment
+    data class Paid(val paidAt: Instant) : Payment
+    data class Refunded(val paidAt: Instant, val refundedAt: Instant) : Payment
+}
+```
+
+```rust
+enum Payment {
+    Unpaid,
+    Paid { paid_at: Instant },
+    Refunded { paid_at: Instant, refunded_at: Instant },
+}
+```
+
+型の値の個数を数えて設計を評価する見方は [代数的データ型](/posts/algebraic-data-types/#不正な状態を表せなくする) のノートにまとめた。
+
+Boolean引数も同じ理由で避ける。
+`send(message, true)` の `true` が何を意味するかは呼び出し側から読めず、2つ並ぶと順番を取り違えてもcompileが通る。
+`enum class Priority { Normal, Urgent }` のように場合に名前を付けた型にする。
+
+## Parse, don't validate
+
+### validateとparse
+
+入力の検査には2つの書き方がある。
+
+- validate: 値を検査し、不正なら例外を投げる。戻り値は `Unit` で、検査の結果は型に残らない
+- parse: 値を検査し、通ったら**より狭い型の値**を返す。不正なら `null` や `Result` のエラーを返す
+
+```kotlin
+// validate: 検査しても、呼び出し側が持っているのは String のまま
+fun validateEmail(s: String) {
+    require('@' in s) { "invalid email: $s" }
+}
+
+// parse: 検査を通った値だけが Email になる
+@JvmInline
+value class Email private constructor(val value: String) {
+    companion object {
+        fun parse(s: String): Email? = if ('@' in s) Email(s) else null
+    }
+}
+```
+
+```rust
+pub struct Email(String); // fieldはmoduleの外から見えない
+
+#[derive(Debug)]
+pub struct ParseEmailError;
+
+impl Email {
+    pub fn parse(s: &str) -> Result<Self, ParseEmailError> {
+        if s.contains('@') {
+            Ok(Self(s.to_owned()))
+        } else {
+            Err(ParseEmailError)
+        }
+    }
+
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+}
+```
+
+constructorを隠して検査付きの生成関数だけを公開する形をsmart constructorと呼ぶ。
+Kotlinは `private constructor`、Rustはfieldを `pub` にしないことで、検査を通らない生成経路を塞ぐ。
+Javaなら `record` のcompact constructorで検査して例外を投げる (生成経路はconstructorしかないので、例外でも型は証拠になる)。
+
+### 境界でparseする
+
+parseはsystemの境界、つまりHTTP request、DB、file、環境変数から値が入ってくる箇所で行う。
+境界の内側では狭い型だけを扱い、`String` や `Int` のまま奥へ流さない。
+
+検査をcodeのあちこちに散らし、処理の途中で入力の不正に気づく書き方はshotgun parsingと呼ばれる。
+途中で失敗すると、それまでに行った副作用 (DBへの書き込みなど) が中途半端に残る。
+最初にすべてparseしておけば、処理を始めた時点で入力が正しいことが確定している。
+
+Rustのserdeなら `#[serde(try_from = "String")]` を付けて `TryFrom<String>` を実装すると、deserializeとparseが一度で済む。
+
+### 情報を捨てない型を選ぶ
+
+parseの戻り値は、検査で分かったことをすべて持つ型にする。
+空でないことを確認したlistを `List<T>` のまま返すと、使う側は先頭要素を取るたびに空の場合を考えることになる。
+
+```kotlin
+data class NonEmptyList<T>(val head: T, val tail: List<T>)
+```
+
+```rust
+struct NonEmpty<T> {
+    head: T,
+    tail: Vec<T>,
+}
+```
+
+先頭要素がfieldとして必ずあるので、`first()` が失敗しない。
+
+### primitive obsession
+
+domainの値を `String` や `Long` のまま扱うことをprimitive obsessionと呼ぶ。
+`fun transfer(from: Long, to: Long, amount: Long)` は引数の順番を間違えてもcompileが通る。
+`UserId`、`AccountId`、`Money` のように意味ごとに型を分けると、取り違えがエラーになる。
+
+Kotlinの `@JvmInline value class`、Rustのnewtype (`struct AccountId(u64);`) はどちらも実行時には中身の値と同じ表現になり、wrapperのcostはかからない (Kotlinはnullableやgenericsで使うとboxingされる)。
+
+Rustでは `PhantomData` で型引数を1つ持たせると、IDの型を1つにまとめられる。
+
+```rust
+use std::marker::PhantomData;
+
+struct Id<T> {
+    value: u64,
+    _entity: PhantomData<T>,
+}
+
+fn find_user(id: Id<User>) -> Option<User> { /* ... */ }
+```
+
+`Id<Order>` を `find_user` に渡すとcompileエラーになる。
+
+## 状態遷移を型にする
+
+状態ごとに型を分け、遷移を「ある状態の値を受け取って次の状態の値を返す関数」にすると、許されない遷移をcompileできなくなる。
+この書き方をtypestateと呼ぶ。
+
+```rust
+use std::marker::PhantomData;
+
+struct Draft;
+struct Submitted;
+
+struct Order<S> {
+    items: Vec<Item>,
+    _state: PhantomData<S>,
+}
+
+impl Order<Draft> {
+    fn add(mut self, item: Item) -> Self {
+        self.items.push(item);
+        self
+    }
+
+    fn submit(self) -> Order<Submitted> {
+        Order { items: self.items, _state: PhantomData }
+    }
+}
+
+impl Order<Submitted> {
+    fn ship(&self) { /* ... */ }
+}
+```
+
+`ship` は `Order<Submitted>` にしかないので、確定前の注文を発送するcodeは書けない。
+`submit` は `self` を値で受け取るので、呼んだ後は元の `Order<Draft>` がmoveされて使えなくなる。
+「確定後に商品を足す」も、古い値が残らないのでcompileエラーになる。
+
+Kotlinでは状態ごとのclassと、状態を引数の型で指定する関数で書く。
+
+```kotlin
+sealed interface Order {
+    val items: List<Item>
+
+    data class Draft(override val items: List<Item>) : Order {
+        fun add(item: Item) = Draft(items + item)
+        fun submit() = Submitted(items)
+    }
+
+    data class Submitted(override val items: List<Item>) : Order
+}
+
+fun ship(order: Order.Submitted) { /* ... */ }
+```
+
+`ship(draft)` はcompileエラーになる。
+ただしKotlinには所有権がないので、`submit()` を呼んだ後も元の `Draft` への参照は残り、そこから `add` を呼べてしまう。
+古い状態を使えなくするところまで型で保証できるのはRustの強み。
+
+## 型を先に書く
+
+Type Driven Developmentは、型を書き、型に沿って実装し、実装の途中で型の誤りに気づいたら型を直す、を繰り返す手順。
+
+まず関数のsignatureだけを書き、中身は `TODO()` (Kotlin) や `todo!()` (Rust) にしておく。
+
+```kotlin
+fun checkout(cart: NonEmptyList<CartItem>, payment: VerifiedPayment): Receipt = TODO()
+```
+
+```rust
+fn checkout(cart: NonEmpty<CartItem>, payment: VerifiedPayment) -> Receipt {
+    todo!()
+}
+```
+
+この時点でcompileは通り、呼び出し側を先に書ける。
+signatureに「空でないcart」「検証済みの支払い」が書いてあるので、`checkout` の中で空checkや検証のやり直しは要らない。
+中身を書く段階では、手元の値の型と返すべき型の差がそのまま次にやることになる。
+`Receipt` を作るのに `PaymentId` が要るのに手元にないなら、`VerifiedPayment` に持たせるべきだった、と型の側を直す。
+
+型が細かいほど、型の合う実装の候補が減り、compilerのエラーが具体的になる。
+`fun f(a: String, b: String): String` は中身の候補が無数にあるが、`fun f(cart: NonEmptyList<CartItem>): Money` なら合計金額を返すくらいしか書けることがない。
+
+## 型にしないもの
+
+型で表せる制約には言語の限界がある。
+
+- 複数の値の関係 (`start < end`)、長さ (要素がちょうど3個) は、KotlinやRustの型では直接書けない。smart constructorで検査し、型は「検査済み」の印として使う
+- 在庫がある、userがlogin中、のように時間とともに変わる事実は型にしない。parseした時点では正しくても、使う時点では変わっている
+- 境界の外から来た値の型は信用できない。DBのcolumnが `NOT NULL` でも、migrationの途中や別のsystemからの書き込みで崩れている可能性がある
+
+型を分けるほど変換のcodeが増える。
+値が1つの関数の中だけで使われるなら、`String` のままで困ることはない。
+複数のmoduleやteamをまたいで流れる値、取り違えたときの被害が大きい値 (金額、ID) から型にするのがよさそう。
+
+## 発展
+
+- 依存型 (dependent type): 値に依存する型。「長さnのvector」「start < endの区間」を型で書ける。Idris、Agda、Lean
+- refinement type: 既存の型に述語を付けた型 (`{x: Int | x > 0}`)。Liquid Haskell。Kotlin、Rustには言語機能としてはない
+- 線形型・affine型: 値を使える回数を型で制限する。Rustの所有権はaffine型に近く、typestateで古い状態を使えなくできるのはこのため
+- session type: 通信protocolの手順を型にする。typestateを2者間のやり取りに広げたもの
+
+## 参考
+
+- Edwin Brady, _Type-Driven Development with Idris_ (Manning, 2017)。型を書き、定義し、型を直す手順を依存型で示した本
+- Alexis King, "Parse, don't validate" (2019)。validateとparseの違い、shotgun parsing、NonEmptyの例
+- Scott Wlaschin, _Domain Modeling Made Functional_ (Pragmatic Bookshelf, 2018)。F#でdomainを型に書く本。不正な状態を表せなくする設計、境界でのparse
+- Yaron Minsky, "Effective ML" (2010)。"Make illegal states unrepresentable" の出典
+- Cliff L. Biffle, "The Typestate Pattern in Rust" (2019)。`PhantomData` と所有権を使ったtypestate
